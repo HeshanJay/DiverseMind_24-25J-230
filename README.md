@@ -1,1 +1,1 @@
-DiverseMind: An Integrated Framework for Multi-Dimensional Learning Disabilities Detection
+DiverseMind: An Integrated Framework for Children with Multi-Dimensional Learning Disabilities
