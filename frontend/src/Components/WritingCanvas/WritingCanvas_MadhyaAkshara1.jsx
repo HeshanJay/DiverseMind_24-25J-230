@@ -106,7 +106,7 @@ const WritingCanvas_MadhyaAkshara1 = () => {
     >
       {/* Title and Box */}
       <div className="absolute top-14 w-full flex justify-center">
-        <div className="bg-gradient-to-r from-blue-300 to-green-300 p-8 rounded-3xl shadow-lg w-[620px] h-[510px] relative">
+        <div className="bg-gradient-to-r from-blue-300/80 to-green-300/80 p-8 rounded-3xl shadow-lg w-[620px] h-[510px] relative border-4 border-green-600">
           {/* Title Positioned on Top */}
           <div className="absolute top-6 w-full flex justify-center">
             <div className="text-6xl font-extrabold text-center">
@@ -149,7 +149,7 @@ const WritingCanvas_MadhyaAkshara1 = () => {
 
         {/* Pencil and Eraser */}
         {/* Pencil */}
-        <div className="absolute left-1 top-[40%] transform -translate-y-1/2 flex items-center">
+        <div className="absolute left-1 top-[10%] transform -translate-y-1/2 flex items-center">
           <img
             src={pencilImage}
             alt="Pencil"
@@ -159,7 +159,7 @@ const WritingCanvas_MadhyaAkshara1 = () => {
         </div>
 
         {/* Eraser */}
-        <div className="absolute left-1 top-[65%] transform -translate-y-1/2 flex items-center">
+        <div className="absolute left-1 top-[90%] transform -translate-y-1/2 flex items-center">
           <img
             src={eraserImage}
             alt="Eraser"
