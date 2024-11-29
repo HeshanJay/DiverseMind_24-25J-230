@@ -1,0 +1,48 @@
+.monkey-img {
+  position: absolute;
+  bottom: 89.5px;
+  right: 26%; /* Position the image on the right side of the canvas */
+  width: 112px;
+}
+
+.speech-bubble {
+  position: absolute;
+  bottom: 300px; /* Position it above the monkey */
+  right: 15%; /* Align with the monkey image */
+  background-color: #ffffff;
+  color: #333;
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 22px;
+  max-width: 200px;
+  text-align: center;
+
+  /* Add zoom-in animation */
+  animation: zoomIn 0.8s ease-out forwards;
+  transform: scale(0); /* Start scaled down */
+}
+
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -10px; /* Place the tail below the bubble */
+  right: 80%; /* Align the tail with the monkey */
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: #ffffff transparent transparent transparent; /* Match the bubble color */
+}
+
+/* Keyframes for zoom-in effect */
+@keyframes zoomIn {
+  0% {
+    transform: scale(0); /* Start fully scaled down */
+    opacity: 0; /* Fully transparent */
+  }
+  100% {
+    transform: scale(1); /* End at normal size */
+    opacity: 1; /* Fully visible */
+  }
+}
