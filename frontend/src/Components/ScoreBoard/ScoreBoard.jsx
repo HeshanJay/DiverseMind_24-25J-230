@@ -14,6 +14,8 @@ const ScoreBoard = ({ score, totalQuestions, onRestart }) => {
     )
   );
 
+  //motivational message
+
   const motivationalMessages = [
     "හොඳ ආරම්භයක්! 🐾",
     "උත්සාහය අතාරින්න එපා! 🌿",
