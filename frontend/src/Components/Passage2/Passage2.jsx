@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Passage2.css"; // Additional styling
+import "./Passage2.css";
 import backgroundImage from "../../assets/background_images/back_img4.jpg";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
@@ -9,12 +9,17 @@ const Passage2 = ({ onPrevious, onNext }) => {
   const options = [
     "වගා භූමිය ජලයෙන් ගිලීම",
     "මියො වගාවට හානි කිරීම",
-    "මියෝ වගා සහ පොළොව විනාශ කිරීම",
+    "මියෝ වගා සහ පොළොව විනාශ කිරීම", // Correct answer is "C"
     "කාලගුණය වැඩි දැඩි වීම",
   ];
+  const correctAnswer = "මියෝ වගා සහ පොළොව විනාශ කිරීම";
 
-  const handleOptionClick = (index) => {
-    setSelectedOption(index);
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+  };
+
+  const handleNextClick = () => {
+    onNext(selectedOption === correctAnswer);
   };
 
   return (
@@ -32,9 +37,9 @@ const Passage2 = ({ onPrevious, onNext }) => {
           {options.map((option, index) => (
             <button
               key={index}
-              onClick={() => handleOptionClick(index)}
+              onClick={() => handleOptionClick(option)}
               className={`p-4 rounded-lg border-2 transition-transform duration-300 shadow-md hover:scale-105 ${
-                selectedOption === index
+                selectedOption === option
                   ? "bg-green-500 text-white border-green-700"
                   : "bg-white text-gray-800 border-gray-300"
               }`}
@@ -53,7 +58,7 @@ const Passage2 = ({ onPrevious, onNext }) => {
       </button>
 
       <button
-        onClick={() => onNext("C")} // Correct answer for Passage2 is "C"
+        onClick={handleNextClick}
         disabled={selectedOption === null}
         className={`absolute bottom-10 right-28 w-16 h-16 rounded-full shadow-lg flex justify-center items-center bg-gradient-to-r from-blue-400 to-green-500 hover:scale-110 transition-transform duration-300 ${
           selectedOption === null ? "opacity-50 cursor-not-allowed" : ""
