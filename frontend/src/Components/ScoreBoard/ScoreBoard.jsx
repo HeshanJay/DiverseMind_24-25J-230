@@ -25,7 +25,7 @@ const ScoreBoard = ({ score, totalQuestions, onRestart }) => {
 
   const message =
     score === totalQuestions
-      ? "අග්‍රගණ්‍යය! 🎉 ඔබ සාර්ථකයි! 🦁"
+      ? "අඉතා හොඳයි! 🎉 ඔබ සාර්ථකයි! 🦁"
       : motivationalMessages[Math.min(score, motivationalMessages.length - 1)];
 
   return (
