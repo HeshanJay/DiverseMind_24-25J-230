@@ -1,4 +1,3 @@
-![image](https://github.com/user-attachments/assets/9ed9cf14-e658-426e-854e-de8cac3d042a)24-25J-230                         
 DiverseMind: An Integrated Framework for Children with Multi-Dimensional Learning Disabilities
 
 Team  Members:
