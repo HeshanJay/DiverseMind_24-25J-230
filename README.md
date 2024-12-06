@@ -27,7 +27,8 @@ The DiverseMind platform is developed to:
 
 Identify slow learners through the analysis of their academic skills, particularly writing skills, attention span, mathamatical skills and short term memory. Provide personalized, gamified interventions aligned with the grade 4 syllabus and teacher's guide. Build the confidence and learning capabilities of slow learners through engaging activities.
 
-## 📈 Overall System Diagram: (/SystemDiagram_DiverseMind.png)
+## 📈 Overall System Diagram
+![System Architecture Diagram](/SystemDiagram_DiverseMind.png)
 
 ## ✅ Components
 
