@@ -136,59 +136,107 @@ const Language_vocab_activity = () => {
       }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-
+  
       <div className="relative z-10 flex flex-col justify-center items-center h-full text-white text-center">
         {isCompleted ? (
-          <ScoreBoard score={score} totalQuestions={questions.length} onRestart={restartActivity} />
+          <ScoreBoard
+            score={score}
+            totalQuestions={questions.length}
+            onRestart={restartActivity}
+          />
         ) : (
           <>
+            {/* Question Page */}
             {showImage && (
-              <h1 className="text-4xl font-bold mb-6">
-                ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
-              </h1>
-            )}
-
-            {showImage && (
-              <div className="p-5 rounded-lg bg-gradient-to-r from-yellow-500 via-red-500 to-purple-500 max-w-4xl mx-auto">
-               <div className="p-5 rounded-lg bg-gradient-to-r from-yellow-500 via-red-500 to-purple-500 max-w-4xl mx-auto flex justify-center items-center">
-  <img
-    src={questions[currentQuestion].image}
-    alt={`Question ${currentQuestion + 1}`}
-    className="w-full max-h-80 object-contain rounded-lg"
-    style={{
-      boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.7)", // Enhanced shadow for emphasis
-    }}
-  />
-</div>
-
-              </div>
-            )}
-
-            {showAnswers && (
               <>
-                <h2 className="text-3xl font-semibold mb-6">නිවැරදි පිළිතුර තෝරන්න</h2>
-                <div className="grid grid-cols-2 gap-6 bg-gray-800 bg-opacity-70 p-6 rounded-lg">
-                  {questions[currentQuestion].answers.map((answer, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleAnswerClick(index)}
-                      className="bg-gradient-to-r from-green-500 to-blue-500 text-white px-8 py-4 rounded-xl text-2xl hover:scale-105 transition-transform"
-                    >
-                      {answer}
-                    </button>
-                  ))}
+                <h1 className="text-4xl font-bold mb-6">
+                  ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
+                </h1>
+  
+                <div className="p-5 rounded-lg bg-gradient-to-r from-yellow-500 via-red-500 to-purple-500 max-w-2xl mx-auto flex justify-center items-center">
+                  <img
+                    src={questions[currentQuestion].image}
+                    alt={`Question ${currentQuestion + 1}`}
+                    className="w-full max-h-80 object-contain rounded-lg"
+                    style={{
+                      boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.7)",
+                    }}
+                  />
                 </div>
               </>
             )}
+  
+            {/* Timer for Question Page */}
+            {!showAnswers && (
+              <div className="flex justify-center mt-6 w-full">
+                <div className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg w-auto max-w-xs text-center">
+                  කාලය: {timer} තත්පර
+                </div>
+              </div>
+            )}
+  {/* Answer Page */}
+{showAnswers && (
+  <>
+    <h2 className="text-3xl font-semibold mb-6 text-center">
+      නිවැරදි පිළිතුර තෝරන්න
+    </h2>
+    <div className="overflow-x-auto">
+      <table className="w-full max-w-5xl mx-auto bg-gray-800 bg-opacity-70 rounded-lg">
+        <tbody>
+          {questions[currentQuestion].answers.map((answer, index) => {
+            const isFirstCol = index % 2 === 0;
 
-            <div className="absolute bottom-10 text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-3 rounded-md">
-              කාලය: {timer} තත්පර
-            </div>
+            if (isFirstCol) {
+              return (
+                <React.Fragment key={index}>
+                  <tr>
+                    <td className="p-4">
+                      <button
+                        onClick={() => handleAnswerClick(index)}
+                        className="w-64 h-19 bg-gradient-to-r from-green-500 to-blue-500 text-white px-4 py-2 rounded-xl text-lg  flex items-center justify-start"
+                      >
+                        <span className="text-left">{answer}</span>
+                      </button>
+                    </td>
+                    {questions[currentQuestion].answers[index + 1] && (
+                      <td className="p-4">
+                        <button
+                          onClick={() => handleAnswerClick(index + 1)}
+                          className="w-64 h-19 bg-gradient-to-r from-green-500 to-blue-500 text-white px-4 py-2 rounded-xl text-lg hover:scale-105 transition-transform flex items-center justify-start"
+                        >
+                          <span className="text-left">
+                            {questions[currentQuestion].answers[index + 1]}
+                          </span>
+                        </button>
+                      </td>
+                    )}
+                  </tr>
+                </React.Fragment>
+              );
+            }
+            return null;
+          })}
+        </tbody>
+      </table>
+    </div>
+
+    {/* Timer Section */}
+    <div className="flex justify-center mt-6 w-full">
+      <div className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg w-auto max-w-xs text-center">
+        කාලය: {timer} තත්පර
+      </div>
+    </div>
+  </>
+)}
+
+
           </>
         )}
       </div>
     </div>
   );
+  
+  
 };
 
 export default Language_vocab_activity;
