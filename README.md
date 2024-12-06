@@ -2,7 +2,7 @@
 
 # DiverseMind: An Integrated Framework for Children with Multi-Dimensional Learning Disabilities  🙋‍♂📚📝
 
-## 👥Team  Members
+## 👥 Team  Members
 
 ### Group Leader: IT21295492 - Jayasundara J.M.H.H. - it21295492@my.sliit.lk
 
@@ -13,15 +13,15 @@
 ### Member 3: IT21217654 - Herath H.M.R.M.K. - it21217654@my.sliit.lk
 
 
-## Overview 🌟
+## 🌟 Overview 
 
 **DiverseMind** is a web-based educational platform designed to detect and support primary school children aged 9–10 years with learning difficulties. By utilizing advanced technologies like image processing, machine learning, and gamification, this system aims to identify the difficulties of students and provide engaging interventions that enhance their skills and confidence in writing, attention span, mathematical abilities, and short-term memory.
 
-## Problem Statement ⚠️
+## ⚠️ Problem Statement 
 
 In Sri Lanka, many primary school children with learning difficulties remain undetected at early stages due to a lack of personalized attention in classrooms. Without early intervention, these children often face increasing academic challenges, leading to diminished confidence and future unemployment.
 
-## Purpose 🎯
+## 🎯 Purpose
 
 The **DiverseMind** platform is developed to:
 
@@ -73,7 +73,7 @@ The **DiverseMind** platform is developed to:
     ✔️ Report Generation.
 
 
-## Dependencies
+## 📦 Dependencies
 
 ### **Frontend** 🌐
 - **Framework**: React.js ⚛️  
