@@ -1,4 +1,12 @@
+![image](https://github.com/user-attachments/assets/9ed9cf14-e658-426e-854e-de8cac3d042a)24-25J-230                         
 DiverseMind: An Integrated Framework for Children with Multi-Dimensional Learning Disabilities
+
+Team  Members:
+IT21295492 - Jayasundara J.M.H.H. - it21295492@my.sliit.lk
+IT21302930 - Neewin S.L. - it21302930@my.sliit.lk
+IT21298158 - Kiriwaththuduwa K.C.N - it21298158@my.sliit.lk
+IT21217654 - Herath H.M.R.M.K. - it21217654@my.sliit.lk
+
 
 Overview
 
