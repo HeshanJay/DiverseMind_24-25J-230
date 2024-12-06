@@ -13,19 +13,22 @@
 ### Member 3: IT21217654 - Herath H.M.R.M.K. - it21217654@my.sliit.lk
 
 
-## Overview
+## Overview 🌟
 
-DiverseMind is a web-based educational platform designed to detect and support primary school children aged 9–10 years with learning difficulties. By utilizing advanced technologies like image processing, machine learning, and gamification, this system aims to identify the difficulties of the students and provide engaging, interventions that enhance students' skills and confidence in writing, attention span, mathematical abilities, and short-term memory.
+**DiverseMind** is a web-based educational platform designed to detect and support primary school children aged 9–10 years with learning difficulties. By utilizing advanced technologies like image processing, machine learning, and gamification, this system aims to identify the difficulties of students and provide engaging interventions that enhance their skills and confidence in writing, attention span, mathematical abilities, and short-term memory.
 
-## Problem Statement
+## Problem Statement ⚠️
 
 In Sri Lanka, many primary school children with learning difficulties remain undetected at early stages due to a lack of personalized attention in classrooms. Without early intervention, these children often face increasing academic challenges, leading to diminished confidence and future unemployment.
 
-## Purpose
+## Purpose 🎯
 
-The DiverseMind platform is developed to:
+The **DiverseMind** platform is developed to:
 
-Identify slow learners through the analysis of their academic skills, particularly writing skills, attention span, mathamatical skills and short term memory. Provide personalized, gamified interventions aligned with the grade 4 syllabus and teacher's guide. Build the confidence and learning capabilities of slow learners through engaging activities.
+- 🧩 **Identify slow learners** through the analysis of their academic skills, particularly writing ✍️, attention span 🕒, mathematical abilities ➗, and short-term memory       🧠.  
+- 🎮 **Provide personalized, gamified interventions** aligned with the grade 4 syllabus and teacher's guide.  
+- 🌱 **Build confidence** and learning capabilities of slow learners through engaging activities.  
+
 
 ## 📈 Overall System Diagram
 ![System Diagram](SystemDiagram_DiverseMind.png)
