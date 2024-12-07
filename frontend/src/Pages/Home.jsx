@@ -6,10 +6,7 @@ import PunctuationsTestQ2 from "../Components/PunctuationsTest/PunctuationsTestQ
 const Home = () => {
   return (
     <div>
-      {/* <h1 className="text-lx font-bold text-red-500">Home Page</h1> */}
-      <VowelSymbolQ6 />
-      {/* <PunctuationsTestQ1 /> */}
-      {/* <PunctuationsTestQ2 /> */}
+      <h1 className="text-lx font-bold text-red-500">Home Page</h1>
     </div>
   );
 };
