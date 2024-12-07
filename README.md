@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/abd7c083-b51a-4e48-a4fd-83ed6af5a543)# 24-25J-230
+# 24-25J-230
 
 # DiverseMind: An Integrated Framework for Children with Multi-Dimensional Challenges as Slow Learners 🙋‍♂📚📝
 
