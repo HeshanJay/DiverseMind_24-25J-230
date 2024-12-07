@@ -66,8 +66,13 @@ The **DiverseMind** platform is developed to:
     ✔️ Provide personalized activities to enhance their mathematical skills.
     ✔️ Report Generation.
 
-### 🧠 Identifying Slow Learners through Working Memory Assessment and Enhancing Their Working Memory
+### 🧠 Identifying Slow Learners through Working Memory Assessment and Enhancing Their Working Memory (Herath H.M.R.M.K.)
     ✔️ Identify slow learners from their working memory using machine learning.
+        - Visual discrimination test.
+        - Audio discrimination test.
+        - Language vocabulary test
+        - Speed measurement test.
+        - Memory measurement test.
     ✔️ Provide real-time feedbacks.
     ✔️ Provide gamified activities using teachers guide to improve their working memory.
     ✔️ Report Generation.
