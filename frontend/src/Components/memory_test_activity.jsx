@@ -164,63 +164,107 @@ const MemoryTestActivity = () => {
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col justify-center items-center h-full text-white text-center">
-        <h1 className="text-4xl font-bold mb-6">
-          ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
-        </h1>
-{/* Image Display */}
-{showImage && (
-  <div className="p-5 rounded-lg bg-gradient-to-r from-yellow-500 via-red-500 to-purple-500 max-w-4xl mx-auto">
-    <img
-      src={questions[currentQuestion].image}
-      alt={`Question ${currentQuestion + 1}`}
-      className="w-full max-h-screen object-cover rounded-lg"
-      style={{
-        boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.7)", // Enhanced shadow for emphasis
-      }}
-    />
-  </div>
+  {showImage && (
+    <h1 className="text-4xl font-bold mb-6">
+      ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
+    </h1>
+  )}
+
+  {/* Image Display */}
+  {showImage && (
+    <div className="p-5 rounded-lg bg-gradient-to-r from-yellow-500 via-red-500 to-purple-500 max-w-4xl mx-auto">
+      <img
+        src={questions[currentQuestion].image}
+        alt={`Question ${currentQuestion + 1}`}
+        className="w-full max-h-screen object-cover rounded-lg"
+        style={{
+          boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.7)", // Enhanced shadow for emphasis
+        }}
+      />
+    </div>
+  )}
+
+
+       {/* Answer Display */}
+{showAnswers && (
+  <>
+    <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 max-w-5xl mx-auto">
+      <h2 className="text-3xl font-semibold mb-6 text-center">
+        නිවැරදි පිළිතුර තෝරන්න
+      </h2>
+      <table className="w-full text-lg border-separate border-spacing-4">
+        <tbody>
+          {questions[currentQuestion].answers.map((answer, index) => {
+            const isFirstCol = index % 2 === 0;
+
+            if (isFirstCol) {
+              return (
+                <tr key={index}>
+                  <td className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg">
+                    <div className="flex flex-col items-center">
+                      <div className="flex justify-center items-center mb-2">
+                        <strong className="text-xl text-white">{index + 1}.&nbsp;</strong>
+                      </div>
+                      {answer.src ? (
+                        <img
+                          src={answer.src}
+                          alt={`Answer ${index + 1}`}
+                          className="w-full h-20 object-contain rounded-md"
+                        />
+                      ) : (
+                        <span className="text-white">{answer}</span>
+                      )}
+                    </div>
+                  </td>
+                  {questions[currentQuestion].answers[index + 1] && (
+                    <td className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg">
+                      <div className="flex flex-col items-center">
+                        <div className="flex justify-center items-center mb-2">
+                          <strong className="text-xl text-white">{index + 2}.&nbsp;</strong>
+                        </div>
+                        {questions[currentQuestion].answers[index + 1].src ? (
+                          <img
+                            src={questions[currentQuestion].answers[index + 1].src}
+                            alt={`Answer ${index + 2}`}
+                            className="w-full h-20 object-contain rounded-md"
+                          />
+                        ) : (
+                          <span className="text-white">{questions[currentQuestion].answers[index + 1]}</span>
+                        )}
+                      </div>
+                    </td>
+                  )}
+                </tr>
+              );
+            }
+            return null;
+          })}
+        </tbody>
+      </table>
+    </div>
+
+    {/* Answer Buttons */}
+    <div className="flex justify-center gap-4 mt-4 -translate-y-6">
+      {questions[currentQuestion].answers.map((answer, index) => (
+        <button
+          key={index}
+          onClick={() => handleAnswerClick(answer.id)}
+          className="bg-gradient-to-r from-yellow-500 to-red-500 text-white px-6 py-3 rounded-full text-xl hover:scale-105 transition-transform"
+        >
+          {index + 1}
+        </button>
+      ))}
+    </div>
+  </>
 )}
 
-        {/* Answer Display */}
-        {showAnswers && (
-          <>
-            <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8">
-              <h2 className="text-3xl font-semibold mb-6">
-                නිවැරදි පිළිතුර තෝරන්න
-              </h2>
-              <div className="grid grid-cols-2 gap-6 text-lg">
-                {questions[currentQuestion].answers.map((answer, index) => (
-                  <div
-                    key={index}
-                    className="p-4 text-white bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg text-xl"
-                  >
-                    <img
-                      src={answer.src}
-                      alt={`Answer ${index + 1}`}
-                      className="w-full h-20 object-contain rounded-md"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex justify-center gap-4 mt-4 -translate-y-6">
-              {questions[currentQuestion].answers.map((answer, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleAnswerClick(answer.id)}
-                  className="bg-gradient-to-r from-yellow-500 to-red-500 text-white px-6 py-3 rounded-full text-xl hover:scale-105 transition-transform"
-                >
-                  {index + 1}
-                </button>
-              ))}
-            </div>
-          </>
-        )}
+{/* Timer */}
+<div className="flex justify-center mt-4">
+  <div className="text-xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 px-6 py-3 rounded-md shadow-lg text-center">
+    කාලය: {timer} තත්පර
+  </div>
+</div>
 
-        {/* Timer */}
-        <div className="absolute bottom-10 text-xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 px-4 py-2 rounded-md">
-          කාලය: {timer} තත්පර
-        </div>
       </div>
     </div>
   );

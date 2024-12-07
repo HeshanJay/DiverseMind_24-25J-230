@@ -118,7 +118,6 @@ const VisualTestActivity = () => {
     setScore(0);
     setIsCompleted(false);
   };
-
   return (
     <div
       className="h-screen w-full bg-cover bg-center relative"
@@ -127,7 +126,7 @@ const VisualTestActivity = () => {
       }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-
+  
       {isCompleted ? (
         <ScoreBoard
           score={score}
@@ -153,57 +152,97 @@ const VisualTestActivity = () => {
               </div>
             </>
           )}
-
-{showAnswers && (
-  <>
-    <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8">
-      <h2 className="text-3xl font-semibold mb-6">
-      නිවැරදි පිළිතුර තෝරන්න
-      </h2>
-      
-      {/* Conditionally adjust grid size for Question 2 */}
-      <div
-        className={`grid ${currentQuestion === 1 ? 'grid-cols-2 gap-4' : 'grid-cols-2 gap-6'} text-lg`}
-      >
-        {questions[currentQuestion].answers.map((answer, index) => (
-          <div
-            key={index}
-            className="p-4 text-white bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg text-xl"
-          >{index + 1}. &nbsp;
-            {answer.src ? (
-              <img
-                src={answer.src}
-                alt={`Answer ${index + 1}`}
-                className="w-full max-h-28 object-contain"  // Adjust image size
-              />
-            ) : (
-              answer
-            )}
-          </div>
-        ))}
-                </div>
+  
+          {/* Timer Button for Question Page */}
+          {!showAnswers && (
+            <div className="mt-6">
+              <div className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg text-center">
+                කාලය: {timer} තත්පර
               </div>
+            </div>
+          )}
+  
+          {showAnswers && (
+            <>
+              <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 max-w-5xl mx-auto">
+                <h2 className="text-3xl font-semibold mb-6 text-center">
+                  නිවැරදි පිළිතුර තෝරන්න
+                </h2>
+  
+                {/* Responsive Table Layout */}
+                <table className="w-full text-lg border-separate border-spacing-4">
+                  <tbody>
+                    {questions[currentQuestion].answers.map((answer, index) => {
+                      const isFirstCol = index % 2 === 0;
+  
+                      if (isFirstCol) {
+                        return (
+                          <tr key={index}>
+                            <td className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg">
+                              <div className="flex justify-center items-center h-full w-full">
+                                <strong className="text-xl text-white align-center">{index + 1}.&nbsp;</strong>
+                                {answer.src ? (
+                                  <img
+                                    src={answer.src}
+                                    alt={`Answer ${index + 1}`}
+                                    className="w-full max-h-28 object-contain rounded-md"
+                                  />
+                                ) : (
+                                  <span className="text-white">{answer}</span>
+                                )}
+                              </div>
+                            </td>
+                            {questions[currentQuestion].answers[index + 1] && (
+                              <td className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg">
+                                <div className="flex justify-center items-center h-full w-full">
+                                  <strong className="text-xl text-white">{index + 2}.&nbsp;</strong>
+                                  {questions[currentQuestion].answers[index + 1].src ? (
+                                    <img
+                                      src={questions[currentQuestion].answers[index + 1].src}
+                                      alt={`Answer ${index + 2}`}
+                                      className="w-full max-h-28 object-contain rounded-md"
+                                    />
+                                  ) : (
+                                    <span className="text-white">{questions[currentQuestion].answers[index + 1]}</span>
+                                  )}
+                                </div>
+                              </td>
+                            )}
+                          </tr>
+                        );
+                      }
+                      return null;
+                    })}
+                  </tbody>
+                </table>
+              </div>
+  
+              {/* Answer Buttons */}
               <div className="flex justify-center gap-4 mt-6">
                 {questions[currentQuestion].answers.map((answer, index) => (
                   <button
                     key={index}
                     onClick={() => handleAnswerClick(answer.id || index + 1)}
-                    className="bg-gradient-to-r from-yellow-500 to-red-500 text-white px-4 py-2 rounded-full text-xl hover:scale-105 transition-transform"
+                    className="bg-gradient-to-r from-yellow-500 to-red-500 text-white px-6 py-3 rounded-full text-xl hover:scale-105 transition-transform"
                   >
                     {index + 1}
                   </button>
                 ))}
               </div>
+  
+              {/* Timer Section for Answer Page */}
+              <div className="flex justify-center mt-4">
+                <div className="text-xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 px-4 py-2 rounded-md shadow-lg text-center">
+                  කාලය: {timer} තත්පර
+                </div>
+              </div>
             </>
           )}
-
-          <div className="absolute bottom-5 text-xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 px-4 py-2 rounded-md">
-            කාලය: {timer} තත්පර
-          </div>
         </div>
       )}
     </div>
   );
+  
 };
 
 export default VisualTestActivity;

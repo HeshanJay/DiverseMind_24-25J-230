@@ -169,84 +169,77 @@ const AudioMeasurementActivity = () => {
               </button>
             )}
 
-           {/* Answer Display */}
+         {/* Answer Display */}
 {showAnswers && (
   <>
-    <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 w-full max-w-xl">
-      <h2 className="text-3xl font-semibold mb-6 text-white">
+    {/* Main Container for Answers */}
+    <div className="bg-gray-800 bg-opacity-70 p-4 rounded-lg mb-6 w-full max-w-5xl mx-auto">
+      <h2 className="text-2xl font-semibold mb-4 text-white text-center">
         නිවැරදි පිළිතුර තෝරන්න
       </h2>
-      {/* Adjusted the grid to use 1 column and increased button width */}
-      {/*
-      <div className="grid grid-cols-1 gap-4 text-lg">
-        {answers[currentQuestion - 1].map((answer, index) => (
-          <div
-            key={index}
-            className="p-4 text-white bg-gradient-to-r from-green-500 to-blue-500 rounded-lg shadow-lg text-xl"
-          >
-            <p>{answer}</p>
-          </div>
-        ))}
-      </div>*/}
 
-<table className="w-full text-lg border-separate border-spacing-4">
-  <tbody>
-    {answers[currentQuestion - 1].map((answer, index) => {
-      const rowIndex = Math.floor(index / 2); // Calculate the row index (2 items per row)
-      const colIndex = index % 2; // Calculate the column index (2 items per row)
+      {/* Answer Buttons in a Table */}
+      <table className="w-full text-lg border-separate border-spacing-2">
+        <tbody>
+          {answers[currentQuestion - 1].map((answer, index) => {
+            const rowIndex = Math.floor(index / 2); // Calculate row index (2 items per row)
+            const colIndex = index % 2; // Calculate column index (2 items per row)
 
-      if (colIndex === 0) {
-        return (
-          <tr key={rowIndex}>
-            <td className="p-6 text-white bg-gradient-to-r from-green-500 to-blue-500 rounded-lg shadow-lg text-xl">
-              {answer}
-            </td>
-            {answers[currentQuestion - 1][index + 1] && (
-              <td className="p-6 text-white bg-gradient-to-r from-green-500 to-blue-500 rounded-lg shadow-lg text-xl">
-                {answers[currentQuestion - 1][index + 1]}
-              </td>
-            )}
-          </tr>
-        );
-      }
-      return null;
-    })}
-  </tbody>
-</table>
-
-
-
+            if (colIndex === 0) {
+              return (
+                <tr key={rowIndex}>
+                  <td className="p-3">
+                    <button
+                      className="w-96 py-3 rounded-md text-lg font-semibold bg-gradient-to-r from-green-400 to-blue-400 text-white hover:scale-105 transition-transform"
+                    >
+                      {answer}
+                    </button>
+                  </td>
+                  {answers[currentQuestion - 1][index + 1] && (
+                    <td className="p-3">
+                      <button
+                        className="w-96 py-3 rounded-md text-lg font-semibold bg-gradient-to-r from-green-400 to-blue-400 text-white hover:scale-105 transition-transform"
+                      >
+                        {answers[currentQuestion - 1][index + 1]}
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              );
+            }
+            return null;
+          })}
+        </tbody>
+      </table>
     </div>
 
-   {/* Number Choices for Selecting Answer */}
-   <table className="w-full text-lg border-separate border-spacing-0">
-  <tbody>
-    <tr className="flex gap-2 justify-center"> {/* Apply flex and gap to the row */}
-      {answerOptions.map((option, index) => (
-        <td key={index} className="p-0 text-center"> {/* Remove padding from td */}
-          <button
-            onClick={() => handleAnswerClick(index)}
-            className="bg-gradient-to-r from-green-400 to-lime-600 text-white px-8 py-4 rounded-full text-xl shadow-lg hover:scale-105 transition-transform"
-          >
-            {option}
-          </button>
-        </td>
-      ))}
-    </tr>
-  </tbody>
-</table>
+    {/* Number Choices for Selecting Answer */}
+    <table className="w-full text-lg border-separate border-spacing-2">
+      <tbody>
+        <tr className="flex gap-2 justify-center">
+          {answerOptions.map((option, index) => (
+            <td key={index} className="p-0 text-center">
+              <button
+                onClick={() => handleAnswerClick(index)}
+                className="bg-gradient-to-r from-green-400 to-lime-600 text-white px-8 py-3 rounded-full text-lg shadow-lg hover:scale-105 transition-transform"
+              >
+                {option}
+              </button>
+            </td>
+          ))}
+        </tr>
+      </tbody>
+    </table>
 
-
-
-{/* Timer */}
-{showAnswers && (
-              <div className="text-xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-4 py-3 rounded-md shadow-lg mt-6 sm:mt-4 md:mt-6 lg:mt-8">
-              කාලය: {timer} තත්පර
-            </div>
-            
-            )}
+    {/* Timer */}
+    {showAnswers && (
+      <div className="text-lg font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-4 py-3 rounded-md shadow-lg mt-4">
+        කාලය: {timer} තත්පර
+      </div>
+    )}
   </>
 )}
+
 
           </div>
         </div>

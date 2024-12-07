@@ -124,36 +124,79 @@ const SpeedMeasurementActivity = () => {
 
             {/* Image Display */}
             {showImage && (
+              <div className="p-5 rounded-lg bg-gradient-to-r from-yellow-500 via-red-500 to-purple-500 max-w-4xl mx-auto">
               <img
                 src={questions[currentQuestion].image}
                 alt={`Question ${currentQuestion + 1}`}
-                className="w-3/4 md:w-1/2 max-h-64 object-contain rounded-md shadow-lg mb-8 border-4 border-white"
+                className="w-full max-h-screen object-cover rounded-lg"
                 style={{
-                  padding: "10px",
-                  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.5)",
+                  boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.7)", // Enhanced shadow for emphasi
                 }}
               />
-            )}
-
-            {/* Answer Display */}
-            {showAnswers && (
-              <div className="grid grid-cols-2 gap-6 bg-gray-800 bg-opacity-50 p-6 rounded-lg">
-                {questions[currentQuestion].answers.map((answer, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleAnswerClick(answer)}
-                    className="bg-gradient-to-r from-green-500 to-blue-500 text-white px-12 py-4 rounded-full text-3xl hover:scale-105 transition-transform shadow-md"
-                  >
-                    {answer}
-                  </button>
-                ))}
               </div>
             )}
 
-            {/* Timer */}
-            <div className="absolute bottom-10 text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-md shadow-lg">
-              කාලය: {timer} තත්පර
-            </div>
+
+
+<div class="overflow-x-auto p-6">
+ 
+ 
+  {questions[currentQuestion]?.question && (
+    <div class="bg-gray-700 text-white text-2xl font-bold text-center p-6 rounded-lg shadow-lg">
+      {questions[currentQuestion].question}
+    </div>
+  )}
+
+  {showAnswers && questions[currentQuestion]?.answers?.length > 0 && (
+    <table class="mt-6 w-full bg-gray-800 bg-opacity-50 rounded-lg shadow-lg">
+      <tbody>
+        <tr>
+          <td class="p-4 text-center">
+            <button
+              onClick={() => handleAnswerClick(questions[currentQuestion].answers[0])}
+              class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-4 rounded-full text-2xl hover:scale-105 transition-transform shadow-md"
+            >
+              {questions[currentQuestion].answers[0]}
+            </button>
+          </td>
+          <td class="p-4 text-center">
+            <button
+              onClick={() => handleAnswerClick(questions[currentQuestion].answers[1])}
+              class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-4 rounded-full text-2xl hover:scale-105 transition-transform shadow-md"
+            >
+              {questions[currentQuestion].answers[1]}
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td class="p-4 text-center">
+            <button
+              onClick={() => handleAnswerClick(questions[currentQuestion].answers[2])}
+              class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-4 rounded-full text-2xl hover:scale-105 transition-transform shadow-md"
+            >
+              {questions[currentQuestion].answers[2]}
+              
+            </button>
+          </td>
+          <td class="p-4 text-center">
+            <button
+              onClick={() => handleAnswerClick(questions[currentQuestion].answers[3])}
+              class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-4 rounded-full text-2xl hover:scale-105 transition-transform shadow-md"
+            >
+              {questions[currentQuestion].answers[3]}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  )}
+
+<div class="mt-6 text-xl font-bold text-center bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-md shadow-lg w-48 mx-auto">
+  කාලය: {timer} තත්පර
+</div>
+
+</div>
+
           </>
         )}
       </div>
