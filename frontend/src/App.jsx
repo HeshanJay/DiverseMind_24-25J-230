@@ -23,23 +23,6 @@ const App = () => {
     <div>
       <BrowserRouter>
         <Routes>
-          {/* Main Pages */}
-          <Route index element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-
-          {/* Reading Test Dashboard and Passages */}
-          <Route
-            path="/attentionreadingtest"
-            element={<AttentionReadingTest />}
-          />
-          <Route path="/math" element={<MathScreeningTest />} />
-          <Route path="/writingtest" element={<WritingTest />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
-    <BrowserRouter>
-      <Routes>
         <Route index element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -56,8 +39,16 @@ const App = () => {
         <Route path="/scoreboard" element={<ScoreBoard />} />
         <Route path="/audio-measurement-activity" element={<AudioMeasurementActivity />} />
         <Route path="*" element={<div>Page Not Found</div>} />
+        {/* Reading Test Dashboard and Passages */}
+        <Route
+            path="/attentionreadingtest"
+            element={<AttentionReadingTest />}
+          />
+          <Route path="/math" element={<MathScreeningTest />} />
+          <Route path="/writingtest" element={<WritingTest />} />
       </Routes>
     </BrowserRouter>
+  </div>
   );
 };
 
