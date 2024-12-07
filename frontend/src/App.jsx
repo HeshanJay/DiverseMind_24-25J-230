@@ -14,8 +14,30 @@ import VisualTestActivity from "./Components/visual_test_activity";
 import ScoreBoard from "./Components/Score_board"; 
 import AudioMeasurementActivity from "./Components/Audio_measurement_activity";
 import AudioTest from "./Components/Audio_test";  
+import AttentionReadingTest from "./Pages/ReadingDashboardpage";
+import MathScreeningTest from "./Pages/math/MathScreeningTest";
+import WritingTest from "./Pages/WritingTest";
+
 const App = () => {
   return (
+    <div>
+      <BrowserRouter>
+        <Routes>
+          {/* Main Pages */}
+          <Route index element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+
+          {/* Reading Test Dashboard and Passages */}
+          <Route
+            path="/attentionreadingtest"
+            element={<AttentionReadingTest />}
+          />
+          <Route path="/math" element={<MathScreeningTest />} />
+          <Route path="/writingtest" element={<WritingTest />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
     <BrowserRouter>
       <Routes>
         <Route index element={<Home />} />
