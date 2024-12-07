@@ -1,0 +1,327 @@
+.math-addition {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+  }
+
+  /* Activity Card Styling */
+  .activity-card {
+    width: 40%;
+    max-width: 600px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #ff9800;
+    border-radius: 16px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+    padding: -1px;
+    margin-top: 5px;
+    text-align: center;
+  }
+
+  .activity-card-heading {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ff9800;
+    margin-bottom: 10px;
+  }
+
+  .activity-card-content {
+    font-size: 1rem;
+    color: #333;
+  }
+
+/* Background container for the heading */
+.math-addition-heading-container {
+  background-size: cover; /* Ensure the image covers the container */
+  padding: 10px 10px; /* Add padding around the text */
+  border-radius: 10px; /* Rounded corners for a playful effect */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+  display: inline-block; /* Wrap content tightly */
+  margin-top: 20px;
+  margin-bottom: 20px; /* Center the container */
+  background-color: #fdd62a;
+}
+
+/* Heading Text */
+.math-addition-heading {
+  color: #ffffff; /* White color to contrast the background */
+  font-size: 1.8rem; /* Slightly larger font size for emphasis */
+  font-family: "Fredoka", "Comic Sans MS", cursive, sans-serif; /* Kid-friendly fonts */
+  text-align: center;
+  text-shadow: 2px 2px 5px #000000; /* Add a shadow for better readability */
+  font-weight: bold;
+  letter-spacing: 2px; /* Slightly spaced-out letters */
+  margin-top: 0; /* Remove default margin */
+}
+
+
+
+  /* Customizable Card Styling */
+  .math-addition-card {
+    width: 90%; /* Default card width */
+    max-width: 600px; /* Maximum width */
+    height: 300px; /* Default card height */
+    background-color: rgba(255, 255, 255, 0.8); /* Default transparency */
+    border: 5px solid #000000; /* Default border color */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Default shadow */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 30px;
+  }
+
+  /* Card Text Styling */
+  .math-addition-card-text {
+    color: #333; /* Default text color */
+    font-size: 1.5rem; /* Default font size */
+    font-weight: 500; /* Default font weight */
+    text-align: center;
+  }
+
+   /* Image Styling */
+   .math-addition-image {
+    max-width:200%; /* Responsive width */
+    max-height: 200%; /* Maintain aspect ratio */
+    border-radius: 8px; /* Optional rounded corners for the image */
+  }
+
+  /* Card Hover Effect */
+  .math-addition-card:hover {
+    background-color: rgba(255, 255, 255, 1); /* Remove transparency on hover */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4); /* Stronger shadow */
+  }
+
+  .answer-card {
+    width: 50%; 
+    max-width: 600px; 
+    background-color: rgba(241, 202, 202, 0.9);
+    border: 2px solid #4caf50;
+    border-radius: 12px; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 10px;
+    margin-top: 10px;
+    gap: 10px; 
+  }
+
+  .answer-label {
+    font-size: 1.5rem;
+    font-weight: bold; 
+    color: #0f0f0f; 
+    margin: 0;
+    flex-shrink: 0;
+  }
+  
+  .answer-input {
+    width: 80%; 
+    padding: 10px;
+    font-size: 1.2rem;
+    border: 2px solid #4caf50; 
+    border-radius: 8px; 
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); 
+    transition: all 0.3s ease-in-out;
+    font-weight: bold; 
+  }
+  
+  .answer-input:focus {
+    outline: none;
+    border-color: #388e3c; 
+    box-shadow: 0px 4px 8px rgba(0, 128, 0, 0.4); 
+  }
+
+  /* Fraction Answer Card */
+.fraction-answer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Space between numerator, divider, and denominator */
+  font-size: 1.5rem; /* Adjust font size */
+  color: #0f0f0f; /* Default text color */
+  font-weight: bold; /* Make the fraction bold */
+}
+
+.fraction-numerator {
+  flex-shrink: 0; /* Ensure numerator doesn't shrink */
+}
+
+.fraction-divider {
+  flex-shrink: 0;
+}
+
+.fraction-denominator-input {
+  width: 80px; /* Fixed width for the input */
+  padding: 5px;
+  font-size: 1.2rem;
+  border: 2px solid #4caf50; /* Input border color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Input shadow */
+  text-align: center; /* Center text in the input */
+  transition: all 0.3s ease-in-out;
+}
+
+.fraction-denominator-input:focus {
+  outline: none;
+  border-color: #388e3c; /* Focus border color */
+  box-shadow: 0px 4px 8px rgba(0, 128, 0, 0.4); /* Focus shadow */
+}
+
+  
+  /* Timer Container */
+  .timer-container {
+    position: absolute; /* Allow positioning anywhere on the page */
+    top: 30%; /* Adjust placement */
+    left: 100px; /* Adjust placement */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 350px; /* Set a fixed width for the timer board */
+    height: 350px; /* Set a fixed height for the timer board */
+  }
+
+  /* Timer Board Image */
+  .timer-board {
+    width: 100%; /* Match the container width */
+    height: 100%; /* Match the container height */
+    object-fit: contain; /* Maintain the aspect ratio */
+    z-index: 1; /* Place image below text */
+  }
+
+  /* Timer Text */
+  .timer-text {
+    position: absolute; /* Position text over the image */
+    font-size: 1.7rem; /* Font size for timer text */
+    font-weight: bold; /* Bold text */
+    color: #020202; /* White text */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Add text shadow for readability */
+    z-index: 2; /* Place text above the image */
+    pointer-events: none; /* Prevent interaction with text */
+    margin-top: 50px;
+  }
+
+  /* .timer {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 1.5rem;
+    color: #ff5722;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  } */
+
+  /* Button Container */
+.button-container {
+  position: fixed; /* Ensures the button stays at the bottom-right, even on scroll */
+  bottom: 20px; /* Distance from the bottom of the page */
+  right: 20px; /* Distance from the right of the page */
+  z-index: 100; /* Keeps it above other elements */
+}
+
+/* Custom Button Styling */
+.custom-button {
+  width: 150px; /* Fixed width */
+  height: 60px; /* Fixed height */
+  background-color: #ffeb3b; /* Bright yellow background */
+  color: #000; /* Black text */
+  font-size: 1.2rem; /* Font size for the button text */
+  font-weight: bold; /* Bold text */
+  border: 3px solid #4caf50; /* Green border */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4); /* Shadow for 3D effect */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Slight text shadow */
+  cursor: pointer; /* Pointer cursor */
+  transition: all 0.3s ease; /* Smooth hover effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hover Effect */
+.custom-button:hover {
+  background-color: #fdd835; /* Darker yellow on hover */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
+  transform: translateY(-3px); /* Lift button */
+}
+
+/* Active Effect */
+.custom-button:active {
+  background-color: #fbc02d; /* Darker yellow on click */
+  transform: translateY(0px); /* Reset lift */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); /* Reduced shadow */
+}
+
+
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .math-addition-heading {
+      font-size: 1.5rem;
+    }
+
+    .math-addition-card {
+      height: 250px; /* Adjust card height */
+    }
+
+    .math-addition-card-text {
+      font-size: 1.2rem; /* Adjust font size */
+    }
+  }
+
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .popup-content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 300px;
+  }
+  
+  .popup-content h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .popup-content p {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .close-popup {
+    background-color: #ff5722;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .close-popup:hover {
+    background-color: #ff7849;
+  }
