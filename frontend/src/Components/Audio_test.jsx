@@ -42,7 +42,7 @@ const AudioTest = () => {
           onClick={handleStart}
           className="mt-8 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xl md:text-2xl px-6 py-4 rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 hover:rotate-1"
         >
-          ආරම්භ කරන්න.
+          ආරම්භ කරන්න
         </button>
       </div>
     </div>
