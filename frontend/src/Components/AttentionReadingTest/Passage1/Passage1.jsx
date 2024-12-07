@@ -1,6 +1,6 @@
 import React from "react";
 import "./Passage1.css"; // Additional styling
-import backgroundImage from "../../assets/background_images/back_img4.jpg";
+import backgroundImage from "../../../assets/background_images/back_img4.jpg";
 import { MdArrowBack, MdArrowForward } from "react-icons/md"; // Fun arrow icons
 
 const Passage1 = ({ onPrevious, onNext }) => {

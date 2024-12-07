@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import ReadingDashboard from "../Components/ReadingDashboard/ReadingDashboard";
-import Passage1 from "../Components/Passage1/Passage1";
-import Passage2 from "../Components/Passage2/Passage2";
-import Passage3 from "../Components/Passage3/Passage3";
-import Passage4 from "../Components/Passage4/Passage4";
-import Passage5 from "../Components/Passage5/Passage5";
-import ScoreBoard from "../Components/ScoreBoard/ScoreBoard";
+import ReadingDashboard from "../Components/AttentionReadingTest/ReadingDashboard/ReadingDashboard";
+import Passage1 from "../Components/AttentionReadingTest/Passage1/Passage1";
+import Passage2 from "../Components/AttentionReadingTest/Passage2/Passage2";
+import Passage3 from "../Components/AttentionReadingTest/Passage3/Passage3";
+import Passage4 from "../Components/AttentionReadingTest/Passage4/Passage4";
+import Passage5 from "../Components/AttentionReadingTest/Passage5/Passage5";
+import ScoreBoard from "../Components/AttentionReadingTest/ScoreBoard/ScoreBoard";
 
 const AttentionReadingTest = () => {
   const [currentComponent, setCurrentComponent] = useState(

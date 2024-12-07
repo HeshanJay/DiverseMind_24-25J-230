@@ -1,7 +1,7 @@
 import React from "react";
 import "./ScoreBoard.css";
-import backgroundImage from "../../assets/background_images/back_img4.jpg";
-import rabbitImage from "../../assets/characters/rabbit.png";
+import backgroundImage from "../../../assets/background_images/back_img4.jpg";
+import rabbitImage from "../../../assets/characters/rabbit.png";
 import { FaStar, FaRegStar, FaTrophy, FaRedoAlt } from "react-icons/fa";
 
 const ScoreBoard = ({ score, totalQuestions, onRestart }) => {

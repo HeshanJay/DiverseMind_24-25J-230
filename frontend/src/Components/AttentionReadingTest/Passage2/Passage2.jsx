@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import "./Passage4.css";
-import backgroundImage from "../../assets/background_images/back_img4.jpg";
+import "./Passage2.css";
+import backgroundImage from "../../../assets/background_images/back_img4.jpg";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
-const Passage4 = ({ onPrevious, onNext }) => {
+const Passage2 = ({ onPrevious, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    "සාමකාමී සහ කුමන්ත‍්‍රණාත්මක",
-    "ඔවුන් අල්ලන එක ගැන සතුටු වීම",
-    "කෝපයෙන් සහ අප්‍රසන්නතාවයෙන් පිරී යාම", // Correct answer is "C"
-    "නොතකස්සූ ලෙස හැසිරීම",
+    "වගා භූමිය ජලයෙන් ගිලීම",
+    "මියො වගාවට හානි කිරීම",
+    "මියෝ වගා සහ පොළොව විනාශ කිරීම", // Correct answer is "C"
+    "කාලගුණය වැඩි දැඩි වීම",
   ];
-  const correctAnswer = "කෝපයෙන් සහ අප්‍රසන්නතාවයෙන් පිරී යාම";
+  const correctAnswer = "මියෝ වගා සහ පොළොව විනාශ කිරීම";
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -25,11 +25,13 @@ const Passage4 = ({ onPrevious, onNext }) => {
   return (
     <div
       className="bg-cover bg-center w-screen h-screen flex justify-center items-center relative m-0 p-0"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+      }}
     >
-      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-red-400">
-        <h1 className="text-3xl font-extrabold text-red-600 mb-6">
-          මියෝගේ මේ හැසිරීම්වලට හෙනේ මාමාගේ හැඟීම කුමක්ද?
+      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-green-400">
+        <h1 className="text-3xl font-extrabold text-green-600 mb-6">
+          හෙනේ මාමාට කතාවේදී මුහුණ දීමට සිදුවන ප්‍රධාන ගැටළුව කුමක්ද?
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (
@@ -38,7 +40,7 @@ const Passage4 = ({ onPrevious, onNext }) => {
               onClick={() => handleOptionClick(option)}
               className={`p-4 rounded-lg border-2 transition-transform duration-300 shadow-md hover:scale-105 ${
                 selectedOption === option
-                  ? "bg-red-500 text-white border-red-700"
+                  ? "bg-green-500 text-white border-green-700"
                   : "bg-white text-gray-800 border-gray-300"
               }`}
             >
@@ -68,4 +70,4 @@ const Passage4 = ({ onPrevious, onNext }) => {
   );
 };
 
-export default Passage4;
+export default Passage2;

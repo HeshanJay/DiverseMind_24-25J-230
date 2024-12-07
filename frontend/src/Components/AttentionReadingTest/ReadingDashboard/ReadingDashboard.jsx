@@ -1,10 +1,10 @@
 import React from "react";
 import { FaArrowRight } from "react-icons/fa"; // Import the right arrow icon from React Icons
 import "./ReadingDashboard.css"; // Ensure this file contains your styles
-import monkeyImage from "../../assets/characters/Monkey.png"; // Path to monkey image
-import bunnyImage from "../../assets/characters/bunny.png"; // Path to bunny image
-import foxImage from "../../assets/characters/fox.png"; // Path to fox image
-import backgroundImage from "../../assets/background_images/back_img4.jpg"; // Path to background image
+import monkeyImage from "../../../assets/characters/Monkey.png"; // Path to monkey image
+import bunnyImage from "../../../assets/characters/bunny.png"; // Path to bunny image
+import foxImage from "../../../assets/characters/fox.png"; // Path to fox image
+import backgroundImage from "../../../assets/background_images/back_img4.jpg"; // Path to background image
 
 const ReadingDashboard = ({ onNext }) => {
   return (
