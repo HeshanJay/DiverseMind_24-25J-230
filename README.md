@@ -30,7 +30,7 @@ The **DiverseMind** platform is developed to:
 - 🌱 **Build confidence** and learning capabilities of slow learners through engaging activities.  
 
 
-## 📈 Overall System Diagram
+## 📈 System Overview Diagram
 ![System Diagram](SystemDiagram_DiverseMind.png)
 
 ## ✅ Components
