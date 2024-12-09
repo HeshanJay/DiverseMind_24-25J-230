@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
-import backImg from "../assets/background_images/back3.jpg"; // Background image
+import backImg from "../assets/background_images/back3.jpg"; 
 import question1Image from "../assets/Questions2_images/1.jpg";
 import question2Image from "../assets/Questions2_images/2.jpg";
 import question3Image from "../assets/Questions2_images/3.jpg";
 import question4Image from "../assets/Questions2_images/4.jpg";
-import ScoreBoard from "../Components/Score_board"; // Import the ScoreBoard component
+import ScoreBoard from "../Components/Score_board"; 
+import { useNavigate } from "react-router-dom"; 
 
 const SpeedMeasurementActivity = () => {
+  const navigate = useNavigate();
   const questions = [
     {
       image: question1Image,
       answers: ["↑", "↓", "←", "→"],
-      correctAnswer: "↓",
+      correctAnswer: "↑",
     },
     {
       image: question2Image,
-      answers: ["⬜", "🔺", "◯", "⬛"],
-      correctAnswer: "⬜",
+      answers: ["▢", "△", "◯", "♢"],
+      correctAnswer: "♢",
     },
     {
       image: question3Image,
@@ -26,7 +28,7 @@ const SpeedMeasurementActivity = () => {
     {
       image: question4Image,
       answers: ["★", "✰", "⬜", "⚫"],
-      correctAnswer: "★",
+      correctAnswer: "✰",
     },
   ];
 
@@ -86,10 +88,14 @@ const SpeedMeasurementActivity = () => {
       setShowAnswers(false);
       setTimer(10);
     } else {
-      setIsCompleted(true); // Mark the activity as completed
+      setIsCompleted(true);
+      // Ensure navigation to /audio-test after 5 seconds
+      setTimeout(() => {
+        navigate("/audio-test"); // Correct route for navigation
+      }, 5000);
     }
   };
-
+  
   const restartActivity = () => {
     setCurrentQuestion(0);
     setScore(0);

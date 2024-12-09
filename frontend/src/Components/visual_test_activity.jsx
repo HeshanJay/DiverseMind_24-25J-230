@@ -16,6 +16,8 @@ import answerImg12 from "../assets/Question4_images/12.jpg";
 import ScoreBoard from "../Components/Score_board";
 
 const VisualTestActivity = () => {
+  const navigate = useNavigate(); // Added navigate hook
+
   const questions = [
     {
       image: question1Image,
@@ -110,14 +112,23 @@ const VisualTestActivity = () => {
       setTimer(10);
     } else {
       setIsCompleted(true);
+      // Automatically navigate to memory-measurement-test after 1 second
+      setTimeout(() => {
+        navigate("/memory-measurement-test");
+      }, 5000);
     }
   };
 
   const handleRestart = () => {
+    // Restart the quiz
     setCurrentQuestion(0);
     setScore(0);
+    setShowImage(true);
+    setShowAnswers(false);
     setIsCompleted(false);
+    setTimer(10);
   };
+
   return (
     <div
       className="h-screen w-full bg-cover bg-center relative"
@@ -126,8 +137,9 @@ const VisualTestActivity = () => {
       }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-  
+
       {isCompleted ? (
+        // Display the ScoreBoard component
         <ScoreBoard
           score={score}
           totalQuestions={questions.length}
@@ -152,7 +164,7 @@ const VisualTestActivity = () => {
               </div>
             </>
           )}
-  
+
           {/* Timer Button for Question Page */}
           {!showAnswers && (
             <div className="mt-6">
@@ -161,26 +173,28 @@ const VisualTestActivity = () => {
               </div>
             </div>
           )}
-  
+
           {showAnswers && (
             <>
               <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 max-w-5xl mx-auto">
                 <h2 className="text-3xl font-semibold mb-6 text-center">
                   නිවැරදි පිළිතුර තෝරන්න
                 </h2>
-  
+
                 {/* Responsive Table Layout */}
                 <table className="w-full text-lg border-separate border-spacing-4">
                   <tbody>
                     {questions[currentQuestion].answers.map((answer, index) => {
                       const isFirstCol = index % 2 === 0;
-  
+
                       if (isFirstCol) {
                         return (
                           <tr key={index}>
                             <td className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg">
                               <div className="flex justify-center items-center h-full w-full">
-                                <strong className="text-xl text-white align-center">{index + 1}.&nbsp;</strong>
+                                <strong className="text-xl text-white align-center">
+                                  {index + 1}.&nbsp;
+                                </strong>
                                 {answer.src ? (
                                   <img
                                     src={answer.src}
@@ -195,7 +209,9 @@ const VisualTestActivity = () => {
                             {questions[currentQuestion].answers[index + 1] && (
                               <td className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg">
                                 <div className="flex justify-center items-center h-full w-full">
-                                  <strong className="text-xl text-white">{index + 2}.&nbsp;</strong>
+                                  <strong className="text-xl text-white">
+                                    {index + 2}.&nbsp;
+                                  </strong>
                                   {questions[currentQuestion].answers[index + 1].src ? (
                                     <img
                                       src={questions[currentQuestion].answers[index + 1].src}
@@ -203,7 +219,9 @@ const VisualTestActivity = () => {
                                       className="w-full max-h-28 object-contain rounded-md"
                                     />
                                   ) : (
-                                    <span className="text-white">{questions[currentQuestion].answers[index + 1]}</span>
+                                    <span className="text-white">
+                                      {questions[currentQuestion].answers[index + 1]}
+                                    </span>
                                   )}
                                 </div>
                               </td>
@@ -216,7 +234,7 @@ const VisualTestActivity = () => {
                   </tbody>
                 </table>
               </div>
-  
+
               {/* Answer Buttons */}
               <div className="flex justify-center gap-4 mt-6">
                 {questions[currentQuestion].answers.map((answer, index) => (
@@ -229,7 +247,7 @@ const VisualTestActivity = () => {
                   </button>
                 ))}
               </div>
-  
+
               {/* Timer Section for Answer Page */}
               <div className="flex justify-center mt-4">
                 <div className="text-xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 px-4 py-2 rounded-md shadow-lg text-center">
@@ -242,7 +260,6 @@ const VisualTestActivity = () => {
       )}
     </div>
   );
-  
 };
 
 export default VisualTestActivity;
