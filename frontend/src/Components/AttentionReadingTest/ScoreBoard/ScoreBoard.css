@@ -1,0 +1,140 @@
+/* General styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Fredoka One", sans-serif;
+}
+
+.bg-cover {
+  background-size: cover;
+  background-position: center;
+}
+
+.scoreboard-frame-jungle {
+  background: rgba(255, 255, 255, 0.85); /* Light jungle theme */
+  border: 8px solid #4a7c59; /* Green jungle vibe */
+  padding: 20px;
+  border-radius: 20px; /* Smooth edges */
+  box-shadow: 0 10px 20px rgba(34, 139, 34, 0.5); /* Green shadow */
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  position: relative;
+}
+
+/* Decorative vines */
+.scoreboard-frame-jungle::before,
+.scoreboard-frame-jungle::after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: url("../../assets/decorations/vine.png") no-repeat center/contain;
+  animation: sway 3s infinite alternate ease-in-out;
+}
+
+.scoreboard-frame-jungle::before {
+  top: -25px;
+  left: -10px;
+}
+
+.scoreboard-frame-jungle::after {
+  bottom: -25px;
+  right: -10px;
+}
+
+/* Button styles */
+.restart-button {
+  background: linear-gradient(
+    to right,
+    #4caf50,
+    #8bc34a
+  ); /* Matching gradient colors */
+  color: white; /* Ensure text is visible */
+  border: none; /* Remove default borders */
+  border-radius: 9999px; /* Fully rounded button */
+  padding: 12px 24px; /* Adjust padding */
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add slight shadow for depth */
+}
+
+.restart-button:hover {
+  cursor: pointer;
+  transform: scale(1.1); /* Slight scale effect */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+}
+
+.restart-button:active {
+  transform: scale(1); /* Reset scale on click */
+}
+
+/* Jumping rabbit animation */
+@keyframes jump {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animal-jump {
+  animation: jump 1s infinite;
+}
+
+/* Star bounce animation */
+@keyframes star-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.star-bounce {
+  animation: star-bounce 0.8s ease-in-out infinite;
+}
+
+/* Swaying vines animation */
+@keyframes sway {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(15deg);
+  }
+}
+
+.rabbit-bottom {
+  position: relative; /* Adjust relative to its container */
+  margin: 10px auto -20px auto; /* Reduces space between the rabbit and the button */
+  display: block; /* Centers the image */
+  width: 7rem; /* Adjust size as needed */
+  height: 7rem; /* Keep proportions */
+}
+
+.restart-button {
+  background-color: #f5b041; /* Customize your button color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.restart-button:hover {
+  background-color: #d68910;
+}
+
+.scoreboard-frame-jungle {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
