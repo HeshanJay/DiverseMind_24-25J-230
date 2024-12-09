@@ -8,6 +8,7 @@ import audio3 from "../assets/Audios/3.mp3"; // Question 3 audio
 import audio4 from "../assets/Audios/4.mp3"; // Question 4 audio
 import audio5 from "../assets/Audios/5.mp3"; // Question 5 audio
 import ScoreBoard from "../Components/Score_board"; // Import the ScoreBoard component
+import { useNavigate } from "react-router-dom"; 
 
 const AudioMeasurementActivity = () => {
   const [currentQuestion, setCurrentQuestion] = useState(1); // Track the current question number
@@ -17,6 +18,7 @@ const AudioMeasurementActivity = () => {
   const [audioPlayedCount, setAudioPlayedCount] = useState(0); // Track how many times the audio has played
   const [score, setScore] = useState(0); // Track score
   const [isQuizCompleted, setIsQuizCompleted] = useState(false); // To check if quiz is completed
+  const navigate = useNavigate(); // Hook for navigation
 
   const audioFiles = [audio1, audio2, audio3, audio4, audio5]; // Audio files for all 5 questions
 
@@ -55,7 +57,7 @@ const AudioMeasurementActivity = () => {
   ];
 
   // Answer options for the user to select (numbered options)
-  const correctAnswers = [0, 3, 2, 3, 3];
+  const correctAnswers = [0, 3, 2, 1, 3];
   const answerOptions = ["1", "2", "3", "4"];
 
   // Handle playing the audio twice (Only plays twice, no more)
@@ -91,9 +93,14 @@ const AudioMeasurementActivity = () => {
       setShowAnswers(false);
       setIsAudioPlaying(false);
     } else {
-      setIsQuizCompleted(true); // Mark quiz as completed
+      setIsQuizCompleted(true); // Mark the quiz as completed
+      // Navigate to Language Vocabulary Test after 5 seconds
+      setTimeout(() => {
+        navigate("/language-vocab-test"); // Ensure the route exists in your router
+      }, 5000);
     }
   };
+  
   
   // Timer countdown when answers are displayed
   useEffect(() => {

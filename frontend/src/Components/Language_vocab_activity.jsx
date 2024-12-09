@@ -5,9 +5,12 @@ import farmImage from "../assets/Questions1_images/2.jpg";
 import restaurantImage from "../assets/Questions1_images/3.jpg"; 
 import accidentImage from "../assets/Questions1_images/4.jpg"; 
 import hospitalImage from "../assets/Questions1_images/5.jpg"; 
-import ScoreBoard from "../Components/Score_board"; // Import the ScoreBoard component
+import ScoreBoard from "../Components/Score_board";
+import { useNavigate } from "react-router-dom";  
+
 
 const Language_vocab_activity = () => {
+  const navigate = useNavigate(); // Hook for navigation
   const questions = [
     {
       image: trainImage,
@@ -23,39 +26,39 @@ const Language_vocab_activity = () => {
       image: farmImage,
       answers: [
         "1. ගොවිපල",
-        "2. කාර්මික මධ්‍යස්ථානය",
-        "3. පලාත් සභා මණ්ඩපය",
-        "4. ව්‍යාපාරික මධ්‍යස්ථානය",
+        "2. සත්ත්තවෝද්‍යානය",
+        "3. උද්භිද්‍ උද්‍යානය ",
+        "4. සත්ත්ව ශාලාව",
       ],
       correctAnswer: "1. ගොවිපල",
     },
     {
       image: restaurantImage,
       answers: [
-        "1. අපනයන මධ්‍යස්ථානය",
-        "2. ආපන ශාලාව",
-        "3. ගුවන් තොටුපළ",
-        "4. කාර්මික මධ්‍යස්ථානය",
+        "1. රාජ බෝජන සංග්‍රහය ",
+        "2. රාජගීය පවුල",
+        "3. රාජකීය සංගී ප්‍රද්‍ර්ශනය",
+        "4. රාජගීය උත්සවය",
       ],
-      correctAnswer: "2. ආපන ශාලාව",
+      correctAnswer: "1. රාජ බෝජන සංග්‍රහය",
     },
     {
       image: accidentImage,
       answers: [
-        "1. ගුවන් තොටුපළ",
-        "2. පාර්ලිමේන්තු මාලිගාව",
-        "3. අනාත මධ්‍යස්ථානය",
-        "4. අනතුරේ ස්ථානය",
+        "1. ඉදිකිරීම්ර කටයුතු ස්ථානය",
+        "2. රිය අනතුර ",
+        "3. රෝහල ඉදිරිපිට",
+        "4. වාහන තදබදය ",
       ],
-      correctAnswer: "4. අනතුරේ ස්ථානය",
+      correctAnswer: "2. රිය අනතුර ",
     },
     {
       image: hospitalImage,
       answers: [
         "1. රෝහල",
-        "2. බස් නැවතුම්පොළ",
-        "3. ගොවිපල",
-        "4. අපනයන මධ්‍යස්ථානය",
+        "2. වෛද්‍ය උපදේශන මධ්‍යස්ථානය",
+        "3. රෝහල් බාහිර රෝගී අංශය",
+        "4. සෞඛ්‍ය මධ්‍යස්ථානය ",
       ],
       correctAnswer: "1. රෝහල",
     },
@@ -107,10 +110,13 @@ const Language_vocab_activity = () => {
       setShowAnswers(false);
       setTimer(10); 
     } else {
-      setIsCompleted(true); 
+      setIsCompleted(true);
+      // Navigate to /memory-tests after quiz completion with a 5-second delay
+      setTimeout(() => {
+        navigate("/memory-tests");
+      }, 5000);
     }
   };
-
   const handleAnswerClick = (index) => {
     const selectedAnswer = questions[currentQuestion].answers[index];
     if (selectedAnswer === questions[currentQuestion].correctAnswer) {

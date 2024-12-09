@@ -5,6 +5,8 @@ import question2Image from "../assets/Question3_images/P2.jpg";
 import question3Image from "../assets/Question3_images/P3.jpg";
 import question4Image from "../assets/Question3_images/P4.jpg";
 import question5Image from "../assets/Question3_images/P5.jpg";
+import { useNavigate } from "react-router-dom";
+
 
 // Answer images
 import answerImg1 from "../assets/Question3_images/answers/img1.jpg";
@@ -30,6 +32,8 @@ import answerImg20 from "../assets/Question3_images/answers/img20.jpg";
 import ScoreBoard from "../Components/Score_board";
 
 const MemoryTestActivity = () => {
+  const navigate = useNavigate(); // Hook for navigation
+  
   const questions = [
     {
       image: question1Image,
@@ -134,8 +138,13 @@ const MemoryTestActivity = () => {
       setTimer(10);
     } else {
       setIsCompleted(true);
+      // Navigate to SpeedMeasurementTest after 5 seconds
+      setTimeout(() => {
+        navigate("/speed-measurement-test");
+      }, 5000); // Delay set to 5 seconds
     }
   };
+  
 
   const handleRestart = () => {
     setCurrentQuestion(0);
