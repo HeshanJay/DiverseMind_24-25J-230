@@ -197,6 +197,7 @@ const AudioMeasurementActivity = () => {
                 <tr key={rowIndex}>
                   <td className="p-3">
                     <button
+                      onClick={() => handleAnswerClick(index)} // Clicking calls handleAnswerClick with this answer index
                       className="w-96 py-3 rounded-md text-lg font-semibold bg-gradient-to-r from-green-400 to-blue-400 text-white hover:scale-105 transition-transform"
                     >
                       {answer}
@@ -205,6 +206,7 @@ const AudioMeasurementActivity = () => {
                   {answers[currentQuestion - 1][index + 1] && (
                     <td className="p-3">
                       <button
+                        onClick={() => handleAnswerClick(index + 1)} // Next answer in the same row
                         className="w-96 py-3 rounded-md text-lg font-semibold bg-gradient-to-r from-green-400 to-blue-400 text-white hover:scale-105 transition-transform"
                       >
                         {answers[currentQuestion - 1][index + 1]}
@@ -220,24 +222,7 @@ const AudioMeasurementActivity = () => {
       </table>
     </div>
 
-    {/* Number Choices for Selecting Answer */}
-    <table className="w-full text-lg border-separate border-spacing-2">
-      <tbody>
-        <tr className="flex gap-2 justify-center">
-          {answerOptions.map((option, index) => (
-            <td key={index} className="p-0 text-center">
-              <button
-                onClick={() => handleAnswerClick(index)}
-                className="bg-gradient-to-r from-green-400 to-lime-600 text-white px-8 py-3 rounded-full text-lg shadow-lg hover:scale-105 transition-transform"
-              >
-                {option}
-              </button>
-            </td>
-          ))}
-        </tr>
-      </tbody>
-    </table>
-
+    
     {/* Timer */}
     {showAnswers && (
       <div className="text-lg font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-4 py-3 rounded-md shadow-lg mt-4">

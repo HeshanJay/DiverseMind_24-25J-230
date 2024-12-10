@@ -200,47 +200,63 @@ const MemoryTestActivity = () => {
     <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 max-w-5xl mx-auto">
       <h2 className="text-3xl font-semibold mb-6 text-center">
         නිවැරදි පිළිතුර තෝරන්න
-      </h2>
+        </h2>
       <table className="w-full text-lg border-separate border-spacing-4">
         <tbody>
           {questions[currentQuestion].answers.map((answer, index) => {
+            const answerId = answer.id || (index + 1); // Ensure we have an answer ID
             const isFirstCol = index % 2 === 0;
 
             if (isFirstCol) {
               return (
                 <tr key={index}>
-                  <td className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg">
-                    <div className="flex flex-col items-center">
-                      <div className="flex justify-center items-center mb-2">
-                        <strong className="text-xl text-white">{index + 1}.&nbsp;</strong>
-                      </div>
-                      {answer.src ? (
-                        <img
-                          src={answer.src}
-                          alt={`Answer ${index + 1}`}
-                          className="w-full h-20 object-contain rounded-md"
-                        />
-                      ) : (
-                        <span className="text-white">{answer}</span>
-                      )}
-                    </div>
-                  </td>
-                  {questions[currentQuestion].answers[index + 1] && (
-                    <td className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg">
+                  <td className="p-4 rounded-lg shadow-lg">
+                    <button
+                      onClick={() => handleAnswerClick(answerId)}
+                      className="w-full h-full text-left bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-lg cursor-pointer hover:bg-pink-600 transition-colors duration-200"
+                    >
                       <div className="flex flex-col items-center">
                         <div className="flex justify-center items-center mb-2">
-                          <strong className="text-xl text-white">{index + 2}.&nbsp;</strong>
+                          <strong className="text-xl text-white">{index + 1}.&nbsp;</strong>
                         </div>
-                        {questions[currentQuestion].answers[index + 1].src ? (
+                        {answer.src ? (
                           <img
-                            src={questions[currentQuestion].answers[index + 1].src}
-                            alt={`Answer ${index + 2}`}
+                            src={answer.src}
+                            alt={`Answer ${index + 1}`}
                             className="w-full h-20 object-contain rounded-md"
                           />
                         ) : (
-                          <span className="text-white">{questions[currentQuestion].answers[index + 1]}</span>
+                          <span className="text-white">{answer}</span>
                         )}
                       </div>
+                    </button>
+                  </td>
+
+                  {questions[currentQuestion].answers[index + 1] && (
+                    <td className="p-4 rounded-lg shadow-lg">
+                      <button
+                        onClick={() =>
+                          handleAnswerClick(
+                            questions[currentQuestion].answers[index + 1].id || index + 2
+                          )
+                        }
+                        className="w-full h-full text-left bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-lg cursor-pointer hover:bg-pink-600 transition-colors duration-200"
+                      >
+                        <div className="flex flex-col items-center">
+                          <div className="flex justify-center items-center mb-2">
+                            <strong className="text-xl text-white">{index + 2}.&nbsp;</strong>
+                          </div>
+                          {questions[currentQuestion].answers[index + 1].src ? (
+                            <img
+                              src={questions[currentQuestion].answers[index + 1].src}
+                              alt={`Answer ${index + 2}`}
+                              className="w-full h-20 object-contain rounded-md"
+                            />
+                          ) : (
+                            <span className="text-white">{questions[currentQuestion].answers[index + 1]}</span>
+                          )}
+                        </div>
+                      </button>
                     </td>
                   )}
                 </tr>
@@ -252,18 +268,6 @@ const MemoryTestActivity = () => {
       </table>
     </div>
 
-    {/* Answer Buttons */}
-    <div className="flex justify-center gap-4 mt-4 -translate-y-6">
-      {questions[currentQuestion].answers.map((answer, index) => (
-        <button
-          key={index}
-          onClick={() => handleAnswerClick(answer.id)}
-          className="bg-gradient-to-r from-yellow-500 to-red-500 text-white px-6 py-3 rounded-full text-xl hover:scale-105 transition-transform"
-        >
-          {index + 1}
-        </button>
-      ))}
-    </div>
   </>
 )}
 

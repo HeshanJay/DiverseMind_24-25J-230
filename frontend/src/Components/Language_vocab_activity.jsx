@@ -180,70 +180,78 @@ const Language_vocab_activity = () => {
                 </div>
               </div>
             )}
-  {/* Answer Page */}
-{showAnswers && (
-  <>
-    <h2 className="text-3xl font-semibold mb-6 text-center">
-      නිවැරදි පිළිතුර තෝරන්න
-    </h2>
-    <div className="overflow-x-auto">
-      <table className="w-full max-w-5xl mx-auto bg-gray-800 bg-opacity-70 rounded-lg">
-        <tbody>
-          {questions[currentQuestion].answers.map((answer, index) => {
-            const isFirstCol = index % 2 === 0;
+ {/* Answer Page */}
+            {showAnswers && (
+              <>
+               <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 max-w-5xl mx-auto">
+                <h2 className="text-3xl font-semibold mb-6 text-center">
+                  නිවැරදි පිළිතුර තෝරන්න
+                </h2>
 
-            if (isFirstCol) {
-              return (
-                <React.Fragment key={index}>
-                  <tr>
-                    <td className="p-4">
-                      <button
-                        onClick={() => handleAnswerClick(index)}
-                        className="w-64 h-19 bg-gradient-to-r from-green-500 to-blue-500 text-white px-4 py-2 rounded-xl text-lg  flex items-center justify-start"
-                      >
-                        <span className="text-left">{answer}</span>
-                      </button>
-                    </td>
-                    {questions[currentQuestion].answers[index + 1] && (
-                      <td className="p-4">
-                        <button
-                          onClick={() => handleAnswerClick(index + 1)}
-                          className="w-64 h-19 bg-gradient-to-r from-green-500 to-blue-500 text-white px-4 py-2 rounded-xl text-lg hover:scale-105 transition-transform flex items-center justify-start"
-                        >
-                          <span className="text-left">
-                            {questions[currentQuestion].answers[index + 1]}
-                          </span>
-                        </button>
-                      </td>
-                    )}
-                  </tr>
-                </React.Fragment>
-              );
-            }
-            return null;
-          })}
-        </tbody>
-      </table>
-    </div>
-
-    {/* Timer Section */}
-    <div className="flex justify-center mt-6 w-full">
-      <div className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg w-auto max-w-xs text-center">
-        කාලය: {timer} තත්පර
-      </div>
-    </div>
-  </>
-)}
-
-
+                {/* Number Choices for Selecting Answer */}
+                <table className="w-full text-lg border-separate border-spacing-2">
+  <tbody>
+    {questions[currentQuestion].answers.map((answer, index) => {
+      // Determine if this is the start of a new row
+      if (index % 2 === 0) {
+        return (
+          <tr key={index} className="flex gap-2 justify-center">
+            <td className="p-0 text-center">
+              <button
+                onClick={() => handleAnswerClick(index)}
+                className="bg-gradient-to-r m-2 from-green-400 to-lime-600 text-white px-8 py-3 rounded-full text-lg shadow-lg hover:scale-105 transition-transform"
+                style={{
+                  width: "330px", // Fixed width
+                  whiteSpace: "normal", // Allow text to wrap
+                  wordWrap: "break-word", // Ensure long words wrap properly
+                  overflowWrap: "break-word",
+                }}
+              >
+                {answer}
+              </button>
+            </td>
+            {/* Check if there's a next item to render in the same row */}
+            {questions[currentQuestion].answers[index + 1] && (
+              <td className="p-0 text-center">
+                <button
+                  onClick={() => handleAnswerClick(index + 1)}
+                  className="bg-gradient-to-r m-2 from-green-400 to-lime-600 text-white px-8 py-3 rounded-full text-lg shadow-lg hover:scale-105 transition-transform"
+                  style={{
+                    width: "330px", // Fixed width
+                    whiteSpace: "normal", // Allow text to wrap
+                    wordWrap: "break-word", // Ensure long words wrap properly
+                    overflowWrap: "break-word",
+                  }}
+                >
+                  {questions[currentQuestion].answers[index + 1]}
+                  
+                </button>
+              </td>
+              
+            )}
+          </tr>
+          
+        );
+        
+      }
+      return null; // Skip rendering for non-start-of-row indices
+    })}
+  </tbody>
+</table>
+</div>
+                {/* Timer */}
+                {showAnswers && (
+                  <div className="text-lg font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-4 py-3 rounded-md shadow-lg mt-4">
+                    කාලය: {timer} තත්පර
+                  </div>
+                )}
+              </>
+            )}
           </>
         )}
       </div>
     </div>
   );
-  
-  
 };
 
 export default Language_vocab_activity;
-
