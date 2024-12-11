@@ -1,2 +1,11 @@
-# Virtual environment
+# Ignore Python-related files
+__pycache__/
+*.pyc
+
+# Ignore virtual environment folders
 venv/
+.venv/
+
+# Ignore IDE-specific files
+.vscode/
+*.log
