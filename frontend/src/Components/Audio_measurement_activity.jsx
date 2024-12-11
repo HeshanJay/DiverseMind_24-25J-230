@@ -181,12 +181,12 @@ const AudioMeasurementActivity = () => {
   <>
     {/* Main Container for Answers */}
     <div className="bg-gray-800 bg-opacity-70 p-4 rounded-lg mb-6 w-full max-w-5xl mx-auto">
-      <h2 className="text-2xl font-semibold mb-4 text-white text-center">
+      <h2 className="text-3xl font-semibold mb-4 text-white text-center">
         නිවැරදි පිළිතුර තෝරන්න
       </h2>
 
-      {/* Answer Buttons in a Table */}
-      <table className="w-full text-lg border-separate border-spacing-2">
+     {/* Answer Buttons in a Table */}
+     <table className="w-full text-lg border-separate border-spacing-4">
         <tbody>
           {answers[currentQuestion - 1].map((answer, index) => {
             const rowIndex = Math.floor(index / 2); // Calculate row index (2 items per row)
@@ -195,19 +195,19 @@ const AudioMeasurementActivity = () => {
             if (colIndex === 0) {
               return (
                 <tr key={rowIndex}>
-                  <td className="p-3">
+                  <td className="p-4">
                     <button
                       onClick={() => handleAnswerClick(index)} // Clicking calls handleAnswerClick with this answer index
-                      className="w-96 py-3 rounded-md text-lg font-semibold bg-gradient-to-r from-green-400 to-blue-400 text-white hover:scale-105 transition-transform"
+                      className="w-72 md:w-96 py-4 rounded-lg text-xl md:text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-500 text-white hover:scale-110 transition-transform"
                     >
                       {answer}
                     </button>
                   </td>
                   {answers[currentQuestion - 1][index + 1] && (
-                    <td className="p-3">
+                    <td className="p-4">
                       <button
                         onClick={() => handleAnswerClick(index + 1)} // Next answer in the same row
-                        className="w-96 py-3 rounded-md text-lg font-semibold bg-gradient-to-r from-green-400 to-blue-400 text-white hover:scale-105 transition-transform"
+                        className="w-72 md:w-96 py-4 rounded-lg text-xl md:text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-500 text-white hover:scale-110 transition-transform"
                       >
                         {answers[currentQuestion - 1][index + 1]}
                       </button>
@@ -225,7 +225,8 @@ const AudioMeasurementActivity = () => {
     
     {/* Timer */}
     {showAnswers && (
-      <div className="text-lg font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-4 py-3 rounded-md shadow-lg mt-4">
+      <div className="text-xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-4 py-3 rounded-md shadow-lg mt-4">
+        
         කාලය: {timer} තත්පර
       </div>
     )}

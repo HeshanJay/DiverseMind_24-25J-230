@@ -213,7 +213,7 @@ const MemoryTestActivity = () => {
                   <td className="p-4 rounded-lg shadow-lg">
                     <button
                       onClick={() => handleAnswerClick(answerId)}
-                      className="w-full h-full text-left bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-lg cursor-pointer hover:bg-pink-600 transition-colors duration-200"
+                      className="w-full h-full text-left bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-lg cursor-pointer hover:scale-105 transition-transform"
                     >
                       <div className="flex flex-col items-center">
                         <div className="flex justify-center items-center mb-2">
@@ -240,7 +240,7 @@ const MemoryTestActivity = () => {
                             questions[currentQuestion].answers[index + 1].id || index + 2
                           )
                         }
-                        className="w-full h-full text-left bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-lg cursor-pointer hover:bg-pink-600 transition-colors duration-200"
+                        className="w-full h-full text-left bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-lg cursor-pointer hover:scale-105 transition-transform"
                       >
                         <div className="flex flex-col items-center">
                           <div className="flex justify-center items-center mb-2">

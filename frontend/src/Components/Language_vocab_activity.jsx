@@ -37,7 +37,7 @@ const Language_vocab_activity = () => {
       answers: [
         "1. රාජ බෝජන සංග්‍රහය ",
         "2. රාජගීය පවුල",
-        "3. රාජකීය සංගී ප්‍රද්‍ර්ශනය",
+        "3. රාජකීය සංගීත ප්‍රදර්ශනය",
         "4. රාජගීය උත්සවය",
       ],
       correctAnswer: "1. රාජ බෝජන සංග්‍රහය",
@@ -56,9 +56,10 @@ const Language_vocab_activity = () => {
       image: hospitalImage,
       answers: [
         "1. රෝහල",
-        "2. වෛද්‍ය උපදේශන මධ්‍යස්ථානය",
+        "2. සෞඛ්‍ය මධ්‍යස්ථානය",
         "3. රෝහල් බාහිර රෝගී අංශය",
-        "4. සෞඛ්‍ය මධ්‍යස්ථානය ",
+        "4. ආරෝග්‍ය මධ්‍යස්ථානය",
+        
       ],
       correctAnswer: "1. රෝහල",
     },
@@ -175,73 +176,65 @@ const Language_vocab_activity = () => {
             {/* Timer for Question Page */}
             {!showAnswers && (
               <div className="flex justify-center mt-6 w-full">
-                <div className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg w-auto max-w-xs text-center">
+                <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg w-auto max-w-xs text-center">
                   කාලය: {timer} තත්පර
                 </div>
               </div>
             )}
- {/* Answer Page */}
-            {showAnswers && (
-              <>
-               <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 max-w-5xl mx-auto">
-                <h2 className="text-3xl font-semibold mb-6 text-center">
-                  නිවැරදි පිළිතුර තෝරන්න
-                </h2>
+            {/* Answer Page */}
+{showAnswers && (
+  <>
+    <div className="bg-gray-800 bg-opacity-70 p-4 rounded-lg shadow-lg mb-6 max-w-5xl mx-auto">
+      <h2 className="text-3xl font-semibold mb-4 text-center">
+        නිවැරදි පිළිතුර තෝරන්න
+      </h2>
 
-                {/* Number Choices for Selecting Answer */}
-                <table className="w-full text-lg border-separate border-spacing-2">
-  <tbody>
-    {questions[currentQuestion].answers.map((answer, index) => {
-      // Determine if this is the start of a new row
-      if (index % 2 === 0) {
-        return (
-          <tr key={index} className="flex gap-2 justify-center">
-            <td className="p-0 text-center">
-              <button
-                onClick={() => handleAnswerClick(index)}
-                className="bg-gradient-to-r m-2 from-green-400 to-lime-600 text-white px-8 py-3 rounded-full text-lg shadow-lg hover:scale-105 transition-transform"
-                style={{
-                  width: "330px", // Fixed width
-                  whiteSpace: "normal", // Allow text to wrap
-                  wordWrap: "break-word", // Ensure long words wrap properly
-                  overflowWrap: "break-word",
-                }}
-              >
-                {answer}
-              </button>
-            </td>
-            {/* Check if there's a next item to render in the same row */}
-            {questions[currentQuestion].answers[index + 1] && (
-              <td className="p-0 text-center">
-                <button
-                  onClick={() => handleAnswerClick(index + 1)}
-                  className="bg-gradient-to-r m-2 from-green-400 to-lime-600 text-white px-8 py-3 rounded-full text-lg shadow-lg hover:scale-105 transition-transform"
-                  style={{
-                    width: "330px", // Fixed width
-                    whiteSpace: "normal", // Allow text to wrap
-                    wordWrap: "break-word", // Ensure long words wrap properly
-                    overflowWrap: "break-word",
-                  }}
-                >
-                  {questions[currentQuestion].answers[index + 1]}
-                  
-                </button>
-              </td>
-              
-            )}
-          </tr>
-          
-        );
-        
-      }
-      return null; // Skip rendering for non-start-of-row indices
+      {/* Number Choices for Selecting Answer */}
+      <table className="w-full text-lg border-separate border-spacing-3">
+        <tbody>
+          {questions[currentQuestion].answers.map((answer, index) => {
+            // Determine if this is the start of a new row
+            if (index % 2 === 0) {
+              return (
+                <tr key={index} className="flex gap-3 justify-center">
+                  <td className="p-0 text-center">
+                    <button
+                      onClick={() => handleAnswerClick(index)}
+                      className="bg-gradient-to-r m-1 from-green-400 to-lime-600 text-white px-8 py-4 rounded-full text-2xl shadow-lg hover:scale-105 transition-transform flex items-center justify-start"
+                      style={{
+                        width: "350px", // Button width
+                        height: "80px", // Button height
+                      }}
+                    >
+                      <strong className="ml-4">{answer}</strong>
+                    </button>
+                  </td>
+                  {/* Check if there's a next item to render in the same row */}
+                  {questions[currentQuestion].answers[index + 1] && (
+                    <td className="p-0 text-center">
+                      <button
+                        onClick={() => handleAnswerClick(index + 1)}
+                        className="bg-gradient-to-r m-1 from-green-400 to-lime-600 text-white px-8 py-4 rounded-full text-2xl shadow-lg hover:scale-105 transition-transform flex items-center justify-start"
+                        style={{
+                          width: "350px", // Button width
+                          height: "80px", // Button height
+                        }}
+                      >
+                        <strong className="ml-4">{questions[currentQuestion].answers[index + 1]}</strong>
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              );
+            }
+            return null; 
     })}
   </tbody>
 </table>
 </div>
                 {/* Timer */}
                 {showAnswers && (
-                  <div className="text-lg font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-4 py-3 rounded-md shadow-lg mt-4">
+                  <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-4 py-3 rounded-md shadow-lg mt-4">
                     කාලය: {timer} තත්පර
                   </div>
                 )}

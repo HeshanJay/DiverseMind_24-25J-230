@@ -192,7 +192,7 @@ const VisualTestActivity = () => {
                         return (
                           <tr key={index}>
                             <td
-                              className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg cursor-pointer"
+                              className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg cursor-pointer hover:scale-105 transition-transform"
                               onClick={() => handleAnswerClick(answerId)}
                             >
                               <div className="flex justify-center items-center h-full w-full">
@@ -212,7 +212,7 @@ const VisualTestActivity = () => {
                             </td>
                             {questions[currentQuestion].answers[index + 1] && (
                               <td
-                                className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-pink-600 rounded-lg shadow-lg cursor-pointer"
+                                className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105 transition-transform rounded-lg shadow-lg cursor-pointer"
                                 onClick={() =>
                                   handleAnswerClick(
                                     questions[currentQuestion].answers[index + 1].id ||

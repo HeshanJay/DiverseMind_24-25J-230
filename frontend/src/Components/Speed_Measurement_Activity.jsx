@@ -143,65 +143,79 @@ const SpeedMeasurementActivity = () => {
             )}
 
 
-
-<div class="overflow-x-auto p-6">
- 
- 
-  {questions[currentQuestion]?.question && (
-    <div class="bg-gray-700 text-white text-2xl font-bold text-center p-6 rounded-lg shadow-lg">
-      {questions[currentQuestion].question}
-    </div>
-  )}
-
-  {showAnswers && questions[currentQuestion]?.answers?.length > 0 && (
-    <table class="mt-6 w-full bg-gray-800 bg-opacity-50 rounded-lg shadow-lg">
-      <tbody>
-        <tr>
-          <td class="p-4 text-center">
-            <button
-              onClick={() => handleAnswerClick(questions[currentQuestion].answers[0])}
-              class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-4 rounded-full text-2xl hover:scale-105 transition-transform shadow-md"
-            >
-              {questions[currentQuestion].answers[0]}
-            </button>
-          </td>
-          <td class="p-4 text-center">
-            <button
-              onClick={() => handleAnswerClick(questions[currentQuestion].answers[1])}
-              class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-4 rounded-full text-2xl hover:scale-105 transition-transform shadow-md"
-            >
-              {questions[currentQuestion].answers[1]}
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td class="p-4 text-center">
-            <button
-              onClick={() => handleAnswerClick(questions[currentQuestion].answers[2])}
-              class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-4 rounded-full text-2xl hover:scale-105 transition-transform shadow-md"
-            >
-              {questions[currentQuestion].answers[2]}
-              
-            </button>
-          </td>
-          <td class="p-4 text-center">
-            <button
-              onClick={() => handleAnswerClick(questions[currentQuestion].answers[3])}
-              class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-4 rounded-full text-2xl hover:scale-105 transition-transform shadow-md"
-            >
-              {questions[currentQuestion].answers[3]}
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  )}
-
+ {/* Answer Display */}
+ {showAnswers && questions[currentQuestion]?.answers?.length > 0 && (
+          <div className="overflow-x-auto p-3">
+          {/* Optional Question Text (if exists) */}
+          {questions[currentQuestion]?.question && (
+            <div className="bg-gray-700 text-white text-2xl font-bold text-center p-6 rounded-lg shadow-lg">
+              {questions[currentQuestion].question}
+            </div>
+          )}
+        
+          {/* Maximized Shadow for the Answer Container */}
+          {showAnswers && questions[currentQuestion]?.answers?.length > 0 && (
+            <table className="mt-6 w-full bg-gray-800 bg-opacity-50 rounded-lg shadow-2xl">
+              <tbody>
+                {/* First Row of Answers */}
+                <tr>
+                  <td className="p-4 text-left">
+                    <button
+                      onClick={() =>
+                        handleAnswerClick(questions[currentQuestion].answers[0])
+                      }
+                      className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-6 rounded-full text-4xl hover:scale-110 transition-transform shadow-lg flex items-center justify-start"
+                    >
+                      <strong className="text-2xl text-white mr-4">1.&nbsp;</strong>
+                      <span className="text-4xl">{questions[currentQuestion].answers[0]}</span>
+                    </button>
+                  </td>
+                  <td className="p-4 text-left">
+                    <button
+                      onClick={() =>
+                        handleAnswerClick(questions[currentQuestion].answers[1])
+                      }
+                      className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-6 rounded-full text-4xl hover:scale-110 transition-transform shadow-lg flex items-center justify-start"
+                    >
+                      <strong className="text-2xl text-white mr-4">2.&nbsp;</strong>
+                      <span className="text-4xl">{questions[currentQuestion].answers[1]}</span>
+                    </button>
+                  </td>
+                </tr>
+                {/* Second Row of Answers */}
+                <tr>
+                  <td className="p-4 text-left">
+                    <button
+                      onClick={() =>
+                        handleAnswerClick(questions[currentQuestion].answers[2])
+                      }
+                      className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-6 rounded-full text-4xl hover:scale-110 transition-transform shadow-lg flex items-center justify-start"
+                    >
+                      <strong className="text-2xl text-white mr-4">3.&nbsp;</strong>
+                      <span className="text-4xl">{questions[currentQuestion].answers[2]}</span>
+                    </button>
+                  </td>
+                  <td className="p-4 text-left">
+                    <button
+                      onClick={() =>
+                        handleAnswerClick(questions[currentQuestion].answers[3])
+                      }
+                      className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-6 rounded-full text-4xl hover:scale-110 transition-transform shadow-lg flex items-center justify-start"
+                    >
+                      <strong className="text-2xl text-white mr-4">4.&nbsp;</strong>
+                      <span className="text-4xl">{questions[currentQuestion].answers[3]}</span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          )}
+        </div>
+        )}
 <div class="mt-6 text-xl font-bold text-center bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-md shadow-lg w-48 mx-auto">
   කාලය: {timer} තත්පර
 </div>
 
-</div>
 
           </>
         )}
