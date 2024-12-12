@@ -1,15 +1,25 @@
-import pickle
+import joblib
 import pandas as pd
 
-# Load the model
+# Paths to the model and scaler
 model_path = "./app/model/memory_predictor.pkl"
-with open(model_path, "rb") as f:
-    model = pickle.load(f)
-
-# Load the scaler
 scaler_path = "./app/model/scaler.pkl"
-with open(scaler_path, "rb") as f:
-    scaler = pickle.load(f)
+
+try:
+    # Load the scaler
+    scaler = joblib.load(scaler_path)
+    if not hasattr(scaler, "transform"):
+        raise ValueError("The loaded scaler does not have a 'transform' method.")
+    print("Scaler loaded successfully.")
+
+    # Load the model
+    model = joblib.load(model_path)
+    if not hasattr(model, "predict"):
+        raise ValueError("The loaded model does not have a 'predict' method.")
+    print("Model loaded successfully.")
+except Exception as e:
+    raise RuntimeError(f"Error loading model or scaler: {e}")
+
 
 def predict_outcome(data):
     """
@@ -21,14 +31,24 @@ def predict_outcome(data):
     Returns:
         str: Predicted label ('Normal', 'Medium', 'Low').
     """
-    # Convert input to DataFrame
-    input_df = pd.DataFrame([data])
+    try:
+        # Convert input data to a DataFrame
+        input_df = pd.DataFrame([data])
+        # Apply scaling
+        sample_scaled = scaler.transform(input_df)
+        # Predict using the model
+        pred = model.predict(sample_scaled)
 
-    # Apply scaling
-    sample_scaled = scaler.transform(input_df)
+        # Map prediction to label
+        label_map = {0: 'Normal', 1: 'Medium', 2: 'Low'}
+        predict_label = label_map[pred[0]]
+        print("Prediction Label:", predict_label)
 
-    # Predict using the model
-    pred = model.predict(sample_scaled)
-    label_map = {0: 'Normal', 1: 'Medium', 2: 'Low'}
-    predict_label = label_map[pred[0]]
-    return predict_label
+        return predict_label
+    except Exception as e:
+        raise ValueError(f"Error during prediction: {e}")
+
+
+
+
+
