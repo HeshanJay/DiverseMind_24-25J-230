@@ -3,28 +3,35 @@ import { MdArrowBack } from "react-icons/md"; // Importing the Back Icon
 import backgroundImg from "../../assets/background_images/back_img1.jpg";
 import monkeyImage from "../../assets/VowelSymbolTest_images/monkey2.png";
 
-const VowelSymbolQ2 = ({ onNext, onBack }) => {
+const VowelSymbolQ2 = ({ onAnswer, onBack }) => {
   const [droppedSymbol, setDroppedSymbol] = useState(""); // Tracks the dropped symbol
   const choices = ["රි", "රු", "රී", "රැ"]; // Drag-and-drop choices
-  const correctAnswer = "රි"; // Correct vowel for "රිලවා"
+  // const correctAnswer = "රි"; // Not needed here, correctness checked in parent
 
   const handleDragStart = (e, symbol) => {
-    e.dataTransfer.setData("text/plain", symbol); // Store the symbol being dragged
-    e.dataTransfer.effectAllowed = "move"; // Allow move effect
+    e.dataTransfer.setData("text/plain", symbol);
+    e.dataTransfer.effectAllowed = "move";
   };
 
   const handleDrop = (e) => {
-    e.preventDefault(); // Prevent default behavior
-    const symbol = e.dataTransfer.getData("text/plain"); // Retrieve the dragged data
-    setDroppedSymbol(symbol); // Set the dropped symbol
+    e.preventDefault();
+    const symbol = e.dataTransfer.getData("text/plain");
+    setDroppedSymbol(symbol);
   };
 
   const handleDragOver = (e) => {
-    e.preventDefault(); // Allow dropping
-    e.dataTransfer.dropEffect = "move"; // Indicate move effect
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
   };
 
-  const isCorrect = droppedSymbol === correctAnswer; // Check if the answer is correct
+  const handleNextClick = () => {
+    if (!droppedSymbol) {
+      alert("කරුණාකර පිල්ලමක් තෝරන්න!");
+      return;
+    }
+    // Pass the chosen symbol back to the parent
+    onAnswer(droppedSymbol);
+  };
 
   return (
     <div
@@ -52,14 +59,12 @@ const VowelSymbolQ2 = ({ onNext, onBack }) => {
             {/* Word with Blank */}
             <div className="mb-6 text-4xl font-bold text-center text-blue-800">
               <span
-                onDragOver={handleDragOver} // Allow dropping
-                onDrop={handleDrop} // Handle drop
-                className={`inline-block align-middle w-20 h-16 mx-2 text-center bg-blue-50 rounded-xl shadow-inner ${
-                  isCorrect ? "border-gray-400" : "border-gray-400"
-                }`}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+                className="inline-block align-middle w-20 h-16 mx-2 text-center bg-blue-50 rounded-xl shadow-inner border-gray-400"
                 style={{
-                  lineHeight: "3rem", // Match the line height to the text
-                  borderWidth: droppedSymbol ? "2px" : "0px", // Border only if something is dropped
+                  lineHeight: "3rem",
+                  borderWidth: droppedSymbol ? "2px" : "0px",
                 }}
               >
                 {droppedSymbol || ""}
@@ -73,7 +78,7 @@ const VowelSymbolQ2 = ({ onNext, onBack }) => {
                 <div
                   key={choice}
                   draggable
-                  onDragStart={(e) => handleDragStart(e, choice)} // Handle drag start
+                  onDragStart={(e) => handleDragStart(e, choice)}
                   className="w-16 h-16 flex items-center justify-center bg-blue-200 text-blue-800 font-bold rounded-full shadow-lg cursor-pointer hover:-translate-y-1 hover:scale-110 transition ease-in-out duration-300 text-3xl"
                 >
                   {choice}
@@ -87,9 +92,7 @@ const VowelSymbolQ2 = ({ onNext, onBack }) => {
       {/* Next Button */}
       <button
         className="absolute bottom-8 right-20 bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 hover:from-yellow-400 hover:to-purple-400 text-white text-xl font-extrabold py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110"
-        onClick={() => {
-          onNext(); // Move to the next component
-        }}
+        onClick={handleNextClick}
       >
         🌟 ඉදිරියට යමු 🚀
       </button>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { MdArrowBack } from "react-icons/md"; // Importing the Back Icon
+import { MdArrowBack } from "react-icons/md";
 import backgroundImg from "../../assets/background_images/back_img1.jpg";
 
-const PunctuationsTestQ1 = ({ onNext, onBack }) => {
+const PunctuationsTestQ1 = ({ onAnswer, onBack }) => {
   const punctuationMarks = [
     { mark: ".", name: "තිත" },
     { mark: ",", name: "කොමාව" },
@@ -32,7 +32,6 @@ const PunctuationsTestQ1 = ({ onNext, onBack }) => {
   const handleDrop = (e, index) => {
     e.preventDefault();
     const droppedAnswer = e.dataTransfer.getData("text/plain");
-
     setDroppedItems((prev) =>
       prev.map((item, idx) =>
         idx === index ? { ...item, answer: droppedAnswer } : item
@@ -44,7 +43,17 @@ const PunctuationsTestQ1 = ({ onNext, onBack }) => {
     e.preventDefault();
   };
 
-  const isCorrect = droppedItems.every((item) => item.answer === item.name);
+  // Calculate how many are correct
+  const correctCount = droppedItems.reduce(
+    (count, item) => count + (item.answer === item.name ? 1 : 0),
+    0
+  );
+
+  const handleNextClick = () => {
+    // If user didn't place answers at all, you could alert. But let's allow partial submissions.
+    // Just call onAnswer with the number of correct answers
+    onAnswer(correctCount);
+  };
 
   return (
     <div
@@ -102,9 +111,7 @@ const PunctuationsTestQ1 = ({ onNext, onBack }) => {
       {/* Next Button */}
       <button
         className="absolute bottom-8 right-10 bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 hover:from-yellow-400 hover:to-purple-400 text-white text-xl font-extrabold py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 flex items-center gap-2"
-        onClick={() => {
-          onNext(); // Move to the next component if correct
-        }}
+        onClick={handleNextClick}
       >
         🌟 ඉදිරියට යමු 🚀
       </button>

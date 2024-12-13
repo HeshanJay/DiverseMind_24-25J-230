@@ -24,11 +24,15 @@ import PunctuationsTestQ2 from "../Components/PunctuationsTest/PunctuationsTestQ
 import PunctuationsTestQ3 from "../Components/PunctuationsTest/PunctuationsTestQ3";
 import PunctuationsTestQ4 from "../Components/PunctuationsTest/PunctuationsTestQ4";
 import PunctuationsTestQ5 from "../Components/PunctuationsTest/PunctuationsTestQ5";
-import PunctuationsTestQ6 from "../Components/PunctuationsTest/PunctuationsTestQ6";
 
 const WritingTest = () => {
   const [currentComponent, setCurrentComponent] = useState(1);
-  const [images, setImages] = useState([]); // Store the 6 images
+  const [images, setImages] = useState([]); // Store the 6 letter images
+
+  // Scores
+  const [cnnOutputScore, setCnnOutputScore] = useState(0); // Letter formation
+  const [vowelSymbolScore, setVowelSymbolScore] = useState(0); // Out of 10
+  const [punctuationScore, setPunctuationScore] = useState(0); // Out of 10 (6 from Q1 + 1 each from Q2-Q5)
 
   const loadNextComponent = () => {
     setCurrentComponent((prev) => prev + 1);
@@ -40,6 +44,7 @@ const WritingTest = () => {
     console.log("Switched to Component:", currentComponent - 1);
   };
 
+  // Submit the 6 letter images and get predictions
   const submitAllImages = async () => {
     const formData = new FormData();
     for (let i = 0; i < images.length; i++) {
@@ -58,165 +63,219 @@ const WritingTest = () => {
       );
       console.log("Prediction:", response.data);
       alert(JSON.stringify(response.data));
+
+      if (response.data && typeof response.data.total_score === "number") {
+        setCnnOutputScore(response.data.total_score);
+      }
     } catch (error) {
       console.error("Error uploading images:", error);
     }
   };
 
-  const handleNext = (imageData) => {
+  const handleNextLetterImage = (imageData) => {
     if (imageData) {
-      // Add the new image to the state
       setImages((prev) => [...prev, imageData]);
     }
-
-    // Move to the next component
-    const nextComponent = currentComponent + 1;
-    setCurrentComponent(nextComponent);
+    setCurrentComponent((prev) => prev + 1);
   };
 
-  // When images array reaches 6, we know all canvases have been processed
   useEffect(() => {
     if (images.length === 6) {
       submitAllImages();
     }
-  }, [images]); // Only runs when 'images' changes
+  }, [images]);
+
+  // Vowel Symbol Answers
+  const handleVowelSymbolAnswer = (questionIndex, userAnswer) => {
+    const correctVowelSymbolAnswers = [
+      "මා",
+      "රි",
+      "බි",
+      "කු",
+      "කෞ",
+      "කෙටි ඉස්පිල්ල, ඇලපිල්ල",
+      "කෙටි ඇදපිල්ල, කෙටි ඉස්පිල්ල, ඇලපිල්ල",
+      "දික් ඇදපිල්ල, ඇලපිල්ල",
+      "දික් කොන් පාපිල්ල, කෙටි ඉස්පිල්ල, ඇලපිල්ල",
+      "කෙටි වක් පාපිල්ල, ඇලපිල්ල, කෙටි ඉස්පිල්ල, කෙටි කොන් පාපිල්ල",
+    ];
+
+    if (userAnswer === correctVowelSymbolAnswers[questionIndex]) {
+      setVowelSymbolScore((prev) => prev + 1);
+    }
+    loadNextComponent();
+  };
+
+  // Punctuation Scores
+  // Q1 returns a score out of 6
+  // Q2-Q5 return 1 or 0
+  const handlePunctuationScore = (score) => {
+    setPunctuationScore((prev) => prev + score);
+    loadNextComponent();
+  };
+
+  // After completing the last component (PunctuationsTestQ5),
+  // currentComponent will become 22 (assuming Q5 is at 21).
+  // We'll trigger final evaluation then.
+  useEffect(() => {
+    if (currentComponent === 22) {
+      // All tests done, fetch final evaluation
+      const fetchFinalEvaluation = async () => {
+        const payload = {
+          cnn_output_score: cnnOutputScore,
+          vowel_symbol_score: vowelSymbolScore,
+          punctuation_score: punctuationScore,
+        };
+        try {
+          const response = await fetch(
+            "http://127.0.0.1:8000/final_evaluation",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            }
+          );
+          const result = await response.json();
+          alert("Final Result: " + JSON.stringify(result));
+        } catch (err) {
+          console.error("Error fetching final evaluation:", err);
+        }
+      };
+      fetchFinalEvaluation();
+    }
+  }, [currentComponent, cnnOutputScore, vowelSymbolScore, punctuationScore]);
 
   return (
     <div>
-      {/* 6 Canvas Components that capture images */}
+      {/* Letter Formation Test */}
       {currentComponent === 1 && (
         <WritingCanvas_MadhyaAkshara1
-          onNext={handleNext}
+          onNext={handleNextLetterImage}
           onBack={loadPreviousComponent}
         />
       )}
       {currentComponent === 2 && (
         <WritingCanvas_MadhyaAkshara2
-          onNext={handleNext}
+          onNext={handleNextLetterImage}
           onBack={loadPreviousComponent}
         />
       )}
       {currentComponent === 3 && (
         <WritingCanvas_AarohanaAkshara1
-          onNext={handleNext}
+          onNext={handleNextLetterImage}
           onBack={loadPreviousComponent}
         />
       )}
       {currentComponent === 4 && (
         <WritingCanvas_AarohanaAkshara2
-          onNext={handleNext}
+          onNext={handleNextLetterImage}
           onBack={loadPreviousComponent}
         />
       )}
       {currentComponent === 5 && (
         <WritingCanvas_AvarohanaAkshara1
-          onNext={handleNext}
+          onNext={handleNextLetterImage}
           onBack={loadPreviousComponent}
         />
       )}
       {currentComponent === 6 && (
         <WritingCanvas_AvarohanaAkshara2
-          onNext={handleNext}
+          onNext={handleNextLetterImage}
           onBack={loadPreviousComponent}
         />
       )}
 
-      {/* After collecting 6 images, the submission is handled automatically via useEffect */}
-
+      {/* Vowel Symbol Test (Q1-Q10) */}
       {currentComponent === 7 && (
         <VowelSymbolQ1
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(answer) => handleVowelSymbolAnswer(0, answer)}
         />
       )}
       {currentComponent === 8 && (
         <VowelSymbolQ2
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(answer) => handleVowelSymbolAnswer(1, answer)}
         />
       )}
       {currentComponent === 9 && (
         <VowelSymbolQ3
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(answer) => handleVowelSymbolAnswer(2, answer)}
         />
       )}
       {currentComponent === 10 && (
         <VowelSymbolQ4
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(answer) => handleVowelSymbolAnswer(3, answer)}
         />
       )}
       {currentComponent === 11 && (
         <VowelSymbolQ5
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(answer) => handleVowelSymbolAnswer(4, answer)}
         />
       )}
       {currentComponent === 12 && (
         <VowelSymbolQ6
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(answer) => handleVowelSymbolAnswer(5, answer)}
         />
       )}
       {currentComponent === 13 && (
         <VowelSymbolQ7
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(answer) => handleVowelSymbolAnswer(6, answer)}
         />
       )}
       {currentComponent === 14 && (
         <VowelSymbolQ8
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(answer) => handleVowelSymbolAnswer(7, answer)}
         />
       )}
       {currentComponent === 15 && (
         <VowelSymbolQ9
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(answer) => handleVowelSymbolAnswer(8, answer)}
         />
       )}
       {currentComponent === 16 && (
         <VowelSymbolQ10
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(answer) => handleVowelSymbolAnswer(9, answer)}
         />
       )}
+
+      {/* Punctuations Test (Q1-Q5) */}
       {currentComponent === 17 && (
         <PunctuationsTestQ1
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(score) => handlePunctuationScore(score)}
         />
       )}
       {currentComponent === 18 && (
         <PunctuationsTestQ2
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(score) => handlePunctuationScore(score)}
         />
       )}
       {currentComponent === 19 && (
         <PunctuationsTestQ3
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(score) => handlePunctuationScore(score)}
         />
       )}
       {currentComponent === 20 && (
         <PunctuationsTestQ4
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
+          onAnswer={(score) => handlePunctuationScore(score)}
         />
       )}
       {currentComponent === 21 && (
         <PunctuationsTestQ5
-          onNext={loadNextComponent}
           onBack={loadPreviousComponent}
-        />
-      )}
-      {currentComponent === 22 && (
-        <PunctuationsTestQ6
-          onNext={loadNextComponent}
-          onBack={loadPreviousComponent}
+          onAnswer={(score) => handlePunctuationScore(score)}
         />
       )}
     </div>

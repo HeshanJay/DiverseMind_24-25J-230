@@ -47,11 +47,14 @@
 
 
 # Writing
+# app/main.py
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from app.model.predictor import predict_outcome
+from app.model.evaluate import evaluate_student_writing_skills
 import logging
 
 # Configure logging
@@ -63,54 +66,39 @@ app = FastAPI()
 # CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  
-    allow_headers=["*"],  
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.post("/predict")
 async def predict(images: List[UploadFile] = File(...)):
-    """
-    Process multiple uploaded images and predict their classes and statuses.
-    """
-    # Detailed logging
     logger.info(f"Received predict request with {len(images)} images")
-
-    # Validate input
     if not images:
         logger.error("No images uploaded")
-        raise HTTPException(
-            status_code=400, 
-            detail="No images uploaded"
-        )
+        raise HTTPException(status_code=400, detail="No images uploaded")
 
     predictions = []
     total_score = 0
 
     try:
         for image in images:
-            # Log each image details
             logger.info(f"Processing image: {image.filename}")
-
-            # Validate image
             if not image.filename:
                 logger.warning("Skipping image with no filename")
                 continue
 
-            # Read image bytes
             try:
                 img_bytes = await image.read()
             except Exception as read_error:
                 logger.error(f"Error reading image {image.filename}: {read_error}")
                 continue
 
-            # Validate image bytes
             if not img_bytes:
                 logger.warning(f"Empty image bytes for {image.filename}")
                 continue
 
-            # Predict
             try:
                 result = predict_outcome(img_bytes)
                 predictions.append({
@@ -125,10 +113,7 @@ async def predict(images: List[UploadFile] = File(...)):
 
     except Exception as e:
         logger.error(f"Unexpected error processing images: {e}")
-        raise HTTPException(
-            status_code=400, 
-            detail=f"Error processing images: {str(e)}"
-        )
+        raise HTTPException(status_code=400, detail=f"Error processing images: {str(e)}")
 
     total_images = len(images)
     score_percentage = (total_score / total_images) * 100 if total_images > 0 else 0
@@ -139,3 +124,18 @@ async def predict(images: List[UploadFile] = File(...)):
         "total_images": total_images,
         "score_percentage": score_percentage
     }
+
+# Input model for final evaluation endpoint
+class EvaluationInput(BaseModel):
+    cnn_output_score: int
+    vowel_symbol_score: int
+    punctuation_score: int
+
+@app.post("/final_evaluation")
+def final_evaluation(data: EvaluationInput):
+    result = evaluate_student_writing_skills(
+        data.cnn_output_score,
+        data.vowel_symbol_score,
+        data.punctuation_score
+    )
+    return result

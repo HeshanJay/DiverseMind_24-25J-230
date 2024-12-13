@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { MdArrowBack } from "react-icons/md"; // Importing the Back Icon
+import { MdArrowBack } from "react-icons/md";
 import backgroundImg from "../../assets/background_images/back_img1.jpg";
 
-const VowelSymbolQ8 = ({ onNext, onBack }) => {
+const VowelSymbolQ8 = ({ onAnswer, onBack }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null); // Tracks the selected answer
-  const correctAnswer = "දික් ඇදපිල්ල, ඇලපිල්ල"; // Correct answer for the question
+  // const correctAnswer = "දික් ඇදපිල්ල, ඇලපිල්ල"; // Known to parent, no need here
   const answers = [
     "කෙටි ඇදපිල්ල, ඇලපිල්ල",
     "දික් ඇදපිල්ල, කෙටි ඉස්පිල්ල",
@@ -16,7 +16,14 @@ const VowelSymbolQ8 = ({ onNext, onBack }) => {
     setSelectedAnswer(answer);
   };
 
-  const isCorrect = selectedAnswer === correctAnswer;
+  const handleNextClick = () => {
+    if (!selectedAnswer) {
+      alert("කරුණාකර පිල්ලමක් තෝරන්න!");
+      return;
+    }
+    // Pass the chosen answer back to the parent
+    onAnswer(selectedAnswer);
+  };
 
   return (
     <div
@@ -44,9 +51,7 @@ const VowelSymbolQ8 = ({ onNext, onBack }) => {
                 onClick={() => handleAnswerClick(answer)}
                 className={`p-6 rounded-2xl shadow-lg text-2xl font-extrabold tracking-wide transition-all duration-300 ${
                   selectedAnswer === answer
-                    ? isCorrect
-                      ? "bg-green-400 text-white"
-                      : "bg-red-400 text-white"
+                    ? "bg-blue-300 scale-105 text-white"
                     : "bg-blue-200 text-blue-800 hover:bg-blue-300 hover:scale-105"
                 }`}
               >
@@ -60,9 +65,7 @@ const VowelSymbolQ8 = ({ onNext, onBack }) => {
       {/* Next Button */}
       <button
         className="absolute bottom-8 right-10 bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 hover:from-yellow-400 hover:to-purple-400 text-white text-xl font-extrabold py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 flex items-center gap-2"
-        onClick={() => {
-          onNext(); // Move to the next component if correct
-        }}
+        onClick={handleNextClick}
       >
         🌟 ඉදිරියට යමු 🚀
       </button>
