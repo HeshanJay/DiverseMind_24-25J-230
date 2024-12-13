@@ -147,7 +147,7 @@ const WritingCanvas_MadhyaAkshara2 = ({ onNext, onBack }) => {
         </button>
 
         {/* Pencil and Eraser - (You can implement the erasing logic if needed) */}
-        <div className="absolute left-1 top-[10%] flex items-center">
+        <div className="absolute left-1 top-[-10%] flex items-center">
           <img
             src={pencilImage}
             alt="Pencil"
@@ -155,7 +155,7 @@ const WritingCanvas_MadhyaAkshara2 = ({ onNext, onBack }) => {
             style={{ cursor: "pointer" }}
           />
         </div>
-        <div className="absolute left-1 top-[90%] flex items-center">
+        <div className="absolute left-1 top-[80%] flex items-center">
           <img
             src={eraserImage}
             alt="Eraser"
