@@ -39,7 +39,7 @@
 #     prediction = predict_outcome(data)
 #     return {"prediction": prediction}
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import cv2
 import mediapipe as mp
@@ -59,9 +59,12 @@ app.add_middleware(
 )
 
 # Load the emotion detection model
-with open('./app/model/emotion_model.json', 'r') as json_file:
-    emotion_model = model_from_json(json_file.read())
-emotion_model.load_weights('./app/model/emotion_model.h5')
+try:
+    with open('./app/model/emotion_model.json', 'r') as json_file:
+        emotion_model = model_from_json(json_file.read())
+    emotion_model.load_weights('./app/model/emotion_model.weights.h5')
+except Exception as e:
+    raise RuntimeError(f"Error loading emotion model: {e}")
 
 # Load Haar Cascade for face detection
 face_cascade = cv2.CascadeClassifier('./app/model/haarcascade_frontalface_default.xml')
@@ -75,51 +78,81 @@ face_mesh = mp_face_mesh.FaceMesh(
     min_tracking_confidence=0.5
 )
 
+# Define eye indices for Mediapipe
+LEFT_EYE = [362, 382, 381, 380, 374, 373, 390, 249, 263, 466, 388, 387, 386, 385, 384, 398]
+RIGHT_EYE = [33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161, 246]
+
+
 @app.get("/")
 def root():
     return {"message": "Real-Time Attention Detection API"}
 
+
 @app.get("/attention")
 def detect_attention():
     cap = cv2.VideoCapture(0)
+    if not cap.isOpened():
+        raise HTTPException(status_code=500, detail="Unable to access the webcam")
+
     total_scores = []
     total_blinks = 0
     frame_count = 0
 
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
+    try:
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                raise HTTPException(status_code=500, detail="Failed to capture frame from webcam")
 
-        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        results = face_mesh.process(rgb_frame)
-        gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            results = face_mesh.process(rgb_frame)
+            gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        if results.multi_face_landmarks:
-            landmarks = landmarks_detection(frame, results)
+            if results.multi_face_landmarks:
+                try:
+                    landmarks = landmarks_detection(frame, results)
 
-            # Blink detection
-            blink_ratio_value = blink_ratio(landmarks, [33, 133], [362, 263])
-            if blink_ratio_value > 3.0:
-                total_blinks += 1
+                    # Ensure sufficient landmarks for blink detection
+                    if len(landmarks) >= max(max(LEFT_EYE), max(RIGHT_EYE)):
+                        # Blink detection
+                        blink_ratio_value = blink_ratio(landmarks, RIGHT_EYE, LEFT_EYE)
+                        if blink_ratio_value > 3.0:
+                            total_blinks += 1
+                    else:
+                        print("Insufficient landmarks detected. Skipping frame.")
+                        continue
 
-            # Emotion detection
-            faces = face_cascade.detectMultiScale(gray_frame, 1.3, 5)
-            for (x, y, w, h) in faces:
-                roi_gray = gray_frame[y:y + h, x:x + w]
-                roi_gray = cv2.resize(roi_gray, (48, 48))
-                roi_gray = np.expand_dims(np.expand_dims(roi_gray, -1), 0)
-                emotion_prediction = emotion_model.predict(roi_gray)
-                emotion = np.argmax(emotion_prediction)
+                    # Emotion detection
+                    faces = face_cascade.detectMultiScale(gray_frame, 1.3, 5)
+                    for (x, y, w, h) in faces:
+                        roi_gray = gray_frame[y:y + h, x:x + w]
+                        roi_gray = cv2.resize(roi_gray, (48, 48))
+                        roi_gray = np.expand_dims(np.expand_dims(roi_gray, -1), 0)
+                        emotion_prediction = emotion_model.predict(roi_gray)
+                        emotion = np.argmax(emotion_prediction)
+                        print(f"Detected Emotion: {emotion}")
 
-            total_scores.append(8)  # Placeholder for actual logic
-            frame_count += 1
+                    total_scores.append(8)  # Placeholder for actual logic
+                    frame_count += 1
 
-        cv2.imshow("Webcam Feed", frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+                except IndexError as e:
+                    print(f"Error accessing landmarks: {e}")
+                    continue
+            else:
+                print("No face landmarks detected in this frame.")
 
-    cap.release()
-    cv2.destroyAllWindows()
-    return {"average_score": np.mean(total_scores), "status": "Focused"}
+            # For testing without GUI, comment out this block
+            cv2.imshow("Webcam Feed", frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):  # Press 'Q' to exit
+                break
 
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred during processing: {e}")
+
+    finally:
+        cap.release()
+        cv2.destroyAllWindows()
+
+    # Calculate final average score
+    average_score = np.mean(total_scores) if total_scores else 0
+    return {"average_score": average_score, "status": "Focused"}

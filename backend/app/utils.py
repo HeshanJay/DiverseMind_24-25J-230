@@ -4,9 +4,11 @@ from math import sqrt
 def landmarks_detection(image, results):
     """Detect landmarks and return coordinates."""
     image_height, image_width = image.shape[:2]
-    landmarks = [(int(point.x * image_width), int(point.y * image_height))
-                 for point in results.multi_face_landmarks[0].landmark]
-    return landmarks
+    if results.multi_face_landmarks:
+        landmarks = [(int(point.x * image_width), int(point.y * image_height))
+                     for point in results.multi_face_landmarks[0].landmark]
+        return landmarks
+    return []
 
 def euclidean_distance(point1, point2):
     """Compute Euclidean distance."""
@@ -16,13 +18,17 @@ def euclidean_distance(point1, point2):
 
 def blink_ratio(landmarks, right_eye_indices, left_eye_indices):
     """Calculate blink ratio."""
-    rh_distance = euclidean_distance(landmarks[right_eye_indices[0]], landmarks[right_eye_indices[8]])
-    rv_distance = euclidean_distance(landmarks[right_eye_indices[12]], landmarks[right_eye_indices[4]])
-    lh_distance = euclidean_distance(landmarks[left_eye_indices[0]], landmarks[left_eye_indices[8]])
-    lv_distance = euclidean_distance(landmarks[left_eye_indices[12]], landmarks[left_eye_indices[4]])
-    right_ratio = rh_distance / rv_distance
-    left_ratio = lh_distance / lv_distance
-    return (right_ratio + left_ratio) / 2
+    try:
+        rh_distance = euclidean_distance(landmarks[right_eye_indices[0]], landmarks[right_eye_indices[8]])
+        rv_distance = euclidean_distance(landmarks[right_eye_indices[12]], landmarks[right_eye_indices[4]])
+        lh_distance = euclidean_distance(landmarks[left_eye_indices[0]], landmarks[left_eye_indices[8]])
+        lv_distance = euclidean_distance(landmarks[left_eye_indices[12]], landmarks[left_eye_indices[4]])
+        right_ratio = rh_distance / rv_distance
+        left_ratio = lh_distance / lv_distance
+        return (right_ratio + left_ratio) / 2
+    except IndexError as e:
+        print(f"Error calculating blink ratio: {e}")
+        return 0  # Return a default ratio if there's an error
 
 def calculate_attention_score(emotion, gaze_ratio, blink_rate, yaw, pitch, roll):
     """Calculate the attention score."""
