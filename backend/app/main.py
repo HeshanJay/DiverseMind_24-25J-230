@@ -157,11 +157,14 @@
 #     average_score = np.mean(total_scores) if total_scores else 0
 #     return {"average_score": average_score, "status": "Focused"}
 
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
 import cv2
 import mediapipe as mp
 import numpy as np
+import time  # Import time to calculate elapsed time
+from math import sqrt
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from tensorflow.keras.models import model_from_json
 from app.utils import blink_ratio, landmarks_detection, calculate_attention_score
 from app.model.predictor import load_emotion_model, load_face_cascade, load_face_mesh
 
@@ -210,6 +213,9 @@ def detect_attention():
     total_blinks = 0
     frame_count = 0
     frame_rate = 30.0  # Approximate frame rate of the webcam. Adjust as needed.
+
+    # Record start time
+    start_time = time.time()
 
     # Placeholder head pose estimation and gaze ratio logic
     # If you have actual methods to compute these, implement them accordingly.
@@ -264,11 +270,6 @@ def detect_attention():
                     gaze_ratio = compute_gaze_ratio(landmarks)
 
                     # Approximate blink_rate per minute: 
-                    # blink_rate = (total_blinks / (elapsed_time_in_min))
-                    # Here, we approximate elapsed_time_in_min = frame_count/(frame_rate*60)
-                    # Actually: elapsed_time_in_min = (frame_count/frame_rate)/60 = frame_count/(frame_rate*60)
-                    # So blink_rate = total_blinks / ((frame_count/(frame_rate*60))) = total_blinks/(frame_count/(frame_rate*60))
-                    #             = (total_blinks / frame_count) * (frame_rate*60)
                     blink_rate = (total_blinks / frame_count * frame_rate * 60) if frame_count > 0 else 0
 
                     attention_score = calculate_attention_score(
@@ -299,6 +300,11 @@ def detect_attention():
         cap.release()
         cv2.destroyAllWindows()
 
-    # Calculate final average score
+    # Calculate final average score and total time
     average_score = np.mean(total_scores) if total_scores else 0
-    return {"average_score": average_score, "status": "Focused" if average_score > 0 else "Not Focused"}
+    elapsed_time = time.time() - start_time  # Calculate elapsed time in seconds
+    return {
+        "average_score": average_score,
+        "status": "Focused" if average_score > 0 else "Not Focused",
+        "total_time_seconds": round(elapsed_time, 2)  # Return total time in seconds
+    }
