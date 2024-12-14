@@ -157,17 +157,107 @@
 #     average_score = np.mean(total_scores) if total_scores else 0
 #     return {"average_score": average_score, "status": "Focused"}
 
+import numpy as np
+from math import sqrt
 import cv2
 import mediapipe as mp
-import numpy as np
-import time  # Import time to calculate elapsed time
-from math import sqrt
+from tensorflow.keras.models import model_from_json
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from tensorflow.keras.models import model_from_json
 from app.utils import blink_ratio, landmarks_detection, calculate_attention_score
 from app.model.predictor import load_emotion_model, load_face_cascade, load_face_mesh
 
+
+# Helper Functions
+def landmarks_detection(image, results):
+    """Detect landmarks and return coordinates."""
+    image_height, image_width = image.shape[:2]
+    if results.multi_face_landmarks:
+        landmarks = [(int(point.x * image_width), int(point.y * image_height))
+                     for point in results.multi_face_landmarks[0].landmark]
+        return landmarks
+    return []
+
+
+def euclidean_distance(point1, point2):
+    """Compute Euclidean distance."""
+    x1, y1 = point1
+    x2, y2 = point2
+    return sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+
+def blink_ratio(landmarks, right_eye_indices, left_eye_indices):
+    """Calculate blink ratio."""
+    try:
+        rh_distance = euclidean_distance(landmarks[right_eye_indices[0]], landmarks[right_eye_indices[8]])
+        rv_distance = euclidean_distance(landmarks[right_eye_indices[12]], landmarks[right_eye_indices[4]])
+        lh_distance = euclidean_distance(landmarks[left_eye_indices[0]], landmarks[left_eye_indices[8]])
+        lv_distance = euclidean_distance(landmarks[left_eye_indices[12]], landmarks[left_eye_indices[4]])
+        right_ratio = rh_distance / rv_distance
+        left_ratio = lh_distance / lv_distance
+        return (right_ratio + left_ratio) / 2
+    except IndexError as e:
+        print(f"Error calculating blink ratio: {e}")
+        return 0  # Return a default ratio if there's an error
+
+
+def estimate_head_pose(landmarks):
+    """Estimate head pose (yaw, pitch, roll)."""
+    # Placeholder values, replace with actual calculations
+    yaw = 0  # Example yaw in degrees
+    pitch = 0  # Example pitch in degrees
+    roll = 0  # Example roll in degrees
+    return yaw, pitch, roll
+
+
+def compute_gaze_ratio(landmarks):
+    """Compute gaze ratio."""
+    # Placeholder value, replace with actual gaze ratio calculation
+    return 0.5  # 0.5 means fairly centered gaze
+
+
+def calculate_attention_score(emotion, gaze_ratio, blink_rate, yaw, pitch, roll):
+    """Calculate the attention score with head pose and gaze ratio considerations."""
+    emotion_scores = {
+        "Happy": 3,
+        "Neutral": 2,
+        "Sad": -1,
+        "Angry": -2,
+        "Disgusted": -3,
+        "Fearful": -3,
+        "Surprised": -2
+    }
+    score = emotion_scores.get(emotion, 0)
+
+    # Gaze Scoring
+    if 0.4 <= gaze_ratio <= 0.6:
+        score += 3
+    elif 0.3 <= gaze_ratio <= 0.7:
+        score += 1
+    else:
+        score -= 2
+
+    # Blink Rate Scoring
+    if 4 <= blink_rate <= 7:
+        score += 3
+    elif 8 <= blink_rate <= 15:
+        score += 2
+    elif blink_rate < 4:
+        score -= 1
+    elif 16 <= blink_rate <= 40:
+        score -= 2
+    else:
+        score -= 3
+
+    # Head Pose Scoring
+    # A larger yaw/pitch/roll deviation means less focus.
+    head_pose_penalty = (abs(yaw) + abs(pitch) + abs(roll)) / 15
+    score -= min(head_pose_penalty, 3)
+
+    return max(min(score, 10), -10)
+
+
+# FastAPI Application Setup
 app = FastAPI()
 
 # Enable CORS
@@ -213,21 +303,7 @@ def detect_attention():
     total_blinks = 0
     frame_count = 0
     frame_rate = 30.0  # Approximate frame rate of the webcam. Adjust as needed.
-
-    # Record start time
-    start_time = time.time()
-
-    # Placeholder head pose estimation and gaze ratio logic
-    # If you have actual methods to compute these, implement them accordingly.
-    def estimate_head_pose(landmarks):
-        # TODO: Implement your head pose estimation logic
-        # Return yaw, pitch, roll in degrees
-        return 0, 0, 0  # Placeholder
-
-    def compute_gaze_ratio(landmarks):
-        # TODO: Implement gaze ratio calculation
-        # Return a float indicating how centered the gaze is
-        return 0.5  # Placeholder: 0.5 means fairly centered
+    total_time = 0  # Total time spent in the detection loop
 
     try:
         while True:
@@ -282,6 +358,7 @@ def detect_attention():
                     )
                     total_scores.append(attention_score)
                     frame_count += 1
+                    total_time += 1 / frame_rate  # Increment total time
 
                 except IndexError as e:
                     print(f"Error accessing landmarks: {e}")
@@ -300,11 +377,10 @@ def detect_attention():
         cap.release()
         cv2.destroyAllWindows()
 
-    # Calculate final average score and total time
+    # Calculate final average score
     average_score = np.mean(total_scores) if total_scores else 0
-    elapsed_time = time.time() - start_time  # Calculate elapsed time in seconds
     return {
         "average_score": average_score,
         "status": "Focused" if average_score > 0 else "Not Focused",
-        "total_time_seconds": round(elapsed_time, 2)  # Return total time in seconds
+        "total_time": total_time
     }
