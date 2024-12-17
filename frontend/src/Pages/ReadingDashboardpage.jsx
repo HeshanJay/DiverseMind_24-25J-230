@@ -50,7 +50,27 @@ const AttentionReadingTest = () => {
   };
 
   const handlePrevious = () => {
-    setCurrentComponent("ReadingDashboard");
+    // Navigate to the previous component based on the current state
+    switch (currentComponent) {
+      case "Passage2":
+        setCurrentComponent("Passage1");
+        break;
+      case "Passage3":
+        setCurrentComponent("Passage2");
+        break;
+      case "Passage4":
+        setCurrentComponent("Passage3");
+        break;
+      case "Passage5":
+        setCurrentComponent("Passage4");
+        break;
+      case "ScoreBoard":
+        setCurrentComponent("Passage5");
+        break;
+      default:
+        setCurrentComponent("ReadingDashboard");
+        break;
+    }
   };
 
   const handleRestart = () => {
