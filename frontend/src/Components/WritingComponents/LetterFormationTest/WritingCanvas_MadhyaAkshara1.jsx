@@ -1,12 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./WritingCanvas_MadhyaAkshara1.css";
-import backgroundImg from "../../assets/background_images/back_img1.jpg";
-import monkeyImage from "../../assets/characters/Monkey.png";
-import pencilImage from "../../assets/design_images/pencil.png";
-import eraserImage from "../../assets/design_images/eraser.png";
-import { MdArrowBack, MdArrowForward } from "react-icons/md";
+import backgroundImg from "../../../assets/background_images/back_img1.jpg";
+import monkeyImage from "../../../assets/characters/Monkey.png";
+import pencilImage from "../../../assets/design_images/pencil.png";
+import eraserImage from "../../../assets/design_images/eraser.png";
 
-const WritingCanvas_AvarohanaAkshara2 = ({ onNext, onBack }) => {
+const WritingCanvas_MadhyaAkshara1 = ({ onNext, onBack }) => {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 });
@@ -117,7 +116,7 @@ const WritingCanvas_AvarohanaAkshara2 = ({ onNext, onBack }) => {
           <div className="absolute top-6 w-full flex justify-center">
             <div className="text-6xl font-extrabold text-center">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500">
-                අවරෝහණ අක්ෂර
+                මධ්‍ය අක්ෂර
               </span>
             </div>
           </div>
@@ -125,7 +124,7 @@ const WritingCanvas_AvarohanaAkshara2 = ({ onNext, onBack }) => {
       </div>
 
       <div className="speech-bubble" style={{ zIndex: 20 }}>
-        ආයුබෝවන්! "ල" අකුර නිවැරදිව ලියමු.
+        ආයුබෝවන්! "ග" අකුර නිවැරදිව ලියමු.
       </div>
 
       <img
@@ -141,7 +140,7 @@ const WritingCanvas_AvarohanaAkshara2 = ({ onNext, onBack }) => {
           style={{ zIndex: 20 }}
         >
           <span className="bg-white text-blue-500 font-bold text-2xl py-1 px-3 rounded-md shadow-md">
-            "ල"
+            "ග"
           </span>
           අකුර ලියන්න
         </button>
@@ -180,14 +179,6 @@ const WritingCanvas_AvarohanaAkshara2 = ({ onNext, onBack }) => {
         ></canvas>
       </div>
 
-      {/* Navigation Buttons */}
-      <button
-        onClick={onBack}
-        className="absolute bottom-10 left-28 w-16 h-16 rounded-full shadow-lg flex justify-center items-center bg-gradient-to-r from-pink-400 to-purple-500 hover:scale-110 transition-transform duration-300"
-      >
-        <MdArrowBack size={40} color="white" />
-      </button>
-
       {/* Buttons */}
       <div className="absolute bottom-8" style={{ left: "450px", zIndex: 20 }}>
         <button className="bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-yellow-500 hover:to-pink-500 text-white font-bold text-xl py-3 px-6 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110">
@@ -206,4 +197,4 @@ const WritingCanvas_AvarohanaAkshara2 = ({ onNext, onBack }) => {
   );
 };
 
-export default WritingCanvas_AvarohanaAkshara2;
+export default WritingCanvas_MadhyaAkshara1;

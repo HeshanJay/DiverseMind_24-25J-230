@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { MdArrowBack } from "react-icons/md"; // Importing the Back Icon
-import backgroundImg from "../../assets/background_images/back_img1.jpg";
-import necklaceImage from "../../assets/VowelSymbolTest_images/neckless2.png";
+import backgroundImg from "../../../assets/background_images/back_img1.jpg";
+import museumImage from "../../../assets/VowelSymbolTest_images/museum.png";
 
-const VowelSymbolQ1 = ({ onAnswer, onBack }) => {
+const VowelSymbolQ5 = ({ onAnswer, onBack }) => {
   const [droppedSymbol, setDroppedSymbol] = useState(""); // Tracks the dropped symbol
-  const choices = ["මි", "මා", "මු", "මෑ"]; // Drag-and-drop choices
-  // const correctAnswer = "මා"; // The correct answer is known, but not needed here for logic
+  const choices = ["කවු", "ක", "කෞ", "කා"]; // Drag-and-drop choices
+  // const correctAnswer = "කෞ"; // Known to parent, no need here
 
   const handleDragStart = (e, symbol) => {
     e.dataTransfer.setData("text/plain", symbol);
@@ -48,10 +48,10 @@ const VowelSymbolQ1 = ({ onAnswer, onBack }) => {
             </div>
 
             {/* Image inside a styled box */}
-            <div className="mb-6 p-4 rounded-3xl shadow-lg border-4 border-pink-400 flex items-center justify-center w-64 h-64 bg-gradient-to-r from-pink-300 via-red-200 to-orange-200">
+            <div className="mb-6 p-4 rounded-3xl shadow-lg border-4 border-orange-400 flex items-center justify-center w-64 h-64 bg-gradient-to-r from-orange-300 via-orange-200 to-orange-100">
               <img
-                src={necklaceImage}
-                alt="Necklace"
+                src={museumImage}
+                alt="Museum"
                 className="w-48 h-auto rounded-lg shadow-md"
               />
             </div>
@@ -69,7 +69,7 @@ const VowelSymbolQ1 = ({ onAnswer, onBack }) => {
               >
                 {droppedSymbol || ""}
               </span>
-              <span className="inline">ලය</span>
+              <span className="inline">තුකාගාරය</span>
             </div>
 
             {/* Choices */}
@@ -108,4 +108,4 @@ const VowelSymbolQ1 = ({ onAnswer, onBack }) => {
   );
 };
 
-export default VowelSymbolQ1;
+export default VowelSymbolQ5;

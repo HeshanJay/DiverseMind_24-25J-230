@@ -1,12 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./WritingCanvas_MadhyaAkshara1.css";
-import backgroundImg from "../../assets/background_images/back_img1.jpg";
-import monkeyImage from "../../assets/characters/Monkey.png";
-import pencilImage from "../../assets/design_images/pencil.png";
-import eraserImage from "../../assets/design_images/eraser.png";
+import backgroundImg from "../../../assets/background_images/back_img1.jpg";
+import monkeyImage from "../../../assets/characters/Monkey.png";
+import pencilImage from "../../../assets/design_images/pencil.png";
+import eraserImage from "../../../assets/design_images/eraser.png";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
-const WritingCanvas_AvarohanaAkshara1 = ({ onNext, onBack }) => {
+const WritingCanvas_AarohanaAkshara2 = ({ onNext, onBack }) => {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 });
@@ -117,7 +117,7 @@ const WritingCanvas_AvarohanaAkshara1 = ({ onNext, onBack }) => {
           <div className="absolute top-6 w-full flex justify-center">
             <div className="text-6xl font-extrabold text-center">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500">
-                අවරෝහණ අක්ෂර
+                ආරෝහණ අක්ෂර
               </span>
             </div>
           </div>
@@ -125,7 +125,7 @@ const WritingCanvas_AvarohanaAkshara1 = ({ onNext, onBack }) => {
       </div>
 
       <div className="speech-bubble" style={{ zIndex: 20 }}>
-        ආයුබෝවන්! "අ" අකුර නිවැරදිව ලියමු.
+        ආයුබෝවන්! "ර" අකුර නිවැරදිව ලියමු.
       </div>
 
       <img
@@ -141,7 +141,7 @@ const WritingCanvas_AvarohanaAkshara1 = ({ onNext, onBack }) => {
           style={{ zIndex: 20 }}
         >
           <span className="bg-white text-blue-500 font-bold text-2xl py-1 px-3 rounded-md shadow-md">
-            "අ"
+            "ර"
           </span>
           අකුර ලියන්න
         </button>
@@ -206,4 +206,4 @@ const WritingCanvas_AvarohanaAkshara1 = ({ onNext, onBack }) => {
   );
 };
 
-export default WritingCanvas_AvarohanaAkshara1;
+export default WritingCanvas_AarohanaAkshara2;

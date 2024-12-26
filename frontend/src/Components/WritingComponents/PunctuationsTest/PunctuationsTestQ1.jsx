@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdArrowBack } from "react-icons/md";
-import backgroundImg from "../../assets/background_images/back_img1.jpg";
+import backgroundImg from "../../../assets/background_images/back_img1.jpg";
 
 const PunctuationsTestQ1 = ({ onAnswer, onBack }) => {
   const punctuationMarks = [

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { MdArrowBack } from "react-icons/md"; // Importing the Back Icon
-import backgroundImg from "../../assets/background_images/back_img1.jpg";
+import backgroundImg from "../../../assets/background_images/back_img1.jpg";
 
-const VowelSymbolQ7 = ({ onAnswer, onBack }) => {
+const VowelSymbolQ6 = ({ onAnswer, onBack }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null); // Tracks the selected answer
-  // const correctAnswer = "කෙටි ඇදපිල්ල, කෙටි ඉස්පිල්ල, ඇලපිල්ල"; // Known to parent, no need here
+  // const correctAnswer = "කෙටි ඉස්පිල්ල, ඇලපිල්ල"; // Known to parent, no need here
   const answers = [
-    "කෙටි ඇදපිල්ල, කෙටි ඉස්පිල්ල, ඇලපිල්ල",
-    "කෙටි ඇදපිල්ල, කෙටි ඉස්පිල්ල, ඇලපිල්ල, හල් කිරීම",
     "කෙටි ඉස්පිල්ල, ඇලපිල්ල",
+    "හල්කිරීම, කෙටි ඉස්පිල්ල, ඇලපිල්ල",
+    "හල්කිරීම, කෙටි ඉස්පිල්ල",
     "හල්කිරීම, කෙටි ඉස්පිල්ල",
   ];
 
@@ -40,7 +40,7 @@ const VowelSymbolQ7 = ({ onAnswer, onBack }) => {
 
           {/* Word Section */}
           <div className="mb-8 p-6 rounded-3xl shadow-lg bg-white text-center text-4xl font-bold text-blue-800 tracking-widest border-4 border-blue-400">
-            <span className="inline-block">රැකියාවක්</span>
+            <span className="inline-block">ආච්චි අම්මා</span>
           </div>
 
           {/* Answers Section */}
@@ -81,4 +81,4 @@ const VowelSymbolQ7 = ({ onAnswer, onBack }) => {
   );
 };
 
-export default VowelSymbolQ7;
+export default VowelSymbolQ6;

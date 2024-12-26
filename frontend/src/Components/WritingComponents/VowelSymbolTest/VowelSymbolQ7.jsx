@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { MdArrowBack } from "react-icons/md"; // Importing the Back Icon
-import backgroundImg from "../../assets/background_images/back_img1.jpg";
+import backgroundImg from "../../../assets/background_images/back_img1.jpg";
 
-const VowelSymbolQ10 = ({ onAnswer, onBack }) => {
+const VowelSymbolQ7 = ({ onAnswer, onBack }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null); // Tracks the selected answer
-  // const correctAnswer = "කෙටි වක් පාපිල්ල, ඇලපිල්ල, කෙටි ඉස්පිල්ල, කෙටි කොන් පාපිල්ල"; // Known to parent, no need here
+  // const correctAnswer = "කෙටි ඇදපිල්ල, කෙටි ඉස්පිල්ල, ඇලපිල්ල"; // Known to parent, no need here
   const answers = [
-    "කෙටි වක් පාපිල්ල, ඇලපිල්ල, කෙටි ඉස්පිල්ල, කෙටි කොන් පාපිල්ල",
-    "දික් කොන් පාපිල්ල, කෙටි ඉස්පිල්ල, ඇලපිල්ල",
-    "ඇලපිල්ල, කෙටි කොන් පාපිල්ල, කෙටි ඉස්පිල්ල",
-    "දික් ඇද පාපිල්ල, ඇලපිල්ල, කෙටි ඉස්පිල්ල",
+    "කෙටි ඇදපිල්ල, කෙටි ඉස්පිල්ල, ඇලපිල්ල",
+    "කෙටි ඇදපිල්ල, කෙටි ඉස්පිල්ල, ඇලපිල්ල, හල් කිරීම",
+    "කෙටි ඉස්පිල්ල, ඇලපිල්ල",
+    "හල්කිරීම, කෙටි ඉස්පිල්ල",
   ];
 
   const handleAnswerClick = (answer) => {
@@ -35,12 +35,12 @@ const VowelSymbolQ10 = ({ onAnswer, onBack }) => {
         <div className="bg-gradient-to-r from-blue-300/80 to-green-300/80 p-8 rounded-3xl shadow-lg w-[720px] h-auto relative border-4 border-green-600">
           {/* Title */}
           <div className="mb-6 text-2xl font-extrabold text-center text-white bg-purple-600 bg-opacity-80 py-2 px-6 rounded-xl shadow-md tracking-wider">
-            මෙම වාක්‍යයෙහි ඇති පිල්ලම් මොනවාද?
+            මෙම වචනයෙහි ඇති පිල්ලම් මොනවාද?
           </div>
 
           {/* Word Section */}
-          <div className="mb-8 p-6 rounded-3xl shadow-lg bg-white text-center text-3xl font-bold text-blue-800 tracking-widest border-4 border-blue-400">
-            <span className="inline-block">කුකුළා මිදුලේ පුටුව යටට අවා.</span>
+          <div className="mb-8 p-6 rounded-3xl shadow-lg bg-white text-center text-4xl font-bold text-blue-800 tracking-widest border-4 border-blue-400">
+            <span className="inline-block">රැකියාවක්</span>
           </div>
 
           {/* Answers Section */}
@@ -49,7 +49,7 @@ const VowelSymbolQ10 = ({ onAnswer, onBack }) => {
               <button
                 key={index}
                 onClick={() => handleAnswerClick(answer)}
-                className={`p-6 rounded-2xl shadow-lg text-xl font-extrabold tracking-wide transition-all duration-300 ${
+                className={`p-6 rounded-2xl shadow-lg text-2xl font-extrabold tracking-wide transition-all duration-300 ${
                   selectedAnswer === answer
                     ? "bg-blue-300 scale-105 text-white"
                     : "bg-blue-200 text-blue-800 hover:bg-blue-300 hover:scale-105"
@@ -81,4 +81,4 @@ const VowelSymbolQ10 = ({ onAnswer, onBack }) => {
   );
 };
 
-export default VowelSymbolQ10;
+export default VowelSymbolQ7;

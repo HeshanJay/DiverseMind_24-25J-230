@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { MdArrowBack } from "react-icons/md";
-import backgroundImg from "../../assets/background_images/back_img1.jpg";
+import backgroundImg from "../../../assets/background_images/back_img1.jpg";
 
-const VowelSymbolQ9 = ({ onAnswer, onBack }) => {
+const VowelSymbolQ8 = ({ onAnswer, onBack }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null); // Tracks the selected answer
-  // const correctAnswer = "දික් කොන් පාපිල්ල, කෙටි ඉස්පිල්ල, ඇලපිල්ල"; // Known to parent, no need here
+  // const correctAnswer = "දික් ඇදපිල්ල, ඇලපිල්ල"; // Known to parent, no need here
   const answers = [
-    "දික් කොන් පාපිල්ල, කෙටි ඉස්පිල්ල",
-    "දික් කොන් පාපිල්ල, කෙටි ඉස්පිල්ල, ඇලපිල්ල",
-    "ඇලපිල්ල, කෙටි කොන් පාපිල්ල, කෙටි ඉස්පිල්ල",
-    "දික් ඇද පාපිල්ල, ඇලපිල්ල, කෙටි ඉස්පිල්ල",
+    "කෙටි ඇදපිල්ල, ඇලපිල්ල",
+    "දික් ඇදපිල්ල, කෙටි ඉස්පිල්ල",
+    "හල්කිරීම, කෙටි ඉස්පිල්ල",
+    "දික් ඇදපිල්ල, ඇලපිල්ල",
   ];
 
   const handleAnswerClick = (answer) => {
@@ -40,7 +40,7 @@ const VowelSymbolQ9 = ({ onAnswer, onBack }) => {
 
           {/* Word Section */}
           <div className="mb-8 p-6 rounded-3xl shadow-lg bg-white text-center text-4xl font-bold text-blue-800 tracking-widest border-4 border-blue-400">
-            <span className="inline-block">චූටි පූසා බූලා ගාව නිදි.</span>
+            <span className="inline-block">වෑකර මාමා වෑවර බෑවා.</span>
           </div>
 
           {/* Answers Section */}
@@ -81,4 +81,4 @@ const VowelSymbolQ9 = ({ onAnswer, onBack }) => {
   );
 };
 
-export default VowelSymbolQ9;
+export default VowelSymbolQ8;

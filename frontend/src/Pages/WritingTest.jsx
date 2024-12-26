@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import WritingCanvas_MadhyaAkshara1 from "../Components/LetterFormationTest/WritingCanvas_MadhyaAkshara1";
-import WritingCanvas_MadhyaAkshara2 from "../Components/LetterFormationTest/WritingCanvas_MadhyaAkshara2";
-import WritingCanvas_AarohanaAkshara1 from "../Components/LetterFormationTest/WritingCanvas_AarohanaAkshara1";
-import WritingCanvas_AarohanaAkshara2 from "../Components/LetterFormationTest/WritingCanvas_AarohanaAkshara2";
-import WritingCanvas_AvarohanaAkshara1 from "../Components/LetterFormationTest/WritingCanvas_AvarohanaAkshara1";
-import WritingCanvas_AvarohanaAkshara2 from "../Components/LetterFormationTest/WritingCanvas_AvarohanaAkshara2";
+import WritingCanvas_MadhyaAkshara1 from "../Components/WritingComponents/LetterFormationTest/WritingCanvas_MadhyaAkshara1";
+import WritingCanvas_MadhyaAkshara2 from "../Components/WritingComponents/LetterFormationTest/WritingCanvas_MadhyaAkshara2";
+import WritingCanvas_AarohanaAkshara1 from "../Components/WritingComponents/LetterFormationTest/WritingCanvas_AarohanaAkshara1";
+import WritingCanvas_AarohanaAkshara2 from "../Components/WritingComponents/LetterFormationTest/WritingCanvas_AarohanaAkshara2";
+import WritingCanvas_AvarohanaAkshara1 from "../Components/WritingComponents/LetterFormationTest/WritingCanvas_AvarohanaAkshara1";
+import WritingCanvas_AvarohanaAkshara2 from "../Components/WritingComponents/LetterFormationTest/WritingCanvas_AvarohanaAkshara2";
 
-import VowelSymbolQ1 from "../Components/VowelSymbolTest/VowelSymbolQ1";
-import VowelSymbolQ2 from "../Components/VowelSymbolTest/VowelSymbolQ2";
-import VowelSymbolQ3 from "../Components/VowelSymbolTest/VowelSymbolQ3";
-import VowelSymbolQ4 from "../Components/VowelSymbolTest/VowelSymbolQ4";
-import VowelSymbolQ5 from "../Components/VowelSymbolTest/VowelSymbolQ5";
-import VowelSymbolQ6 from "../Components/VowelSymbolTest/VowelSymbolQ6";
-import VowelSymbolQ7 from "../Components/VowelSymbolTest/VowelSymbolQ7";
-import VowelSymbolQ8 from "../Components/VowelSymbolTest/VowelSymbolQ8";
-import VowelSymbolQ9 from "../Components/VowelSymbolTest/VowelSymbolQ9";
-import VowelSymbolQ10 from "../Components/VowelSymbolTest/VowelSymbolQ10";
+import VowelSymbolQ1 from "../Components/WritingComponents/VowelSymbolTest/VowelSymbolQ1";
+import VowelSymbolQ2 from "../Components/WritingComponents/VowelSymbolTest/VowelSymbolQ2";
+import VowelSymbolQ3 from "../Components/WritingComponents/VowelSymbolTest/VowelSymbolQ3";
+import VowelSymbolQ4 from "../Components/WritingComponents/VowelSymbolTest/VowelSymbolQ4";
+import VowelSymbolQ5 from "../Components/WritingComponents/VowelSymbolTest/VowelSymbolQ5";
+import VowelSymbolQ6 from "../Components/WritingComponents/VowelSymbolTest/VowelSymbolQ6";
+import VowelSymbolQ7 from "../Components/WritingComponents/VowelSymbolTest/VowelSymbolQ7";
+import VowelSymbolQ8 from "../Components/WritingComponents/VowelSymbolTest/VowelSymbolQ8";
+import VowelSymbolQ9 from "../Components/WritingComponents/VowelSymbolTest/VowelSymbolQ9";
+import VowelSymbolQ10 from "../Components/WritingComponents/VowelSymbolTest/VowelSymbolQ10";
 
-import PunctuationsTestQ1 from "../Components/PunctuationsTest/PunctuationsTestQ1";
-import PunctuationsTestQ2 from "../Components/PunctuationsTest/PunctuationsTestQ2";
-import PunctuationsTestQ3 from "../Components/PunctuationsTest/PunctuationsTestQ3";
-import PunctuationsTestQ4 from "../Components/PunctuationsTest/PunctuationsTestQ4";
-import PunctuationsTestQ5 from "../Components/PunctuationsTest/PunctuationsTestQ5";
+import PunctuationsTestQ1 from "../Components/WritingComponents/PunctuationsTest/PunctuationsTestQ1";
+import PunctuationsTestQ2 from "../Components/WritingComponents/PunctuationsTest/PunctuationsTestQ2";
+import PunctuationsTestQ3 from "../Components/WritingComponents/PunctuationsTest/PunctuationsTestQ3";
+import PunctuationsTestQ4 from "../Components/WritingComponents/PunctuationsTest/PunctuationsTestQ4";
+import PunctuationsTestQ5 from "../Components/WritingComponents/PunctuationsTest/PunctuationsTestQ5";
+
+import WritingFinalPrediction from "../Components/WritingComponents/WritingFinalPrediction";
 
 const WritingTest = () => {
   const [currentComponent, setCurrentComponent] = useState(1);
@@ -33,6 +35,9 @@ const WritingTest = () => {
   const [cnnOutputScore, setCnnOutputScore] = useState(0); // Letter formation
   const [vowelSymbolScore, setVowelSymbolScore] = useState(0); // Out of 10
   const [punctuationScore, setPunctuationScore] = useState(0); // Out of 10 (6 from Q1 + 1 each from Q2-Q5)
+
+  const [finalPrediction, setFinalPrediction] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
 
   const loadNextComponent = () => {
     setCurrentComponent((prev) => prev + 1);
@@ -55,20 +60,26 @@ const WritingTest = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/predict",
+        "http://127.0.0.1:8000/predict_letters",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      console.log("Prediction:", response.data);
-      alert(JSON.stringify(response.data));
 
+      // Log and show the response data in an alert
+      // console.log("Prediction Response:", response.data);
+      // alert("Prediction Response: " + JSON.stringify(response.data));
+
+      // Update the CNN output score
       if (response.data && typeof response.data.total_score === "number") {
         setCnnOutputScore(response.data.total_score);
       }
     } catch (error) {
       console.error("Error uploading images:", error);
+      alert(
+        "An error occurred while submitting images. Check console logs for details."
+      );
     }
   };
 
@@ -107,43 +118,39 @@ const WritingTest = () => {
   };
 
   // Punctuation Scores
-  // Q1 returns a score out of 6
-  // Q2-Q5 return 1 or 0
   const handlePunctuationScore = (score) => {
     setPunctuationScore((prev) => prev + score);
     loadNextComponent();
   };
 
-  // After completing the last component (PunctuationsTestQ5),
-  // currentComponent will become 22 (assuming Q5 is at 21).
-  // We'll trigger final evaluation then.
+  const handleFinalEvaluation = async () => {
+    const payload = {
+      cnn_output_score: cnnOutputScore,
+      vowel_symbol_score: vowelSymbolScore,
+      punctuation_score: punctuationScore,
+    };
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/final_writing_evaluation",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
+      const result = await response.json();
+      setFinalPrediction(result); // Store result
+      setShowPopup(true); // Show popup
+    } catch (err) {
+      console.error("Error fetching final evaluation:", err);
+    }
+  };
+
   useEffect(() => {
     if (currentComponent === 22) {
-      // All tests done, fetch final evaluation
-      const fetchFinalEvaluation = async () => {
-        const payload = {
-          cnn_output_score: cnnOutputScore,
-          vowel_symbol_score: vowelSymbolScore,
-          punctuation_score: punctuationScore,
-        };
-        try {
-          const response = await fetch(
-            "http://127.0.0.1:8000/final_evaluation",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
-            }
-          );
-          const result = await response.json();
-          alert("Final Result: " + JSON.stringify(result));
-        } catch (err) {
-          console.error("Error fetching final evaluation:", err);
-        }
-      };
-      fetchFinalEvaluation();
+      handleFinalEvaluation();
     }
-  }, [currentComponent, cnnOutputScore, vowelSymbolScore, punctuationScore]);
+  }, [currentComponent]);
 
   return (
     <div>
@@ -275,7 +282,20 @@ const WritingTest = () => {
       {currentComponent === 21 && (
         <PunctuationsTestQ5
           onBack={loadPreviousComponent}
-          onAnswer={(score) => handlePunctuationScore(score)}
+          onAnswer={(score) => {
+            handlePunctuationScore(score); // Update score
+            setTimeout(() => {
+              handleFinalEvaluation(); // Trigger evaluation after the last question
+            }, 500); // Delay ensures state updates
+          }}
+        />
+      )}
+
+      {/* Popup */}
+      {showPopup && (
+        <WritingFinalPrediction
+          data={finalPrediction}
+          onClose={() => setShowPopup(false)}
         />
       )}
     </div>

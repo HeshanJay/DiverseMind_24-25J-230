@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { MdArrowBack } from "react-icons/md"; // Importing the Back Icon
-import backgroundImg from "../../assets/background_images/back_img1.jpg";
-import museumImage from "../../assets/VowelSymbolTest_images/museum.png";
+import backgroundImg from "../../../assets/background_images/back_img1.jpg";
+import eggImage from "../../../assets/VowelSymbolTest_images/egg.png";
 
-const VowelSymbolQ5 = ({ onAnswer, onBack }) => {
+const VowelSymbolQ3 = ({ onAnswer, onBack }) => {
   const [droppedSymbol, setDroppedSymbol] = useState(""); // Tracks the dropped symbol
-  const choices = ["කවු", "ක", "කෞ", "කා"]; // Drag-and-drop choices
-  // const correctAnswer = "කෞ"; // Known to parent, no need here
+  const choices = ["බී", "බ", "බු", "බි"]; // Drag-and-drop choices
+  // const correctAnswer = "බි"; // Known to parent, no need here
 
   const handleDragStart = (e, symbol) => {
     e.dataTransfer.setData("text/plain", symbol);
@@ -48,10 +48,10 @@ const VowelSymbolQ5 = ({ onAnswer, onBack }) => {
             </div>
 
             {/* Image inside a styled box */}
-            <div className="mb-6 p-4 rounded-3xl shadow-lg border-4 border-orange-400 flex items-center justify-center w-64 h-64 bg-gradient-to-r from-orange-300 via-orange-200 to-orange-100">
+            <div className="mb-6 p-4 rounded-3xl shadow-lg border-4 border-gray-400 flex items-center justify-center w-64 h-64 bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100">
               <img
-                src={museumImage}
-                alt="Museum"
+                src={eggImage}
+                alt="Egg"
                 className="w-48 h-auto rounded-lg shadow-md"
               />
             </div>
@@ -69,7 +69,7 @@ const VowelSymbolQ5 = ({ onAnswer, onBack }) => {
               >
                 {droppedSymbol || ""}
               </span>
-              <span className="inline">තුකාගාරය</span>
+              <span className="inline">ත්තරය</span>
             </div>
 
             {/* Choices */}
@@ -108,4 +108,4 @@ const VowelSymbolQ5 = ({ onAnswer, onBack }) => {
   );
 };
 
-export default VowelSymbolQ5;
+export default VowelSymbolQ3;

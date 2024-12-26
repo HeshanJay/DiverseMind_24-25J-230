@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { MdArrowBack } from "react-icons/md";
-import backgroundImg from "../../assets/background_images/back_img1.jpg";
+import backgroundImg from "../../../assets/background_images/back_img1.jpg";
 
-const PunctuationsTestQ4 = ({ onAnswer, onBack }) => {
+const PunctuationsTestQ3 = ({ onAnswer, onBack }) => {
   const question = "නිවැරදි විරාම ලක්ෂණ සහිත වාක්‍ය තෝරන්න";
   const answers = [
-    '"අපි විනෝද චාරිකාවක් යමුද?" යැයි දර්ශනී අසුවා ය.',
-    "අපි විනෝද චාරිකාවක් යමුද යැයි දර්ශනී අසුවා ය.",
-    '"අපි විනෝද චාරිකාවක් යමුද යැයි" දර්ශනී අසුවා ය.',
-    '"අපි විනෝද චාරිකාවක් යමුද? යැයි" දර්ශනී අසුවා ය',
+    "අම්මා වම්බටු බණ්ඩක්කා මෑකරල් පොලෙන් ගෙනාවා ය.",
+    "අම්මා වම්බටු, බණ්ඩක්කා, මෑකරල් පොලෙන් ගෙනාවා ය",
+    "අම්මා, වම්බටු, බණ්ඩක්කා, මෑකරල් පොලෙන් ගෙනාවා ය.",
+    "අම්මා වම්බටු, බණ්ඩක්කා, මෑකරල් පොලෙන් ගෙනාවා ය.",
   ];
-  const correctAnswer = '"අපි විනෝද චාරිකාවක් යමුද?" යැයි දර්ශනී අසුවා ය.';
+  const correctAnswer = "අම්මා වම්බටු, බණ්ඩක්කා, මෑකරල් පොලෙන් ගෙනාවා ය.";
 
   const [selectedAnswer, setSelectedAnswer] = useState(null);
 
@@ -73,4 +73,4 @@ const PunctuationsTestQ4 = ({ onAnswer, onBack }) => {
   );
 };
 
-export default PunctuationsTestQ4;
+export default PunctuationsTestQ3;
