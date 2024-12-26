@@ -72,7 +72,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/predict")
+@app.post("/predict_letters")
 async def predict(images: List[UploadFile] = File(...)):
     logger.info(f"Received predict request with {len(images)} images")
     if not images:
@@ -131,7 +131,7 @@ class EvaluationInput(BaseModel):
     vowel_symbol_score: int
     punctuation_score: int
 
-@app.post("/final_evaluation")
+@app.post("/final_writing_evaluation")
 def final_evaluation(data: EvaluationInput):
     result = evaluate_student_writing_skills(
         data.cnn_output_score,
