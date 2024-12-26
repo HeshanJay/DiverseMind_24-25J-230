@@ -1,0 +1,110 @@
+/* General Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Fredoka One", sans-serif;
+}
+
+/* Background styling */
+.bg-cover {
+  background-size: cover;
+  background-position: center;
+}
+
+/* Scoreboard Container Styling */
+.scoreboard-frame-jungle {
+  background: rgba(255, 255, 255, 0.85); /* Light background */
+  border: 8px solid #4a7c59; /* Green border */
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(34, 139, 34, 0.5); /* Green shadow */
+  width: 90%;
+  max-width: 500px; /* Limit the width */
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Star bounce animation */
+@keyframes star-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.star-bounce {
+  animation: star-bounce 0.8s ease-in-out infinite;
+}
+
+/* Rabbit Image with Jumping Animation */
+@keyframes jump {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animal-jump {
+  animation: jump 1s infinite;
+}
+
+/* Button Styling */
+.restart-button {
+  background: linear-gradient(to right, #4caf50, #8bc34a);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.restart-button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.restart-button:active {
+  transform: scale(1);
+}
+
+/* Rabbit Container Styling */
+.rabbit-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Decorative vines in the corners of the scoreboard */
+.scoreboard-frame-jungle::before,
+.scoreboard-frame-jungle::after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: url("../../assets/decorations/vine.png") no-repeat center/contain;
+  animation: sway 3s infinite alternate ease-in-out;
+}
+
+.scoreboard-frame-jungle::before {
+  top: -25px;
+  left: -10px;
+}
+
+.scoreboard-frame-jungle::after {
+  bottom: -25px;
+  right: -10px;
+}
