@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 
 import WritingCanvas_MadhyaAkshara1 from "../Components/WritingComponents/LetterFormationTest/WritingCanvas_MadhyaAkshara1";
 import WritingCanvas_MadhyaAkshara2 from "../Components/WritingComponents/LetterFormationTest/WritingCanvas_MadhyaAkshara2";
@@ -26,10 +27,12 @@ import PunctuationsTestQ4 from "../Components/WritingComponents/PunctuationsTest
 import PunctuationsTestQ5 from "../Components/WritingComponents/PunctuationsTest/PunctuationsTestQ5";
 
 import WritingFinalPrediction from "../Components/WritingComponents/WritingFinalPrediction";
+import ReportView from "../Components/WritingComponents/ReportView";
 
 const WritingTest = () => {
   const [currentComponent, setCurrentComponent] = useState(1);
   const [images, setImages] = useState([]); // Store the 6 letter images
+  const [showReportView, setShowReportView] = useState(false);
 
   // Scores
   const [cnnOutputScore, setCnnOutputScore] = useState(0); // Letter formation
@@ -139,8 +142,12 @@ const WritingTest = () => {
         }
       );
       const result = await response.json();
-      setFinalPrediction(result); // Store result
-      setShowPopup(true); // Show popup
+
+      // *** Make sure finalPrediction is set ***
+      setFinalPrediction(result);
+
+      // Show the popup
+      setShowPopup(true);
     } catch (err) {
       console.error("Error fetching final evaluation:", err);
     }
@@ -151,6 +158,44 @@ const WritingTest = () => {
       handleFinalEvaluation();
     }
   }, [currentComponent]);
+
+  const handleViewReport = () => {
+    setShowReportView(true);
+    setShowPopup(false); // optionally hide the popup if you want
+  };
+
+  const handleSaveReport = async () => {
+    if (!finalPrediction) {
+      alert("No final prediction data to save!");
+      return;
+    }
+
+    // Build the minimal object to send to /save_report
+    const report = {
+      skill_level: finalPrediction.skill_level,
+      letter_formation_score: finalPrediction.letter_formation_score,
+      vowel_symbol_score: finalPrediction.vowel_symbol_score,
+      punctuation_score: finalPrediction.punctuation_score,
+    };
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/save_report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(report),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Report saved successfully! Inserted ID: " + data.inserted_id);
+      } else {
+        alert("Failed to save report: " + data.detail);
+      }
+    } catch (error) {
+      console.error("Save report error:", error);
+      alert("Error saving report: Check console.");
+    }
+  };
 
   return (
     <div>
@@ -291,12 +336,38 @@ const WritingTest = () => {
         />
       )}
 
-      {/* Popup */}
+      {/* Render final prediction popup */}
       {showPopup && (
         <WritingFinalPrediction
-          data={finalPrediction}
+          finalPredictionData={finalPrediction}
           onClose={() => setShowPopup(false)}
+          onSave={handleSaveReport}
+          onViewReport={handleViewReport} // pass the new callback
         />
+      )}
+
+      {/* Render the PDF viewer if user clicked "View Report" */}
+      {showReportView && finalPrediction && (
+        <div className="p-4 m-4 border border-gray-300">
+          <h2 className="text-2xl font-bold mb-2">Professional PDF Preview</h2>
+          {/* Inline PDF viewer */}
+          <PDFViewer width={600} height={800}>
+            <ReportView
+              finalPredictionData={finalPrediction}
+              onSave={handleSaveReport}
+            />
+          </PDFViewer>
+
+          {/* Download link */}
+          <PDFDownloadLink
+            document={<ReportView finalPredictionData={finalPrediction} />}
+            fileName="DiverseMind-writing-report.pdf"
+          >
+            {({ blob, url, loading, error }) =>
+              loading ? "Preparing PDF..." : "Download PDF"
+            }
+          </PDFDownloadLink>
+        </div>
       )}
     </div>
   );

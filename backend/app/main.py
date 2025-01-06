@@ -1,53 +1,6 @@
-# from fastapi import FastAPI, File, UploadFile
-# from fastapi.responses import JSONResponse
-# import numpy as np
-# from tensorflow.keras.models import load_model
-# import cv2
-# from app.model.predictor import predict_outcome
-# from typing import List
-# from fastapi.middleware.cors import CORSMiddleware
-# from pydantic import BaseModel
-# from app.model.predictor import predict_outcome
-
-# app = FastAPI()
-
-# # CORS configuration
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],  
-#     allow_credentials=True,
-#     allow_methods=["*"],  
-#     allow_headers=["*"],  
-# )
-
-# Define input schema
-# class InputData(BaseModel):
-#     addition_time: float
-#     substraction_time: float
-#     division_time: float
-#     multiplication_time: float
-#     fraction_time: float
-#     total_time: float
-#     total_accuracy: float
-#     addition_score: int
-#     substraction_score: int
-#     division_score: int
-#     multiplication_score: int
-#     fraction_score: int
-
-# @app.get("/")
-# def read_root():
-#     return {"message": "Math Skill Predictor API"}
-
-# @app.post("/predict/")
-# def predict(input_data: InputData):
-#     data = input_data.dict()
-#     prediction = predict_outcome(data)
-#     return {"prediction": prediction}
-
-
-# Writing
-# app/main.py
+import numpy as np
+from tensorflow.keras.models import load_model
+import cv2
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse
 from typing import List
@@ -56,6 +9,7 @@ from pydantic import BaseModel
 from app.model.predictor import predict_outcome
 from app.model.evaluate import evaluate_student_writing_skills
 import logging
+from app.db import get_database
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -72,6 +26,33 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Define input schema
+class InputData(BaseModel):
+    addition_time: float
+    substraction_time: float
+    division_time: float
+    multiplication_time: float
+    fraction_time: float
+    total_time: float
+    total_accuracy: float
+    addition_score: int
+    substraction_score: int
+    division_score: int
+    multiplication_score: int
+    fraction_score: int
+
+@app.get("/")
+def read_root():
+    return {"message": "Math Skill Predictor API"}
+
+@app.post("/predict/")
+def predict(input_data: InputData):
+    data = input_data.dict()
+    prediction = predict_outcome(data)
+    return {"prediction": prediction}
+
+
+# Writing
 @app.post("/predict_letters")
 async def predict(images: List[UploadFile] = File(...)):
     logger.info(f"Received predict request with {len(images)} images")
@@ -139,3 +120,32 @@ def final_evaluation(data: EvaluationInput):
         data.punctuation_score
     )
     return result
+
+
+# 1) Pydantic model for the final report data
+class ReportData(BaseModel):
+    skill_level: str
+    letter_formation_score: int
+    vowel_symbol_score: int
+    punctuation_score: int
+
+@app.post("/save_report")
+def save_report(report_data: ReportData):
+    """
+    Saves the final prediction and optional letter formation results to MongoDB.
+    """
+    db = get_database()
+
+    # Explicitly compare db to None
+    if db is None:
+        raise HTTPException(status_code=500, detail="Database connection failed")
+
+    collection = db["reports"]
+    doc = report_data.dict()
+
+    try:
+        result = collection.insert_one(doc)
+        return {"message": "Report saved successfully", "inserted_id": str(result.inserted_id)}
+    except Exception as e:
+        logger.error(f"Error saving report to MongoDB: {e}")
+        raise HTTPException(status_code=500, detail="Failed to save report")
