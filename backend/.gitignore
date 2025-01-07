@@ -9,3 +9,18 @@ venv/
 # Ignore IDE-specific files
 .vscode/
 *.log
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore virtual environment folders
+venv/
+.venv/
+
+# Ignore IDE-specific files
+.vscode/
+*.log
+
+# macOS system files
+.DS_Store
