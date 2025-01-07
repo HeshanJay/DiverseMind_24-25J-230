@@ -2,16 +2,22 @@ import numpy as np
 from tensorflow.keras.models import load_model
 import cv2
 from fastapi import FastAPI, File, UploadFile, HTTPException
-from fastapi.responses import JSONResponse
-from typing import List, HTTPException, Query
-from app.utils import hash_password, verify_password, create_verification_token, verify_token, send_verification_email, create_access_token
+from fastapi.responses import JSONResponse, RedirectResponse
+from typing import List, Query
+from app.utils import (
+    hash_password, 
+    verify_password, 
+    create_verification_token, 
+    verify_token, 
+    send_verification_email, 
+    create_access_token
+)
 from app.db import get_database
 from pydantic import BaseModel, EmailStr
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
 from app.model.evaluate import evaluate_student_writing_skills
 import logging
-from app.db import get_database
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
