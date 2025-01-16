@@ -181,16 +181,20 @@ const VisualTestActivity = () => {
                   නිවැරදි පිළිතුර තෝරන්න
                 </h2>
 
-                {/* Responsive Table Layout */}
-                <table className="w-full text-lg border-separate border-spacing-4">
+              {/* Responsive Table Layout */}
+              <table className="w-full text-lg border-separate border-spacing-4">
                   <tbody>
                     {questions[currentQuestion].answers.map((answer, index) => {
                       const isFirstCol = index % 2 === 0;
+                      const answerId = answer.id || index + 1;
 
                       if (isFirstCol) {
                         return (
                           <tr key={index}>
-                            <td className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg">
+                            <td
+                              className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg cursor-pointer hover:scale-105 transition-transform"
+                              onClick={() => handleAnswerClick(answerId)}
+                            >
                               <div className="flex justify-center items-center h-full w-full">
                                 <strong className="text-xl text-white align-center">
                                   {index + 1}.&nbsp;
@@ -207,7 +211,15 @@ const VisualTestActivity = () => {
                               </div>
                             </td>
                             {questions[currentQuestion].answers[index + 1] && (
-                              <td className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg">
+                              <td
+                                className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105 transition-transform rounded-lg shadow-lg cursor-pointer"
+                                onClick={() =>
+                                  handleAnswerClick(
+                                    questions[currentQuestion].answers[index + 1].id ||
+                                      index + 2
+                                  )
+                                }
+                              >
                                 <div className="flex justify-center items-center h-full w-full">
                                   <strong className="text-xl text-white">
                                     {index + 2}.&nbsp;
@@ -235,18 +247,7 @@ const VisualTestActivity = () => {
                 </table>
               </div>
 
-              {/* Answer Buttons */}
-              <div className="flex justify-center gap-4 mt-6">
-                {questions[currentQuestion].answers.map((answer, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleAnswerClick(answer.id || index + 1)}
-                    className="bg-gradient-to-r from-yellow-500 to-red-500 text-white px-6 py-3 rounded-full text-xl hover:scale-105 transition-transform"
-                  >
-                    {index + 1}
-                  </button>
-                ))}
-              </div>
+              
 
               {/* Timer Section for Answer Page */}
               <div className="flex justify-center mt-4">

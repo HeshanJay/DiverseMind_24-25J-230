@@ -17,6 +17,8 @@ import AudioTest from "./Components/Audio_test";
 import AttentionReadingTest from "./Pages/ReadingDashboardpage";
 import MathScreeningTest from "./Pages/math/MathScreeningTest";
 import WritingTest from "./Pages/WritingTest";
+import Login from "./Components/Login/Login";
+import Signup from "./Components/Signup/Signup";
 
 const App = () => {
   return (
@@ -46,6 +48,8 @@ const App = () => {
           />
           <Route path="/math" element={<MathScreeningTest />} />
           <Route path="/writingtest" element={<WritingTest />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
       </Routes>
     </BrowserRouter>
   </div>
