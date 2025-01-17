@@ -7,8 +7,6 @@ import question4Image from "../assets/Question3_images/P4.jpg";
 import question5Image from "../assets/Question3_images/P5.jpg";
 import { useNavigate } from "react-router-dom";
 
-
-// Answer images
 import answerImg1 from "../assets/Question3_images/answers/img1.jpg";
 import answerImg2 from "../assets/Question3_images/answers/img2.jpg";
 import answerImg3 from "../assets/Question3_images/answers/img3.jpg";
@@ -29,10 +27,26 @@ import answerImg17 from "../assets/Question3_images/answers/img17.jpg";
 import answerImg18 from "../assets/Question3_images/answers/img18.jpg";
 import answerImg19 from "../assets/Question3_images/answers/img19.jpg";
 import answerImg20 from "../assets/Question3_images/answers/img20.jpg";
-import ScoreBoard from "../Components/Score_board";
+import { useScores } from "../context/Score_context";
+import ScoreBoard from "../Components/Score_board"
 
 const MemoryTestActivity = () => {
-  const navigate = useNavigate(); // Hook for navigation
+    const {
+      visualDiscriminationScore,
+      setVisualDiscriminationScore,
+      memoryScore,
+      setMemoryScore,
+      languageVocabScore, 
+      setLanguageVocabScore,
+      audioDiscriminationScore, 
+      setAudioDiscriminationScore,
+      speedScore, 
+      setSpeedScore,
+      currentTestName, 
+      setCurrentTestName
+    } = useScores();
+
+  const navigate = useNavigate(); 
   
   const questions = [
     {
@@ -88,11 +102,37 @@ const MemoryTestActivity = () => {
   ];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(10);
   const [showImage, setShowImage] = useState(true);
   const [showAnswers, setShowAnswers] = useState(false);
-  const [score, setScore] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
+  
+
+  const sendDataToBackend = async (data) => {
+    console.log("Data being sent to backend:", data);
+  
+    try {
+  
+      const response = await fetch("http://127.0.0.1:8000/prediction/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Server Error: ${response.status}`);
+      }
+  
+      const result = await response.json();
+      alert(`Backend Prediction: ${result.prediction}`);
+    } catch (error) {
+      console.error("Error sending data to backend:", error);
+      alert(`Error sending data to backend: ${error.message}`);
+    }
+  };  
 
   useEffect(() => {
     let interval;
@@ -123,9 +163,30 @@ const MemoryTestActivity = () => {
     return () => clearInterval(interval);
   }, [showImage, showAnswers]);
 
-  const handleAnswerClick = (id) => {
-    if (id === questions[currentQuestion].correctAnswer) {
-      setScore(score + 1);
+  const handleAnswerClick = (answer) => {
+    if (answer === questions[currentQuestion].correctAnswer) {
+      setScore((prevScore) => prevScore + 1);
+  
+        switch (currentTestName) {
+          case "visual-test-activity":
+            setVisualDiscriminationScore((prev) => prev + 1);
+            break;
+          case "memory-test-activity":
+            setMemoryScore((prev) => prev + 1);
+            break;
+          case "Language Vocabulary Test":
+            setLanguageVocabScore((prev) => prev + 1);
+            break;
+          case "Audio Discrimination Test":
+            setAudioDiscriminationScore((prev) => prev + 1);
+            break;
+          case "Speed Test":
+            setSpeedScore((prev) => prev + 1);
+            break;
+          default:
+            console.warn(`Unhandled test name: ${currentTestName}`);
+        }
+      
     }
     handleNextQuestion();
   };
@@ -138,13 +199,20 @@ const MemoryTestActivity = () => {
       setTimer(10);
     } else {
       setIsCompleted(true);
-      // Navigate to SpeedMeasurementTest after 5 seconds
+
+      const data = {
+        Language_vocab: languageVocabScore,
+        Memory: memoryScore,
+        Speed: speedScore,
+        Visual_discrimination: visualDiscriminationScore,
+        Audio_Discrimination: audioDiscriminationScore,
+      };  
+
       setTimeout(() => {
         navigate("/speed-measurement-test");
-      }, 5000); // Delay set to 5 seconds
+      }, 5000);
     }
   };
-  
 
   const handleRestart = () => {
     setCurrentQuestion(0);
@@ -187,7 +255,7 @@ const MemoryTestActivity = () => {
         alt={`Question ${currentQuestion + 1}`}
         className="w-full max-h-screen object-cover rounded-lg"
         style={{
-          boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.7)", // Enhanced shadow for emphasis
+          boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.7)", 
         }}
       />
     </div>
@@ -204,7 +272,7 @@ const MemoryTestActivity = () => {
       <table className="w-full text-lg border-separate border-spacing-4">
         <tbody>
           {questions[currentQuestion].answers.map((answer, index) => {
-            const answerId = answer.id || (index + 1); // Ensure we have an answer ID
+            const answerId = answer.id || (index + 1); 
             const isFirstCol = index % 2 === 0;
 
             if (isFirstCol) {

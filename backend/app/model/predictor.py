@@ -32,6 +32,7 @@ def predict_outcome(data):
         str: Predicted label ('Normal', 'Medium', 'Low').
     """
     try:
+        
         # Convert input data to a DataFrame
         input_df = pd.DataFrame([data])
         # Apply scaling

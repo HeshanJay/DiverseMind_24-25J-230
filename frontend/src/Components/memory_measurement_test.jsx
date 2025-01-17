@@ -1,12 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import backImg from "../assets/background_images/back3.jpg"; // Ensure the image path is correct
+import backImg from "../assets/background_images/back3.jpg"; 
+import { useScores } from "../context/Score_context";
 
 const MemoryMeasurementTest = () => {
   const navigate = useNavigate();
+  const {
+    currentTestName, 
+    setCurrentTestName
+  } = useScores();
 
   const handleStart = () => {
-    navigate("/memory-test-activity"); // Correct navigation route
+    navigate("/memory-test-activity"); 
+    setCurrentTestName("memory-test-activity")
   };
 
   return (
@@ -23,7 +29,6 @@ const MemoryMeasurementTest = () => {
       <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-white px-4">
         <h1 className="text-4xl md:text-6xl font-bold mb-6">මතක පරීක්ෂණය</h1>
 
-        {/* Instructions Container */}
         <div className="bg-gray-800 bg-opacity-70 px-8 py-6 rounded-lg shadow-lg text-left max-w-xl w-full">
           <ul className="text-lg md:text-xl mb-8 list-disc list-inside leading-relaxed ml-11">
             <li>උපදෙස් නිවැරදිව කියවා පිළිතුරු සපයන්න.</li>

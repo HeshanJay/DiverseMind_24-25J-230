@@ -1,13 +1,19 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; 
 import backImg from "../assets/background_images/back3.jpg"; 
+import { useScores } from "../context/Score_context";
 
 const Language_vocab_test = () => {
   const navigate = useNavigate();
+  const {
+    currentTestName, 
+    setCurrentTestName
+  } = useScores();
 
   const handleStart = () => {
-    // Navigate to the activity page
-    navigate("/language-vocab-activity"); // Ensure this matches App.jsx
+    
+    navigate("/language-vocab-activity");
+    setCurrentTestName("Language Vocabulary Test") 
   };
 
   return (

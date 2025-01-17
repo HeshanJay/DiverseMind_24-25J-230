@@ -7,10 +7,25 @@ import accidentImage from "../assets/Questions1_images/4.jpg";
 import hospitalImage from "../assets/Questions1_images/5.jpg"; 
 import ScoreBoard from "../Components/Score_board";
 import { useNavigate } from "react-router-dom";  
-
+import { useScores } from "../context/Score_context";
 
 const Language_vocab_activity = () => {
-  const navigate = useNavigate(); // Hook for navigation
+  const {
+    visualDiscriminationScore,
+    setVisualDiscriminationScore,
+    memoryScore,
+    setMemoryScore,
+    languageVocabScore, 
+    setLanguageVocabScore,
+    audioDiscriminationScore, 
+    setAudioDiscriminationScore,
+    speedScore, 
+    setSpeedScore,
+    currentTestName, 
+    setCurrentTestName
+  } = useScores();
+
+  const navigate = useNavigate(); 
   const questions = [
     {
       image: trainImage,
@@ -72,6 +87,31 @@ const Language_vocab_activity = () => {
   const [score, setScore] = useState(0); 
   const [isCompleted, setIsCompleted] = useState(false); 
 
+   const sendDataToBackend = async (data) => {
+  console.log("Data being sent to backend:", data);
+
+  try {
+
+    const response = await fetch("http://127.0.0.1:8000/prediction/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server Error: ${response.status}`);
+    }
+
+    const result = await response.json();
+    alert(`Backend Prediction: ${result.prediction}`);
+  } catch (error) {
+    console.error("Error sending data to backend:", error);
+    alert(`Error sending data to backend: ${error.message}`);
+  }
+};
+
   useEffect(() => {
     if (showImage) {
       const interval = setInterval(() => {
@@ -79,7 +119,7 @@ const Language_vocab_activity = () => {
           if (prevTimer === 1) {
             setShowImage(false);
             setShowAnswers(true);
-            setTimer(15); 
+            setTimer(10); 
             clearInterval(interval);
           }
           return prevTimer - 1;
@@ -104,6 +144,32 @@ const Language_vocab_activity = () => {
     }
   }, [showAnswers]);
 
+  const handleAnswerClick = (index) => {
+    if (questions[currentQuestion].answers[index] === questions[currentQuestion].correctAnswer) {
+      setScore((prevScore) => prevScore + 1);
+      switch (currentTestName) {
+        case "visual-test-activity":
+          setVisualDiscriminationScore((prev) => prev + 1);
+          break;
+        case "Memory Test":
+          setMemoryScore((prev) => prev + 1);
+          break;
+        case "Language Vocabulary Test":
+          setLanguageVocabScore((prev) => prev + 1);
+          break;
+        case "Audio Discrimination Test":
+          setAudioDiscriminationScore((prev) => prev + 1);
+          break;
+        case "Speed Test":
+          setSpeedScore((prev) => prev + 1);
+          break;
+        default:
+          console.warn(`Unhandled test name: ${currentTestName}`);
+      }
+    }
+    handleNextQuestion();
+  };
+  
   const handleNextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
@@ -112,20 +178,23 @@ const Language_vocab_activity = () => {
       setTimer(10); 
     } else {
       setIsCompleted(true);
-      // Navigate to /memory-tests after quiz completion with a 5-second delay
+
+      
+      const data = {
+        Language_vocab: languageVocabScore,
+        Memory: memoryScore,
+        Speed: speedScore,
+        Visual_discrimination: visualDiscriminationScore,
+        Audio_Discrimination: audioDiscriminationScore,
+      };
+  
+      sendDataToBackend(data);
+
       setTimeout(() => {
         navigate("/memory-tests");
       }, 5000);
     }
   };
-  const handleAnswerClick = (index) => {
-    const selectedAnswer = questions[currentQuestion].answers[index];
-    if (selectedAnswer === questions[currentQuestion].correctAnswer) {
-      setScore((prevScore) => prevScore + 1); 
-    }
-    handleNextQuestion();
-  };
-
   const restartActivity = () => {
     setCurrentQuestion(0);
     setScore(0);
@@ -173,7 +242,6 @@ const Language_vocab_activity = () => {
               </>
             )}
   
-            {/* Timer for Question Page */}
             {!showAnswers && (
               <div className="flex justify-center mt-6 w-full">
                 <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg w-auto max-w-xs text-center">
@@ -181,7 +249,7 @@ const Language_vocab_activity = () => {
                 </div>
               </div>
             )}
-            {/* Answer Page */}
+           
 {showAnswers && (
   <>
     <div className="bg-gray-800 bg-opacity-70 p-4 rounded-lg shadow-lg mb-6 max-w-5xl mx-auto">
@@ -193,7 +261,6 @@ const Language_vocab_activity = () => {
       <table className="w-full text-lg border-separate border-spacing-3">
         <tbody>
           {questions[currentQuestion].answers.map((answer, index) => {
-            // Determine if this is the start of a new row
             if (index % 2 === 0) {
               return (
                 <tr key={index} className="flex gap-3 justify-center">
@@ -202,22 +269,22 @@ const Language_vocab_activity = () => {
                       onClick={() => handleAnswerClick(index)}
                       className="bg-gradient-to-r m-1 from-green-400 to-lime-600 text-white px-8 py-4 rounded-full text-2xl shadow-lg hover:scale-105 transition-transform flex items-center justify-start"
                       style={{
-                        width: "350px", // Button width
-                        height: "80px", // Button height
+                        width: "350px", 
+                        height: "80px", 
                       }}
                     >
                       <strong className="ml-4">{answer}</strong>
                     </button>
                   </td>
-                  {/* Check if there's a next item to render in the same row */}
+         
                   {questions[currentQuestion].answers[index + 1] && (
                     <td className="p-0 text-center">
                       <button
                         onClick={() => handleAnswerClick(index + 1)}
                         className="bg-gradient-to-r m-1 from-green-400 to-lime-600 text-white px-8 py-4 rounded-full text-2xl shadow-lg hover:scale-105 transition-transform flex items-center justify-start"
                         style={{
-                          width: "350px", // Button width
-                          height: "80px", // Button height
+                          width: "350px", 
+                          height: "80px", 
                         }}
                       >
                         <strong className="ml-4">{questions[currentQuestion].answers[index + 1]}</strong>

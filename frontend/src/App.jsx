@@ -17,11 +17,13 @@ import AudioTest from "./Components/Audio_test";
 import AttentionReadingTest from "./Pages/ReadingDashboardpage";
 import MathScreeningTest from "./Pages/math/MathScreeningTest";
 import WritingTest from "./Pages/WritingTest";
+import { ScoresProvider } from "./context/Score_context";
 
 const App = () => {
   return (
     <div>
       <BrowserRouter>
+      <ScoresProvider>
         <Routes>
         <Route index element={<Home />} />
         <Route path="/home" element={<Home />} />
@@ -47,6 +49,7 @@ const App = () => {
           <Route path="/math" element={<MathScreeningTest />} />
           <Route path="/writingtest" element={<WritingTest />} />
       </Routes>
+      </ScoresProvider>
     </BrowserRouter>
   </div>
   );

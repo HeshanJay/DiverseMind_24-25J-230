@@ -1,13 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import backImg from "../assets/background_images/back3.jpg"; 
+import { useScores } from "../context/Score_context"; 
 
 const AudioTest = () => {
   const navigate = useNavigate();
+  const {
+    currentTestName, 
+    setCurrentTestName
+  } = useScores();
 
   const handleStart = () => {
-    // Navigate to the audio measurement activity page
     navigate("/audio-measurement-activity");
+    setCurrentTestName("Audio Discrimination Test") 
   };
 
   return (

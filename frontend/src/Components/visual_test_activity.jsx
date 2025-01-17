@@ -14,9 +14,25 @@ import answerImg10 from "../assets/Question4_images/10.jpg";
 import answerImg11 from "../assets/Question4_images/11.jpg";
 import answerImg12 from "../assets/Question4_images/12.jpg";
 import ScoreBoard from "../Components/Score_board";
+import { useScores } from "../context/Score_context";
 
 const VisualTestActivity = () => {
-  const navigate = useNavigate(); // Added navigate hook
+    const {
+      visualDiscriminationScore,
+      setVisualDiscriminationScore,
+      memoryScore,
+      setMemoryScore,
+      languageVocabScore, 
+      setLanguageVocabScore,
+      audioDiscriminationScore, 
+      setAudioDiscriminationScore,
+      speedScore, 
+      setSpeedScore,
+      currentTestName, 
+      setCurrentTestName
+    } = useScores();
+
+  const navigate = useNavigate(); 
 
   const questions = [
     {
@@ -60,67 +76,118 @@ const VisualTestActivity = () => {
       correctAnswer: 2,
     },
   ];
-
+  
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(10);
   const [showImage, setShowImage] = useState(true);
   const [showAnswers, setShowAnswers] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  
 
-  useEffect(() => {
-    let interval;
-    if (showImage) {
-      interval = setInterval(() => {
-        setTimer((prevTimer) => {
-          if (prevTimer === 1) {
-            setShowImage(false);
-            setShowAnswers(true);
-            clearInterval(interval);
-            setTimer(10);
-          }
-          return prevTimer - 1;
-        });
-      }, 1000);
-    } else if (showAnswers) {
-      interval = setInterval(() => {
-        setTimer((prevTimer) => {
-          if (prevTimer === 1) {
-            handleNextQuestion();
-            clearInterval(interval);
-          }
-          return prevTimer - 1;
-        });
-      }, 1000);
+const sendDataToBackend = async (data) => {
+  console.log("Data being sent to backend:", data);
+
+  try {
+
+    const response = await fetch("http://127.0.0.1:8000/prediction/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server Error: ${response.status}`);
     }
 
-    return () => clearInterval(interval);
-  }, [showImage, showAnswers]);
+    const result = await response.json();
+    alert(`Backend Prediction: ${result.prediction}`);
+  } catch (error) {
+    console.error("Error sending data to backend:", error);
+    alert(`Error sending data to backend: ${error.message}`);
+  }
+};
 
-  const handleAnswerClick = (id) => {
-    if (id === questions[currentQuestion].correctAnswer) {
-      setScore(score + 1);
-    }
-    handleNextQuestion();
-  };
+useEffect(() => {
+  let interval;
+  if (showImage) {
+    interval = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer === 1) {
+          setShowImage(false);
+          setShowAnswers(true);
+          clearInterval(interval);
+          setTimer(10);
+        }
+        return prevTimer - 1;
+      });
+    }, 1000);
+  } else if (showAnswers) {
+    interval = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer === 1) {
+          handleNextQuestion();
+          clearInterval(interval);
+        }
+        return prevTimer - 1;
+      });
+    }, 1000);
+  }
 
-  const handleNextQuestion = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion((prev) => prev + 1);
-      setShowImage(true);
-      setShowAnswers(false);
-      setTimer(10);
-    } else {
-      setIsCompleted(true);
-      // Automatically navigate to memory-measurement-test after 1 second
-      setTimeout(() => {
-        navigate("/memory-measurement-test");
-      }, 5000);
+  return () => clearInterval(interval);
+}, [showImage, showAnswers]);
+
+const handleAnswerClick = (id) => {
+  if (id === questions[currentQuestion].correctAnswer) {
+    switch (currentTestName) {
+      case "visual-test-activity":
+        setVisualDiscriminationScore((prev) => prev + 1);
+        break;
+      case "Memory Test":
+        setMemoryScore((prev) => prev + 1);
+        break;
+      case "Language Vocabulary Test":
+        setLanguageVocabScore((prev) => prev + 1);
+        break;
+      case "Audio Discrimination Test":
+        setAudioDiscriminationScore((prev) => prev + 1);
+        break;
+      case "Speed Test":
+        setSpeedScore((prev) => prev + 1);
+        break;
+      default:
+        console.warn(`Unhandled test name: ${currentTestName}`);
     }
-  };
+  }
+  handleNextQuestion();
+};
+
+const handleNextQuestion = () => {
+  if (currentQuestion < questions.length - 1) {
+    setCurrentQuestion((prev) => prev + 1);
+    setShowImage(true);
+    setShowAnswers(false);
+    setTimer(10);
+  } else {
+    setIsCompleted(true);
+
+    const data = {
+      Language_vocab: languageVocabScore,
+      Memory: memoryScore,
+      Speed: speedScore,
+      Visual_discrimination: visualDiscriminationScore,
+      Audio_Discrimination: audioDiscriminationScore,
+    };
+
+    setTimeout(() => {
+      navigate("/memory-measurement-test");
+    }, 5000);
+  }
+};
 
   const handleRestart = () => {
-    // Restart the quiz
     setCurrentQuestion(0);
     setScore(0);
     setShowImage(true);
@@ -139,9 +206,8 @@ const VisualTestActivity = () => {
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
       {isCompleted ? (
-        // Display the ScoreBoard component
         <ScoreBoard
-          score={score}
+          score={visualDiscriminationScore}
           totalQuestions={questions.length}
           onRestart={handleRestart}
         />

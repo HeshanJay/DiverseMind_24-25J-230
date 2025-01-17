@@ -1,28 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { FaPlay } from "react-icons/fa"; // Import FaPlay
-import backImg from "../assets/background_images/back7.png"; // Background image for the audio page
-import backImgAnswer from "../assets/background_images/back12.jpg"; // Background image for the answers page
-import audio1 from "../assets/Audios/1.mp3"; // Question 1 audio
-import audio2 from "../assets/Audios/2.mp3"; // Question 2 audio
-import audio3 from "../assets/Audios/3.mp3"; // Question 3 audio
-import audio4 from "../assets/Audios/4.mp3"; // Question 4 audio
-import audio5 from "../assets/Audios/5.mp3"; // Question 5 audio
-import ScoreBoard from "../Components/Score_board"; // Import the ScoreBoard component
+import { FaPlay } from "react-icons/fa"; 
+import backImg from "../assets/background_images/back7.png"; 
+import backImgAnswer from "../assets/background_images/back12.jpg"; 
+import audio1 from "../assets/Audios/1.mp3"; 
+import audio2 from "../assets/Audios/2.mp3"; 
+import audio3 from "../assets/Audios/3.mp3"; 
+import audio4 from "../assets/Audios/4.mp3"; 
+import audio5 from "../assets/Audios/5.mp3"; 
+import ScoreBoard from "../Components/Score_board"; 
+import { useScores } from "../context/Score_context"; 
 import { useNavigate } from "react-router-dom"; 
 
 const AudioMeasurementActivity = () => {
-  const [currentQuestion, setCurrentQuestion] = useState(1); // Track the current question number
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false); // Whether audio is playing
-  const [showAnswers, setShowAnswers] = useState(false); // To show answers after audio plays twice
-  const [timer, setTimer] = useState(15); // Timer for the answer phase
-  const [audioPlayedCount, setAudioPlayedCount] = useState(0); // Track how many times the audio has played
-  const [score, setScore] = useState(0); // Track score
-  const [isQuizCompleted, setIsQuizCompleted] = useState(false); // To check if quiz is completed
-  const navigate = useNavigate(); // Hook for navigation
+  const {
+    visualDiscriminationScore,
+    setVisualDiscriminationScore,
+    memoryScore,
+    setMemoryScore,
+    languageVocabScore, 
+    setLanguageVocabScore,
+    audioDiscriminationScore, 
+    setAudioDiscriminationScore,
+    speedScore, 
+    setSpeedScore,
+    currentTestName, 
+    setCurrentTestName
+  } = useScores();
 
-  const audioFiles = [audio1, audio2, audio3, audio4, audio5]; // Audio files for all 5 questions
+  const navigate = useNavigate(); 
+  const audioFiles = [audio1, audio2, audio3, audio4, audio5]; 
 
-  // Answer options for each question
+  
   const answers = [
     [
       "1. අමරගේ පියා පොල් කැඩුවේය.",
@@ -55,21 +63,50 @@ const AudioMeasurementActivity = () => {
       "4. මහනුවර සිට කොළඹ බලා ධාවනය වන දුම්රිය පස්වරු 5.30 වන විට 6 වන වේදිකාවට ළගා වනු ඇත.",
     ],
   ];
-
-  // Answer options for the user to select (numbered options)
+  const [currentQuestion, setCurrentQuestion] = useState(1); 
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false); 
+  const [showAnswers, setShowAnswers] = useState(false); 
+  const [timer, setTimer] = useState(15); 
+  const [audioPlayedCount, setAudioPlayedCount] = useState(0); 
+  const [score, setScore] = useState(0); 
+  const [isQuizCompleted, setIsQuizCompleted] = useState(false); 
   const correctAnswers = [0, 3, 2, 1, 3];
   const answerOptions = ["1", "2", "3", "4"];
 
-  // Handle playing the audio twice (Only plays twice, no more)
+  const sendDataToBackend = async (data) => {
+    console.log("Data being sent to backend:", data);
+  
+    try {
+  
+      const response = await fetch("http://127.0.0.1:8000/prediction/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Server Error: ${response.status}`);
+      }
+  
+      const result = await response.json();
+      alert(`Backend Prediction: ${result.prediction}`);
+    } catch (error) {
+      console.error("Error sending data to backend:", error);
+      alert(`Error sending data to backend: ${error.message}`);
+    }
+  };
+
   useEffect(() => {
     if (audioPlayedCount < 2 && isAudioPlaying) {
-      const audio = new Audio(audioFiles[currentQuestion - 1]); // Get the current question's audio
+      const audio = new Audio(audioFiles[currentQuestion - 1]); 
       audio.play();
 
       audio.onended = () => {
-        setAudioPlayedCount((prev) => prev + 1); // Increment audio play count
+        setAudioPlayedCount((prev) => prev + 1); 
         if (audioPlayedCount + 1 >= 2) {
-          setShowAnswers(true); // Show answers after audio played twice
+          setShowAnswers(true); 
         }
       };
     }
@@ -78,49 +115,80 @@ const AudioMeasurementActivity = () => {
   // Start the audio (plays exactly 2 times)
   const handleStartAudio = () => {
     setIsAudioPlaying(true);
-    setShowAnswers(false); // Hide answers initially
-    setTimer(15); // Set the timer to 15 seconds for each question
-    setAudioPlayedCount(0); // Reset the audio play count for this question
+    setShowAnswers(false); 
+    setTimer(3); 
+    setAudioPlayedCount(0); 
   };
 
-  // Handle answer selection
-  const handleAnswerClick = (index) => {
-    if (index === correctAnswers[currentQuestion - 1]) {
-      setScore((prevScore) => prevScore + 1); // Increment score if correct
+  const handleAnswerClick = (answer) => {
+    if (answer === correctAnswers[currentQuestion]) {
+      setScore((prevScore) => prevScore + 1); // Update local score
+      switch (currentTestName) {
+        case "visual-test-activity":
+          setVisualDiscriminationScore((prev) => prev + 1);
+          break;
+        case "Memory Test":
+          setMemoryScore((prev) => prev + 1);
+          break;
+        case "Language Vocabulary Test":
+          setLanguageVocabScore((prev) => prev + 1);
+          break;
+        case "Audio Discrimination Test":
+          setAudioDiscriminationScore((prev) => prev + 1);
+          break;
+        case "Speed Test":
+          setSpeedScore((prev) => prev + 1);
+          break;
+        default:
+          console.warn(`Unhandled test name: ${currentTestName}`);
+      }
     }
-    if (currentQuestion < 5) {
-      setCurrentQuestion(currentQuestion + 1); // Move to the next question
-      setShowAnswers(false);
+    handleNextQuestion();
+  
+  };
+
+  const handleNextQuestion = () => {
+    if (currentQuestion < 4) {
+      setCurrentQuestion((prev) => prev + 1);
       setIsAudioPlaying(false);
+      setShowAnswers(false);
+      setTimer(4);
     } else {
-      setIsQuizCompleted(true); // Mark the quiz as completed
-      // Navigate to Language Vocabulary Test after 5 seconds
+      setIsQuizCompleted(true);
+
+      const data = {
+      Language_vocab: languageVocabScore,
+      Memory: memoryScore,
+      Speed: speedScore,
+      Visual_discrimination: visualDiscriminationScore,
+      Audio_Discrimination: audioDiscriminationScore,
+    };
+
+
       setTimeout(() => {
-        navigate("/language-vocab-test"); // Ensure the route exists in your router
+        navigate("/language-vocab-test");
       }, 5000);
     }
   };
-  
-  
-  // Timer countdown when answers are displayed
+ 
   useEffect(() => {
     if (showAnswers) {
       const timerId = setInterval(() => {
         setTimer((prev) => {
           if (prev === 1) {
-            clearInterval(timerId); // Stop timer when it reaches 0
+            clearInterval(timerId); 
             if (currentQuestion < 5) {
-              setCurrentQuestion(currentQuestion + 1); // Move to next question if time runs out
-              setShowAnswers(false); // Hide answers for the next question
-              setIsAudioPlaying(false); // Stop audio and reset for next question
+              setCurrentQuestion(currentQuestion + 1); 
+              setShowAnswers(false); 
+              setIsAudioPlaying(false); 
             }
           }
           return prev - 1;
         });
-      }, 1000); // Timer decrements every second
-      return () => clearInterval(timerId); // Cleanup timer when the component unmounts
+      }, 1000); 
+      return () => clearInterval(timerId); 
     }
-  }, [showAnswers, currentQuestion]);
+  }, [showAnswers]);
 
   return (
     <>
@@ -130,7 +198,7 @@ const AudioMeasurementActivity = () => {
         <div
           className="relative z-10 flex flex-col justify-center items-center"
           style={{
-            backgroundImage: showAnswers ? `url('${backImgAnswer}')` : `url('${backImg}')`, // Background image based on whether answers are shown
+            backgroundImage: showAnswers ? `url('${backImgAnswer}')` : `url('${backImg}')`, 
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -144,19 +212,16 @@ const AudioMeasurementActivity = () => {
 
           {/* Main Content */}
           <div className="relative z-10 flex flex-col justify-center items-center h-full text-white text-center">
-            {/* Title: Before Audio */}
+            
             {!isAudioPlaying && !showAnswers && (
               <h1 className="text-4xl font-bold mb-6">අවධානයෙන් සවන් දෙන්න</h1>
             )}
 
-            {/* While Audio is Playing */}
             {isAudioPlaying && !showAnswers && (
               <h1 className="text-4xl font-bold mb-6">අවධානයෙන් සවන් දෙන්න</h1>
             )}
 
             
-
-            {/* Audio Control (Play Button) */}
             {!isAudioPlaying && !showAnswers && (
               <button
                 onClick={handleStartAudio}
@@ -166,7 +231,6 @@ const AudioMeasurementActivity = () => {
               </button>
             )}
 
-            {/* While Audio is Playing (play icon button remains visible) */}
             {isAudioPlaying && !showAnswers && (
               <button
                 disabled
@@ -179,25 +243,24 @@ const AudioMeasurementActivity = () => {
          {/* Answer Display */}
 {showAnswers && (
   <>
-    {/* Main Container for Answers */}
+    
     <div className="bg-gray-800 bg-opacity-70 p-4 rounded-lg mb-6 w-full max-w-5xl mx-auto">
       <h2 className="text-3xl font-semibold mb-4 text-white text-center">
         නිවැරදි පිළිතුර තෝරන්න
       </h2>
 
-     {/* Answer Buttons in a Table */}
      <table className="w-full text-lg border-separate border-spacing-4">
         <tbody>
           {answers[currentQuestion - 1].map((answer, index) => {
-            const rowIndex = Math.floor(index / 2); // Calculate row index (2 items per row)
-            const colIndex = index % 2; // Calculate column index (2 items per row)
+            const rowIndex = Math.floor(index / 2); 
+            const colIndex = index % 2; 
 
             if (colIndex === 0) {
               return (
                 <tr key={rowIndex}>
                   <td className="p-4">
                     <button
-                      onClick={() => handleAnswerClick(index)} // Clicking calls handleAnswerClick with this answer index
+                      onClick={() => handleAnswerClick(index)} 
                       className="w-72 md:w-96 py-4 rounded-lg text-xl md:text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-500 text-white hover:scale-110 transition-transform"
                     >
                       {answer}
@@ -206,7 +269,7 @@ const AudioMeasurementActivity = () => {
                   {answers[currentQuestion - 1][index + 1] && (
                     <td className="p-4">
                       <button
-                        onClick={() => handleAnswerClick(index + 1)} // Next answer in the same row
+                        onClick={() => handleAnswerClick(index + 1)} 
                         className="w-72 md:w-96 py-4 rounded-lg text-xl md:text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-500 text-white hover:scale-110 transition-transform"
                       >
                         {answers[currentQuestion - 1][index + 1]}

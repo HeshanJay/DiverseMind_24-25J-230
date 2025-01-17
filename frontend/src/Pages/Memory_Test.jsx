@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Import Link for navigation
 import backImg from "../assets/background_images/back3.jpg";
+import { useScores } from "../context/Score_context";
 
 const MemoryTests = () => {
   const tests = [
@@ -10,6 +11,10 @@ const MemoryTests = () => {
     { id: 4, name: "ශ්‍රව්‍ය විෂමතා පරීක්ෂණය", link: "/audio-test" },
     { id: 5, name: "භාෂා ශබ්ද කෝෂ දැනුම පරීක්ෂණය", link: "/language-vocab-test" },
   ];
+  const {
+    currentTestName, 
+    setCurrentTestName
+  } = useScores();
 
   return (
     <div
@@ -29,6 +34,7 @@ const MemoryTests = () => {
               key={test.id}
               to={test.link}
               className="text-lg md:text-2xl font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-500 h-16 w-72 flex items-center justify-center rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 hover:rotate-1 hover:bg-gradient-to-l"
+              onClick={() => setCurrentTestName(test.name)}
             >
               {test.name}
             </Link>

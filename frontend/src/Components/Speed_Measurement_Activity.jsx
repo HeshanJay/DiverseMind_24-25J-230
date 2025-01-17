@@ -1,13 +1,29 @@
 import React, { useState, useEffect } from "react";
-import backImg from "../assets/background_images/back3.jpg"; 
+import backImg from "../assets/background_images/back3.jpg";
 import question1Image from "../assets/Questions2_images/1.jpg";
 import question2Image from "../assets/Questions2_images/2.jpg";
 import question3Image from "../assets/Questions2_images/3.jpg";
 import question4Image from "../assets/Questions2_images/4.jpg";
-import ScoreBoard from "../Components/Score_board"; 
-import { useNavigate } from "react-router-dom"; 
+import ScoreBoard from "../Components/Score_board";
+import { useScores } from "../context/Score_context";
+import { useNavigate } from "react-router-dom";
 
 const SpeedMeasurementActivity = () => {
+  const {
+    visualDiscriminationScore,
+    setVisualDiscriminationScore,
+    memoryScore,
+    setMemoryScore,
+    languageVocabScore,
+    setLanguageVocabScore,
+    audioDiscriminationScore,
+    setAudioDiscriminationScore,
+    speedScore,
+    setSpeedScore,
+    currentTestName,
+    setCurrentTestName,
+  } = useScores();
+
   const navigate = useNavigate();
   const questions = [
     {
@@ -40,6 +56,30 @@ const SpeedMeasurementActivity = () => {
   const [intervalId, setIntervalId] = useState(null);
   const [isCompleted, setIsCompleted] = useState(false);
 
+  const sendDataToBackend = async (data) => {
+    console.log("Data being sent to backend:", data);
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/prediction/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server Error: ${response.status}`);
+      }
+
+      const result = await response.json();
+      alert(`Backend Prediction: ${result.prediction}`);
+    } catch (error) {
+      console.error("Error sending data to backend:", error);
+      alert(`Error sending data to backend: ${error.message}`);
+    }
+  };
+
   useEffect(() => {
     if (showImage) {
       const id = setInterval(() => {
@@ -47,7 +87,7 @@ const SpeedMeasurementActivity = () => {
           if (prevTimer === 1) {
             setShowImage(false);
             setShowAnswers(true);
-            setTimer(15);
+            setTimer(10);
             clearInterval(id);
           }
           return prevTimer - 1;
@@ -72,14 +112,36 @@ const SpeedMeasurementActivity = () => {
       return () => clearInterval(id);
     }
   }, [showAnswers]);
+  
 
   const handleAnswerClick = (answer) => {
     if (answer === questions[currentQuestion].correctAnswer) {
-      setScore((prevScore) => prevScore + 1); // Increment the score silently
+      setScore((prevScore) => prevScore + 1);
+  
+      switch (currentTestName) {
+        case "visual-test-activity":
+          setVisualDiscriminationScore((prev) => prev + 1);
+          break;
+        case "Memory Test":
+          setMemoryScore((prev) => prev + 1);
+          break;
+        case "Language Vocabulary Test":
+          setLanguageVocabScore((prev) => prev + 1);
+          break;
+        case "Audio Discrimination Test":
+          setAudioDiscriminationScore((prev) => prev + 1);
+          break;
+        case "Speed Test":
+          setSpeedScore((prev) => prev + 1);
+          break;
+        default:
+          console.warn(`Unhandled test name: ${currentTestName}`);
+      }
     }
-    clearInterval(intervalId); // Clear the timer
-    moveToNextQuestion(); // Move to the next question
+    clearInterval(intervalId);
+    moveToNextQuestion();
   };
+  
 
   const moveToNextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
@@ -89,13 +151,21 @@ const SpeedMeasurementActivity = () => {
       setTimer(10);
     } else {
       setIsCompleted(true);
-      // Ensure navigation to /audio-test after 5 seconds
+
+      const data = {
+        Language_vocab: languageVocabScore,
+        Memory: memoryScore,
+        Speed: speedScore,
+        Visual_discrimination: visualDiscriminationScore,
+        Audio_Discrimination: audioDiscriminationScore,
+      };
+
       setTimeout(() => {
-        navigate("/audio-test"); // Correct route for navigation
+        navigate("/audio-test");
       }, 5000);
     }
   };
-  
+
   const restartActivity = () => {
     setCurrentQuestion(0);
     setScore(0);
@@ -104,6 +174,7 @@ const SpeedMeasurementActivity = () => {
     setTimer(10);
     setIsCompleted(false);
   };
+
 
   return (
     <div
@@ -124,8 +195,8 @@ const SpeedMeasurementActivity = () => {
             {/* Header */}
             <h1 className="text-4xl font-bold mb-6">
               {showAnswers
-                ? "නිවැරදි පිළිතුර තෝරන්න" // Display this text during the answer part
-                : `ප්‍රශ්නය: ${currentQuestion + 1}/${questions.length}`} {/* Display question number otherwise */}
+                ? "නිවැරදි පිළිතුර තෝරන්න" 
+                : `ප්‍රශ්නය: ${currentQuestion + 1}/${questions.length}`} 
             </h1>
 
             {/* Image Display */}
@@ -136,7 +207,7 @@ const SpeedMeasurementActivity = () => {
                 alt={`Question ${currentQuestion + 1}`}
                 className="w-full max-h-screen object-cover rounded-lg"
                 style={{
-                  boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.7)", // Enhanced shadow for emphasi
+                  boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.7)", 
                 }}
               />
               </div>
@@ -146,18 +217,17 @@ const SpeedMeasurementActivity = () => {
  {/* Answer Display */}
  {showAnswers && questions[currentQuestion]?.answers?.length > 0 && (
           <div className="overflow-x-auto p-3">
-          {/* Optional Question Text (if exists) */}
+        
           {questions[currentQuestion]?.question && (
             <div className="bg-gray-700 text-white text-2xl font-bold text-center p-6 rounded-lg shadow-lg">
               {questions[currentQuestion].question}
             </div>
           )}
         
-          {/* Maximized Shadow for the Answer Container */}
+         
           {showAnswers && questions[currentQuestion]?.answers?.length > 0 && (
             <table className="mt-6 w-full bg-gray-800 bg-opacity-50 rounded-lg shadow-2xl">
               <tbody>
-                {/* First Row of Answers */}
                 <tr>
                   <td className="p-4 text-left">
                     <button
@@ -182,7 +252,7 @@ const SpeedMeasurementActivity = () => {
                     </button>
                   </td>
                 </tr>
-                {/* Second Row of Answers */}
+                
                 <tr>
                   <td className="p-4 text-left">
                     <button

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from app.model.predictor import predict_outcome  # Import the prediction function
+from app.model.predictor import predict_outcome  
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -9,10 +9,10 @@ app = FastAPI()
 # CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
+    allow_origins=["*"],  
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods
-    allow_headers=["*"],  # Allow all headers
+    allow_methods=["*"],  
+    allow_headers=["*"],  
 )
 
 # Define input schema
@@ -36,7 +36,7 @@ def predict(input_data: InputData):
     """
     try:
         data = input_data.dict()
-        prediction = predict_outcome(data)  # Call the function from predictor.py
+        prediction = predict_outcome(data) 
         return {"prediction": prediction}
     except Exception as e:
         return {"error": str(e)}
