@@ -196,7 +196,7 @@ const MemoryTestActivity = () => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(10);
+      setTimer(4);
     } else {
       setIsCompleted(true);
 

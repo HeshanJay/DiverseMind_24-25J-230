@@ -175,7 +175,7 @@ const Language_vocab_activity = () => {
       setCurrentQuestion(currentQuestion + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(10); 
+      setTimer(4); 
     } else {
       setIsCompleted(true);
 
@@ -200,7 +200,7 @@ const Language_vocab_activity = () => {
     setScore(0);
     setShowImage(true);
     setShowAnswers(false);
-    setTimer(10);
+    setTimer(4);
     setIsCompleted(false);
   };
 

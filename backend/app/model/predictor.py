@@ -48,8 +48,3 @@ def predict_outcome(data):
         return predict_label
     except Exception as e:
         raise ValueError(f"Error during prediction: {e}")
-
-
-
-
-

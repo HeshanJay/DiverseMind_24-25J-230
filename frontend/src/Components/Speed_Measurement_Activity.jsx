@@ -148,7 +148,7 @@ const SpeedMeasurementActivity = () => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(10);
+      setTimer(4);
     } else {
       setIsCompleted(true);
 
@@ -171,7 +171,7 @@ const SpeedMeasurementActivity = () => {
     setScore(0);
     setShowImage(true);
     setShowAnswers(false);
-    setTimer(10);
+    setTimer(4);
     setIsCompleted(false);
   };
 
