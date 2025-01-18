@@ -277,20 +277,18 @@
 # def get_attention_result():
 #     return attention_results
 
+import threading
 import numpy as np
-from math import sqrt
 import cv2
 import mediapipe as mp
-import threading
+from math import sqrt
 from tensorflow.keras.models import model_from_json
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from fastapi import FastAPI, HTTPException, Query
-from app.utils import hash_password, verify_password, create_verification_token, verify_token, send_verification_email, create_access_token
-from app.db import get_database
 from pydantic import BaseModel, EmailStr
-
-from app.utils import blink_ratio, landmarks_detection, calculate_attention_score
+from app.utils import hash_password, verify_password, create_verification_token, verify_token, send_verification_email, create_access_token, blink_ratio, landmarks_detection, calculate_attention_score
+from app.db import get_database
 from app.model.predictor import load_emotion_model, load_face_cascade, load_face_mesh
 
 # FastAPI Application Setup
@@ -324,70 +322,16 @@ class AttentionSpanResult(BaseModel):
     status: str
     total_time: float
 
-@app.post("/signup/")
-def signup(teacher: TeacherSignupModel):
-    # Check if email already exists
-    if teachers_collection.find_one({"email": teacher.email}):
-        raise HTTPException(status_code=400, detail="Email already registered")
-
-    # Hash the password
-    hashed_password = hash_password(teacher.password)
-
-    # Save the teacher in the database
-    teachers_collection.insert_one({
-        "email": teacher.email,
-        "password": hashed_password,
-        "is_verified": False
-    })
-
-    # Generate and send verification token
-    token = create_verification_token(teacher.email)
-    send_verification_email(teacher.email, token)
-
-    return {"message": "Signup successful. Please verify your email. Please check your email"}
-
-@app.get("/verify-email/")
-def verify_email(token: str = Query(...)):
-    email = verify_token(token)
-    if email == "Expired":
-        return RedirectResponse(url="http://localhost:5173/verify-result?status=expired")
-    if email == "Invalid":
-        return RedirectResponse(url="http://localhost:5173/verify-result?status=invalid")
-
-    # Update the teacher's verification status
-    result = teachers_collection.update_one({"email": email}, {"$set": {"is_verified": True}})
-    if result.matched_count == 0:
-        return RedirectResponse(url="http://localhost:5173/verify-result?status=notfound")
-
-    return RedirectResponse(url="http://localhost:5173/login")
-
-@app.post("/login/")
-def login(teacher: TeacherLoginModel):
-    # Check if the email exists
-    teacher_data = teachers_collection.find_one({"email": teacher.email})
-    if not teacher_data:
-        raise HTTPException(status_code=401, detail="Invalid email or password")
-
-    # Verify the password
-    if not verify_password(teacher.password, teacher_data["password"]):
-        raise HTTPException(status_code=401, detail="Invalid email or password")
-
-    # Check if the email is verified
-    if not teacher_data["is_verified"]:
-        raise HTTPException(status_code=403, detail="Email not verified")
-
-    # Generate a JWT token
-    access_token = create_access_token({"sub": teacher.email})
-
-    return {"access_token": access_token, "token_type": "bearer", "message": "Login successful"}
-
-# Attention span detection
+# Real-Time Attention Detection Globals
 attention_results = {
     "average_score": None,
     "status": None,
     "total_time": None,
 }
+stop_detection = threading.Event()
+camera_thread = None
 
+# Load Models
 emotion_model = load_emotion_model('./app/model/emotion_model.json', './app/model/emotion_model.weights.h5')
 face_cascade = load_face_cascade('./app/model/haarcascade_frontalface_default.xml')
 face_mesh = load_face_mesh()
@@ -403,7 +347,7 @@ emotions_map = {
 
 # Real-Time Attention Detection Function
 def attention_detection_thread():
-    global attention_results
+    global attention_results, stop_detection
 
     print("Starting real-time attention detection...")
     cap = cv2.VideoCapture(0)
@@ -423,7 +367,7 @@ def attention_detection_thread():
     frame_rate = 30.0
 
     try:
-        while True:
+        while not stop_detection.is_set():
             ret, frame = cap.read()
             if not ret:
                 print("Error: Unable to read a frame.")
@@ -483,11 +427,69 @@ def attention_detection_thread():
             }
         print("Final Attention Results:", attention_results)
 
+# FastAPI Endpoints
+@app.post("/signup/")
+def signup(teacher: TeacherSignupModel):
+    if teachers_collection.find_one({"email": teacher.email}):
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    hashed_password = hash_password(teacher.password)
+    teachers_collection.insert_one({
+        "email": teacher.email,
+        "password": hashed_password,
+        "is_verified": False
+    })
+
+    token = create_verification_token(teacher.email)
+    send_verification_email(teacher.email, token)
+    return {"message": "Signup successful. Please verify your email."}
+
+@app.get("/verify-email/")
+def verify_email(token: str = Query(...)):
+    email = verify_token(token)
+    if email == "Expired":
+        return RedirectResponse(url="http://localhost:5173/verify-result?status=expired")
+    if email == "Invalid":
+        return RedirectResponse(url="http://localhost:5173/verify-result?status=invalid")
+
+    result = teachers_collection.update_one({"email": email}, {"$set": {"is_verified": True}})
+    if result.matched_count == 0:
+        return RedirectResponse(url="http://localhost:5173/verify-result?status=notfound")
+
+    return RedirectResponse(url="http://localhost:5173/login")
+
+@app.post("/login/")
+def login(teacher: TeacherLoginModel):
+    teacher_data = teachers_collection.find_one({"email": teacher.email})
+    if not teacher_data:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    if not verify_password(teacher.password, teacher_data["password"]):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    if not teacher_data["is_verified"]:
+        raise HTTPException(status_code=403, detail="Email not verified")
+
+    access_token = create_access_token({"sub": teacher.email})
+    return {"access_token": access_token, "token_type": "bearer", "message": "Login successful"}
+
 @app.get("/attention/start")
 def start_attention_detection():
-    thread = threading.Thread(target=attention_detection_thread)
-    thread.start()
+    global camera_thread, stop_detection
+    stop_detection.clear()
+    camera_thread = threading.Thread(target=attention_detection_thread)
+    camera_thread.start()
     return {"message": "Real-time attention detection started."}
+
+@app.get("/attention/stop")
+def stop_attention_detection():
+    global stop_detection, camera_thread
+    if camera_thread and camera_thread.is_alive():
+        stop_detection.set()
+        camera_thread.join()
+        stop_detection.clear()
+        return {"message": "Attention detection stopped."}
+    return {"message": "No active attention detection to stop."}
 
 @app.get("/attention/result")
 def get_attention_result():
@@ -495,13 +497,11 @@ def get_attention_result():
 
 @app.post("/save_attention_span")
 def save_attention_span(result: AttentionSpanResult):
-    if db is None:  # Explicitly check if the database connection is None
+    if db is None:
         raise HTTPException(status_code=500, detail="Database connection failed")
-
     try:
         result_data = result.dict()
         attention_collection.insert_one(result_data)
         return {"message": "Attention span result saved successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save attention span result: {e}")
-
