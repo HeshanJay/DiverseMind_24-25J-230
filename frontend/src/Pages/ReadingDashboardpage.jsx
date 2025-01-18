@@ -5,6 +5,7 @@ import Passage2 from "../Components/AttentionReadingTest/Passage2/Passage2";
 import Passage3 from "../Components/AttentionReadingTest/Passage3/Passage3";
 import Passage4 from "../Components/AttentionReadingTest/Passage4/Passage4";
 import Passage5 from "../Components/AttentionReadingTest/Passage5/Passage5";
+import Passage6 from "../Components/AttentionReadingTest/Passage6/Passage6";
 import ScoreBoard from "../Components/AttentionReadingTest/ScoreBoard/ScoreBoard";
 
 const AttentionReadingTest = () => {
@@ -12,7 +13,6 @@ const AttentionReadingTest = () => {
     localStorage.getItem("currentComponent") || "ReadingDashboard"
   );
 
-  // Initialize score to 0
   const [score, setScore] = useState(0);
 
   useEffect(() => {
@@ -22,12 +22,15 @@ const AttentionReadingTest = () => {
   const handleStartReading = () => setCurrentComponent("Passage1");
 
   const handleNext = (isCorrect) => {
-    // Increment score only if the answer is correct
-    if (isCorrect) {
+    if (
+      ["Passage2", "Passage3", "Passage4", "Passage5"].includes(
+        currentComponent
+      ) &&
+      isCorrect
+    ) {
       setScore((prevScore) => prevScore + 1);
     }
 
-    // Navigate through components
     switch (currentComponent) {
       case "Passage1":
         setCurrentComponent("Passage2");
@@ -42,6 +45,9 @@ const AttentionReadingTest = () => {
         setCurrentComponent("Passage5");
         break;
       case "Passage5":
+        setCurrentComponent("Passage6");
+        break;
+      case "Passage6":
         setCurrentComponent("ScoreBoard");
         break;
       default:
@@ -50,7 +56,6 @@ const AttentionReadingTest = () => {
   };
 
   const handlePrevious = () => {
-    // Navigate to the previous component based on the current state
     switch (currentComponent) {
       case "Passage2":
         setCurrentComponent("Passage1");
@@ -64,8 +69,11 @@ const AttentionReadingTest = () => {
       case "Passage5":
         setCurrentComponent("Passage4");
         break;
-      case "ScoreBoard":
+      case "Passage6":
         setCurrentComponent("Passage5");
+        break;
+      case "ScoreBoard":
+        setCurrentComponent("Passage6");
         break;
       default:
         setCurrentComponent("ReadingDashboard");
@@ -87,7 +95,7 @@ const AttentionReadingTest = () => {
       {currentComponent === "Passage1" && (
         <Passage1
           onPrevious={handlePrevious}
-          onNext={() => handleNext(false)} // No score for Passage1
+          onNext={(isCorrect) => handleNext(isCorrect)}
         />
       )}
       {currentComponent === "Passage2" && (
@@ -112,6 +120,12 @@ const AttentionReadingTest = () => {
         <Passage5
           onNext={(isCorrect) => handleNext(isCorrect)}
           onPrevious={handlePrevious}
+        />
+      )}
+      {currentComponent === "Passage6" && (
+        <Passage6
+          onNext={(isCorrect) => handleNext(isCorrect)}
+          onPrevious={() => setCurrentComponent("Passage5")}
         />
       )}
       {currentComponent === "ScoreBoard" && (
