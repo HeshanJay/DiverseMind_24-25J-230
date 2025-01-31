@@ -5,6 +5,7 @@ import Passage2 from "../Components/AttentionReadingTest/Passage2/Passage2";
 import Passage3 from "../Components/AttentionReadingTest/Passage3/Passage3";
 import Passage4 from "../Components/AttentionReadingTest/Passage4/Passage4";
 import Passage5 from "../Components/AttentionReadingTest/Passage5/Passage5";
+import PassageM from "../Components/AttentionReadingTest/PassageM/PassageM"; // New PassageM
 import Passage6 from "../Components/AttentionReadingTest/Passage6/Passage6";
 import ScoreBoard from "../Components/AttentionReadingTest/ScoreBoard/ScoreBoard";
 
@@ -45,7 +46,10 @@ const AttentionReadingTest = () => {
         setCurrentComponent("Passage5");
         break;
       case "Passage5":
-        setCurrentComponent("Passage6");
+        setCurrentComponent("PassageM"); // Go to PassageM instead of Passage6
+        break;
+      case "PassageM":
+        setCurrentComponent("Passage6"); // After PassageM, go to Passage6
         break;
       case "Passage6":
         setCurrentComponent("ScoreBoard");
@@ -69,8 +73,11 @@ const AttentionReadingTest = () => {
       case "Passage5":
         setCurrentComponent("Passage4");
         break;
+      case "PassageM":
+        setCurrentComponent("Passage5"); // Go back to Passage5 from PassageM
+        break;
       case "Passage6":
-        setCurrentComponent("Passage5");
+        setCurrentComponent("PassageM"); // Go back to PassageM from Passage6
         break;
       case "ScoreBoard":
         setCurrentComponent("Passage6");
@@ -122,10 +129,16 @@ const AttentionReadingTest = () => {
           onPrevious={handlePrevious}
         />
       )}
+      {currentComponent === "PassageM" && (
+        <PassageM
+          onNext={(isCorrect) => handleNext(isCorrect)}
+          onPrevious={() => setCurrentComponent("Passage5")}
+        />
+      )}
       {currentComponent === "Passage6" && (
         <Passage6
           onNext={(isCorrect) => handleNext(isCorrect)}
-          onPrevious={() => setCurrentComponent("Passage5")}
+          onPrevious={() => setCurrentComponent("PassageM")}
         />
       )}
       {currentComponent === "ScoreBoard" && (
