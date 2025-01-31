@@ -9,7 +9,9 @@ import PassageM from "../Components/AttentionReadingTest/PassageM/PassageM";
 import PassageM1 from "../Components/AttentionReadingTest/PassageM1/PassageM1";
 import PassageM2 from "../Components/AttentionReadingTest/PassageM2/PassageM2";
 import PassageM3 from "../Components/AttentionReadingTest/PassageM3/PassageM3";
-import PassageK from "../Components/AttentionReadingTest/PassageK/PassageK"; // New PassageK
+import PassageK from "../Components/AttentionReadingTest/PassageK/PassageK";
+import PassageK1 from "../Components/AttentionReadingTest/PassageK1/PassageK1";
+import PassageK2 from "../Components/AttentionReadingTest/PassageK2/PassageK2";
 import Passage6 from "../Components/AttentionReadingTest/Passage6/Passage6";
 import ScoreBoard from "../Components/AttentionReadingTest/ScoreBoard/ScoreBoard";
 
@@ -25,7 +27,7 @@ const AttentionReadingTest = () => {
   }, [currentComponent]);
 
   const handleNext = (isCorrect) => {
-    // Ensure only Passage2, Passage3, Passage4, and Passage5 contribute to the score
+    // ✅ Ensure only Passage2, Passage3, Passage4, and Passage5 affect the score
     if (
       ["Passage2", "Passage3", "Passage4", "Passage5"].includes(
         currentComponent
@@ -64,6 +66,12 @@ const AttentionReadingTest = () => {
         setCurrentComponent("PassageK");
         break;
       case "PassageK":
+        setCurrentComponent("PassageK1");
+        break;
+      case "PassageK1":
+        setCurrentComponent("PassageK2");
+        break;
+      case "PassageK2":
         setCurrentComponent("Passage6");
         break;
       case "Passage6":
@@ -103,8 +111,14 @@ const AttentionReadingTest = () => {
       case "PassageK":
         setCurrentComponent("PassageM3");
         break;
-      case "Passage6":
+      case "PassageK1":
         setCurrentComponent("PassageK");
+        break;
+      case "PassageK2":
+        setCurrentComponent("PassageK1");
+        break;
+      case "Passage6":
+        setCurrentComponent("PassageK2");
         break;
       case "ScoreBoard":
         setCurrentComponent("Passage6");
@@ -161,20 +175,32 @@ const AttentionReadingTest = () => {
       )}
       {currentComponent === "PassageK" && (
         <PassageK
-          onNext={() => setCurrentComponent("Passage6")}
+          onNext={() => setCurrentComponent("PassageK1")}
           onPrevious={() => setCurrentComponent("PassageM3")}
+        />
+      )}
+      {currentComponent === "PassageK1" && (
+        <PassageK1
+          onNext={() => setCurrentComponent("PassageK2")}
+          onPrevious={() => setCurrentComponent("PassageK")}
+        />
+      )}
+      {currentComponent === "PassageK2" && (
+        <PassageK2
+          onNext={() => setCurrentComponent("Passage6")}
+          onPrevious={() => setCurrentComponent("PassageK1")}
         />
       )}
       {currentComponent === "Passage6" && (
         <Passage6
           onNext={handleNext}
-          onPrevious={() => setCurrentComponent("PassageK")}
+          onPrevious={() => setCurrentComponent("PassageK2")}
         />
       )}
       {currentComponent === "ScoreBoard" && (
         <ScoreBoard
           score={score}
-          totalQuestions={4} // Ensures only Passage2, Passage3, Passage4, and Passage5 are counted
+          totalQuestions={4} // ✅ Ensures only Passage2, Passage3, Passage4, and Passage5 are counted
           onRestart={() => setCurrentComponent("ReadingDashboard")}
         />
       )}
