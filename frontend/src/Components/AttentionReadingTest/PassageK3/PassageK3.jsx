@@ -29,8 +29,8 @@ const PassageK3 = ({ onPrevious, onNext }) => {
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
-      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-green-400">
-        <h1 className="text-3xl font-extrabold text-green-600 mb-6">
+      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-violet-400">
+        <h1 className="text-3xl font-extrabold text-violet-600 mb-6">
           ගෙදර අය බබාගේ හැසිරීම ගැන කෙසේ ප්‍රතිචාර දක්වූවේද?
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
@@ -40,7 +40,7 @@ const PassageK3 = ({ onPrevious, onNext }) => {
               onClick={() => handleOptionClick(option)}
               className={`p-4 rounded-lg border-2 transition-transform duration-300 shadow-md hover:scale-105 ${
                 selectedOption === option
-                  ? "bg-green-500 text-white border-green-700"
+                  ? "bg-violet-500 text-white border-violet-700"
                   : "bg-white text-gray-800 border-gray-300"
               }`}
             >

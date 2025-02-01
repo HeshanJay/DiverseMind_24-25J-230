@@ -27,8 +27,8 @@ const PassageK2 = ({ onPrevious, onNext }) => {
       className="bg-cover bg-center w-screen h-screen flex justify-center items-center relative m-0 p-0"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-blue-400">
-        <h1 className="text-3xl font-extrabold text-blue-600 mb-6">
+      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-lime-400">
+        <h1 className="text-3xl font-extrabold text-lime-600 mb-6">
           බබා ඇයි හැම විටම අඬමින් දේවල් ඉල්ලන්නේ?
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
@@ -38,7 +38,7 @@ const PassageK2 = ({ onPrevious, onNext }) => {
               onClick={() => handleOptionClick(option)}
               className={`p-4 rounded-lg border-2 transition-transform duration-300 shadow-md hover:scale-105 ${
                 selectedOption === option
-                  ? "bg-blue-500 text-white border-blue-700"
+                  ? "bg-lime-500 text-white border-lime-700"
                   : "bg-white text-gray-800 border-gray-300"
               }`}
             >
