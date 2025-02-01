@@ -12,7 +12,7 @@ import PassageM3 from "../Components/AttentionReadingTest/PassageM3/PassageM3";
 import PassageK from "../Components/AttentionReadingTest/PassageK/PassageK";
 import PassageK1 from "../Components/AttentionReadingTest/PassageK1/PassageK1";
 import PassageK2 from "../Components/AttentionReadingTest/PassageK2/PassageK2";
-import PassageK3 from "../Components/AttentionReadingTest/PassageK3/PassageK3"; // ✅ Added PassageK3
+import PassageK3 from "../Components/AttentionReadingTest/PassageK3/PassageK3";
 import Passage6 from "../Components/AttentionReadingTest/Passage6/Passage6";
 import ScoreBoard from "../Components/AttentionReadingTest/ScoreBoard/ScoreBoard";
 
@@ -28,7 +28,7 @@ const AttentionReadingTest = () => {
   }, [currentComponent]);
 
   const handleNext = (isCorrect) => {
-    // ✅ Ensure only Passage2, Passage3, Passage4, and Passage5 affect the score
+    //Ensure only Passage2, Passage3, Passage4, and Passage5 affect the score
     if (
       ["Passage2", "Passage3", "Passage4", "Passage5"].includes(
         currentComponent
@@ -73,10 +73,10 @@ const AttentionReadingTest = () => {
         setCurrentComponent("PassageK2");
         break;
       case "PassageK2":
-        setCurrentComponent("PassageK3"); // ✅ Navigate to PassageK3
+        setCurrentComponent("PassageK3");
         break;
       case "PassageK3":
-        setCurrentComponent("Passage6"); // ✅ Navigate to Passage6
+        setCurrentComponent("Passage6"); //Navigate to Passage6
         break;
       case "Passage6":
         setCurrentComponent("ScoreBoard");
@@ -122,10 +122,10 @@ const AttentionReadingTest = () => {
         setCurrentComponent("PassageK1");
         break;
       case "PassageK3":
-        setCurrentComponent("PassageK2"); // ✅ Navigate back to PassageK2
+        setCurrentComponent("PassageK2"); //Navigate back to PassageK2
         break;
       case "Passage6":
-        setCurrentComponent("PassageK3"); // ✅ Navigate back to PassageK3
+        setCurrentComponent("PassageK3"); // Navigate back to PassageK3
         break;
       case "ScoreBoard":
         setCurrentComponent("Passage6");
