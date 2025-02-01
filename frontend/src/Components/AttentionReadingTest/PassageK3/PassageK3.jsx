@@ -7,12 +7,12 @@ const PassageK3 = ({ onPrevious, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    "වගා භූමිය ජලයෙන් ගිලීම",
-    "මියො වගාවට හානි කිරීම",
-    "මියෝ වගා සහ පොළොව විනාශ කිරීම", // Correct answer is "C"
-    "කාලගුණය වැඩි දැඩි වීම",
+    "බබාව දැඩියෙන් දණ්ඩනය කළා",
+    "බබාව අනධිකරණයට පැමිණිල්ලක් කළා",
+    "බබාව නළවා, ඔහු ඉල්ලන දේ සැපයීය", // Correct answer is "C"
+    "බබාව ගෙදරින් පිටුවහල් කළා",
   ];
-  const correctAnswer = "මියෝ වගා සහ පොළොව විනාශ කිරීම";
+  const correctAnswer = "බබාව නළවා, ඔහු ඉල්ලන දේ සැපයීය";
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -31,7 +31,7 @@ const PassageK3 = ({ onPrevious, onNext }) => {
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-green-400">
         <h1 className="text-3xl font-extrabold text-green-600 mb-6">
-          හෙනේ මාමාට කතාවේදී මුහුණ දීමට සිදුවන ප්‍රධාන ගැටළුව කුමක්ද?
+          ගෙදර අය බබාගේ හැසිරීම ගැන කෙසේ ප්‍රතිචාර දක්වූවේද?
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (

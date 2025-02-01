@@ -7,12 +7,12 @@ const PassageK2 = ({ onPrevious, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    "වගාවේ පිටුපස සැගවීම",
-    "විදුලිය වගේ පැනලා දුවීම", // Correct answer is "B"
-    "වගාව විනාශ කිරීම දිගටම කරමින් සිටීම",
-    "හෙනේ මාමාට ප්‍රහාර කිරීම",
+    "ඕනේම දෙයක් ලැබෙන බව දැනගත්තා නිසා", // Correct answer is "A"
+    "අම්මට හා තාත්තට රිදවන්න",
+    "ගෙදර අය බබාව බය කරන නිසා",
+    "ගෙදර අය බබාව නොසලකා හැරීම නිසා",
   ];
-  const correctAnswer = "විදුලිය වගේ පැනලා දුවීම";
+  const correctAnswer = "ඕනේම දෙයක් ලැබෙන බව දැනගත්තා නිසා";
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -29,7 +29,7 @@ const PassageK2 = ({ onPrevious, onNext }) => {
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-blue-400">
         <h1 className="text-3xl font-extrabold text-blue-600 mb-6">
-          **PassageK2: හෙනේ මාමාගේ අඩි සද්දෙ ඇහුන ගමන් මියෝ කරන්නේ කුමක්ද?**
+          බබා ඇයි හැම විටම අඬමින් දේවල් ඉල්ලන්නේ?
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (

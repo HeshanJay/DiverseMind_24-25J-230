@@ -7,12 +7,12 @@ const PassageM3 = ({ onPrevious, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    "මියෝ වගා බිම්වල වාසය කිරීම",
-    "මියෝන්ගේ සන්සුන් ජීවිතය",
-    "මියෝ වගා සහ පොළොව විනාශ කිරීම", // Correct answer is "C"
-    "හෙනේ මාමාගේ වගා කළ හැටි",
+    "‘පුතේ, හැමදේම විනෝදයි’",
+    "‘පුතේ, උගන්මන් ඉගෙන ගන්න’",
+    "‘පුතේ, දඟ කරන්නෙ පරෙස්සමින්!’", // Correct answer is "C"
+    " ‘පුතේ, හිඹුටු ගෙඩි බොහෝම රසයි’",
   ];
-  const correctAnswer = "මියෝ වගා සහ පොළොව විනාශ කිරීම";
+  const correctAnswer = "‘පුතේ, දඟ කරන්නෙ පරෙස්සමින්!’";
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -31,7 +31,7 @@ const PassageM3 = ({ onPrevious, onNext }) => {
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-green-400">
         <h1 className="text-3xl font-extrabold text-green-600 mb-6">
-          මියෝන් වගා බිම්වල ඇති කළ බලපෑම කුමක්ද? (Passage M3)
+          බුකුං බුකුංට එයාගෙ අම්මා මොනවද කියන්නේ?
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (

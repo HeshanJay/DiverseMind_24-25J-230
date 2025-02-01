@@ -7,12 +7,12 @@ const PassageM2 = ({ onPrevious, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    "මියෝ වගා බිම්වල වාසය කිරීම",
-    "මියෝන්ගේ සන්සුන් ජීවිතය",
-    "මියෝ වගා සහ පොළොව විනාශ කිරීම", // Correct answer is "C"
-    "හෙනේ මාමාගේ වගා කළ හැටි",
+    "හිඹුටු ගසක වැඳුන ගිරවා,සන්සුන්ව සිටින්නෙක්",
+    "හිඹුටු කැලේ ඇති පැහැදිලිම සතෙකි,හැමෝටම උපදෙස් දෙනා",
+    "හිඹුටු කැලේ වැඳුන වඳුරෙකු,කවදාවත් දඟ නොකරන්නෙක්",
+    "හිඹුටු කැලේ වඳුරු පැටියෙක්,දඟකාරයෙක්", // Correct answer is "D"
   ];
-  const correctAnswer = "මියෝ වගා සහ පොළොව විනාශ කිරීම";
+  const correctAnswer = "හිඹුටු කැලේ වඳුරු පැටියෙක්,දඟකාරයෙක්";
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -31,7 +31,7 @@ const PassageM2 = ({ onPrevious, onNext }) => {
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-green-400">
         <h1 className="text-3xl font-extrabold text-green-600 mb-6">
-          මියෝන් වගා බිම්වල ඇති කළ බලපෑම කුමක්ද? (Passage M2)
+          බුකුං බුකුං යනු කවුරුන්ද, සහ ඔහුගේ ස්වභාවය කුමක්ද?
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (

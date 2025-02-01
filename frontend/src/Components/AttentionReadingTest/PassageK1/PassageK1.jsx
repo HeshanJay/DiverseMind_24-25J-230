@@ -7,12 +7,12 @@ const PassageK1 = ({ onPrevious, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    "වගාවේ පිටුපස සැගවීම",
-    "විදුලිය වගේ පැනලා දුවීම", // Correct answer is "B"
-    "වගාව විනාශ කිරීම දිගටම කරමින් සිටීම",
-    "හෙනේ මාමාට ප්‍රහාර කිරීම",
+    "අම්මා",
+    "පුංචි බබා", // Correct answer is "B"
+    "තාත්තා",
+    "සීයා",
   ];
-  const correctAnswer = "විදුලිය වගේ පැනලා දුවීම";
+  const correctAnswer = "පුංචි බබා";
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -29,7 +29,7 @@ const PassageK1 = ({ onPrevious, onNext }) => {
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-blue-400">
         <h1 className="text-3xl font-extrabold text-blue-600 mb-6">
-          **PassageK1: හෙනේ මාමාගේ අඩි සද්දෙ ඇහුන ගමන් මියෝ කරන්නේ කුමක්ද?**
+          "අඬන බබා" කතාවේ ප්‍රධාන චරිතය කවුද?
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (
