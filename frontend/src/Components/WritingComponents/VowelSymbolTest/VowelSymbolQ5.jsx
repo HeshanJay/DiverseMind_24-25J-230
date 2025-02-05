@@ -38,12 +38,12 @@ const VowelSymbolQ5 = ({ onAnswer, onBack }) => {
       className="flex items-center justify-center min-h-screen bg-cover bg-center relative"
       style={{ backgroundImage: `url(${backgroundImg})` }}
     >
-      <div className="absolute top-14 w-full flex justify-center">
-        <div className="bg-gradient-to-r from-blue-300/80 to-green-300/80 p-8 rounded-3xl shadow-lg w-[620px] h-[510px] relative border-4 border-green-600">
+      <div className="absolute top-15 w-full flex justify-center">
+        <div className="bg-gradient-to-r from-gray-300/80 to-green-300/80 p-8 rounded-3xl shadow-lg w-[640px] h-[530px] relative border-4 border-green-600">
           {/* Content inside the box */}
           <div className="absolute inset-0 flex flex-col items-center justify-center p-8 rounded-3xl">
             {/* Title */}
-            <div className="mb-4 text-2xl font-extrabold text-center text-white bg-purple-600 bg-opacity-80 py-2 px-4 rounded-xl shadow-md">
+            <div className="mb-4 text-3xl font-extrabold text-center text-white bg-gradient-to-r from-green-500 to-green-700 bg-opacity-90 py-2 px-4 rounded-xl shadow-md">
               නිවැරදි පිල්ලම සහිත අකුර යොදන්න
             </div>
 
@@ -57,19 +57,19 @@ const VowelSymbolQ5 = ({ onAnswer, onBack }) => {
             </div>
 
             {/* Word with Blank */}
-            <div className="mb-6 text-4xl font-bold text-center text-blue-800">
+            <div className="mb-6 text-5xl font-extrabold text-center text-green-900">
               <span
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
-                className="inline-block align-middle w-20 h-16 mx-2 text-center bg-blue-50 rounded-xl shadow-inner border-gray-400"
+                className="inline-block align-middle w-24 h-20 mx-2 text-center bg-white text-green-900 font-bold rounded-xl shadow-lg border-4 border-green-600"
                 style={{
-                  lineHeight: "3rem",
-                  borderWidth: droppedSymbol ? "2px" : "0px",
+                  lineHeight: "4rem",
+                  borderWidth: droppedSymbol ? "4px" : "2px",
                 }}
               >
-                {droppedSymbol || ""}
+                {droppedSymbol || "?"}
               </span>
-              <span className="inline">තුකාගාරය</span>
+              <span className="inline">තුකගරය</span>
             </div>
 
             {/* Choices */}
@@ -79,7 +79,7 @@ const VowelSymbolQ5 = ({ onAnswer, onBack }) => {
                   key={choice}
                   draggable
                   onDragStart={(e) => handleDragStart(e, choice)}
-                  className="w-16 h-16 flex items-center justify-center bg-blue-200 text-blue-800 font-bold rounded-full shadow-lg cursor-pointer hover:-translate-y-1 hover:scale-110 transition ease-in-out duration-300 text-3xl"
+                  className="w-16 h-16 flex items-center justify-center bg-green-300 text-green-900 font-bold rounded-full shadow-lg border-2 border-green-700 cursor-pointer hover:-translate-y-1 hover:scale-110 transition ease-in-out duration-300 text-3xl"
                 >
                   {choice}
                 </div>
@@ -91,7 +91,7 @@ const VowelSymbolQ5 = ({ onAnswer, onBack }) => {
 
       {/* Next Button */}
       <button
-        className="absolute bottom-8 right-20 bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 hover:from-yellow-400 hover:to-purple-400 text-white text-xl font-extrabold py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110"
+        className="absolute bottom-8 right-5 bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 hover:from-yellow-400 hover:to-purple-400 text-white text-xl font-extrabold py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110"
         onClick={handleNextClick}
       >
         🌟 ඉදිරියට යමු 🚀
@@ -100,7 +100,7 @@ const VowelSymbolQ5 = ({ onAnswer, onBack }) => {
       {/* Previous Button */}
       <button
         onClick={onBack}
-        className="absolute bottom-10 left-28 w-16 h-16 rounded-full shadow-lg flex justify-center items-center bg-gradient-to-r from-pink-400 to-purple-500 hover:scale-110 transition-transform duration-300"
+        className="absolute bottom-10 left-20 w-16 h-16 rounded-full shadow-lg flex justify-center items-center bg-gradient-to-r from-pink-400 to-purple-500 hover:scale-110 transition-transform duration-300"
       >
         <MdArrowBack size={40} color="white" />
       </button>

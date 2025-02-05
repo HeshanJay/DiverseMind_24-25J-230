@@ -18,11 +18,11 @@ const PunctuationsTestQ1 = ({ onAnswer, onBack }) => {
 
   const answerChoices = [
     "තිත",
-    "කොමාව",
     "ප්‍රශ්නාර්ථ ලකුණ",
+    "කොමාව",
     "විස්මයාදි ලකුණ",
-    "යුගල උඩු කෝමා",
     "සරල වරහන්",
+    "යුගල උඩු කෝමා",
   ];
 
   const handleDragStart = (e, answer) => {
@@ -60,10 +60,10 @@ const PunctuationsTestQ1 = ({ onAnswer, onBack }) => {
       className="flex items-center justify-center min-h-screen bg-cover bg-center relative"
       style={{ backgroundImage: `url(${backgroundImg})` }}
     >
-      <div className="absolute top-20 w-full flex justify-center">
-        <div className="bg-gradient-to-r from-blue-300/80 to-green-300/80 p-6 rounded-3xl shadow-lg w-[680px] h-auto relative border-4 border-green-600">
+      <div className="absolute top-15 w-full flex justify-center">
+        <div className="bg-gradient-to-r from-gray-300/80 to-yellow-300/80 p-8 rounded-3xl shadow-lg w-[750px] min-h-[480px] relative border-4 border-yellow-600">
           {/* Title */}
-          <div className="mb-4 text-2xl font-extrabold text-center text-white bg-purple-600 bg-opacity-80 py-2 px-4 rounded-xl shadow-md tracking-wider">
+          <div className="mb-4 text-3xl font-extrabold text-center text-white bg-gradient-to-r from-yellow-500 to-yellow-700 bg-opacity-90 py-2 px-4 rounded-xl shadow-md">
             විරාම ලක්ෂණ නම් කරන්න
           </div>
 
@@ -78,12 +78,10 @@ const PunctuationsTestQ1 = ({ onAnswer, onBack }) => {
                 <div
                   onDrop={(e) => handleDrop(e, index)}
                   onDragOver={handleDragOver}
-                  className={`w-40 h-10 rounded-lg border-2 text-center flex items-center justify-center ${
+                  className={`w-60 h-10 rounded-lg border-2 text-center flex items-center justify-center ${
                     item.answer
-                      ? item.answer === item.name
-                        ? "bg-green-200 border-green-600"
-                        : "bg-red-200 border-red-600"
-                      : "bg-gray-100 border-gray-400"
+                      ? "bg-blue-100 border-blue-400"
+                      : "bg-yellow-100 border-yellow-400"
                   }`}
                 >
                   {item.answer}
@@ -99,7 +97,7 @@ const PunctuationsTestQ1 = ({ onAnswer, onBack }) => {
                 key={index}
                 draggable
                 onDragStart={(e) => handleDragStart(e, choice)}
-                className="p-3 rounded-lg bg-blue-200 text-blue-800 text-2xl text-center font-bold shadow-md cursor-pointer hover:scale-105 transition-transform duration-300"
+                className="p-3 rounded-lg bg-pink-200 text-pink-800 text-2xl text-center font-bold shadow-md cursor-pointer hover:bg-pink-300 hover:scale-105 transition-transform duration-300"
               >
                 {choice}
               </div>
@@ -110,7 +108,7 @@ const PunctuationsTestQ1 = ({ onAnswer, onBack }) => {
 
       {/* Next Button */}
       <button
-        className="absolute bottom-8 right-10 bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 hover:from-yellow-400 hover:to-purple-400 text-white text-xl font-extrabold py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 flex items-center gap-2"
+        className="absolute bottom-8 right-5 bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 hover:from-yellow-400 hover:to-purple-400 text-white text-xl font-extrabold py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110 flex items-center gap-2"
         onClick={handleNextClick}
       >
         🌟 ඉදිරියට යමු 🚀
@@ -119,7 +117,7 @@ const PunctuationsTestQ1 = ({ onAnswer, onBack }) => {
       {/* Previous Button */}
       <button
         onClick={onBack}
-        className="absolute bottom-10 left-28 w-16 h-16 rounded-full shadow-lg flex justify-center items-center bg-gradient-to-r from-pink-400 to-purple-500 hover:scale-110 transition-transform duration-300"
+        className="absolute bottom-10 left-20 w-16 h-16 rounded-full shadow-lg flex justify-center items-center bg-gradient-to-r from-pink-400 to-purple-500 hover:scale-110 transition-transform duration-300"
       >
         <MdArrowBack size={40} color="white" />
       </button>

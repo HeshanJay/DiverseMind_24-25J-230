@@ -1,0 +1,64 @@
+
+.popup-box {
+    animation: popIn 0.7s ease-out forwards;
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  
+  @keyframes popIn {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* 
+    2) Sprinkles container for the short confetti effect
+  */
+  .sprinkles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* allow clicks to pass through */
+    overflow: hidden;
+    z-index: 20; /* above overlay, behind popup */
+  }
+  
+  /*
+    3) Each sprinkle is a small falling circle 
+  */
+  .sprinkle {
+    position: absolute;
+    top: -40px;
+    width: 10px;
+    height: 10px;
+    background-color: #ff69b4; /* Pink confetti color */
+    border-radius: 50%;
+    opacity: 0.8;
+  
+    animation-name: sprinkle-fall;
+    animation-timing-function: linear;
+    animation-iteration-count: 1; /* fall once */
+  }
+  
+  @keyframes sprinkle-fall {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(110vh);
+      opacity: 0;
+    }
+  }
+  

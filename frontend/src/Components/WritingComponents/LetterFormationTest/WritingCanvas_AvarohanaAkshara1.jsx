@@ -106,15 +106,42 @@ const WritingCanvas_AvarohanaAkshara1 = ({ onNext, onBack }) => {
     onNext(image);
   };
 
+  const eraseCanvas = () => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const context = canvas.getContext("2d");
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Optionally redraw the initial styles (guide lines and border)
+      context.fillStyle = "#fff";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+
+      context.strokeStyle = "#4A90E2";
+      context.lineWidth = 2;
+      const lineSpacing = canvas.height / 4;
+      for (let i = 1; i <= 3; i++) {
+        const y = lineSpacing * i;
+        context.beginPath();
+        context.moveTo(20, y);
+        context.lineTo(canvas.width - 20, y);
+        context.stroke();
+      }
+
+      context.strokeStyle = "#4A90E2";
+      context.lineWidth = 8;
+      context.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+    }
+  };
+
   return (
     <div
       className="flex items-center justify-center min-h-screen bg-cover bg-center relative"
       style={{ backgroundImage: `url(${backgroundImg})` }}
     >
       {/* Title and Box */}
-      <div className="absolute top-14 w-full flex justify-center">
-        <div className="bg-gradient-to-r from-blue-300/80 to-green-300/80 p-8 rounded-3xl shadow-lg w-[620px] h-[510px] relative border-4 border-green-600">
-          <div className="absolute top-6 w-full flex justify-center">
+      <div className="absolute top-15 w-full flex justify-center">
+        <div className="bg-gradient-to-r from-blue-300/80 to-green-300/80 p-8 rounded-3xl shadow-lg w-[650px] h-[525px] relative border-4 border-green-600">
+          <div className="absolute top-8 w-full flex justify-center">
             <div className="text-6xl font-extrabold text-center">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500">
                 අවරෝහණ අක්ෂර
@@ -132,15 +159,15 @@ const WritingCanvas_AvarohanaAkshara1 = ({ onNext, onBack }) => {
         src={monkeyImage}
         alt="Monkey"
         className="monkey-img"
-        style={{ zIndex: 20 }}
+        style={{ zIndex: 20, position: "absolute", top: "272px" }}
       />
 
-      <div className="mt-20 relative" style={{ zIndex: 10 }}>
+      <div className="relative" style={{ zIndex: 10, marginTop: "45px" }}>
         <button
           className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-400 via-green-400 to-teal-400 text-white text-xl font-extrabold py-2 px-6 rounded-full shadow-lg flex items-center justify-center gap-2"
           style={{ zIndex: 20 }}
         >
-          <span className="bg-white text-blue-500 font-bold text-2xl py-1 px-3 rounded-md shadow-md">
+          <span className="bg-white text-purple-500 font-bold text-2xl py-1 px-3 rounded-md shadow-md">
             "අ"
           </span>
           අකුර ලියන්න
@@ -189,12 +216,15 @@ const WritingCanvas_AvarohanaAkshara1 = ({ onNext, onBack }) => {
       </button>
 
       {/* Buttons */}
-      <div className="absolute bottom-8" style={{ left: "450px", zIndex: 20 }}>
-        <button className="bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-yellow-500 hover:to-pink-500 text-white font-bold text-xl py-3 px-6 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110">
+      <div className="absolute bottom-12" style={{ left: "440px", zIndex: 20 }}>
+        <button
+          className="bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-yellow-500 hover:to-pink-500 text-white font-bold text-xl py-3 px-6 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110"
+          onClick={eraseCanvas}
+        >
           🩹 මකන්න
         </button>
       </div>
-      <div className="absolute bottom-8" style={{ left: "650px", zIndex: 20 }}>
+      <div className="absolute bottom-12" style={{ left: "650px", zIndex: 20 }}>
         <button
           className="bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 hover:from-yellow-400 hover:to-purple-400 text-white text-xl font-extrabold py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110"
           onClick={handleSubmitImage}
