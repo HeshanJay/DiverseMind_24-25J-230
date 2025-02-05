@@ -159,7 +159,7 @@ const MathAddition = () => {
         // }
         try {
           console.log("Sending Data:", requestData);
-          const response = await axios.post("http://127.0.0.1:8000/predict/", requestData);
+          const response = await axios.post("http://127.0.0.1:8000/math-prediction/", requestData);
           const mappedResult = mapPredictionToText(response.data.prediction); // Convert result
           setPredictionResult(mappedResult); // Set mapped result
           setShowPopup(true); // Show popup
