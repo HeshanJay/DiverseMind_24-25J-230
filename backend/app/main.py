@@ -371,4 +371,3 @@ def predict(input_data: InputData):
 #     data = input_data.dict()
 #     prediction = predict_outcome(data)
 #     return {"prediction": prediction}
-
