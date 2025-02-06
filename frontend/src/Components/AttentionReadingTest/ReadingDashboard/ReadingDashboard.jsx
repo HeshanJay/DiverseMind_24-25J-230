@@ -30,18 +30,21 @@ const ReadingDashboard = ({ onNext }) => {
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
-      <div className="absolute top-[15%] left-1/2 transform -translate-x-1/2 bg-white bg-opacity-80 rounded-xl shadow-lg p-6 flex flex-col items-center">
-        <h1 className="text-3xl text-center text-black font-extrabold popup-text">
+      {/* Title & Button Section */}
+      <div className="absolute top-[25%] left-1/2 transform -translate-x-1/2 p-6 flex flex-col items-center popup-container">
+        <h1 className="text-3xl text-center text-white font-extrabold popup-text">
           අවධානය! <br /> කියවීමේ පරීක්ෂණය
         </h1>
         <button
           onClick={startAttentionDetection}
-          className="mt-4 px-6 py-3 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-lg font-bold rounded-full shadow-lg flex items-center space-x-2 hover:scale-105 hover:bg-gradient-to-l transition-transform duration-300"
+          className="mt-6 px-6 py-3 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-lg font-bold rounded-full shadow-lg flex items-center space-x-2 hover:scale-105 hover:bg-gradient-to-l transition-transform duration-300"
         >
           <span>ඉදිරියට යන්න</span>
           <MdArrowForward size={24} />
         </button>
       </div>
+
+      {/* Next Button */}
       <button
         onClick={onNext}
         className="absolute bottom-10 right-28 w-16 h-16 rounded-full shadow-lg flex justify-center items-center bg-gradient-to-r from-blue-400 to-green-500 hover:scale-110 transition-transform duration-300"
@@ -49,6 +52,8 @@ const ReadingDashboard = ({ onNext }) => {
       >
         <MdArrowForward size={40} color="white" />
       </button>
+
+      {/* Character Images */}
       <div className="absolute bottom-10 left-1/2 transform -translate-x-[200%]">
         <img src={foxImage} alt="Fox" className="w-28 monkey-animation" />
       </div>
@@ -58,6 +63,8 @@ const ReadingDashboard = ({ onNext }) => {
       <div className="absolute bottom-10 left-1/2 transform translate-x-[60%]">
         <img src={bunnyImage} alt="Bunny" className="w-28 monkey-animation" />
       </div>
+
+      {/* Camera Active Status */}
       {cameraActive && (
         <div className="absolute top-5 right-5 bg-green-500 text-white px-4 py-2 rounded-full shadow-lg">
           Camera Active: Attention Detecting...
