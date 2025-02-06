@@ -1,0 +1,84 @@
+/* Dashboard.css */
+
+.dashboard-container {
+    padding: 20px;
+    background-color: #eaf0f6;
+    min-height: 100vh;
+  }
+  
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .dashboard-header h1 {
+    color: #2e7d32;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+  }
+  
+  .logout-button {
+    padding: 10px 20px;
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .logout-button:hover {
+    background-color: #c62828;
+  }
+  
+  .code-section {
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  .unique-code {
+    font-size: 1.5rem;
+    color: #388e3c;
+    margin: 10px 0;
+  }
+  
+  .generate-button,
+  .reset-button,
+  .reset-password-button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #388e3c;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .generate-button:hover,
+  .reset-button:hover,
+  .reset-password-button:hover {
+    background-color: #2e7d32;
+  }
+  
+  .students-section {
+    margin-top: 40px;
+  }
+  
+  .students-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .students-section li {
+    background-color: #c8e6c9;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  .actions-section {
+    margin-top: 40px;
+    text-align: center;
+  }
+  

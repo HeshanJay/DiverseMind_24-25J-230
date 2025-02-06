@@ -21,13 +21,18 @@ import Login from "./Components/Login/Login";
 import Signup from "./Components/Signup/Signup";
 import { ScoresProvider } from "./context/Score_context";
 
+import Dashboard from "./Components/Dashboard/Dashboard";
+import ResetPassword from "./Components/ResetPassword/ResetPassword";
+import StudentEntrance from "./Components/StudentEntrence/StudentEntrence";
+import HomePage from "./Pages/HomePage/home_page";
+
 const App = () => {
   return (
     <div>
       <BrowserRouter>
       <ScoresProvider>
         <Routes>
-        <Route index element={<Home />} />
+        <Route index element={<HomePage />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/memory-tests" element={<MemoryTests />} />
@@ -52,6 +57,10 @@ const App = () => {
           <Route path="/writingtest" element={<WritingTest />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/student-entrance" element={<StudentEntrance />} />
+          <Route path="/home-page" element={<HomePage />} />
       </Routes>
       </ScoresProvider>
     </BrowserRouter>

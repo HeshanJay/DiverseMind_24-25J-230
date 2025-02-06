@@ -1,27 +1,71 @@
-from fastapi import FastAPI,HTTPException, Query
-from app.utils import hash_password, verify_password, create_verification_token, verify_token, send_verification_email, create_access_token
+from fastapi import FastAPI, HTTPException, Query, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, EmailStr
-from app.model.predictor import predict_outcome  
 from fastapi.responses import RedirectResponse
+from fastapi.security import OAuth2PasswordBearer
+from pydantic import BaseModel, EmailStr, Field
+from app.utils import (
+    hash_password,
+    verify_password,
+    create_verification_token,
+    verify_token,
+    send_verification_email,
+    create_access_token,
+    SECRET_KEY,
+    ALGORITHM
+)
 from app.db import get_database
+from app.model.predictor import predict_outcome
+from typing import List
+import random
+import string
+from jose import jwt, JWTError
+import logging
 
-# Initialize FastAPI app
+
 app = FastAPI()
 
-# CORS configuration
+logging.basicConfig(level=logging.INFO)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  
-    allow_headers=["*"],  
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
-# MongoDB Connection
+
+
 db = get_database()
 teachers_collection = db["teachers"]
+students_collection = db["students"]
 
-# Models
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login/")
+
+
+def generate_unique_code(length=8):
+    """Generates a unique alphanumeric code."""
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
+
+def get_current_teacher(token: str = Depends(oauth2_scheme)):
+    """Retrieves the current logged-in teacher from JWT token."""
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+    teacher = teachers_collection.find_one({"email": email})
+    if teacher is None:
+        raise credentials_exception
+    return teacher
+
+
 class TeacherSignupModel(BaseModel):
     email: EmailStr
     password: str
@@ -30,37 +74,63 @@ class TeacherLoginModel(BaseModel):
     email: EmailStr
     password: str
 
+class StudentEnrollmentModel(BaseModel):
+    teacher_code: str = Field(..., description="Unique code of the teacher")
+    student_name: str = Field(..., description="Name of the student")
+
+class ResetPasswordModel(BaseModel):
+    email: EmailStr
+    old_password: str
+    new_password: str
+
+class InputData(BaseModel):
+    addition_time: float
+    substraction_time: float
+    division_time: float
+    multiplication_time: float
+    fraction_time: float
+    total_time: float
+    total_accuracy: float
+    addition_score: int
+    substraction_score: int
+    division_score: int
+    multiplication_score: int
+    fraction_score: int
+
+class WorkingMemoryInput(BaseModel):
+    Language_vocab: float
+    Memory: float
+    Speed: float
+    Visual_discrimination: float
+    Audio_Discrimination: float
+
 @app.post("/signup/")
 def signup(teacher: TeacherSignupModel):
-    # Check if email already exists
+    """Handles teacher signup with email verification."""
     if teachers_collection.find_one({"email": teacher.email}):
-        raise HTTPException(status_code=400, detail="Email already registered")
+        raise HTTPException(status_code=400, detail="මෙම විද්‍යුත් තැපෑල බාවිතා කර ඇත")
 
-    # Hash the password
     hashed_password = hash_password(teacher.password)
-
-    # Save the teacher in the database
     teachers_collection.insert_one({
         "email": teacher.email,
         "password": hashed_password,
         "is_verified": False
     })
 
-    # Generate and send verification token
     token = create_verification_token(teacher.email)
     send_verification_email(teacher.email, token)
 
-    return {"message": "Signup successful. Please verify your email. Please check your email"}
+    return {"message": "ලියාපදිංචි වීම සාර්ථකයි. කරුණාකර ඔබගේ විද්‍යුත් තැපෑල තහවුරු කරන්න."}
 
 @app.get("/verify-email/")
 def verify_email(token: str = Query(...)):
+    """Verifies teacher's email using token."""
     email = verify_token(token)
     if email == "Expired":
         return RedirectResponse(url="http://localhost:5173/verify-result?status=expired")
     if email == "Invalid":
         return RedirectResponse(url="http://localhost:5173/verify-result?status=invalid")
 
-    # Update the teacher's verification status
     result = teachers_collection.update_one({"email": email}, {"$set": {"is_verified": True}})
     if result.matched_count == 0:
         return RedirectResponse(url="http://localhost:5173/verify-result?status=notfound")
@@ -69,108 +139,44 @@ def verify_email(token: str = Query(...)):
 
 @app.post("/login/")
 def login(teacher: TeacherLoginModel):
-    # Check if the email exists
+    """Handles teacher login and returns JWT token."""
     teacher_data = teachers_collection.find_one({"email": teacher.email})
     if not teacher_data:
-        raise HTTPException(status_code=401, detail="Invalid email or password")
+        raise HTTPException(status_code=401, detail="වලංගු නොවන ඊමේල් හෝ මුරපදය")
 
-    # Verify the password
     if not verify_password(teacher.password, teacher_data["password"]):
-        raise HTTPException(status_code=401, detail="Invalid email or password")
+        raise HTTPException(status_code=401, detail="වලංගු නොවන ඊමේල් හෝ මුරපදය")
 
-    # Check if the email is verified
     if not teacher_data["is_verified"]:
         raise HTTPException(status_code=403, detail="Email not verified")
 
-    # Generate a JWT token
     access_token = create_access_token({"sub": teacher.email})
+    return {"access_token": access_token, "token_type": "bearer", "message": "ඇතුලත් වීම සාර්ථකයි "}
 
-    return {"access_token": access_token, "token_type": "bearer", "message": "Login successful"}
-
-
-# @app.post("/login/")
-# def login(teacher: TeacherLoginModel):
-#     # Check if the email exists
-#     teacher_data = teachers_collection.find_one({"email": teacher.email})
-#     if not teacher_data:
-#         raise HTTPException(status_code=401, detail="Invalid email or password")
-
-#     # Verify the password
-#     if not verify_password(teacher.password, teacher_data["password"]):
-#         raise HTTPException(status_code=401, detail="Invalid email or password")
-
-#     # Check if the email is verified
-#     if not teacher_data["is_verified"]:
-#         raise HTTPException(status_code=403, detail="Email not verified")
-
-#     return {"message": "Login successful"}
-
-
-class InputData(BaseModel):
-    Language_vocab: float
-    Memory: float
-    Speed: float
-    Visual_discrimination: float
-    Audio_Discrimination: float
-
-@app.post("/prediction/")
-def predict(input_data: InputData):
+@app.post("/working_memory_prediction/")
+def working_memory_prediction(input_data: WorkingMemoryInput):
     """
-    API endpoint for making predictions.
-
-    Args:
-        input_data (InputData): Input features for the model.
-
-    Returns:
-        dict: Prediction result.
+    Predicts working memory assessment.
     """
     try:
+        logging.info(f"Received request data: {input_data.dict()}")
         data = input_data.dict()
-        prediction = predict_outcome(data) 
+        prediction = predict_outcome(data)
         return {"prediction": prediction}
     except Exception as e:
-        return {"error": str(e)}
-    
-    # from fastapi import FastAPI, File, UploadFile
-# from fastapi.responses import JSONResponse
-# import numpy as np
-# from app.model.predictor import predict_outcome
-# from typing import List
-# from fastapi.middleware.cors import CORSMiddleware
-# from pydantic import BaseModel
-# from app.model.predictor import predict_outcome
+        logging.error(f"Error during prediction: {e}")
+        raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
 
-# app = FastAPI()
+@app.post("/math-prediction/")
+def predict_math(input_data: InputData):
+    """Handles math skill predictions using ML models."""
+    try:
+        data = input_data.dict()
+        math_prediction = predict_outcome(data)
+        return {"prediction": math_prediction}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Prediction error: {str(e)}")
 
-# # CORS configuration
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],  
-#     allow_credentials=True,
-#     allow_methods=["*"],  
-#     allow_headers=["*"],  
-# )
-
-# class InputData(BaseModel):
-#     addition_time: float
-#     substraction_time: float
-#     division_time: float
-#     multiplication_time: float
-#     fraction_time: float
-#     total_time: float
-#     total_accuracy: float
-#     addition_score: int
-#     substraction_score: int
-#     division_score: int
-#     multiplication_score: int
-#     fraction_score: int
-
-# @app.get("/")
-# def read_root():
-#     return {"message": "Math Skill Predictor API"}
-
-# @app.post("/predict/")
-# def predict(input_data: InputData):
-#     data = input_data.dict()
-#     prediction = predict_outcome(data)
-#     return {"prediction": prediction}
+@app.get("/")
+def read_root():
+    return {"message": "Math Skill Predictor API"}
