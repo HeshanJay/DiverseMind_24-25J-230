@@ -1,20 +1,28 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import backImg from "../assets/background_images/back3.jpg";
 import { useScores } from "../context/Score_context";
 
 const MemoryTests = () => {
   const tests = [
-    { id: 1, name: "දෘශ්‍ය විෂමතා පරීක්ෂණය", link:"/visual-test" },
-    { id: 2, name: "මතක පරීක්ෂණය", link:"/memory-measurement-test" }, 
-    { id: 3, name: "වේගය විශ්ලේෂණ පරීක්ෂණය", link: "/speed-measurement-test" },
-    { id: 4, name: "ශ්‍රව්‍ය විෂමතා පරීක්ෂණය", link: "/audio-test" },
-    { id: 5, name: "භාෂා ශබ්ද කෝෂ දැනුම පරීක්ෂණය", link: "/language-vocab-test" },
+    { id: 1, name: "දෘශ්‍ය විෂමතා පරීක්ෂණය" },
+    { id: 2, name: "මතක පරීක්ෂණය" },
+    { id: 3, name: "වේගය විශ්ලේෂණ පරීක්ෂණය" },
+    { id: 4, name: "ශ්‍රව්‍ය විෂමතා පරීක්ෂණය" },
+    { id: 5, name: "භාෂා ශබ්ද කෝෂ දැනුම පරීක්ෂණය" },
   ];
+
   const {
-    currentTestName, 
-    setCurrentTestName
+    currentTestName,
+    setCurrentTestName,
   } = useScores();
+
+  const navigate = useNavigate(); // Initialize the navigate function
+
+  
+  const handleStartClick = () => {
+    navigate("/visual-test"); 
+  };
 
   return (
     <div
@@ -28,6 +36,16 @@ const MemoryTests = () => {
         <h1 className="text-white text-4xl md:text-6xl font-bold mb-8 animate-pulse">
           මතකය පරීක්ෂා කරමු
         </h1>
+
+        {/* Start Button on the right bottom */}
+        <button
+          className="absolute right-8 bottom-8 text-lg font-semibold text-white bg-gradient-to-r from-green-500 to-teal-500 h-16 w-48 flex items-center justify-center rounded-full shadow-lg hover:shadow-xl transition-all transform hover:scale-110 hover:rotate-2"
+          onClick={handleStartClick} // Use handleStartClick to navigate
+        >
+          ආරම්භ කරන්න
+        </button>
+
+        {/* Test Buttons */}
         <div className="flex flex-col items-center gap-6">
           {tests.map((test) => (
             <Link
@@ -46,5 +64,3 @@ const MemoryTests = () => {
 };
 
 export default MemoryTests;
-
-

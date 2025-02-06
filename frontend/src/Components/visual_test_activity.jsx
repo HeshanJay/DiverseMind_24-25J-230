@@ -194,7 +194,7 @@ const handleNextQuestion = () => {
     setShowAnswers(false);
     setIsCompleted(false);
 
-    setTimer(10);
+    setTimer(4);
   };
 
   return (
