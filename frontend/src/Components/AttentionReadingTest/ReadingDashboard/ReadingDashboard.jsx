@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { MdArrowForward } from "react-icons/md";
 import axios from "axios";
 import "./ReadingDashboard.css";
-import monkeyImage from "../../../assets/characters/Monkey.png";
 import bunnyImage from "../../../assets/characters/bunny.png";
 import foxImage from "../../../assets/characters/fox.png";
 import backgroundImage from "../../../assets/background_images/scorebg2.jpg";
@@ -54,13 +53,10 @@ const ReadingDashboard = ({ onNext }) => {
       </button>
 
       {/* Character Images */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-[200%]">
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-[100%]">
         <img src={foxImage} alt="Fox" className="w-28 monkey-animation" />
       </div>
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-[60%]">
-        <img src={monkeyImage} alt="Monkey" className="w-28 monkey-animation" />
-      </div>
-      <div className="absolute bottom-10 left-1/2 transform translate-x-[60%]">
+      <div className="absolute bottom-10 left-1/2 transform translate-x-[0%]">
         <img src={bunnyImage} alt="Bunny" className="w-28 monkey-animation" />
       </div>
 
