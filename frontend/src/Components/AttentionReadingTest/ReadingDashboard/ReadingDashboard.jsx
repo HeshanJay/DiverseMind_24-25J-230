@@ -5,7 +5,7 @@ import "./ReadingDashboard.css";
 import monkeyImage from "../../../assets/characters/Monkey.png";
 import bunnyImage from "../../../assets/characters/bunny.png";
 import foxImage from "../../../assets/characters/fox.png";
-import backgroundImage from "../../../assets/background_images/back_img4.jpg";
+import backgroundImage from "../../../assets/background_images/scorebg2.jpg";
 
 const ReadingDashboard = ({ onNext }) => {
   const [cameraActive, setCameraActive] = useState(false);
