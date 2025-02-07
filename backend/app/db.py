@@ -19,6 +19,7 @@ def get_database():
     except Exception as e:
         print("MongoDB Connection Failed!")
         print(f"Error: {e}")
+        return None  # Corrected indentation
         return None
 
 

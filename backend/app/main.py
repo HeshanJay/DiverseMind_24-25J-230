@@ -1,4 +1,14 @@
 from fastapi import FastAPI, HTTPException, Query, Depends
+import numpy as np
+from tensorflow.keras.models import load_model
+import cv2
+from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi.responses import JSONResponse
+from typing import List
+from fastapi import HTTPException, Query
+from app.utils import hash_password, verify_password, create_verification_token, verify_token, send_verification_email, create_access_token
+from app.db import get_database
+from pydantic import BaseModel, EmailStr
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
@@ -33,6 +43,16 @@ from typing import List
 import numpy as np
 import string
 import random
+
+# Initialize FastAPI app
+from fastapi.responses import RedirectResponse
+from app.model.predictor import predict_outcome_writing
+from app.model.evaluate import evaluate_student_writing_skills
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Initialize FastAPI app - writing
 from app.model.predictor import predict_outcome_writing
@@ -199,6 +219,107 @@ def predict_math(input_data: InputData):
 @app.get("/")
 def read_root():
     return {"message": "Math Skill Predictor API"}
+
+@app.post("/math-prediction/")
+def predict(input_data: InputData):
+    data = input_data.dict()
+    math_prediction = predict_outcome(data)
+    return {"prediction": math_prediction}
+
+# Writing
+@app.post("/predict_letters")
+async def predict_letters(images: List[UploadFile] = File(...)):
+    logger.info(f"Received request with {len(images)} images")
+    if not images:
+        logger.error("No images uploaded")
+        raise HTTPException(status_code=400, detail="No images uploaded")
+
+    predictions = []
+    total_score = 0
+    total_images = len(images)
+
+    for image in images:
+        try:
+            img_bytes = await image.read()
+            if not img_bytes:
+                logger.warning(f"Empty image bytes for {image.filename}")
+                continue
+
+            result = predict_outcome_writing(img_bytes)
+
+            # Check for errors
+            if "error" in result:
+                logger.error(f"Prediction error: {result['error']}")
+                continue
+
+            # If no error, update predictions and score
+            predicted_class = result.get("predicted_class", "Unknown")
+            status_str = result.get("status")  # "Correct" or "Incorrect"
+            status_score = 1 if status_str == "Correct" else 0
+
+            predictions.append({
+                "file_name": image.filename,
+                "Predicted Class": predicted_class,
+                "Status": status_score
+            })
+            total_score += status_score
+
+        except Exception as e:
+            logger.error(f"Error processing {image.filename}: {e}")
+            continue
+
+    score_percentage = (total_score / total_images) * 100 if total_images > 0 else 0
+
+    return {
+        "predictions": predictions,
+        "total_score": total_score,
+        "total_images": total_images,
+        "score_percentage": score_percentage
+    }
+
+# Input model for final evaluation endpoint
+class EvaluationInput(BaseModel):
+    cnn_output_score: int
+    vowel_symbol_score: int
+    punctuation_score: int
+
+@app.post("/final_writing_evaluation")
+def final_evaluation(data: EvaluationInput):
+    result = evaluate_student_writing_skills(
+        data.cnn_output_score,
+        data.vowel_symbol_score,
+        data.punctuation_score
+    )
+    return result
+
+
+# 1) Pydantic model for the final report data
+class ReportData(BaseModel):
+    skill_level: str
+    letter_formation_score: int
+    vowel_symbol_score: int
+    punctuation_score: int
+
+@app.post("/save_writing_results")
+def save_report(report_data: ReportData):
+    """
+    Saves the final prediction and optional letter formation results to MongoDB.
+    """
+    db = get_database()
+
+    # Explicitly compare db to None
+    if db is None:
+        raise HTTPException(status_code=500, detail="Database connection failed")
+
+    collection = db["writing_results"]
+    doc = report_data.dict()
+
+    try:
+        result = collection.insert_one(doc)
+        return {"message": "Report saved successfully", "inserted_id": str(result.inserted_id)}
+    except Exception as e:
+        logger.error(f"Error saving report to MongoDB: {e}")
+        raise HTTPException(status_code=500, detail="Failed to save report")
 
 # Attention
 class AttentionSpanResult(BaseModel):

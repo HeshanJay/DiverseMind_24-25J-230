@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
-import ScoreBoard from "./Components/Score_board"; 
+import ScoreBoard from "./Components/Score_board";
 import Login from "./Components/Login/Login";
 import Signup from "./Components/Signup/Signup";
 import { ScoresProvider } from "./context/Score_context";
