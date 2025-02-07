@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+import certifi
 
 def get_database():
     try:
@@ -6,7 +7,7 @@ def get_database():
         MONGO_URI = "mongodb+srv://root:12345@diverseminddb.mqqat.mongodb.net/?retryWrites=true&w=majority&appName=DiverseMindDB"
 
         # Create a MongoDB client
-        client = MongoClient(MONGO_URI)
+        client = MongoClient(MONGO_URI,tlsCAFile=certifi.where())
 
         # Test connection by listing databases
         databases = client.list_database_names()
@@ -19,6 +20,7 @@ def get_database():
         print("MongoDB Connection Failed!")
         print(f"Error: {e}")
         return None
+
 
 
 # from pymongo import MongoClient

@@ -2,7 +2,7 @@
 node_modules
 
 # Ignore Python cache files
-__pycache__/
+_pycache_/
 *.pyc
 
 # Ignore virtual environment folders
@@ -41,10 +41,11 @@ dist-ssr
 .idea
 .DS_Store
 *.suo
-*.ntvs*
+.ntvs
 *.njsproj
 *.sln
 *.sw?
+node_modules
 
 # Dependencies
 node_modules
