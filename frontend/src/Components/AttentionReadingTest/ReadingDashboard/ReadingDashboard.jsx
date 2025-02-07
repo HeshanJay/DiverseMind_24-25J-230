@@ -1,19 +1,22 @@
 import React, { useState } from "react";
-import { MdArrowForward } from "react-icons/md";
+import { MdPlayArrow } from "react-icons/md";
 import axios from "axios";
 import "./ReadingDashboard.css";
-import bunnyImage from "../../../assets/characters/bunny.png";
 import foxImage from "../../../assets/characters/fox.png";
 import backgroundImage from "../../../assets/background_images/scorebg2.jpg";
 
 const ReadingDashboard = ({ onNext }) => {
   const [cameraActive, setCameraActive] = useState(false);
+  const [instructionStep, setInstructionStep] = useState(1);
+  const [playButtonDisabled, setPlayButtonDisabled] = useState(false); // New state for disabling the play button
 
   const startAttentionDetection = async () => {
     try {
       const response = await axios.get("http://localhost:8000/attention/start");
       console.log("Attention detection started:", response.data);
-      setCameraActive(true); // Set camera to active state
+      setCameraActive(true);
+      setInstructionStep(2); // Move to the next step after clicking Play Button
+      setPlayButtonDisabled(true); // Disable the Play Button after clicking
     } catch (error) {
       console.error(
         "Error starting attention detection:",
@@ -29,35 +32,58 @@ const ReadingDashboard = ({ onNext }) => {
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
+      {/* Dark overlay when camera starts (excluding Next Button & Pop-up) */}
+      {cameraActive && (
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      )}
+
       {/* Title & Button Section */}
       <div className="absolute top-[25%] left-1/2 transform -translate-x-1/2 p-6 flex flex-col items-center popup-container">
         <h1 className="text-3xl text-center text-white font-extrabold popup-text">
-          අවධානය! <br /> කියවීමේ පරීක්ෂණය
+          අවධානය <br /> පරීක්ෂා කරමු
         </h1>
+        {/* Circular Play Button - Kid Friendly (Initially Enabled, Disabled After Click) */}
         <button
           onClick={startAttentionDetection}
-          className="mt-6 px-6 py-3 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-lg font-bold rounded-full shadow-lg flex items-center space-x-2 hover:scale-105 hover:bg-gradient-to-l transition-transform duration-300"
+          disabled={playButtonDisabled} // Disable button after clicking
+          className={`mt-6 w-20 h-20 border-4 border-white text-white rounded-full shadow-lg flex justify-center items-center transition-transform duration-300
+            ${
+              playButtonDisabled
+                ? "bg-gray-500 cursor-not-allowed opacity-50" // Disabled style
+                : "bg-yellow-400 hover:scale-110 hover:bg-yellow-500" // Normal style
+            }
+          `}
         >
-          <span>ඉදිරියට යන්න</span>
-          <MdArrowForward size={24} />
+          <MdPlayArrow size={40} color="white" />
         </button>
       </div>
 
-      {/* Next Button */}
+      {/* Next Button (Initially Disabled) */}
       <button
-        onClick={onNext}
-        className="absolute bottom-10 right-28 w-16 h-16 rounded-full shadow-lg flex justify-center items-center bg-gradient-to-r from-blue-400 to-green-500 hover:scale-110 transition-transform duration-300"
+        onClick={cameraActive ? onNext : null} // Only allow clicking when cameraActive is true
+        disabled={!cameraActive} // Disable button if camera is not active
+        className={`absolute bottom-10 right-28 py-3 px-8 rounded-full shadow-lg font-extrabold text-xl text-white transition-all duration-300 transform 
+          ${
+            cameraActive
+              ? "bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 hover:from-yellow-400 hover:to-purple-400 hover:scale-110 hover:shadow-2xl"
+              : "bg-gray-400 cursor-not-allowed opacity-50"
+          }
+        `}
         aria-label="Next"
       >
-        <MdArrowForward size={40} color="white" />
+        🌟 ඉදිරියට යමු 🚀
       </button>
 
-      {/* Character Images */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-[100%]">
+      {/* Step 2 Instruction Popup (Appears after clicking Play Button) */}
+      {instructionStep === 2 && (
+        <div className="absolute bottom-24 right-36 bg-white text-black p-3 rounded-lg shadow-lg animate-fadeIn z-10">
+          ✅ Click here to start!
+        </div>
+      )}
+
+      {/* Character Image */}
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
         <img src={foxImage} alt="Fox" className="w-28 monkey-animation" />
-      </div>
-      <div className="absolute bottom-10 left-1/2 transform translate-x-[0%]">
-        <img src={bunnyImage} alt="Bunny" className="w-28 monkey-animation" />
       </div>
 
       {/* Camera Active Status */}
