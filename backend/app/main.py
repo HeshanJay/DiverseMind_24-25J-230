@@ -47,16 +47,16 @@ app = FastAPI()
 # Add CORS Middlewarre
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # MongoDB Connection
-db = get_database()
-teachers_collection = db["teachers"]
-students_collection = db["students"] 
+# db = get_database()
+# teachers_collection = db["teachers"]
+# students_collection = db["students"]
 
 # OAuth2 scheme for protected routes
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login/")
@@ -107,6 +107,13 @@ class InputData(BaseModel):
     division_score: int
     multiplication_score: int
     fraction_score: int
+
+class WorkingMemoryInput(BaseModel):
+    Language_vocab: float
+    Memory: float
+    Speed: float
+    Visual_discrimination: float
+    Audio_Discrimination: float
 
 class TeacherUpdateModel(BaseModel):
     pass
@@ -210,7 +217,7 @@ def add_student(student: StudentEnrollmentModel):
     student_doc = {
         "name": student.student_name,
         "teacher_id": str(teacher["_id"]),
-        "activities": [] 
+        "activities": []
     }
     students_collection.insert_one(student_doc)
     return {"message": "ඇතුලත් කිරීම සාර්ථකයි "}
@@ -255,6 +262,20 @@ def predict(input_data: InputData):
     math_prediction = predict_outcome(data)
     return {"prediction": math_prediction}
 
+# Working Memory
+@app.post("/working_memory_prediction/")
+def working_memory_prediction(input_data: WorkingMemoryInput):
+    """
+    Predicts working memory assessment.
+    """
+    try:
+        logging.info(f"Received request data: {input_data.dict()}")
+        data = input_data.dict()
+        prediction = predict_outcome(data)
+        return {"prediction": prediction}
+    except Exception as e:
+        logging.error(f"Error during prediction: {e}")
+        raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
 
 # Writing
 @app.post("/predict_letters")
@@ -321,7 +342,6 @@ def final_evaluation(data: EvaluationInput):
         data.punctuation_score
     )
     return result
-
 
 # 1) Pydantic model for the final report data
 class ReportData(BaseModel):

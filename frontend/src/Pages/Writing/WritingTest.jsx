@@ -446,7 +446,6 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 
 // Import your letter formation and punctuation test components
 import WritingCanvas_MadhyaAkshara1 from "../../Components/WritingComponents/LetterFormationTest/WritingCanvas_MadhyaAkshara1";

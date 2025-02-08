@@ -3,8 +3,17 @@ import pickle
 import pandas as pd 
 import cv2
 import numpy as np 
+import joblib
+import mediapipe as mp
+from tensorflow.keras.models import model_from_json
 
 from tensorflow.keras.models import load_model 
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+model_path = os.path.join(BASE_DIR, "memory_predictor.pkl")
+scaler_path = os.path.join(BASE_DIR, "scaler.pkl")
 
 # Maths
 model_math_path = "./app/model/predictor_math.pickle"
@@ -105,3 +114,52 @@ def predict_outcome_writing(image_bytes: bytes) -> dict:
         }
     except Exception as e:
         return {"error": str(e)}
+    
+# Memory
+try:
+    scaler = joblib.load(scaler_path)
+    if not hasattr(scaler, "transform"):
+        raise ValueError("The loaded scaler does not have a 'transform' method.")
+    print("Scaler loaded successfully.")
+
+    model = joblib.load(model_path)
+    if not hasattr(model, "predict"):
+        raise ValueError("The loaded model does not have a 'predict' method.")
+    print("Memory Predictor Model loaded successfully.")
+
+except FileNotFoundError as e:
+    raise RuntimeError(f"Model or scaler file not found: {e}")
+except Exception as e:
+    raise RuntimeError(f"Error loading model or scaler: {e}")
+
+
+def predict_outcome(data: dict) -> str:
+    """
+    Predict the outcome based on the input features.
+
+    Args:
+        data (dict): Dictionary containing input features.
+
+    Returns:
+        str: Predicted label ('Normal', 'Medium', 'Low').
+    """
+    try:
+        # Convert input data to a DataFrame
+        input_df = pd.DataFrame([data])
+
+        # Apply scaling
+        sample_scaled = scaler.transform(input_df)
+
+        # Predict using the model
+        pred = model.predict(sample_scaled)
+
+        # Map prediction to label
+        label_map = {0: 'Normal', 1: 'Medium', 2: 'Low'}
+        predict_label = label_map.get(pred[0], "Unknown")
+
+        print("Prediction Label:", predict_label)
+
+        return predict_label
+
+    except Exception as e:
+        raise ValueError(f"Error during prediction: {e}")
