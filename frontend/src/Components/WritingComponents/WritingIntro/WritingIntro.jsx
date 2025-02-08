@@ -19,7 +19,7 @@ const WritingIntroPage = ({ onStartTest }) => {
 
         {/* Kid-friendly start button */}
         <button
-          onClick={onStartTest} // <-- Invoke the passed callback
+          onClick={onStartTest} // This will trigger setShowIntro(false)
           className="
             bg-gradient-to-r from-pink-400 to-purple-500 
             text-white text-2xl font-extrabold 
