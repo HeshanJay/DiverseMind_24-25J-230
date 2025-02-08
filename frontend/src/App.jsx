@@ -21,12 +21,17 @@ import Login from "./Components/Login/Login";
 import Signup from "./Components/Signup/Signup";
 import TeacherDashboard from "./Pages/TeacherDashboard/TeacherDashboard";
 
+import Dashboard from "./Components/Dashboard/Dashboard";
+import ResetPassword from "./Components/ResetPassword/ResetPassword";
+import StudentEntrance from "./Components/StudentEntrence/StudentEntrence";
+import HomePage from "./Pages/HomePage/home_page";
+
 const App = () => {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home />} />
+          <Route index element={<HomePage />} />
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/memory-tests" element={<MemoryTests />} />
@@ -72,7 +77,11 @@ const App = () => {
           <Route path="/writingtest" element={<WritingTest />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={<TeacherDashboard />} />
+          <Route path="/dashboardTeacher" element={<TeacherDashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/student-entrance" element={<StudentEntrance />} />
+          <Route path="/home-page" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
     </div>
@@ -80,3 +89,50 @@ const App = () => {
 };
 
 export default App;
+
+// import React from "react";
+// import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import Home from "./Pages/Home/Home";
+// import About from "./Pages/About/About";
+// import AttentionReadingTest from "./Pages/ReadingDashboardpage";
+// import MathScreeningTest from "./Pages/math/MathScreeningTest";
+// import WritingTest from "./Pages/Writing/WritingTest";
+// import Login from "./Components/Login/Login";
+// import Signup from "./Components/Signup/Signup";
+// import Dashboard from "./Components/Dashboard/Dashboard";
+// import ResetPassword from "./Components/ResetPassword/ResetPassword";
+// import StudentEntrance from "./Components/StudentEntrence/StudentEntrence";
+// import HomePage from "./Pages/HomePage/home_page";
+// import TeacherDashboard from "./Pages/TeacherDashboard/TeacherDashboard";
+// import WorkingMemory from "./Pages/WorkingMemory/WorkingMemory";
+
+// const App = () => {
+//   return (
+//     <div>
+//       <BrowserRouter>
+//         <Routes>
+//           <Route index element={<HomePage />} />
+//           <Route path="/home" element={<Home />} />
+//           <Route path="/about" element={<About />} />
+//           <Route
+//             path="/attentionreadingtest"
+//             element={<AttentionReadingTest />}
+//           />
+//           <Route path="/math" element={<MathScreeningTest />} />
+//           <Route path="/writingtest" element={<WritingTest />} />
+//           <Route path="/working-memory" element={<WorkingMemory />} />
+//           <Route path="/login" element={<Login />} />
+//           <Route path="/signup" element={<Signup />} />
+//           <Route path="/dashboard" element={<Dashboard />} />
+//           <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
+//           <Route path="/reset-password" element={<ResetPassword />} />
+//           <Route path="/student-entrance" element={<StudentEntrance />} />
+//           <Route path="/home-page" element={<HomePage />} />
+//           <Route path="*" element={<div>Page Not Found</div>} />
+//         </Routes>
+//       </BrowserRouter>
+//     </div>
+//   );
+// };
+
+// export default App;

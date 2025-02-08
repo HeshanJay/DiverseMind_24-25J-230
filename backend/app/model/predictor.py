@@ -1,17 +1,17 @@
 import os
 import pickle
-import pandas as pd
+import pandas as pd 
 import cv2
-import numpy as np
+import numpy as np 
 
-from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model 
 
 # Maths
 model_math_path = "./app/model/predictor_math.pickle"
 with open(model_math_path, "rb") as f:
     model_math = pickle.load(f)
 
-def predict_outcome_math(features_dict: dict) -> int:
+def predict_outcome(data):
     """
     Predict the outcome based on input features using the scikit-learn model.
 
@@ -21,7 +21,7 @@ def predict_outcome_math(features_dict: dict) -> int:
     Returns:
         int: The predicted label (e.g. 0, 1, 2) from the scikit-learn model.
     """
-    df = pd.DataFrame([features_dict])
+    df = pd.DataFrame([data])
     prediction = model_math.predict(df)
     return int(prediction[0])
 
