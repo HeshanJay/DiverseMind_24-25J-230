@@ -1,5 +1,4 @@
 from pymongo import MongoClient
-import certifi
 
 def get_database():
     try:
@@ -7,7 +6,7 @@ def get_database():
         MONGO_URI = "mongodb+srv://root:12345@diverseminddb.mqqat.mongodb.net/?retryWrites=true&w=majority&appName=DiverseMindDB"
 
         # Create a MongoDB client
-        client = MongoClient(MONGO_URI,tlsCAFile=certifi.where())
+        client = MongoClient(MONGO_URI)
 
         # Test connection by listing databases
         databases = client.list_database_names()
@@ -19,20 +18,4 @@ def get_database():
     except Exception as e:
         print("MongoDB Connection Failed!")
         print(f"Error: {e}")
-        return None
-
-
-
-# from pymongo import MongoClient
-
-# def get_database():
-#     # Connection string
-#     MONGO_URI = "mongodb+srv://root:12345@diverseminddb.mqqat.mongodb.net/?retryWrites=true&w=majority&appName=DiverseMindDB"
-
-#     # Create a connection using MongoClient
-#     client = MongoClient(MONGO_URI)
-
-#     # Return the database object
-#     return client["DiverseMindDB"]
-
-
+        return None  # Corrected indentation
