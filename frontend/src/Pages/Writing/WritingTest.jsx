@@ -445,7 +445,6 @@
 // export default WritingTest;
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 
 // Import the intro page component
 import WritingIntroPage from "../../Components/WritingComponents/WritingIntro/WritingIntro";
