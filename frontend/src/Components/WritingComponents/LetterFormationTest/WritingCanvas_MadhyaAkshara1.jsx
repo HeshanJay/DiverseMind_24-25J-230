@@ -4,6 +4,7 @@ import backgroundImg from "../../../assets/background_images/back_img1.jpg";
 import monkeyImage from "../../../assets/characters/Monkey.png";
 import pencilImage from "../../../assets/design_images/pencil.png";
 import eraserImage from "../../../assets/design_images/eraser.png";
+import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
 const WritingCanvas_MadhyaAkshara1 = ({ onNext, onBack }) => {
   const canvasRef = useRef(null);
@@ -205,6 +206,14 @@ const WritingCanvas_MadhyaAkshara1 = ({ onNext, onBack }) => {
           style={{ zIndex: 10 }}
         ></canvas>
       </div>
+
+      {/* Navigation Buttons */}
+      <button
+        onClick={onBack}
+        className="absolute bottom-10 left-28 w-16 h-16 rounded-full shadow-lg flex justify-center items-center bg-gradient-to-r from-pink-400 to-purple-500 hover:scale-110 transition-transform duration-300"
+      >
+        <MdArrowBack size={40} color="white" />
+      </button>
 
       {/* Buttons */}
       <div className="absolute bottom-12" style={{ left: "440px", zIndex: 20 }}>

@@ -67,9 +67,7 @@ const WritingFinalFeedback = ({
       */}
       <div className="z-10 popup-box">
         <div className="relative bg-white p-6 rounded-lg shadow-lg w-[400px]">
-          <h2 className="text-5xl font-bold mb-4 text-center text-green-800">
-            ඔබේ ප්‍රතිඵලය
-          </h2>
+          <h2 className="text-5xl font-bold mb-4 text-center text-green-800"></h2>
           <p className="text-3xl text-center mb-4 text-purple-700 font-extrabold">
             {skillPhrase}
           </p>
