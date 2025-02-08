@@ -608,7 +608,16 @@ import accidentImage from "../../assets/Questions1_images/4.jpg";
 import hospitalImage from "../../assets/Questions1_images/5.jpg";
 import ScoreBoard from "../Score_board";
 import { useScores } from "../../context/Score_context";
-
+import img41 from "../../assets/Working_Memory/img41.png"
+import img42 from "../../assets/Working_Memory/img42.png"
+import img43 from "../../assets/Working_Memory/img43.png"
+import img44 from "../../assets/Working_Memory/img44.png"
+import img45 from "../../assets/Working_Memory/img45.png"
+import img46 from "../../assets/Working_Memory/img46.png"
+import img47 from "../../assets/Working_Memory/img47.png"
+import img48 from "../../assets/Working_Memory/img48.png"
+import img49 from "../../assets/Working_Memory/img49.png"
+import img50 from "../../assets/Working_Memory/img50.png"
 /**
  * The final test in the sequence.
  * When finished, this component calls onFinishAll() so the parent sends data.
@@ -631,6 +640,9 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
   const questions = [
     {
       image: trainImage,
+      width: "210px",
+      height: "200px",
+      marginTop: "10px",
       answers: [
         "1. දුම්රිය ස්ථානය",
         "2. බස් නැවතුම්පොළ",
@@ -641,6 +653,9 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
     },
     {
       image: farmImage,
+      width: "240px",
+      height: "240px",
+      marginTop: "20px",
       answers: [
         "1. ගොවිපල",
         "2. සත්ත්තවෝද්‍යානය",
@@ -651,6 +666,9 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
     },
     {
       image: restaurantImage,
+      width: "340px",
+      height: "170px",
+      marginTop: "20px",
       answers: [
         "1. රාජ බෝජන සංග්‍රහය ",
         "2. රාජගීය පවුල",
@@ -661,6 +679,9 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
     },
     {
       image: accidentImage,
+      width: "232px",
+      height: "230px",
+      marginTop: "10px",
       answers: [
         "1. ඉදිකිරීම්ර කටයුතු ස්ථානය",
         "2. රිය අනතුර ",
@@ -671,6 +692,9 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
     },
     {
       image: hospitalImage,
+      width: "300px",
+      height: "210px",
+      marginTop: "10px",
       answers: [
         "1. රෝහල",
         "2. සෞඛ්‍ය මධ්‍යස්ථානය",
@@ -696,7 +720,7 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
           if (prev === 1) {
             setShowImage(false);
             setShowAnswers(true);
-            setTimer(10);
+            setTimer(3);
             clearInterval(interval);
           }
           return prev - 1;
@@ -753,7 +777,7 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(4);
+      setTimer(3);
     } else {
       setIsCompleted(true);
       // Once completed, call onFinishAll so the parent sends data to backend.
@@ -776,6 +800,7 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
       style={{ backgroundImage: `url(${backImg})` }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+
       <div className="relative z-10 flex flex-col justify-center items-center h-full text-white text-center">
         {isCompleted ? (
           <ScoreBoard score={score} totalQuestions={questions.length} onRestart={restartActivity} />
@@ -783,24 +808,64 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
           <>
             {showImage && (
               <>
-                <h1 className="text-4xl font-bold mb-6">
-                  ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
-                </h1>
-                <div className="p-5 rounded-lg bg-gradient-to-r from-yellow-500 via-red-500 to-purple-500 max-w-2xl mx-auto flex justify-center items-center">
-                  <img
-                    src={questions[currentQuestion].image}
-                    alt={`Question ${currentQuestion + 1}`}
-                    className="w-full max-h-80 object-contain rounded-lg"
-                    style={{ boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.7)" }}
-                  />
+                {/* ✅ Updated Container Styling with Falling Golden Snowballs */}
+                <div className="p-8 rounded-[2rem] bg-gradient-to-r from-blue-300/80 via-green-300/80 to-purple-300/80 
+                  border-8 border-blue-800 shadow-md max-w-xl mx-auto mt-6 relative w-[600px] h-[420px] flex flex-col justify-between items-center overflow-hidden">
+                  
+                  {/* ✅ Falling Golden Snowballs */}
+                  <div className="absolute inset-0 pointer-events-none">
+                    {[...Array(12)].map((_, index) => (
+                      <div
+                        key={index}
+                        className="falling-snowball"
+                        style={{
+                          left: `${Math.random() * 100}%`,  // Random horizontal position
+                          animationDelay: `${Math.random() * 3}s`,  // Random animation delay
+                        }}
+                      ></div>
+                    ))}
+                  </div>
+
+                  {/* ✅ Question Number inside the container */}
+                  <div className="absolute top-[-20px] px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 
+                      text-white text-lg font-bold rounded-2xl shadow-md mt-[50px]">
+                    ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
+                  </div>
+
+                  {/* ✅ Images Inside Container */}
+                  <img src={img41} alt="img41" className="absolute top-[267px] right-[360px] w-[200px] h-auto" />
+                  <img src={img42} alt="img42" className="absolute top-[267px] right-[200px] w-[200px] h-auto" />
+                  <img src={img43} alt="img43" className="absolute top-[267px] right-[90px] w-[200px] h-auto" />
+                  <img src={img44} alt="img44" className="absolute top-[267px] right-[6px] w-[200px] h-auto" />
+                  <img src={img45} alt="img45" className="absolute top-[310px] right-[390px] w-[30px] h-auto" />
+                  <img src={img46} alt="img46" className="absolute top-[310px] right-[120px] w-[45px] h-auto" />
+                  <img src={img47} alt="img47" className="absolute top-[27px] right-[90px] w-[80px] h-auto" />
+                  <img src={img48} alt="img48" className="absolute top-[200px] right-[480px] w-[105px] h-auto" />
+                  <img src={img49} alt="img49" className="absolute top-[6px] right-[370px] w-[190px] h-auto" />
+                  <img src={img50} alt="img50" className="absolute top-[138px] right-[20px] w-[90px] h-auto" />
+
+                  {/* ✅ Question Image */}
+                  <div className="flex-grow flex justify-center items-center w-full">
+                    <img
+                      src={questions[currentQuestion].image}
+                      alt={`Question ${currentQuestion + 1}`}
+                      className="object-contain rounded-lg border-8 border-white shadow-lg"
+                      style={{
+                        width: questions[currentQuestion].width,  // ✅ Apply dynamic width
+                        height: questions[currentQuestion].height,  // ✅ Apply dynamic height
+                        marginTop: questions[currentQuestion].marginTop, 
+                        boxShadow: "0px 10px 35px rgba(0, 0, 0, 0.8)",
+                      }}
+                    />
+                  </div>
                 </div>
               </>
             )}
             {!showAnswers && (
-              <div className="flex justify-center mt-6 w-full">
-                <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg w-auto max-w-xs text-center">
-                  කාලය: {timer} තත්පර
-                </div>
+              <div className="mt-6">
+              <div className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg text-center">
+              ⏳ කාලය: {timer} තත්පර
+              </div>
               </div>
             )}
             {showAnswers && (
@@ -848,12 +913,36 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
             )}
           </>
         )}
-        <button
-          onClick={onBack}
-          className="absolute top-4 left-4 bg-gray-600 px-4 py-2 rounded-full"
-        >
-          Back
-        </button>
+        {/* ✅ Falling Golden Snowballs Animation Styles */}
+      <style>
+        {`
+          @keyframes fallAndSway {
+            0% {
+              transform: translateY(-100px) translateX(0px);
+              opacity: 1;
+            }
+            50% {
+              transform: translateY(200px) translateX(15px);
+            }
+            100% {
+              transform: translateY(400px) translateX(-15px);
+              opacity: 0;
+            }
+          }
+
+          .falling-snowball {
+            position: absolute;
+            top: -50px;
+            width: 15px;
+            height: 15px;
+             background: linear-gradient(to bottom, #ff1493, #1e90ff);
+            border-radius: 50%;
+            opacity: 0.9;
+            animation: fallAndSway 5s linear infinite;
+          }
+        `}
+      </style>
+      
       </div>
     </div>
   );

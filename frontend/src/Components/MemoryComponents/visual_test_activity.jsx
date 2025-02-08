@@ -346,8 +346,14 @@ import answerImg9 from "../../assets/Question4_images/9.jpg";
 import answerImg10 from "../../assets/Question4_images/10.jpg";
 import answerImg11 from "../../assets/Question4_images/11.jpg";
 import answerImg12 from "../../assets/Question4_images/12.jpg";
+import img27 from "../../assets/Working_Memory/img27.png";
+import img30 from "../../assets/Working_Memory/img30.png";
+import img31 from "../../assets/Working_Memory/img31.png";
+import img32 from "../../assets/Working_Memory/img32.png";
+import img33 from "../../assets/Working_Memory/img33.png"
 import ScoreBoard from "../Score_board";
 import { useScores } from "../../context/Score_context";
+
 
 /**
  * Component #3 — Visual Test Activity
@@ -428,7 +434,7 @@ const VisualTestActivity = ({ onNext, onBack }) => {
             setShowImage(false);
             setShowAnswers(true);
             clearInterval(interval);
-            setTimer(10);
+            setTimer(1);
           }
           return prevTimer - 1;
         });
@@ -477,7 +483,7 @@ const VisualTestActivity = ({ onNext, onBack }) => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(4);
+      setTimer(1);
     } else {
       setIsCompleted(true);
     }
@@ -503,43 +509,112 @@ const VisualTestActivity = ({ onNext, onBack }) => {
 
   return (
     <div
-      className="h-screen w-full bg-cover bg-center relative"
-      style={{ backgroundImage: `url(${backImg})` }}
-    >
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+    className="h-screen w-full bg-cover bg-center relative"
+    style={{ backgroundImage: `url(${backImg})` }}
+  >
+    <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+  
+    {isCompleted ? (
+      <ScoreBoard
+        score={visualDiscriminationScore}
+        totalQuestions={questions.length}
+      />
+    ) : (
+      <div className="relative z-10 flex flex-col justify-center items-center h-full text-white text-center">
+        {showImage && (
+          <>
+          {/* Question Container with Increased Height & Adjusted Layout */}
+<div className="p-8 rounded-[2rem] bg-gradient-to-r from-blue-300/80 via-green-300/80 to-purple-300/80 border-8 border-blue-800 shadow- max-w-xl mx-auto mt-6 relative h-[340px] flex flex-col justify-between items-center">
 
-      {isCompleted ? (
-        // Show scoreboard or “completed” screen
-        <ScoreBoard
-          score={visualDiscriminationScore}
-          totalQuestions={questions.length}
-          onRestart={handleRestart}
-        />
-      ) : (
-        <div className="relative z-10 flex flex-col justify-center items-center h-full text-white text-center">
-          {showImage && (
-            <>
-              <h1 className="text-4xl font-bold mb-6">
-                ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
-              </h1>
-              <div className="p-5 rounded-lg bg-gradient-to-r from-yellow-500 via-red-500 to-purple-500 max-w-xl mx-auto">
-                <img
-                  src={questions[currentQuestion].image}
-                  alt={`Question ${currentQuestion + 1}`}
-                  className="w-full max-h-60 object-contain rounded-lg border-4 border-white"
-                  style={{
-                    boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.7)",
-                  }}
-                />
-              </div>
-            </>
+{/* Image img25 positioned inside the top-right corner */}
+<img
+    src={img27}
+    alt="img27"
+    className="absolute top-[18px] right-[50px] w-[150px] h-auto"
+  />
+
+{/* Question Number placed inside the container at the top */}
+<div className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg font-bold rounded-2xl shadow-md mt-[-10px]">
+    ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
+  </div>
+
+  {/* Image img31 positioned inside the container box */}
+<img
+  src={img33}
+  alt="img33"
+  className="absolute top-[70px] right-[500px] w-[45px] h-auto animate-butterfly"
+  style={{ animationDelay: "0s" }}
+/>
+ {/* Image img31 positioned inside the container box */}
+<img
+  src={img32}
+  alt="img32"
+  className="absolute top-[20px] right-[20px] w-[50px] h-auto animate-butterfly"
+  style={{ animationDelay: "0.5s" }} 
+/>
+{/* Image img31 positioned inside the container box */}
+<img
+  src={img31}
+  alt="img31"
+  className="absolute top-[-10px] right-[420px] w-[70px] h-auto animate-butterfly"
+  style={{ animationDelay: "1s" }} 
+/>
+
+  {/* Wrapper for Question Image + img30 positioned on the top border */}
+  <div className="w-full flex justify-center mt-4 relative">
+    
+    {/* Image img30 placed on top of the question image border */}
+    <img
+      src={img30}
+      alt="img30"
+      className="absolute top-[-82px] right-[160px] w-[300px] h-auto"
+    />
+    {/* Question Image with Border & Increased Size */}
+    <img
+      src={questions[currentQuestion].image}
+      alt={`Question ${currentQuestion + 1}`}
+      className="w-[90%] max-h-[300px] object-contain rounded-lg border-8 border-white shadow-lg"
+      style={{
+        boxShadow: "0px 10px 35px rgba(0, 0, 0, 0.8)",
+      }}
+    />
+  </div>
+
+</div>
+{/* CSS for Butterfly Animation */}
+<style>
+  {`
+    @keyframes butterflyWings {
+      0%, 100% {
+        transform: scale(1) rotate(0deg);
+      }
+      25% {
+        transform: scale(1.1) rotate(-2deg);
+      }
+      50% {
+        transform: scale(1) rotate(0deg);
+      }
+      75% {
+        transform: scale(1.1) rotate(2deg);
+      }
+    }
+
+    .animate-butterfly {
+      animation: butterflyWings 0.8s infinite ease-in-out;
+    }
+  `}
+</style>
+
+
+
+          </>
           )}
 
           {/* Timer */}
           {!showAnswers && (
             <div className="mt-6">
               <div className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg text-center">
-                කාලය: {timer} තත්පර
+              ⏳ කාලය: {timer} තත්පර
               </div>
             </div>
           )}

@@ -381,7 +381,9 @@ import answerImg17 from "../../assets/Question3_images/answers/img17.jpg";
 import answerImg18 from "../../assets/Question3_images/answers/img18.jpg";
 import answerImg19 from "../../assets/Question3_images/answers/img19.jpg";
 import answerImg20 from "../../assets/Question3_images/answers/img20.jpg";
-
+import img28 from "../../assets/Working_Memory/img28.png"
+import img35 from "../../assets/Working_Memory/img35.png"
+import img26 from "../../assets/Working_Memory/img26.png";
 import ScoreBoard from "../Score_board";
 import { useScores } from "../../context/Score_context";
 
@@ -472,7 +474,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
             setShowImage(false);
             setShowAnswers(true);
             clearInterval(interval);
-            setTimer(10);
+            setTimer(2);
           }
           return prevTimer - 1;
         });
@@ -523,7 +525,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(4);
+      setTimer(2);
     } else {
       setIsCompleted(true);
     }
@@ -567,22 +569,45 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
 
       <div className="relative z-10 flex flex-col justify-center items-center h-full text-white text-center">
         {showImage && (
-          <h1 className="text-4xl font-bold mb-6">
-            ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
-          </h1>
-        )}
+          <>
+            {/* Question Container with Increased Height & Adjusted Layout */}
+            <div className="p-8 rounded-[2rem] bg-gradient-to-r from-blue-300/80 via-green-300/80 to-purple-300/80 border-8 border-blue-800 shadow-md max-w-xl mx-auto mt-6 relative w-[600px] h-[380px] flex flex-col justify-between items-center">
+              
+              {/* Question Number inside the container */}
+              <div className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg font-bold rounded-2xl shadow-md">
+                ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
+              </div>
 
-        {showImage && (
-          <div className="p-5 rounded-lg bg-gradient-to-r from-yellow-500 via-red-500 to-purple-500 max-w-4xl mx-auto">
-            <img
-              src={questions[currentQuestion].image}
-              alt={`Question ${currentQuestion + 1}`}
-              className="w-full max-h-screen object-cover rounded-lg"
-              style={{ boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.7)" }}
-            />
+              <img
+                src={img35}
+                alt="img35"
+                className="absolute top-[220px] right-[405px] w-[160px] h-auto"
+              />
+              <img
+                src={img26}
+                alt="img26"
+                className="absolute bottom-[20px] right-[10px] w-[110px] h-auto"
+              />
+              <img
+                src={img28}
+                alt="img28"
+                className="absolute bottom-[1px] right-[30px] w-[470px] h-auto"
+              />
+              
+            {/* Moved the Question Image slightly higher */}
+            <div className="flex-grow flex justify-center items-center w-full mt-[-75px]">
+              <img
+                src={questions[currentQuestion].image}
+                alt={`Question ${currentQuestion + 1}`}
+                className="w-[80%] max-h-[280px] object-contain rounded-lg border-8 border-white shadow-lg"
+                style={{
+                  boxShadow: "0px 10px 35px rgba(0, 0, 0, 0.8)",
+                }}
+              />
+            </div>
           </div>
-        )}
-
+        </>
+      )}
         {/* Answers */}
         {showAnswers && (
           <>
@@ -666,12 +691,13 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
         )}
 
         {/* Timer */}
-        <div className="flex justify-center mt-4">
-          <div className="text-xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 px-6 py-3 rounded-md shadow-lg text-center">
-            කාලය: {timer} තත්පර
-          </div>
-        </div>
-      
+        {!showAnswers && (
+            <div className="mt-6">
+              <div className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg text-center">
+              ⏳ කාලය: {timer} තත්පර
+              </div>
+            </div>
+          )}
       </div>
     </div>
   );

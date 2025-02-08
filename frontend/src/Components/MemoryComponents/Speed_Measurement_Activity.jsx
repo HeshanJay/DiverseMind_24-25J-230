@@ -357,7 +357,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
           if (prevTimer === 1) {
             setShowImage(false);
             setShowAnswers(true);
-            setTimer(10);
+            setTimer();
             clearInterval(id);
           }
           return prevTimer - 1;
@@ -413,7 +413,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(4);
+      setTimer(1);
     } else {
       setIsCompleted(true);
     }
@@ -433,7 +433,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
     setScore(0);
     setShowImage(true);
     setShowAnswers(false);
-    setTimer(4);
+    setTimer(1);
     setIsCompleted(false);
   };
 

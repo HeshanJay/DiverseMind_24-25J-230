@@ -316,7 +316,10 @@ import audio2 from "../../assets/Audios/2.mp3";
 import audio3 from "../../assets/Audios/3.mp3";
 import audio4 from "../../assets/Audios/4.mp3";
 import audio5 from "../../assets/Audios/5.mp3";
+import img32 from "../../assets/Working_Memory/img32.png";
+import img31 from "../../assets/Working_Memory/img31.png"
 import ScoreBoard from "../Score_board";
+
 import { useScores } from "../../context/Score_context";
 
 /**
@@ -482,7 +485,6 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
     setTimer(15);
     setAudioPlayedCount(0);
   };
-
   return (
     <>
       {isQuizCompleted ? (
@@ -505,41 +507,66 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
           }}
         >
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-
+  
           <div className="relative z-10 flex flex-col justify-center items-center h-full text-white text-center">
-            {!isAudioPlaying && !showAnswers && (
-              <h1 className="text-4xl font-bold mb-6">අවධානයෙන් සවන් දෙන්න</h1>
+            
+            {/* ✅ Ensure the Container Box is ONLY Visible Before the Answer Phase */}
+            {!showAnswers && (
+              <div className="bg-gradient-to-r from-blue-300/80 via-green-300/80 to-purple-300/80 
+                  p-8 rounded-[2rem] shadow-md w-[420px] h-[120px] relative border-8 border-blue-800 
+                  flex flex-col justify-center items-center mt-[-40px]">
+       {/* ✅ Butterfly Images with Animation Inside the Container */}
+            <img
+                src={img32}
+                alt="Butterfly 1"
+                className="absolute top-[30px] right-[30px] w-[50px] h-auto animate-butterfly"
+                style={{ animationDelay: "0.5s" }}
+              />
+              <img
+                src={img31}
+                alt="Butterfly 2"
+                className="absolute top-[10px] left-[-20px] w-[105px] h-auto animate-butterfly"
+                style={{ animationDelay: "0s" }}
+              />
+              
+              {/* ✅ Gradient Styled Text Inside the Container (Always Visible) */}
+              <h1 className="text-4xl md:text-4xl font-bold text-center mb-2 bg-gradient-to-r from-pink-500 via-blue-500 to-red-500 bg-clip-text text-transparent">
+                අවධානයෙන් සවන් දෙන්න
+              </h1>
+            </div>
+          )}
+  
+            {/* ✅ Audio Play Button (Outside the Container) */}
+            {!showAnswers && (
+              <>
+                {!isAudioPlaying && (
+                  <button
+                    onClick={handleStartAudio}
+                    className="mt-6 bg-gradient-to-r from-green-500 to-blue-500 text-white text-4xl w-32 h-32 rounded-full flex items-center justify-center transform transition-all hover:scale-110"
+                  >
+                    <FaPlay className="m-auto" />
+                  </button>
+                )}
+  
+                {isAudioPlaying && (
+                  <button
+                    disabled
+                    className="mt-6 bg-gradient-to-r from-green-500 to-blue-500 text-white text-4xl w-32 h-32 rounded-full flex items-center justify-center"
+                  >
+                    <FaPlay className="m-auto" />
+                  </button>
+                )}
+              </>
             )}
-
-            {isAudioPlaying && !showAnswers && (
-              <h1 className="text-4xl font-bold mb-6">අවධානයෙන් සවන් දෙන්න</h1>
-            )}
-
-            {!isAudioPlaying && !showAnswers && (
-              <button
-                onClick={handleStartAudio}
-                className="bg-gradient-to-r from-green-500 to-blue-500 text-white text-4xl w-32 h-32 rounded-full flex items-center justify-center transform transition-all hover:scale-110"
-              >
-                <FaPlay className="m-auto" />
-              </button>
-            )}
-
-            {isAudioPlaying && !showAnswers && (
-              <button
-                disabled
-                className="bg-gradient-to-r from-green-500 to-blue-500 text-white text-4xl w-32 h-32 rounded-full flex items-center justify-center"
-              >
-                <FaPlay className="m-auto" />
-              </button>
-            )}
-
+            
             {showAnswers && (
               <>
+                {/* ✅ Answer Section is kept the same */}
                 <div className="bg-gray-800 bg-opacity-70 p-4 rounded-lg mb-6 w-full max-w-5xl mx-auto">
                   <h2 className="text-3xl font-semibold mb-4 text-white text-center">
                     නිවැරදි පිළිතුර තෝරන්න
                   </h2>
-
+  
                   <table className="w-full text-lg border-separate border-spacing-4">
                     <tbody>
                       {answers[currentQuestion - 1].map((answer, index) => {
@@ -554,7 +581,7 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
                                   {answer}
                                 </button>
                               </td>
-
+  
                               {answers[currentQuestion - 1][index + 1] && (
                                 <td className="p-4 text-center">
                                   <button
@@ -579,6 +606,30 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
                 </div>
               </>
             )}
+            {/* ✅ Butterfly Animation Keyframes */}
+  <style>
+      {`
+        @keyframes butterflyWings {
+          0%, 100% {
+            transform: scale(1) rotate(0deg);
+          }
+          25% {
+            transform: scale(1.1) rotate(-2deg);
+          }
+          50% {
+            transform: scale(1) rotate(0deg);
+          }
+          75% {
+            transform: scale(1.1) rotate(2deg);
+          }
+        }
+
+        .animate-butterfly {
+          animation: butterflyWings 0.8s infinite ease-in-out;
+        }
+      `}
+    </style>
+
           
           </div>
         </div>

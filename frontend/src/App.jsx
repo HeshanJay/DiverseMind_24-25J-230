@@ -11,6 +11,9 @@ import ResetPassword from "./Components/ResetPassword/ResetPassword";
 import StudentEntrance from "./Components/StudentEntrence/StudentEntrence";
 import HomePage from "./Pages/HomePage/home_page";
 import WorkingMemory from "./Pages/WorkingMemory/WorkingMemory";
+import AttentionReadingTest from "./Pages/ReadingDashboardpage";
+import MathScreeningTest from "./Pages/math/MathScreeningTest";
+import WritingTest from "./Pages/WritingTest";
 
 const App = () => {
   return (
@@ -21,7 +24,8 @@ const App = () => {
             <Route index element={<HomePage />} />
             <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
-
+            <Route path="/math" element={<MathScreeningTest />} />
+            <Route path="/writingtest" element={<WritingTest />} />
             <Route path="/scoreboard" element={<ScoreBoard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -30,6 +34,7 @@ const App = () => {
             <Route path="/student-entrance" element={<StudentEntrance />} />
             <Route path="/home-page" element={<HomePage />} />
             <Route path="/working-memory" element={<WorkingMemory />} />
+            <Route path="/attentionreadingtest" element={<AttentionReadingTest />} />
             <Route path="*" element={<div>Page Not Found</div>} />
           </Routes>
         </ScoresProvider>
