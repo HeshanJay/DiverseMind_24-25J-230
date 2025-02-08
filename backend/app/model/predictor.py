@@ -6,8 +6,8 @@ import numpy as np
 import joblib
 import mediapipe as mp
 from tensorflow.keras.models import model_from_json
-
 from tensorflow.keras.models import load_model 
+
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -163,3 +163,24 @@ def predict_outcome(data: dict) -> str:
 
     except Exception as e:
         raise ValueError(f"Error during prediction: {e}")
+
+
+#attention
+def load_emotion_model(json_path: str, weights_path: str):
+    with open(json_path, 'r') as json_file:
+        model = model_from_json(json_file.read())
+    model.load_weights(weights_path)
+    return model
+
+def load_face_cascade(cascade_path: str):
+    return cv2.CascadeClassifier(cascade_path)
+
+def load_face_mesh():
+    mp_face_mesh = mp.solutions.face_mesh
+    face_mesh = mp_face_mesh.FaceMesh(
+        refine_landmarks=True,
+        max_num_faces=1,
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5
+    )
+    return face_mesh
