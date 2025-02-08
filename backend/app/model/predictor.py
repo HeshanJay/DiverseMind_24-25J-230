@@ -1,17 +1,17 @@
 import os
 import pickle
-import pandas as pd
+import pandas as pd 
 import cv2
-import numpy as np
+import numpy as np 
 
-from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model 
 
 # Maths
 model_math_path = "./app/model/predictor_math.pickle"
 with open(model_math_path, "rb") as f:
     model_math = pickle.load(f)
 
-def predict_outcome_math(features_dict: dict) -> int:
+def predict_outcome(data):
     """
     Predict the outcome based on input features using the scikit-learn model.
 
@@ -21,7 +21,7 @@ def predict_outcome_math(features_dict: dict) -> int:
     Returns:
         int: The predicted label (e.g. 0, 1, 2) from the scikit-learn model.
     """
-    df = pd.DataFrame([features_dict])
+    df = pd.DataFrame([data])
     prediction = model_math.predict(df)
     return int(prediction[0])
 
@@ -105,78 +105,3 @@ def predict_outcome_writing(image_bytes: bytes) -> dict:
         }
     except Exception as e:
         return {"error": str(e)}
-
-
-# import joblib
-# import pandas as pd
-
-# # Paths to the model and scaler
-# model_path = "./app/model/memory_predictor.pkl"
-# scaler_path = "./app/model/scaler.pkl"
-
-# try:
-#     # Load the scaler
-#     scaler = joblib.load(scaler_path)
-#     if not hasattr(scaler, "transform"):
-#         raise ValueError("The loaded scaler does not have a 'transform' method.")
-#     print("Scaler loaded successfully.")
-
-#     # Load the model
-#     model = joblib.load(model_path)
-#     if not hasattr(model, "predict"):
-#         raise ValueError("The loaded model does not have a 'predict' method.")
-#     print("Model loaded successfully.")
-# except Exception as e:
-#     raise RuntimeError(f"Error loading model or scaler: {e}")
-
-
-# def predict_outcome(data):
-#     """
-#     Predict the outcome based on the input features.
-
-#     Args:
-#         data (dict): Dictionary containing input features.
-
-#     Returns:
-#         str: Predicted label ('Normal', 'Medium', 'Low').
-#     """
-#     try:
-#         # Convert input data to a DataFrame
-#         input_df = pd.DataFrame([data])
-#         # Apply scaling
-#         sample_scaled = scaler.transform(input_df)
-#         # Predict using the model
-#         pred = model.predict(sample_scaled)
-
-#         # Map prediction to label
-#         label_map = {0: 'Normal', 1: 'Medium', 2: 'Low'}
-#         predict_label = label_map[pred[0]]
-#         print("Prediction Label:", predict_label)
-
-#         return predict_label
-#     except Exception as e:
-#         raise ValueError(f"Error during prediction: {e}")
-
-
-import cv2
-import mediapipe as mp
-from tensorflow.keras.models import model_from_json
-
-def load_emotion_model(json_path: str, weights_path: str):
-    with open(json_path, 'r') as json_file:
-        model = model_from_json(json_file.read())
-    model.load_weights(weights_path)
-    return model
-
-def load_face_cascade(cascade_path: str):
-    return cv2.CascadeClassifier(cascade_path)
-
-def load_face_mesh():
-    mp_face_mesh = mp.solutions.face_mesh
-    face_mesh = mp_face_mesh.FaceMesh(
-        refine_landmarks=True,
-        max_num_faces=1,
-        min_detection_confidence=0.5,
-        min_tracking_confidence=0.5
-    )
-    return face_mesh
