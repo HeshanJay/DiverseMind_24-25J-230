@@ -14,7 +14,8 @@ from fastapi.responses import RedirectResponse
 from app.model.predictor import predict_outcome_writing
 from app.model.evaluate import evaluate_student_writing_skills
 import logging
-from app.model.predictor import predict_outcome
+from app.model.predictor import predict_math_outcome
+from app.model.predictor import predict_memory_outcome
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -33,7 +34,6 @@ from app.utils import (
     ALGORITHM
 )
 from app.db import get_database
-from app.model.predictor import predict_outcome
 from typing import List
 import numpy as np
 import string
