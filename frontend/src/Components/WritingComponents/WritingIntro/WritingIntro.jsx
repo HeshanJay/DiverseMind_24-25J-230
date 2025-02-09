@@ -1,6 +1,6 @@
 import React from "react";
-import backgroundImage from "../../../assets/background_images/writing_back_start.webp";
-import "./WritingIntro.css"; // Import your custom CSS for the animation
+import backgroundImage from "../../../assets/background_images/intro.jpg";
+import "./WritingIntro.css";
 
 const WritingIntroPage = ({ onStartTest }) => {
   return (
