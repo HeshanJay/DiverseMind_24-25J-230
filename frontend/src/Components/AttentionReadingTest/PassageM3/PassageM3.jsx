@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import "./Passage2.css";
+import "./PassageM3.css";
 import backgroundImage from "../../../assets/background_images/back_img4.jpg";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
-const Passage2 = ({ onPrevious, onNext }) => {
+const PassageM3 = ({ onPrevious, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    "වගා භූමිය ජලයෙන් ගිලීම",
-    "මියෝ වගාවට හානි කිරීම",
-    "මියෝ වගා සහ පොළොව විනාශ කිරීම", // Correct answer is "C"
-    "කාලගුණය වැඩි දැඩි වීම",
+    "‘පුතේ, හැමදේම විනෝදයි’",
+    "‘පුතේ, උගන්මන් ඉගෙන ගන්න’",
+    "‘පුතේ, දඟ කරන්නෙ පරෙස්සමින්!’", // Correct answer is "C"
+    " ‘පුතේ, හිඹුටු ගෙඩි බොහෝම රසයි’",
   ];
-  const correctAnswer = "මියෝ වගා සහ පොළොව විනාශ කිරීම";
+  const correctAnswer = "‘පුතේ, දඟ කරන්නෙ පරෙස්සමින්!’";
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -29,9 +29,9 @@ const Passage2 = ({ onPrevious, onNext }) => {
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
-      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-green-400">
-        <h1 className="text-3xl font-extrabold text-green-600 mb-6">
-          හෙනේ මාමාට කතාවේදී මුහුණ දීමට සිදුවන ප්‍රධාන ගැටළුව කුමක්ද?
+      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-orange-400">
+        <h1 className="text-3xl font-extrabold text-orange-600 mb-6">
+          බුකුං බුකුංට එයාගෙ අම්මා මොනවද කියන්නේ?
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (
@@ -40,7 +40,7 @@ const Passage2 = ({ onPrevious, onNext }) => {
               onClick={() => handleOptionClick(option)}
               className={`p-4 rounded-lg border-2 transition-transform duration-300 shadow-md hover:scale-105 ${
                 selectedOption === option
-                  ? "bg-green-500 text-white border-green-700"
+                  ? "bg-orange-500 text-white border-orange-700"
                   : "bg-white text-gray-800 border-gray-300"
               }`}
             >
@@ -70,4 +70,4 @@ const Passage2 = ({ onPrevious, onNext }) => {
   );
 };
 
-export default Passage2;
+export default PassageM3;
