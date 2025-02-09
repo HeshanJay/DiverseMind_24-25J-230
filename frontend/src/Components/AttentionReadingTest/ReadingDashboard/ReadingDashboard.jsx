@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import { MdArrowForward } from "react-icons/md";
 import axios from "axios";
 import "./ReadingDashboard.css";
-import monkeyImage from "../../../assets/characters/Monkey.png";
-import bunnyImage from "../../../assets/characters/bunny.png";
 import foxImage from "../../../assets/characters/fox.png";
-import backgroundImage from "../../../assets/background_images/back_img4.jpg";
+import backgroundImage from "../../../assets/background_images/scorebg2.jpg";
 
 const ReadingDashboard = ({ onNext }) => {
   const [cameraActive, setCameraActive] = useState(false);
+  const [instructionStep, setInstructionStep] = useState(1);
+  const [playButtonDisabled, setPlayButtonDisabled] = useState(false);
 
   const startAttentionDetection = async () => {
     try {
       const response = await axios.get("http://localhost:8000/attention/start");
       console.log("Attention detection started:", response.data);
-      setCameraActive(true); // Set camera to active state
+      setCameraActive(true);
+      setInstructionStep(2);
+      setPlayButtonDisabled(true);
     } catch (error) {
       console.error(
         "Error starting attention detection:",
@@ -30,34 +31,56 @@ const ReadingDashboard = ({ onNext }) => {
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
-      <div className="absolute top-[15%] left-1/2 transform -translate-x-1/2 bg-white bg-opacity-80 rounded-xl shadow-lg p-6 flex flex-col items-center">
-        <h1 className="text-3xl text-center text-black font-extrabold popup-text">
-          අවධානය! <br /> කියවීමේ පරීක්ෂණය
+      {cameraActive && (
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      )}
+
+      <div className="absolute top-[25%] left-1/2 transform -translate-x-1/2 p-6 flex flex-col items-center popup-container">
+        <h1 className="text-3xl text-center text-white font-extrabold popup-text">
+          අවධානය <br /> පරීක්ෂා කරමු
         </h1>
+
+        {/* Kid-friendly "ආරම්භ කරමු" button */}
         <button
           onClick={startAttentionDetection}
-          className="mt-4 px-6 py-3 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-lg font-bold rounded-full shadow-lg flex items-center space-x-2 hover:scale-105 hover:bg-gradient-to-l transition-transform duration-300"
+          disabled={playButtonDisabled}
+          className={`mt-6 px-6 py-3 border-4 border-white text-white rounded-full shadow-lg font-bold text-xl transition-transform duration-300 
+            ${
+              playButtonDisabled
+                ? "bg-gray-500 cursor-not-allowed opacity-50"
+                : "bg-yellow-400 hover:scale-110 hover:bg-yellow-500"
+            }
+          `}
         >
-          <span>ඉදිරියට යන්න</span>
-          <MdArrowForward size={24} />
+          ආරම්භ කරමු
         </button>
       </div>
+
       <button
-        onClick={onNext}
-        className="absolute bottom-10 right-28 w-16 h-16 rounded-full shadow-lg flex justify-center items-center bg-gradient-to-r from-blue-400 to-green-500 hover:scale-110 transition-transform duration-300"
+        onClick={cameraActive ? onNext : null}
+        disabled={!cameraActive}
+        className={`absolute bottom-10 right-28 py-3 px-8 rounded-full shadow-lg font-extrabold text-xl text-white transition-all duration-300 transform 
+          ${
+            cameraActive
+              ? "bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 hover:from-yellow-400 hover:to-purple-400 hover:scale-110 hover:shadow-2xl"
+              : "bg-gray-400 cursor-not-allowed opacity-50"
+          }
+        `}
         aria-label="Next"
       >
-        <MdArrowForward size={40} color="white" />
+        🌟 ඉදිරියට යමු 🚀
       </button>
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-[200%]">
+
+      {instructionStep === 2 && (
+        <div className="absolute bottom-24 right-36 bg-white text-black p-3 rounded-lg shadow-lg animate-fadeIn z-10">
+          ✅ Click here to start!
+        </div>
+      )}
+
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
         <img src={foxImage} alt="Fox" className="w-28 monkey-animation" />
       </div>
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-[60%]">
-        <img src={monkeyImage} alt="Monkey" className="w-28 monkey-animation" />
-      </div>
-      <div className="absolute bottom-10 left-1/2 transform translate-x-[60%]">
-        <img src={bunnyImage} alt="Bunny" className="w-28 monkey-animation" />
-      </div>
+
       {cameraActive && (
         <div className="absolute top-5 right-5 bg-green-500 text-white px-4 py-2 rounded-full shadow-lg">
           Camera Active: Attention Detecting...

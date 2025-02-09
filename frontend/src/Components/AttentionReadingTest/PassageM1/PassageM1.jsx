@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import "./Passage2.css";
+import "./PassageM1.css";
 import backgroundImage from "../../../assets/background_images/back_img4.jpg";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
-const Passage2 = ({ onPrevious, onNext }) => {
+const PassageM1 = ({ onPrevious, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    "වගා භූමිය ජලයෙන් ගිලීම",
-    "මියෝ වගාවට හානි කිරීම",
-    "මියෝ වගා සහ පොළොව විනාශ කිරීම", // Correct answer is "C"
-    "කාලගුණය වැඩි දැඩි වීම",
+    "කහ පාට ගෙඩි අතුවල එල්ලී තිබුණා", // Correct answer is "A"
+    "කොළ පාට ගෙඩි ගස්වල උඩ තිබුණා",
+    "රතු පාට ගෙඩි ගස්වල හැදිලා තිබුණා",
+    "හිඹුටු ගස්වල කිසිදු ගෙඩි නැත",
   ];
-  const correctAnswer = "මියෝ වගා සහ පොළොව විනාශ කිරීම";
+  const correctAnswer = "කහ පාට ගෙඩි අතුවල එල්ලී තිබුණා";
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -29,9 +29,9 @@ const Passage2 = ({ onPrevious, onNext }) => {
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
-      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-green-400">
-        <h1 className="text-3xl font-extrabold text-green-600 mb-6">
-          හෙනේ මාමාට කතාවේදී මුහුණ දීමට සිදුවන ප්‍රධාන ගැටළුව කුමක්ද?
+      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-pink-400">
+        <h1 className="text-3xl font-extrabold text-pink-600 mb-6">
+          හිඹුටු කැලේ ගස්වල ගෙඩි කෙසේ තිබුණාද?
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (
@@ -40,7 +40,7 @@ const Passage2 = ({ onPrevious, onNext }) => {
               onClick={() => handleOptionClick(option)}
               className={`p-4 rounded-lg border-2 transition-transform duration-300 shadow-md hover:scale-105 ${
                 selectedOption === option
-                  ? "bg-green-500 text-white border-green-700"
+                  ? "bg-pink-500 text-white border-pink-700"
                   : "bg-white text-gray-800 border-gray-300"
               }`}
             >
@@ -70,4 +70,4 @@ const Passage2 = ({ onPrevious, onNext }) => {
   );
 };
 
-export default Passage2;
+export default PassageM1;
