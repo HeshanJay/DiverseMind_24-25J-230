@@ -25,13 +25,13 @@ from app.utils import (
 )
 from app.db import get_database
 from app.model.predictor import (
-    predict_outcome_writing,
-    predict_outcome,
     load_emotion_model,
     load_face_cascade,
     load_face_mesh
 )
 from app.model.evaluate import evaluate_student_writing_skills
+from app.model.predictor import predict_math_outcome
+from app.model.predictor import predict_memory_outcome
 
 #################################################
 # Configure logging
@@ -260,7 +260,7 @@ def read_root():
 @app.post("/math-prediction/")
 def predict(input_data: InputData):
     data = input_data.dict()
-    math_prediction = predict_outcome(data)
+    math_prediction = predict_math_outcome(data)
     return {"prediction": math_prediction}
 
 @app.post("/working_memory_prediction/")
@@ -268,7 +268,7 @@ def working_memory_prediction(input_data: WorkingMemoryInput):
     try:
         logging.info(f"Received request data: {input_data.dict()}")
         data = input_data.dict()
-        prediction = predict_outcome(data)
+        prediction = predict_memory_outcome(data)
         return {"prediction": prediction}
     except Exception as e:
         logging.error(f"Error during prediction: {e}")

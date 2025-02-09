@@ -20,7 +20,7 @@ model_math_path = "./app/model/predictor_math.pickle"
 with open(model_math_path, "rb") as f:
     model_math = pickle.load(f)
 
-def predict_outcome(data):
+def predict_math_outcome(data):
     """
     Predict the outcome based on input features using the scikit-learn model.
 
@@ -133,7 +133,7 @@ except Exception as e:
     raise RuntimeError(f"Error loading model or scaler: {e}")
 
 
-def predict_outcome(data: dict) -> str:
+def predict_memory_outcome(data: dict) -> str:
     """
     Predict the outcome based on the input features.
 
