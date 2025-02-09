@@ -381,8 +381,8 @@ import answerImg17 from "../../assets/Question3_images/answers/img17.jpg";
 import answerImg18 from "../../assets/Question3_images/answers/img18.jpg";
 import answerImg19 from "../../assets/Question3_images/answers/img19.jpg";
 import answerImg20 from "../../assets/Question3_images/answers/img20.jpg";
-import img28 from "../../assets/Working_Memory/img28.png"
-import img35 from "../../assets/Working_Memory/img35.png"
+import img28 from "../../assets/Working_Memory/img28.png";
+import img35 from "../../assets/Working_Memory/img35.png";
 import img26 from "../../assets/Working_Memory/img26.png";
 import ScoreBoard from "../Score_board";
 import { useScores } from "../../context/Score_context";
@@ -474,7 +474,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
             setShowImage(false);
             setShowAnswers(true);
             clearInterval(interval);
-            setTimer(2);
+            setTimer(3);
           }
           return prevTimer - 1;
         });
@@ -547,7 +547,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
     setIsCompleted(false);
     setShowImage(true);
     setShowAnswers(false);
-    setTimer(4);
+    setTimer(2);
   };
 
   if (isCompleted) {
@@ -572,7 +572,6 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
           <>
             {/* Question Container with Increased Height & Adjusted Layout */}
             <div className="p-8 rounded-[2rem] bg-gradient-to-r from-blue-300/80 via-green-300/80 to-purple-300/80 border-8 border-blue-800 shadow-md max-w-xl mx-auto mt-6 relative w-[600px] h-[380px] flex flex-col justify-between items-center">
-              
               {/* Question Number inside the container */}
               <div className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg font-bold rounded-2xl shadow-md">
                 ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
@@ -593,29 +592,37 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
                 alt="img28"
                 className="absolute bottom-[1px] right-[30px] w-[470px] h-auto"
               />
-              
-            {/* Moved the Question Image slightly higher */}
-            <div className="flex-grow flex justify-center items-center w-full mt-[-75px]">
-              <img
-                src={questions[currentQuestion].image}
-                alt={`Question ${currentQuestion + 1}`}
-                className="w-[80%] max-h-[280px] object-contain rounded-lg border-8 border-white shadow-lg"
-                style={{
-                  boxShadow: "0px 10px 35px rgba(0, 0, 0, 0.8)",
-                }}
-              />
+
+              {/* Moved the Question Image slightly higher */}
+              <div className="flex-grow flex justify-center items-center w-full mt-[-75px]">
+                <img
+                  src={questions[currentQuestion].image}
+                  alt={`Question ${currentQuestion + 1}`}
+                  className="w-[80%] max-h-[280px] object-contain rounded-lg border-8 border-white shadow-lg"
+                  style={{
+                    boxShadow: "0px 10px 35px rgba(0, 0, 0, 0.8)",
+                  }}
+                />
+              </div>
             </div>
-          </div>
-        </>
-      )}
-        {/* Answers */}
+
+            {/* Timer for the question page (blue-to-purple) */}
+            <div className="mt-6">
+              <div className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg text-center">
+                ⏳ කාලය: {timer} තත්පර
+              </div>
+            </div>
+          </>
+        )}
+
         {showAnswers && (
           <>
-            <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 max-w-5xl mx-auto">
+            {/* Answers Container with White Border */}
+            <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 max-w-5xl mx-auto border-4 border-white">
               <h2 className="text-3xl font-semibold mb-6 text-center">
                 නිවැරදි පිළිතුර තෝරන්න
               </h2>
-              <table className="w-full text-lg border-separate border-spacing-4">
+              <table className="w-full text-lg border-separate border-spacing-4 ">
                 <tbody>
                   {questions[currentQuestion].answers.map((answer, index) => {
                     const answerId = answer.id || index + 1;
@@ -687,17 +694,15 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
                 </tbody>
               </table>
             </div>
-          </>
-        )}
 
-        {/* Timer */}
-        {!showAnswers && (
+            {/* Timer for the answer page (yellow-to-red) */}
             <div className="mt-6">
-              <div className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg text-center">
-              ⏳ කාලය: {timer} තත්පර
+              <div className="text-xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 px-6 py-3 rounded-md shadow-lg text-center">
+                ⏳ කාලය: {timer} තත්පර
               </div>
             </div>
-          )}
+          </>
+        )}
       </div>
     </div>
   );

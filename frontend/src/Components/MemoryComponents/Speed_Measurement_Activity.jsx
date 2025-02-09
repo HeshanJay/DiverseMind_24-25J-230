@@ -302,9 +302,15 @@ import question1Image from "../../assets/Questions2_images/1.jpg";
 import question2Image from "../../assets/Questions2_images/2.jpg";
 import question3Image from "../../assets/Questions2_images/3.jpg";
 import question4Image from "../../assets/Questions2_images/4.jpg";
+import img34 from "../../assets/Working_Memory/img34.png"
+import img53 from "../../assets/Working_Memory/img53.png"
+import img52 from "../../assets/Working_Memory/img52.png"
 import ScoreBoard from "../Score_board";
 import { useScores } from "../../context/Score_context";
 
+/**
+ * Step #7 — Speed Measurement Activity
+ */
 const SpeedMeasurementActivity = ({ onNext, onBack }) => {
   const {
     visualDiscriminationScore,
@@ -325,31 +331,45 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
       image: question1Image,
       answers: ["↑", "↓", "←", "→"],
       correctAnswer: "↑",
+      imageWidth: "245px",    // Customize width for question 1
+      imageHeight: "189px", // Customize height for question 1
+      imageMarginTop: "49px" // Adjusted margin-top for question 1
     },
     {
       image: question2Image,
       answers: ["▢", "△", "◯", "♢"],
       correctAnswer: "♢",
+      imageWidth: "70%",    // Customize width for question 2
+      imageHeight: "194px", // Customize height for question 2
+      imageMarginTop: "49px" // Adjusted margin-top for question 2
     },
     {
       image: question3Image,
       answers: ["R", "r", "A", "h"],
       correctAnswer: "R",
+      imageWidth: "82%",    // Customize width for question 3
+      imageHeight: "191px", // Customize height for question 3
+      imageMarginTop: "49px" // Adjusted margin-top for question 3
     },
     {
       image: question4Image,
       answers: ["★", "✰", "⬜", "⚫"],
       correctAnswer: "✰",
+      imageWidth: "82%",    // Customize width for question 4
+      imageHeight: "168px", // Customize height for question 4
+      imageMarginTop: "49px"  // Adjusted margin-top for question 4
     },
   ];
+  
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showImage, setShowImage] = useState(true);
   const [showAnswers, setShowAnswers] = useState(false);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(3);
   const [score, setScore] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
 
+  // Timer for showing image
   useEffect(() => {
     if (showImage) {
       const id = setInterval(() => {
@@ -357,7 +377,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
           if (prevTimer === 1) {
             setShowImage(false);
             setShowAnswers(true);
-            setTimer();
+            setTimer(20);
             clearInterval(id);
           }
           return prevTimer - 1;
@@ -367,6 +387,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
     }
   }, [showImage]);
 
+  // Timer for showing answers
   useEffect(() => {
     if (showAnswers) {
       const id = setInterval(() => {
@@ -413,12 +434,13 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(1);
+      setTimer(20);
     } else {
       setIsCompleted(true);
     }
   };
 
+  // After finishing, go to next step after a delay
   useEffect(() => {
     if (isCompleted) {
       const t = setTimeout(() => {
@@ -433,7 +455,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
     setScore(0);
     setShowImage(true);
     setShowAnswers(false);
-    setTimer(1);
+    setTimer(4);
     setIsCompleted(false);
   };
 
@@ -460,14 +482,48 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
             </h1>
 
             {showImage && (
-              <div className="p-5 rounded-lg bg-gradient-to-r from-yellow-500 via-red-500 to-purple-500 max-w-4xl mx-auto">
-                <img
-                  src={questions[currentQuestion].image}
-                  alt={`Question ${currentQuestion + 1}`}
-                  className="w-full max-h-screen object-cover rounded-lg"
-                  style={{ boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.7)" }}
-                />
-              </div>
+              <>
+                {/* Question Container with Increased Height & Adjusted Layout */}
+                <div className="p-8 rounded-[2rem] bg-gradient-to-r from-blue-300/80 via-green-300/80 to-purple-300/80 border-8 border-blue-800 shadow-md max-w-xl mx-auto mt-6 relative w-[600px] h-[380px] flex flex-col justify-between items-center">
+                  {/* Question Number inside the container */}
+                  <div className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg font-bold rounded-2xl shadow-md">
+                    ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
+                  </div>
+
+                  {/* Decorative images */}
+                  <img
+                    src={img34}
+                    alt="img34"
+                    className="absolute top-[220px] right-[450px] w-[140px] h-auto"
+                  />
+          
+                  <img
+                    src={img52}
+                    alt="img52"
+                    className="absolute bottom-[1px] right-[15px] w-[220px] h-auto"
+                  />
+                  <img
+                    src={img53}
+                    alt="img53"
+                    className="absolute bottom-[1px] right-[230px] w-[220px] h-auto"
+                  />
+
+                  {/* Moved the Question Image slightly higher */}
+                  <div className="flex-grow flex justify-center items-center w-full mt-[-75px]">
+                  <img
+                      src={questions[currentQuestion].image}
+                      alt={`Question ${currentQuestion + 1}`}
+                      className="object-contain rounded-lg border-8 border-white shadow-lg"
+                      style={{
+                        width: questions[currentQuestion].imageWidth,
+                        height: questions[currentQuestion].imageHeight,
+                        marginTop: questions[currentQuestion].imageMarginTop,
+                        boxShadow: "0px 10px 35px rgba(0, 0, 0, 0.8)",
+                      }}
+                    />
+                  </div>
+                </div>
+              </>
             )}
 
             {showAnswers && (
@@ -478,7 +534,9 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
                       <td className="p-4 text-left">
                         <button
                           onClick={() =>
-                            handleAnswerClick(questions[currentQuestion].answers[0])
+                            handleAnswerClick(
+                              questions[currentQuestion].answers[0]
+                            )
                           }
                           className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-6 rounded-full text-4xl hover:scale-110 transition-transform shadow-lg flex items-center justify-start"
                         >
@@ -493,7 +551,9 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
                       <td className="p-4 text-left">
                         <button
                           onClick={() =>
-                            handleAnswerClick(questions[currentQuestion].answers[1])
+                            handleAnswerClick(
+                              questions[currentQuestion].answers[1]
+                            )
                           }
                           className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-6 rounded-full text-4xl hover:scale-110 transition-transform shadow-lg flex items-center justify-start"
                         >
@@ -511,7 +571,9 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
                       <td className="p-4 text-left">
                         <button
                           onClick={() =>
-                            handleAnswerClick(questions[currentQuestion].answers[2])
+                            handleAnswerClick(
+                              questions[currentQuestion].answers[2]
+                            )
                           }
                           className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-6 rounded-full text-4xl hover:scale-110 transition-transform shadow-lg flex items-center justify-start"
                         >
@@ -526,7 +588,9 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
                       <td className="p-4 text-left">
                         <button
                           onClick={() =>
-                            handleAnswerClick(questions[currentQuestion].answers[3])
+                            handleAnswerClick(
+                              questions[currentQuestion].answers[3]
+                            )
                           }
                           className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-6 rounded-full text-4xl hover:scale-110 transition-transform shadow-lg flex items-center justify-start"
                         >
@@ -544,11 +608,9 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
               </div>
             )}
 
-            <div className="mt-6 text-xl font-bold text-center bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-md shadow-lg w-48 mx-auto">
-              කාලය: {timer} තත්පර
+            <div className="mt-6 text-xl font-bold text-center bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-md shadow-lg w-50 mx-auto">
+            ⏳ කාලය: {timer} තත්පර
             </div>
-
-            
           </>
         )}
       </div>

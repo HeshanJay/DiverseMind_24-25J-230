@@ -434,7 +434,7 @@ const VisualTestActivity = ({ onNext, onBack }) => {
             setShowImage(false);
             setShowAnswers(true);
             clearInterval(interval);
-            setTimer(1);
+            setTimer(3);
           }
           return prevTimer - 1;
         });
@@ -483,7 +483,7 @@ const VisualTestActivity = ({ onNext, onBack }) => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(1);
+      setTimer(3);
     } else {
       setIsCompleted(true);
     }
@@ -504,7 +504,7 @@ const VisualTestActivity = ({ onNext, onBack }) => {
     setShowImage(true);
     setShowAnswers(false);
     setIsCompleted(false);
-    setTimer(4);
+    setTimer(3);
   };
 
   return (
@@ -621,7 +621,8 @@ const VisualTestActivity = ({ onNext, onBack }) => {
 
           {showAnswers && (
             <>
-              <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 max-w-5xl mx-auto">
+            <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 max-w-5xl mx-auto border-4 border-white">
+
                 <h2 className="text-3xl font-semibold mb-6 text-center">
                   නිවැරදි පිළිතුර තෝරන්න
                 </h2>
@@ -693,8 +694,8 @@ const VisualTestActivity = ({ onNext, onBack }) => {
 
               {/* Timer */}
               <div className="flex justify-center mt-4">
-                <div className="text-xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 px-4 py-2 rounded-md shadow-lg text-center">
-                  කාලය: {timer} තත්පර
+                <div className="text-xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 px-6 py-3 rounded-md shadow-lg text-center">
+                ⏳ කාලය: {timer} තත්පර
                 </div>
               </div>
             </>

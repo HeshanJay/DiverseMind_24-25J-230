@@ -403,7 +403,7 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
   const handleStartAudio = () => {
     setIsAudioPlaying(true);
     setShowAnswers(false);
-    setTimer(3);
+    setTimer(5);
     setAudioPlayedCount(0);
   };
 
@@ -439,7 +439,7 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
       setCurrentQuestion((prev) => prev + 1);
       setIsAudioPlaying(false);
       setShowAnswers(false);
-      setTimer(4);
+      setTimer(5);
       setAudioPlayedCount(0);
     } else {
       setIsQuizCompleted(true);
