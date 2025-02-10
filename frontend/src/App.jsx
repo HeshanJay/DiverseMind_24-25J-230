@@ -8,6 +8,7 @@ import WritingTest from "./Pages/Writing/WritingTest";
 import Login from "./Components/Login/Login";
 import Signup from "./Components/Signup/Signup";
 import TeacherDashboard from "./Pages/TeacherDashboard/TeacherDashboard";
+import SplashScreen from "./Pages/SplashScreen/SplashScreen";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import ResetPassword from "./Components/ResetPassword/ResetPassword";
 import StudentEntrance from "./Components/StudentEntrence/StudentEntrence";
@@ -16,14 +17,13 @@ import WorkingMemory from "./Pages/WorkingMemory/WorkingMemory";
 import ScoreBoard from "./Components/Score_board"; 
 import { ScoresProvider } from "./context/Score_context";
 
-
 const App = () => {
   return (
     <div>
       <BrowserRouter>
       <ScoresProvider>
         <Routes>
-          <Route index element={<HomePage />} />
+          <Route index element={<SplashScreen />} />
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           {/* Reading Test Dashboard and Passages */}
@@ -42,6 +42,7 @@ const App = () => {
           <Route path="/student-entrance" element={<StudentEntrance />} />
           <Route path="/home-page" element={<HomePage />} />
           <Route path="/scoreboard" element={<ScoreBoard />} />
+          <Route path="/splash" element={<SplashScreen />} />
         </Routes>
       </ScoresProvider>
       </BrowserRouter>
