@@ -443,9 +443,11 @@
 // };
 
 // export default WritingTest;
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
+// Import the intro page component
+import WritingIntroPage from "../../Components/WritingComponents/WritingIntro/WritingIntro";
 
 // Import your letter formation and punctuation test components
 import WritingCanvas_MadhyaAkshara1 from "../../Components/WritingComponents/LetterFormationTest/WritingCanvas_MadhyaAkshara1";
@@ -475,6 +477,8 @@ import PunctuationsTestQ5 from "../../Components/WritingComponents/PunctuationsT
 import WritingFinalPrediction from "../../Components/WritingComponents/WritingFinalFeedback/WritingFinalFeedback";
 
 const WritingTest = () => {
+  // New state to control intro page visibility
+  const [showIntro, setShowIntro] = useState(true);
   const [currentComponent, setCurrentComponent] = useState(1);
   const [images, setImages] = useState([]); // Store the 6 letter images
   const [showReportView, setShowReportView] = useState(false);
@@ -483,7 +487,6 @@ const WritingTest = () => {
   const [cnnOutputScore, setCnnOutputScore] = useState(0);
   const [vowelSymbolScore, setVowelSymbolScore] = useState(0);
   const [punctuationScore, setPunctuationScore] = useState(0);
-
   const [finalPrediction, setFinalPrediction] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
 
@@ -649,148 +652,156 @@ const WritingTest = () => {
 
   return (
     <div>
-      {/* 1) Letter Formation Test */}
-      {currentComponent === 1 && (
-        <WritingCanvas_MadhyaAkshara1
-          onNext={handleNextLetterImage}
-          onBack={loadPreviousComponent}
-        />
-      )}
-      {currentComponent === 2 && (
-        <WritingCanvas_MadhyaAkshara2
-          onNext={handleNextLetterImage}
-          onBack={loadPreviousComponent}
-        />
-      )}
-      {currentComponent === 3 && (
-        <WritingCanvas_AarohanaAkshara1
-          onNext={handleNextLetterImage}
-          onBack={loadPreviousComponent}
-        />
-      )}
-      {currentComponent === 4 && (
-        <WritingCanvas_AarohanaAkshara2
-          onNext={handleNextLetterImage}
-          onBack={loadPreviousComponent}
-        />
-      )}
-      {currentComponent === 5 && (
-        <WritingCanvas_AvarohanaAkshara1
-          onNext={handleNextLetterImage}
-          onBack={loadPreviousComponent}
-        />
-      )}
-      {currentComponent === 6 && (
-        <WritingCanvas_AvarohanaAkshara2
-          onNext={handleNextLetterImage}
-          onBack={loadPreviousComponent}
-        />
-      )}
+      {/* Render the intro page if showIntro is true */}
+      {showIntro ? (
+        <WritingIntroPage onStartTest={() => setShowIntro(false)} />
+      ) : (
+        // Render the test components if showIntro is false
+        <>
+          {/* 1) Letter Formation Test */}
+          {currentComponent === 1 && (
+            <WritingCanvas_MadhyaAkshara1
+              onNext={handleNextLetterImage}
+              onBack={() => setShowIntro(true)}
+            />
+          )}
+          {currentComponent === 2 && (
+            <WritingCanvas_MadhyaAkshara2
+              onNext={handleNextLetterImage}
+              onBack={loadPreviousComponent}
+            />
+          )}
+          {currentComponent === 3 && (
+            <WritingCanvas_AarohanaAkshara1
+              onNext={handleNextLetterImage}
+              onBack={loadPreviousComponent}
+            />
+          )}
+          {currentComponent === 4 && (
+            <WritingCanvas_AarohanaAkshara2
+              onNext={handleNextLetterImage}
+              onBack={loadPreviousComponent}
+            />
+          )}
+          {currentComponent === 5 && (
+            <WritingCanvas_AvarohanaAkshara1
+              onNext={handleNextLetterImage}
+              onBack={loadPreviousComponent}
+            />
+          )}
+          {currentComponent === 6 && (
+            <WritingCanvas_AvarohanaAkshara2
+              onNext={handleNextLetterImage}
+              onBack={loadPreviousComponent}
+            />
+          )}
 
-      {/* 2) Vowel Symbol Test */}
-      {currentComponent === 7 && (
-        <VowelSymbolQ1
-          onBack={loadPreviousComponent}
-          onAnswer={(answer) => handleVowelSymbolAnswer(0, answer)}
-        />
-      )}
-      {currentComponent === 8 && (
-        <VowelSymbolQ2
-          onBack={loadPreviousComponent}
-          onAnswer={(answer) => handleVowelSymbolAnswer(1, answer)}
-        />
-      )}
-      {currentComponent === 9 && (
-        <VowelSymbolQ3
-          onBack={loadPreviousComponent}
-          onAnswer={(answer) => handleVowelSymbolAnswer(2, answer)}
-        />
-      )}
-      {currentComponent === 10 && (
-        <VowelSymbolQ4
-          onBack={loadPreviousComponent}
-          onAnswer={(answer) => handleVowelSymbolAnswer(3, answer)}
-        />
-      )}
-      {currentComponent === 11 && (
-        <VowelSymbolQ5
-          onBack={loadPreviousComponent}
-          onAnswer={(answer) => handleVowelSymbolAnswer(4, answer)}
-        />
-      )}
-      {currentComponent === 12 && (
-        <VowelSymbolQ6
-          onBack={loadPreviousComponent}
-          onAnswer={(answer) => handleVowelSymbolAnswer(5, answer)}
-        />
-      )}
-      {currentComponent === 13 && (
-        <VowelSymbolQ7
-          onBack={loadPreviousComponent}
-          onAnswer={(answer) => handleVowelSymbolAnswer(6, answer)}
-        />
-      )}
-      {currentComponent === 14 && (
-        <VowelSymbolQ8
-          onBack={loadPreviousComponent}
-          onAnswer={(answer) => handleVowelSymbolAnswer(7, answer)}
-        />
-      )}
-      {currentComponent === 15 && (
-        <VowelSymbolQ9
-          onBack={loadPreviousComponent}
-          onAnswer={(answer) => handleVowelSymbolAnswer(8, answer)}
-        />
-      )}
-      {currentComponent === 16 && (
-        <VowelSymbolQ10
-          onBack={loadPreviousComponent}
-          onAnswer={(answer) => handleVowelSymbolAnswer(9, answer)}
-        />
-      )}
+          {/* 2) Vowel Symbol Test */}
+          {currentComponent === 7 && (
+            <VowelSymbolQ1
+              onBack={loadPreviousComponent}
+              onAnswer={(answer) => handleVowelSymbolAnswer(0, answer)}
+            />
+          )}
+          {currentComponent === 8 && (
+            <VowelSymbolQ2
+              onBack={loadPreviousComponent}
+              onAnswer={(answer) => handleVowelSymbolAnswer(1, answer)}
+            />
+          )}
+          {currentComponent === 9 && (
+            <VowelSymbolQ3
+              onBack={loadPreviousComponent}
+              onAnswer={(answer) => handleVowelSymbolAnswer(2, answer)}
+            />
+          )}
+          {currentComponent === 10 && (
+            <VowelSymbolQ4
+              onBack={loadPreviousComponent}
+              onAnswer={(answer) => handleVowelSymbolAnswer(3, answer)}
+            />
+          )}
+          {currentComponent === 11 && (
+            <VowelSymbolQ5
+              onBack={loadPreviousComponent}
+              onAnswer={(answer) => handleVowelSymbolAnswer(4, answer)}
+            />
+          )}
+          {currentComponent === 12 && (
+            <VowelSymbolQ6
+              onBack={loadPreviousComponent}
+              onAnswer={(answer) => handleVowelSymbolAnswer(5, answer)}
+            />
+          )}
+          {currentComponent === 13 && (
+            <VowelSymbolQ7
+              onBack={loadPreviousComponent}
+              onAnswer={(answer) => handleVowelSymbolAnswer(6, answer)}
+            />
+          )}
+          {currentComponent === 14 && (
+            <VowelSymbolQ8
+              onBack={loadPreviousComponent}
+              onAnswer={(answer) => handleVowelSymbolAnswer(7, answer)}
+            />
+          )}
+          {currentComponent === 15 && (
+            <VowelSymbolQ9
+              onBack={loadPreviousComponent}
+              onAnswer={(answer) => handleVowelSymbolAnswer(8, answer)}
+            />
+          )}
+          {currentComponent === 16 && (
+            <VowelSymbolQ10
+              onBack={loadPreviousComponent}
+              onAnswer={(answer) => handleVowelSymbolAnswer(9, answer)}
+            />
+          )}
 
-      {/* 3) Punctuations Test */}
-      {currentComponent === 17 && (
-        <PunctuationsTestQ1
-          onBack={loadPreviousComponent}
-          onAnswer={(score) => handlePunctuationScore(score)}
-        />
-      )}
-      {currentComponent === 18 && (
-        <PunctuationsTestQ2
-          onBack={loadPreviousComponent}
-          onAnswer={(score) => handlePunctuationScore(score)}
-        />
-      )}
-      {currentComponent === 19 && (
-        <PunctuationsTestQ3
-          onBack={loadPreviousComponent}
-          onAnswer={(score) => handlePunctuationScore(score)}
-        />
-      )}
-      {currentComponent === 20 && (
-        <PunctuationsTestQ4
-          onBack={loadPreviousComponent}
-          onAnswer={(score) => handlePunctuationScore(score)}
-        />
-      )}
-      {currentComponent === 21 && (
-        <PunctuationsTestQ5
-          onBack={loadPreviousComponent}
-          onAnswer={(score) => {
-            setPunctuationScore((prev) => prev + score);
-            loadNextComponent();
-          }}
-          onFinalEvalAndSave={handleFinalEvaluationAndSave}
-        />
-      )}
+          {/* 3) Punctuations Test */}
+          {currentComponent === 17 && (
+            <PunctuationsTestQ1
+              onBack={loadPreviousComponent}
+              onAnswer={(score) => handlePunctuationScore(score)}
+            />
+          )}
+          {currentComponent === 18 && (
+            <PunctuationsTestQ2
+              onBack={loadPreviousComponent}
+              onAnswer={(score) => handlePunctuationScore(score)}
+            />
+          )}
+          {currentComponent === 19 && (
+            <PunctuationsTestQ3
+              onBack={loadPreviousComponent}
+              onAnswer={(score) => handlePunctuationScore(score)}
+            />
+          )}
+          {currentComponent === 20 && (
+            <PunctuationsTestQ4
+              onBack={loadPreviousComponent}
+              onAnswer={(score) => handlePunctuationScore(score)}
+            />
+          )}
+          {currentComponent === 21 && (
+            <PunctuationsTestQ5
+              onBack={loadPreviousComponent}
+              onAnswer={(score) => {
+                setPunctuationScore((prev) => prev + score);
+                loadNextComponent();
+              }}
+              onFinalEvalAndSave={handleFinalEvaluationAndSave}
+            />
+          )}
 
-      {/* Final Popup */}
-      {showPopup && (
-        <WritingFinalPrediction
-          finalPredictionData={finalPrediction}
-          onClose={() => setShowPopup(false)}
-        />
+          {/* Final Popup */}
+          {showPopup && (
+            <WritingFinalPrediction
+              finalPredictionData={finalPrediction}
+              onClose={() => setShowPopup(false)}
+            />
+          )}
+        </>
       )}
     </div>
   );
