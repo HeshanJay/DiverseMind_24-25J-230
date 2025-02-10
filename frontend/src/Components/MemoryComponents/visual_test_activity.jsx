@@ -434,7 +434,7 @@ const VisualTestActivity = ({ onNext, onBack }) => {
             setShowImage(false);
             setShowAnswers(true);
             clearInterval(interval);
-            setTimer(3);
+            setTimer(300);
           }
           return prevTimer - 1;
         });
@@ -534,7 +534,7 @@ const VisualTestActivity = ({ onNext, onBack }) => {
   />
 
 {/* Question Number placed inside the container at the top */}
-<div className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg font-bold rounded-2xl shadow-md mt-[-10px]">
+<div className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xl font-bold rounded-2xl shadow-md mt-[-10px]">
     ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
   </div>
 
@@ -621,7 +621,7 @@ const VisualTestActivity = ({ onNext, onBack }) => {
 
           {showAnswers && (
             <>
-            <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 max-w-5xl mx-auto border-4 border-white">
+            <div className="bg-gray-800 bg-opacity-70 p-6 rounded-[3rem] shadow-lg mb-8 max-w-5xl mx-auto border-4 border-white">
 
                 <h2 className="text-3xl font-semibold mb-6 text-center">
                   නිවැරදි පිළිතුර තෝරන්න
@@ -641,7 +641,7 @@ const VisualTestActivity = ({ onNext, onBack }) => {
                               onClick={() => handleAnswerClick(answerId)}
                             >
                               <div className="flex justify-center items-center h-full w-full">
-                                <strong className="text-xl text-white align-center">
+                                <strong className="text-xl text-white align-center ">
                                   {index + 1}.&nbsp;
                                 </strong>
                                 {answer.src ? (
@@ -651,7 +651,8 @@ const VisualTestActivity = ({ onNext, onBack }) => {
                                     className="w-full max-h-28 object-contain rounded-md"
                                   />
                                 ) : (
-                                  <span className="text-white">{answer}</span>
+                                  <span className="text-xl md:text-2xl text-white ">{answer}</span>
+
                                 )}
                               </div>
                             </td>
@@ -676,7 +677,8 @@ const VisualTestActivity = ({ onNext, onBack }) => {
                                       className="w-full max-h-28 object-contain rounded-md"
                                     />
                                   ) : (
-                                    <span className="text-white">
+                                    <span className="text-md md:text-2xl text-white">
+
                                       {questions[currentQuestion].answers[index + 1]}
                                     </span>
                                   )}

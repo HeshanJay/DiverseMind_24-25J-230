@@ -52,9 +52,9 @@ app.add_middleware(
 
 # MongoDB Connection
 db = get_database()
-teachers_collection = db["teachers"]
-students_collection = db["students"]
-attention_collection = db["attention_results"]
+# teachers_collection = db["teachers"]
+# students_collection = db["students"]
+# attention_collection = db["attention_results"]
 
 # OAuth2 scheme for protected routes
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login/")

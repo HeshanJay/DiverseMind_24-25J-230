@@ -403,7 +403,7 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
   const handleStartAudio = () => {
     setIsAudioPlaying(true);
     setShowAnswers(false);
-    setTimer(5);
+    setTimer(20);
     setAudioPlayedCount(0);
   };
 
@@ -439,7 +439,7 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
       setCurrentQuestion((prev) => prev + 1);
       setIsAudioPlaying(false);
       setShowAnswers(false);
-      setTimer(5);
+      setTimer(20);
       setAudioPlayedCount(0);
     } else {
       setIsQuizCompleted(true);
@@ -482,7 +482,7 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
     setIsQuizCompleted(false);
     setIsAudioPlaying(false);
     setShowAnswers(false);
-    setTimer(15);
+    setTimer(20);
     setAudioPlayedCount(0);
   };
   return (
@@ -562,7 +562,8 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
             {showAnswers && (
               <>
                 {/* ✅ Answer Section is kept the same */}
-                <div className="bg-gray-800 bg-opacity-70 p-4 rounded-lg mb-6 w-full max-w-5xl mx-auto">
+                <div className="bg-gray-800 bg-opacity-70 p-4 border-4 border-white rounded-[3rem] mb-6 w-full max-w-5xl mx-auto">
+
                   <h2 className="text-3xl font-semibold mb-4 text-white text-center">
                     නිවැරදි පිළිතුර තෝරන්න
                   </h2>
@@ -573,20 +574,20 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
                         if (index % 2 === 0) {
                           return (
                             <tr key={index}>
-                              <td className="p-4 text-center">
+                              <td className="p-3 text-center">
                                 <button
                                   onClick={() => handleAnswerClick(index)}
-                                  className="w-72 md:w-96 py-4 rounded-lg text-xl md:text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-500 text-white hover:scale-110 transition-transform"
+                                  className="w-72 md:w-96 py-4 rounded-lg text-xl md:text-2xl bg-gradient-to-r from-green-400 to-blue-500 text-white hover:scale-110 transition-transform"
                                 >
                                   {answer}
                                 </button>
                               </td>
   
                               {answers[currentQuestion - 1][index + 1] && (
-                                <td className="p-4 text-center">
+                                <td className="p-3 text-center">
                                   <button
                                     onClick={() => handleAnswerClick(index + 1)}
-                                    className="w-72 md:w-96 py-4 rounded-lg text-xl md:text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-500 text-white hover:scale-110 transition-transform"
+                                    className="w-72 md:w-96 py-4 rounded-lg text-xl md:text-2xl bg-gradient-to-r from-green-400 to-blue-500 text-white hover:scale-110 transition-transform"
                                   >
                                     {answers[currentQuestion - 1][index + 1]}
                                   </button>
@@ -600,10 +601,12 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
                     </tbody>
                   </table>
                 </div>
+                <div className="text-xl font-bold bg-gradient-to-r from-indigo-500 via-blue-500 to-purple-600 px-6 py-3 rounded-md shadow-lg mt-4">
+  ⏳ කාලය: {timer} තත්පර
+</div>
 
-                <div className="text-xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-4 py-3 rounded-md shadow-lg mt-4">
-                  කාලය: {timer} තත්පර
-                </div>
+
+
               </>
             )}
             {/* ✅ Butterfly Animation Keyframes */}

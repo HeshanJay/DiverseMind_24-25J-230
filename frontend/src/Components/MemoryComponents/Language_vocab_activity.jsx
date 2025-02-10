@@ -612,12 +612,8 @@ import img41 from "../../assets/Working_Memory/img41.png"
 import img42 from "../../assets/Working_Memory/img42.png"
 import img43 from "../../assets/Working_Memory/img43.png"
 import img44 from "../../assets/Working_Memory/img44.png"
-import img45 from "../../assets/Working_Memory/img45.png"
-import img46 from "../../assets/Working_Memory/img46.png"
-import img47 from "../../assets/Working_Memory/img47.png"
 import img48 from "../../assets/Working_Memory/img48.png"
-import img49 from "../../assets/Working_Memory/img49.png"
-import img50 from "../../assets/Working_Memory/img50.png"
+
 /**
  * The final test in the sequence.
  * When finished, this component calls onFinishAll() so the parent sends data.
@@ -679,11 +675,11 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
     },
     {
       image: accidentImage,
-      width: "232px",
-      height: "230px",
+      width: "240px",
+      height: "240px",
       marginTop: "10px",
       answers: [
-        "1. ඉදිකිරීම්ර කටයුතු ස්ථානය",
+        "1. ඉදිකිරීම් කටයුතු ස්ථානය",
         "2. රිය අනතුර ",
         "3. රෝහල ඉදිරිපිට",
         "4. වාහන තදබදය ",
@@ -698,7 +694,7 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
       answers: [
         "1. රෝහල",
         "2. සෞඛ්‍ය මධ්‍යස්ථානය",
-        "3. රෝහල් බාහිර රෝගී අංශය",
+        "3. බාහිර රෝගී අංශය",
         "4. ආරෝග්‍ය මධ්‍යස්ථානය",
       ],
       correctAnswer: "1. රෝහල",
@@ -777,7 +773,7 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(3);
+      setTimer(15);
     } else {
       setIsCompleted(true);
       // Once completed, call onFinishAll so the parent sends data to backend.
@@ -828,7 +824,7 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
 
                   {/* ✅ Question Number inside the container */}
                   <div className="absolute top-[-20px] px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 
-                      text-white text-lg font-bold rounded-2xl shadow-md mt-[50px]">
+                      text-white text-xl font-bold rounded-2xl shadow-md mt-[50px]">
                     ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
                   </div>
 
@@ -837,12 +833,7 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
                   <img src={img42} alt="img42" className="absolute top-[267px] right-[200px] w-[200px] h-auto" />
                   <img src={img43} alt="img43" className="absolute top-[267px] right-[90px] w-[200px] h-auto" />
                   <img src={img44} alt="img44" className="absolute top-[267px] right-[6px] w-[200px] h-auto" />
-                  <img src={img45} alt="img45" className="absolute top-[310px] right-[390px] w-[30px] h-auto" />
-                  <img src={img46} alt="img46" className="absolute top-[310px] right-[120px] w-[45px] h-auto" />
-                  <img src={img47} alt="img47" className="absolute top-[27px] right-[90px] w-[80px] h-auto" />
-                  <img src={img48} alt="img48" className="absolute top-[200px] right-[480px] w-[105px] h-auto" />
-                  <img src={img49} alt="img49" className="absolute top-[6px] right-[370px] w-[190px] h-auto" />
-                  <img src={img50} alt="img50" className="absolute top-[138px] right-[20px] w-[90px] h-auto" />
+                  <img src={img48} alt="img48" className="absolute top-[10px] right-[414px] w-[145px] h-auto" />
 
                   {/* ✅ Question Image */}
                   <div className="flex-grow flex justify-center items-center w-full">
@@ -870,32 +861,32 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
             )}
             {showAnswers && (
               <>
-                <div className="bg-gray-800 bg-opacity-70 p-4 rounded-lg shadow-lg mb-6 max-w-5xl mx-auto">
+                <div className="bg-gray-800 bg-opacity-70 p-4 rounded-[3rem] shadow-lg mb-6 max-w-5xl mx-auto border-4 border-white">
                   <h2 className="text-3xl font-semibold mb-4 text-center">නිවැරදි පිළිතුර තෝරන්න</h2>
                   <table className="w-full text-lg border-separate border-spacing-3">
                     <tbody>
                       {questions[currentQuestion].answers.map((answer, index) => {
                         if (index % 2 === 0) {
                           return (
-                            <tr key={index} className="flex gap-3 justify-center">
-                              <td className="p-0 text-center">
-                                <button
-                                  onClick={() => handleAnswerClick(index)}
-                                  className="bg-gradient-to-r m-1 from-green-400 to-lime-600 text-white px-8 py-4 rounded-full text-2xl shadow-lg hover:scale-105 transition-transform flex items-center justify-start"
-                                  style={{ width: "350px", height: "80px" }}
-                                >
-                                  <strong className="ml-4">{answer}</strong>
-                                </button>
-                              </td>
-                              {questions[currentQuestion].answers[index + 1] && (
-                                <td className="p-0 text-center">
-                                  <button
-                                    onClick={() => handleAnswerClick(index + 1)}
-                                    className="bg-gradient-to-r m-1 from-green-400 to-lime-600 text-white px-8 py-4 rounded-full text-2xl shadow-lg hover:scale-105 transition-transform flex items-center justify-start"
-                                    style={{ width: "350px", height: "80px" }}
-                                  >
-                                    <strong className="ml-4">{questions[currentQuestion].answers[index + 1]}</strong>
-                                  </button>
+                            <tr key={index} className="flex gap-10 justify-center">
+                              <td className="p-3 text-center">
+                              <button
+                onClick={() => handleAnswerClick(index)}
+                className="bg-gradient-to-r from-green-400 to-lime-600 text-white px-6 py-3 rounded-xl text-2xl shadow-lg hover:scale-105 transition-transform flex items-center justify-start"
+                style={{ width: "320px", height: "70px" }}
+              >
+                <strong className="ml-4">{answer}</strong>
+              </button>
+            </td>
+            {questions[currentQuestion].answers[index + 1] && (
+              <td className="p-3 text-center">
+                <button
+                  onClick={() => handleAnswerClick(index + 1)}
+                  className="bg-gradient-to-r from-green-400 to-lime-600 text-white px-6 py-3 rounded-xl text-2xl shadow-lg hover:scale-105 transition-transform flex items-center justify-start"
+                  style={{ width: "320px", height: "70px" }}
+                >
+                  <strong className="ml-4">{questions[currentQuestion].answers[index + 1]}</strong>
+                </button>
                                 </td>
                               )}
                             </tr>
@@ -906,42 +897,14 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
                     </tbody>
                   </table>
                 </div>
-                <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-4 py-3 rounded-md shadow-lg mt-4">
-                  කාලය: {timer} තත්පර
+                <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-6 py-3 rounded-md shadow-lg mt-4">
+                ⏳ කාලය: {timer} තත්පර
                 </div>
               </>
             )}
           </>
         )}
-        {/* ✅ Falling Golden Snowballs Animation Styles */}
-      <style>
-        {`
-          @keyframes fallAndSway {
-            0% {
-              transform: translateY(-100px) translateX(0px);
-              opacity: 1;
-            }
-            50% {
-              transform: translateY(200px) translateX(15px);
-            }
-            100% {
-              transform: translateY(400px) translateX(-15px);
-              opacity: 0;
-            }
-          }
-
-          .falling-snowball {
-            position: absolute;
-            top: -50px;
-            width: 15px;
-            height: 15px;
-             background: linear-gradient(to bottom, #ff1493, #1e90ff);
-            border-radius: 50%;
-            opacity: 0.9;
-            animation: fallAndSway 5s linear infinite;
-          }
-        `}
-      </style>
+        
       
       </div>
     </div>

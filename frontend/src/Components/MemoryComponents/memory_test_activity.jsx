@@ -474,7 +474,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
             setShowImage(false);
             setShowAnswers(true);
             clearInterval(interval);
-            setTimer(3);
+            setTimer(300);
           }
           return prevTimer - 1;
         });
@@ -547,7 +547,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
     setIsCompleted(false);
     setShowImage(true);
     setShowAnswers(false);
-    setTimer(2);
+    setTimer(20);
   };
 
   if (isCompleted) {
@@ -573,7 +573,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
             {/* Question Container with Increased Height & Adjusted Layout */}
             <div className="p-8 rounded-[2rem] bg-gradient-to-r from-blue-300/80 via-green-300/80 to-purple-300/80 border-8 border-blue-800 shadow-md max-w-xl mx-auto mt-6 relative w-[600px] h-[380px] flex flex-col justify-between items-center">
               {/* Question Number inside the container */}
-              <div className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg font-bold rounded-2xl shadow-md">
+              <div className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xl font-bold rounded-2xl shadow-md">
                 ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
               </div>
 
@@ -618,7 +618,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
         {showAnswers && (
           <>
             {/* Answers Container with White Border */}
-            <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 max-w-5xl mx-auto border-4 border-white">
+            <div className="bg-gray-800 bg-opacity-70 p-6 rounded-[3rem] shadow-lg mb-8 max-w-5xl mx-auto border-4 border-white">
               <h2 className="text-3xl font-semibold mb-6 text-center">
                 නිවැරදි පිළිතුර තෝරන්න
               </h2>

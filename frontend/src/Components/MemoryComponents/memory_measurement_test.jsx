@@ -101,10 +101,10 @@ const MemoryMeasurementTest = ({ onNext, onBack }) => {
               උපදෙස් නිවැරදිව කියවා පිළිතුරු සපයන්න.
             </p>
             <ul className="text-lg md:text-xl mb-8 list-disc list-inside leading-relaxed text-left text-black ml-12">
-              <li>උපදෙස් නිවැරදිව කියවා පිළිතුරු සපයන්න.</li>
+              <li>රූපය නිවැරදිව මතක තබා ගන්න.</li>
+              <li>රූපයේ දැක්වෙන පරිදි නිවැරදි අනුපිළිවෙල තෝරන්න.</li>
               <li>ප්‍රශ්න 5 කට පිළිතුරු සැපයිය යුතුයි.</li>
-              <li>එක් ප්‍රශ්නයකට තත්පර 10 ක් ලබා දේ.</li>
-              <li>පින්තූරය මතක තබා ගන්න.</li>
+              <li>එක් ප්‍රශ්නයක් සඳහා තත්පර 10 ක් ලබා දේ.</li>
             </ul>
           </div>
         </div>

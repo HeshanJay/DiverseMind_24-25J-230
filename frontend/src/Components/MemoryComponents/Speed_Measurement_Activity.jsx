@@ -331,36 +331,35 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
       image: question1Image,
       answers: ["↑", "↓", "←", "→"],
       correctAnswer: "↑",
-      imageWidth: "245px",    // Customize width for question 1
-      imageHeight: "189px", // Customize height for question 1
-      imageMarginTop: "49px" // Adjusted margin-top for question 1
+      imageWidth: "260px",
+      imageHeight: "200px",
+      imageMarginTop: "40px",
     },
     {
       image: question2Image,
       answers: ["▢", "△", "◯", "♢"],
       correctAnswer: "♢",
-      imageWidth: "70%",    // Customize width for question 2
-      imageHeight: "194px", // Customize height for question 2
-      imageMarginTop: "49px" // Adjusted margin-top for question 2
+      imageWidth: "379px",
+      imageHeight: "211px",
+      imageMarginTop: "10px",
     },
     {
       image: question3Image,
       answers: ["R", "r", "A", "h"],
       correctAnswer: "R",
-      imageWidth: "82%",    // Customize width for question 3
-      imageHeight: "191px", // Customize height for question 3
-      imageMarginTop: "49px" // Adjusted margin-top for question 3
+      imageWidth: "378px",
+      imageHeight: "178px",
+      imageMarginTop: "10px",
     },
     {
       image: question4Image,
       answers: ["★", "✰", "⬜", "⚫"],
       correctAnswer: "✰",
-      imageWidth: "82%",    // Customize width for question 4
-      imageHeight: "168px", // Customize height for question 4
-      imageMarginTop: "49px"  // Adjusted margin-top for question 4
+      imageWidth: "335px",
+      imageHeight: "140px",
+      imageMarginTop: "20px",
     },
   ];
-  
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showImage, setShowImage] = useState(true);
@@ -377,7 +376,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
           if (prevTimer === 1) {
             setShowImage(false);
             setShowAnswers(true);
-            setTimer(20);
+            setTimer(4);
             clearInterval(id);
           }
           return prevTimer - 1;
@@ -434,7 +433,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(20);
+      setTimer(4);
     } else {
       setIsCompleted(true);
     }
@@ -475,28 +474,20 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
           />
         ) : (
           <>
-            <h1 className="text-4xl font-bold mb-6">
-              {showAnswers
-                ? "නිවැරදි පිළිතුර තෝරන්න"
-                : `ප්‍රශ්නය: ${currentQuestion + 1}/${questions.length}`}
-            </h1>
 
             {showImage && (
               <>
-                {/* Question Container with Increased Height & Adjusted Layout */}
-                <div className="p-8 rounded-[2rem] bg-gradient-to-r from-blue-300/80 via-green-300/80 to-purple-300/80 border-8 border-blue-800 shadow-md max-w-xl mx-auto mt-6 relative w-[600px] h-[380px] flex flex-col justify-between items-center">
-                  {/* Question Number inside the container */}
-                  <div className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg font-bold rounded-2xl shadow-md">
+                <div className="p-8 rounded-[2rem] bg-gradient-to-r from-blue-300/80 via-green-300/80 to-purple-300/80 border-8 border-blue-800 shadow-md max-w-xl mx-auto mt-6 relative w-[600px] h-[370px] flex flex-col justify-between items-center">
+                  <div className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xl font-bold rounded-2xl shadow-md">
                     ප්‍රශ්නය: {currentQuestion + 1}/{questions.length}
                   </div>
 
-                  {/* Decorative images */}
+                  {/* Decorative Images */}
                   <img
                     src={img34}
                     alt="img34"
-                    className="absolute top-[220px] right-[450px] w-[140px] h-auto"
+                    className="absolute top-[210px] right-[450px] w-[140px] h-auto"
                   />
-          
                   <img
                     src={img52}
                     alt="img52"
@@ -508,109 +499,61 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
                     className="absolute bottom-[1px] right-[230px] w-[220px] h-auto"
                   />
 
-                  {/* Moved the Question Image slightly higher */}
-                  <div className="flex-grow flex justify-center items-center w-full mt-[-75px]">
-                  <img
-                      src={questions[currentQuestion].image}
-                      alt={`Question ${currentQuestion + 1}`}
-                      className="object-contain rounded-lg border-8 border-white shadow-lg"
-                      style={{
-                        width: questions[currentQuestion].imageWidth,
-                        height: questions[currentQuestion].imageHeight,
-                        marginTop: questions[currentQuestion].imageMarginTop,
-                        boxShadow: "0px 10px 35px rgba(0, 0, 0, 0.8)",
-                      }}
-                    />
+<img
+  src={questions[currentQuestion].image}
+  alt={`Question ${currentQuestion + 1}`}
+  className="object-contain rounded-lg border-8 border-white shadow-lg"
+  style={{
+    width: questions[currentQuestion].imageWidth,  
+    height: questions[currentQuestion].imageHeight,
+    marginTop: questions[currentQuestion].imageMarginTop,  // Dynamically set marginTop
+    boxShadow: "0px 10px 35px rgba(0, 0, 0, 0.8)",
+  }}
+/>
+
+
+
+                </div>
+
+                {/* Timer Button for Question Image */}
+                <div className="mt-6">
+                  <div className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg text-center">
+                    ⏳ කාලය: {timer} තත්පර
                   </div>
                 </div>
               </>
             )}
 
             {showAnswers && (
-              <div className="overflow-x-auto p-3">
-                <table className="mt-6 w-full bg-gray-800 bg-opacity-50 rounded-lg shadow-2xl">
-                  <tbody>
-                    <tr>
-                      <td className="p-4 text-left">
-                        <button
-                          onClick={() =>
-                            handleAnswerClick(
-                              questions[currentQuestion].answers[0]
-                            )
-                          }
-                          className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-6 rounded-full text-4xl hover:scale-110 transition-transform shadow-lg flex items-center justify-start"
-                        >
-                          <strong className="text-2xl text-white mr-4">
-                            1.&nbsp;
-                          </strong>
-                          <span className="text-4xl">
-                            {questions[currentQuestion].answers[0]}
-                          </span>
-                        </button>
-                      </td>
-                      <td className="p-4 text-left">
-                        <button
-                          onClick={() =>
-                            handleAnswerClick(
-                              questions[currentQuestion].answers[1]
-                            )
-                          }
-                          className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-6 rounded-full text-4xl hover:scale-110 transition-transform shadow-lg flex items-center justify-start"
-                        >
-                          <strong className="text-2xl text-white mr-4">
-                            2.&nbsp;
-                          </strong>
-                          <span className="text-4xl">
-                            {questions[currentQuestion].answers[1]}
-                          </span>
-                        </button>
-                      </td>
-                    </tr>
+              <div className="bg-gray-800 bg-opacity-70 p-8 rounded-[3rem] shadow-lg mb-8 max-w-7xl mx-auto border-4 border-white">
 
-                    <tr>
-                      <td className="p-4 text-left">
-                        <button
-                          onClick={() =>
-                            handleAnswerClick(
-                              questions[currentQuestion].answers[2]
-                            )
-                          }
-                          className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-6 rounded-full text-4xl hover:scale-110 transition-transform shadow-lg flex items-center justify-start"
-                        >
-                          <strong className="text-2xl text-white mr-4">
-                            3.&nbsp;
-                          </strong>
-                          <span className="text-4xl">
-                            {questions[currentQuestion].answers[2]}
-                          </span>
-                        </button>
-                      </td>
-                      <td className="p-4 text-left">
-                        <button
-                          onClick={() =>
-                            handleAnswerClick(
-                              questions[currentQuestion].answers[3]
-                            )
-                          }
-                          className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-6 rounded-full text-4xl hover:scale-110 transition-transform shadow-lg flex items-center justify-start"
-                        >
-                          <strong className="text-2xl text-white mr-4">
-                            4.&nbsp;
-                          </strong>
-                          <span className="text-4xl">
-                            {questions[currentQuestion].answers[3]}
-                          </span>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+
+                <h2 className="text-3xl font-semibold mb-6 text-center text-white">
+                  නිවැරදි පිළිතුර තෝරන්න
+                </h2>
+                <div className="grid grid-cols-2 gap-6">
+                  {questions[currentQuestion].answers.map((answer, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleAnswerClick(answer)}
+                      className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-12 py-8 rounded-[30px] text-4xl font-bold flex items-center justify-center hover:scale-110 transition-transform shadow-md"
+                    >
+                      <span className="mr-4">{index + 1}.</span>
+                      <span>{answer}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
 
-            <div className="mt-6 text-xl font-bold text-center bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-md shadow-lg w-50 mx-auto">
-            ⏳ කාලය: {timer} තත්පර
-            </div>
+            {/* Timer Button for Answers */}
+            {showAnswers && (
+              <div className="flex justify-center mt-4">
+                <div className="text-xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 px-6 py-3 rounded-md shadow-lg text-center">
+                  ⏳ කාලය: {timer} තත්පර
+                </div>
+              </div>
+            )}
           </>
         )}
       </div>
