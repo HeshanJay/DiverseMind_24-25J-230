@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Level1_1 from "../../../../assets/background_images/AttentionGames/Game2/Level1_1.png";
-import Level1_1_1 from "../../../../assets/background_images/AttentionGames/Game2/Level1_1.1.png";
+import Level3_1 from "../../../../assets/background_images/AttentionGames/Game2/Level3_1.png";
+import Level3_1_1 from "../../../../assets/background_images/AttentionGames/Game2/Level3_1.1.png";
 import BackImage from "../../../../assets/background_images/AttentionGames/Game2/backimg1_game2.png";
 
 const Game2Level3Screen1 = ({ onTileSelect, onTimeout }) => {
@@ -28,10 +28,10 @@ const Game2Level3Screen1 = ({ onTileSelect, onTimeout }) => {
   }, [timeLeft]);
 
   const tiles = [
-    { id: 1, image: Level1_1 },
-    { id: 2, image: Level1_1 },
-    { id: 3, image: Level1_1 },
-    { id: 4, image: Level1_1_1 },
+    { id: 1, image: Level3_1 },
+    { id: 2, image: Level3_1 },
+    { id: 3, image: Level3_1 },
+    { id: 4, image: Level3_1_1 },
   ];
 
   const handleTileClick = (id) => {
