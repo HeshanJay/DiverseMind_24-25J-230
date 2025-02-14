@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Level3_2 from "../../../../assets/background_images/AttentionGames/Game2/Level3_2.png";
-import Level3_2_1 from "../../../../assets/background_images/AttentionGames/Game2/Level3_2.1.png";
+import Level3_1 from "../../../../assets/background_images/AttentionGames/Game2/Level3_2.png";
+import Level3_1_1 from "../../../../assets/background_images/AttentionGames/Game2/Level3_2.1.png";
 import BackImage from "../../../../assets/background_images/AttentionGames/Game2/backimg1_game2.png";
 
 const Game2Level3Screen2 = ({ onTileSelect, onTimeout }) => {
@@ -28,10 +28,14 @@ const Game2Level3Screen2 = ({ onTileSelect, onTimeout }) => {
   }, [timeLeft]);
 
   const tiles = [
-    { id: 1, image: Level3_2_1 },
-    { id: 2, image: Level3_2 },
-    { id: 3, image: Level3_2 },
-    { id: 4, image: Level3_2 },
+    { id: 1, image: Level3_1 },
+    { id: 2, image: Level3_1 },
+    { id: 3, image: Level3_1 },
+    { id: 4, image: Level3_1_1 },
+    { id: 5, image: Level3_1 },
+    { id: 6, image: Level3_1 },
+    { id: 7, image: Level3_1 },
+    { id: 8, image: Level3_1 },
   ];
 
   const handleTileClick = (id) => {
@@ -82,7 +86,7 @@ const Game2Level3Screen2 = ({ onTileSelect, onTimeout }) => {
           </text>
         </svg>
       </div>
-      <div className="relative flex gap-6">
+      <div className="relative grid grid-cols-4 gap-6">
         {tiles.map((tile) => (
           <button
             key={tile.id}

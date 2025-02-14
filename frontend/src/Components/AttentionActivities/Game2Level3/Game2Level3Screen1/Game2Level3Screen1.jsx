@@ -32,6 +32,10 @@ const Game2Level3Screen1 = ({ onTileSelect, onTimeout }) => {
     { id: 2, image: Level3_1 },
     { id: 3, image: Level3_1 },
     { id: 4, image: Level3_1_1 },
+    { id: 5, image: Level3_1 },
+    { id: 6, image: Level3_1 },
+    { id: 7, image: Level3_1 },
+    { id: 8, image: Level3_1 },
   ];
 
   const handleTileClick = (id) => {
@@ -82,7 +86,7 @@ const Game2Level3Screen1 = ({ onTileSelect, onTimeout }) => {
           </text>
         </svg>
       </div>
-      <div className="relative flex gap-6">
+      <div className="relative grid grid-cols-4 gap-6">
         {tiles.map((tile) => (
           <button
             key={tile.id}

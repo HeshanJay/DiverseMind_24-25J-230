@@ -28,10 +28,12 @@ const Game2Screen4 = ({ onTileSelect, onTimeout }) => {
   }, [timeLeft]);
 
   const tiles = [
-    { id: 1, image: Level2_4_1 },
+    { id: 1, image: Level2_4 },
     { id: 2, image: Level2_4 },
     { id: 3, image: Level2_4 },
     { id: 4, image: Level2_4 },
+    { id: 5, image: Level2_4_1 },
+    { id: 6, image: Level2_4 },
   ];
 
   const handleTileClick = (id) => {
@@ -82,7 +84,7 @@ const Game2Screen4 = ({ onTileSelect, onTimeout }) => {
           </text>
         </svg>
       </div>
-      <div className="relative flex gap-6">
+      <div className="relative grid grid-cols-3 gap-6">
         {tiles.map((tile) => (
           <button
             key={tile.id}
