@@ -1,3 +1,4 @@
+// AttentionGame2Level2.jsx
 import React, { useState, useEffect } from "react";
 import Game2Screen1 from "../../Components/AttentionActivities/Game2Level2/Game2Screen1/Game2Screen1.jsx";
 import Game2Screen2 from "../../Components/AttentionActivities/Game2Level2/Game2Screen2/Game2Screen2.jsx";
@@ -7,6 +8,10 @@ import Game2Screen5 from "../../Components/AttentionActivities/Game2Level2/Game2
 import Game2Screen6 from "../../Components/AttentionActivities/Game2Level2/Game2Screen6/Game2Screen6.jsx";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
+// Correct answers for the quiz screens:
+const correctAnswers = [1, 4, 3, 5, 2];
+
+// We have six screens (screens 1-5 are quiz, screen6 is results)
 const components = [
   Game2Screen1,
   Game2Screen2,
@@ -17,42 +22,60 @@ const components = [
 ];
 
 const AttentionGame2Level2 = () => {
+  // userAnswers holds booleans for screens 1-5 (unanswered = null)
+  const [userAnswers, setUserAnswers] = useState(Array(5).fill(null));
   const [currentIndex, setCurrentIndex] = useState(0);
+  // isNextEnabled is true when the current quiz screen has an answer
   const [isNextEnabled, setIsNextEnabled] = useState(false);
-  const [selectedTiles, setSelectedTiles] = useState(
-    Array(components.length).fill(false)
-  );
 
   useEffect(() => {
     setCurrentIndex(0);
     setIsNextEnabled(false);
   }, []);
 
+  // Called from quiz screens with the tile id that the user selected.
+  const handleTileSelection = (tileId) => {
+    if (currentIndex < 5) {
+      const isCorrect = tileId === correctAnswers[currentIndex];
+      const updatedAnswers = [...userAnswers];
+      updatedAnswers[currentIndex] = isCorrect;
+      setUserAnswers(updatedAnswers);
+      setIsNextEnabled(true);
+    }
+  };
+
+  // If the timer runs out, mark the answer as incorrect (if not answered yet)
+  const handleTimeout = () => {
+    if (currentIndex < 5 && userAnswers[currentIndex] === null) {
+      const updatedAnswers = [...userAnswers];
+      updatedAnswers[currentIndex] = false;
+      setUserAnswers(updatedAnswers);
+    }
+    // move to next screen if available
+    if (currentIndex < components.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      // For quiz screens 1-5, disable Next until answered. For results screen, no Next button.
+      setIsNextEnabled(
+        currentIndex + 1 < 5 ? userAnswers[currentIndex + 1] !== null : false
+      );
+    }
+  };
+
   const handleNext = () => {
     if (currentIndex < components.length - 1) {
       setCurrentIndex(currentIndex + 1);
-      setIsNextEnabled(selectedTiles[currentIndex + 1]);
+      setIsNextEnabled(
+        currentIndex + 1 < 5 ? userAnswers[currentIndex + 1] !== null : false
+      );
     }
   };
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
-      setIsNextEnabled(true);
-    }
-  };
-
-  const handleTileSelection = () => {
-    const updatedSelections = [...selectedTiles];
-    updatedSelections[currentIndex] = true;
-    setSelectedTiles(updatedSelections);
-    setIsNextEnabled(true);
-  };
-
-  const handleTimeout = () => {
-    if (currentIndex < components.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setIsNextEnabled(selectedTiles[currentIndex + 1]);
+      setIsNextEnabled(
+        currentIndex - 1 < 5 ? userAnswers[currentIndex - 1] !== null : false
+      );
     }
   };
 
@@ -63,6 +86,8 @@ const AttentionGame2Level2 = () => {
       <CurrentComponent
         onTileSelect={handleTileSelection}
         onTimeout={handleTimeout}
+        // For Game2Screen6 (results), pass the userAnswers array for calculation.
+        userAnswers={currentIndex === 5 ? userAnswers : undefined}
       />
 
       {currentIndex > 0 && (

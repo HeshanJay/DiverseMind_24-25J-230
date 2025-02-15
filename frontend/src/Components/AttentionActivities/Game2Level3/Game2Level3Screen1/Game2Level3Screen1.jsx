@@ -1,3 +1,4 @@
+// Game2Level3Screen1.jsx
 import React, { useState, useEffect } from "react";
 import Level3_1 from "../../../../assets/background_images/AttentionGames/Game2/Level3_1.png";
 import Level3_1_1 from "../../../../assets/background_images/AttentionGames/Game2/Level3_1.1.png";
@@ -10,16 +11,15 @@ const Game2Level3Screen1 = ({ onTileSelect, onTimeout }) => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft((prevTime) => {
-        if (prevTime <= 1) {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
           clearInterval(timer);
           onTimeout();
           return 0;
         }
-        return prevTime - 1;
+        return prev - 1;
       });
     }, 1000);
-
     return () => clearInterval(timer);
   }, [onTimeout]);
 
@@ -27,11 +27,12 @@ const Game2Level3Screen1 = ({ onTileSelect, onTimeout }) => {
     setProgress((timeLeft / 10) * 100);
   }, [timeLeft]);
 
+  // There are 8 tiles; the correct answer is tile with id 3.
   const tiles = [
     { id: 1, image: Level3_1 },
     { id: 2, image: Level3_1 },
-    { id: 3, image: Level3_1 },
-    { id: 4, image: Level3_1_1 },
+    { id: 3, image: Level3_1_1 },
+    { id: 4, image: Level3_1 },
     { id: 5, image: Level3_1 },
     { id: 6, image: Level3_1 },
     { id: 7, image: Level3_1 },
@@ -41,7 +42,7 @@ const Game2Level3Screen1 = ({ onTileSelect, onTimeout }) => {
   const handleTileClick = (id) => {
     if (selectedTile !== id) {
       setSelectedTile(id);
-      onTileSelect();
+      onTileSelect(id);
     }
   };
 
@@ -50,8 +51,8 @@ const Game2Level3Screen1 = ({ onTileSelect, onTimeout }) => {
       className="relative w-screen h-screen bg-cover bg-center flex items-center justify-center"
       style={{ backgroundImage: `url(${BackImage})` }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-      <div className="absolute top-5 right-5 flex items-center justify-center">
+      {/* Timer */}
+      <div className="absolute top-5 right-5">
         <svg width="80" height="80" viewBox="0 0 100 100">
           <circle
             cx="50"
@@ -86,6 +87,7 @@ const Game2Level3Screen1 = ({ onTileSelect, onTimeout }) => {
           </text>
         </svg>
       </div>
+      {/* Tiles */}
       <div className="relative grid grid-cols-4 gap-6">
         {tiles.map((tile) => (
           <button

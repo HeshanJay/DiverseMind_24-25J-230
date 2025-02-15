@@ -1,3 +1,4 @@
+// Screen3.jsx
 import React, { useState, useEffect } from "react";
 import Level1_3 from "../../../../assets/background_images/AttentionGames/Game2/Level1_3.png";
 import Level1_3_1 from "../../../../assets/background_images/AttentionGames/Game2/Level1_3.1.png";
@@ -19,7 +20,6 @@ const Screen3 = ({ onTileSelect, onTimeout }) => {
         return prevTime - 1;
       });
     }, 1000);
-
     return () => clearInterval(timer);
   }, [onTimeout]);
 
@@ -37,7 +37,7 @@ const Screen3 = ({ onTileSelect, onTimeout }) => {
   const handleTileClick = (id) => {
     if (selectedTile !== id) {
       setSelectedTile(id);
-      onTileSelect();
+      onTileSelect(id);
     }
   };
 

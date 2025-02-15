@@ -1,3 +1,4 @@
+// Game2Screen2.jsx
 import React, { useState, useEffect } from "react";
 import Level2_2 from "../../../../assets/background_images/AttentionGames/Game2/Level2_2.png";
 import Level2_2_1 from "../../../../assets/background_images/AttentionGames/Game2/Level2_2.1.png";
@@ -19,7 +20,6 @@ const Game2Screen2 = ({ onTileSelect, onTimeout }) => {
         return prevTime - 1;
       });
     }, 1000);
-
     return () => clearInterval(timer);
   }, [onTimeout]);
 
@@ -27,6 +27,7 @@ const Game2Screen2 = ({ onTileSelect, onTimeout }) => {
     setProgress((timeLeft / 10) * 100);
   }, [timeLeft]);
 
+  // For Game2Screen2, the correct answer is tile id 4.
   const tiles = [
     { id: 1, image: Level2_2_1 },
     { id: 2, image: Level2_2_1 },
@@ -39,17 +40,17 @@ const Game2Screen2 = ({ onTileSelect, onTimeout }) => {
   const handleTileClick = (id) => {
     if (selectedTile !== id) {
       setSelectedTile(id);
-      onTileSelect();
+      onTileSelect(id);
     }
   };
 
   return (
     <div
-      className="relative w-screen h-screen bg-cover bg-center flex items-center justify-center"
+      className="relative w-screen h-screen bg-cover bg-center flex flex-col items-center justify-center"
       style={{ backgroundImage: `url(${BackImage})` }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-      <div className="absolute top-5 right-5 flex items-center justify-center">
+      {/* Timer */}
+      <div className="absolute top-5 right-5">
         <svg width="80" height="80" viewBox="0 0 100 100">
           <circle
             cx="50"
@@ -84,6 +85,7 @@ const Game2Screen2 = ({ onTileSelect, onTimeout }) => {
           </text>
         </svg>
       </div>
+      {/* Tiles */}
       <div className="relative grid grid-cols-3 gap-6">
         {tiles.map((tile) => (
           <button

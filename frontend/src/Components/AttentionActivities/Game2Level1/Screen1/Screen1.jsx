@@ -1,3 +1,4 @@
+// Screen1.jsx
 import React, { useState, useEffect } from "react";
 import Level1_1 from "../../../../assets/background_images/AttentionGames/Game2/Level1_1.png";
 import Level1_1_1 from "../../../../assets/background_images/AttentionGames/Game2/Level1_1.1.png";
@@ -37,7 +38,7 @@ const Screen1 = ({ onTileSelect, onTimeout }) => {
   const handleTileClick = (id) => {
     if (selectedTile !== id) {
       setSelectedTile(id);
-      onTileSelect();
+      onTileSelect(id);
     }
   };
 
