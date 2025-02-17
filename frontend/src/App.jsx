@@ -19,11 +19,15 @@ import { ScoresProvider } from "./context/Score_context";
 import ScreeningMenu from "./Pages/ScreeningMenu/ScreeningMenu";
 import AttentionIM from "./Pages/Attention/AttentionIM";
 import AttentionGame1 from "./Pages/Attention/AttentionGame1";
+
 import AttentionGame2 from "./Pages/Attention/AttentionGame2";
-import AttentionGame3 from "./Pages/Attention/AttentionGame3";
 import AttentionGame2Level1 from "./Pages/Attention/AttentionGame2level1";
 import AttentionGame2Level2 from "./Pages/Attention/AttentionGame2Level2";
 import AttentionGame2Level3 from "./Pages/Attention/AttentionGame2Level3";
+import AttentionGame3 from "./Pages/Attention/AttentionGame3";
+import AttentionGame1Level1 from "./Pages/Attention/AttentionGame1Level1";
+import AttentionGame1Level2 from "./Pages/Attention/AttentionGame1Level2";
+import AttentionGame1Level3 from "./Pages/Attention/AttentionGame1Level3";
 
 const App = () => {
   return (
@@ -40,6 +44,20 @@ const App = () => {
               element={<AttentionReadingTest />}
             />
             <Route path="/attentiongame1" element={<AttentionGame1 />} />
+
+            <Route
+              path="/attentiongame1level1"
+              element={<AttentionGame1Level1 />}
+            />
+            <Route
+              path="/attentiongame1level2"
+              element={<AttentionGame1Level2 />}
+            />
+            <Route
+              path="/attentiongame1level3"
+              element={<AttentionGame1Level3 />}
+            />
+
             <Route path="/attentiongame2" element={<AttentionGame2 />} />
             <Route
               path="/attentiongame2level1"
@@ -53,6 +71,7 @@ const App = () => {
               path="/attentiongame2level3"
               element={<AttentionGame2Level3 />}
             />
+
             <Route path="/attentiongame3" element={<AttentionGame3 />} />
             <Route path="/attentionInterventions" element={<AttentionIM />} />
             <Route path="/math" element={<MathScreeningTest />} />
