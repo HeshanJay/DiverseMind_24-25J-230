@@ -20,6 +20,8 @@ import ScreeningMenu from "./Pages/ScreeningMenu/ScreeningMenu";
 import WritingGameMenu from "./Pages/WritingInterventions/WritingGameMenu/WritingGameMenu";
 import WritingGame2Menu from "./Pages/WritingInterventions/WritingGame2/WritingGame2Menu";
 import WritingGame2Level1 from "./Pages/WritingInterventions/WritingGame2/WritingGame2Level1";
+import WritingGame2Level2 from "./Pages/WritingInterventions/WritingGame2/WritingGame2Level2";
+import WritingGame2Level3 from "./Pages/WritingInterventions/WritingGame2/WritingGame2Level3";
 
 const App = () => {
   return (
@@ -53,6 +55,14 @@ const App = () => {
             <Route
               path="/writing-game2-level1"
               element={<WritingGame2Level1 />}
+            />
+            <Route
+              path="/writing-game2-level2"
+              element={<WritingGame2Level2 />}
+            />
+            <Route
+              path="/writing-game2-level3"
+              element={<WritingGame2Level3 />}
             />
           </Routes>
         </ScoresProvider>

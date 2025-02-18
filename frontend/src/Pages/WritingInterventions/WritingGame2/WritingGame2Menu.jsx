@@ -19,10 +19,16 @@ const WritingGame2Menu = () => {
           >
             අදියර 1
           </button>
-          <button className="p-4 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-700 transition">
+          <button
+            className="p-4 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-700 transition"
+            onClick={() => navigate("/writing-game2-level2")}
+          >
             අදියර 2
           </button>
-          <button className="p-4 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
+          <button
+            className="p-4 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-700 transition"
+            onClick={() => navigate("/writing-game2-level3")}
+          >
             අදියර 3
           </button>
         </div>
