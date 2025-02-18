@@ -4,7 +4,7 @@ import Home from "./Pages/Home/Home";
 import About from "./Pages//About/About";
 import AttentionReadingTest from "./Pages/ReadingDashboardpage";
 import MathScreeningTest from "./Pages/math/MathScreeningTest";
-import WritingTest from "./Pages/Writing/WritingTest";
+import WritingTest from "./Pages/WritingScreening/WritingTest";
 import Login from "./Components/Login/Login";
 import Signup from "./Components/Signup/Signup";
 import TeacherDashboard from "./Pages/TeacherDashboard/TeacherDashboard";
@@ -17,6 +17,9 @@ import WorkingMemory from "./Pages/WorkingMemory/WorkingMemory";
 import ScoreBoard from "./Components/Score_board";
 import { ScoresProvider } from "./context/Score_context";
 import ScreeningMenu from "./Pages/ScreeningMenu/ScreeningMenu";
+import WritingGameMenu from "./Pages/WritingInterventions/WritingGameMenu/WritingGameMenu";
+import WritingGame2Menu from "./Pages/WritingInterventions/WritingGame2/WritingGame2Menu";
+import WritingGame2Level1 from "./Pages/WritingInterventions/WritingGame2/WritingGame2Level1";
 
 const App = () => {
   return (
@@ -45,6 +48,12 @@ const App = () => {
             <Route path="/scoreboard" element={<ScoreBoard />} />
             <Route path="/splash" element={<SplashScreen />} />
             <Route path="/screening-menu" element={<ScreeningMenu />} />
+            <Route path="/writing-game-menu" element={<WritingGameMenu />} />
+            <Route path="/writing-game2-menu" element={<WritingGame2Menu />} />
+            <Route
+              path="/writing-game2-level1"
+              element={<WritingGame2Level1 />}
+            />
           </Routes>
         </ScoresProvider>
       </BrowserRouter>
