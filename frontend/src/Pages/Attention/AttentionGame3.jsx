@@ -1,11 +1,10 @@
 import React from "react";
+import Display1 from "../../Components/AttentionActivities/Game3/Display1";
 
 const AttentionGame3 = () => {
   return (
     <div>
-      <h1 className="text-lx font-bold text-red-500">
-        AttentionGame333333333333
-      </h1>
+      <Display1 />
     </div>
   );
 };

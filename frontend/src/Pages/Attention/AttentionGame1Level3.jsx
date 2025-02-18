@@ -1,6 +1,6 @@
 import React from "react";
-import ColorChange from "../../Components/AttentionActivities/Game1/ColorChange";
 import backgroundImage from "../../assets/background_images/baord.png";
+import ColorChange3 from "../../Components/AttentionActivities/Game1/ColorChange3";
 
 const AttentionGame1Level3 = () => {
   return (
@@ -8,7 +8,7 @@ const AttentionGame1Level3 = () => {
       className="attention-container"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <ColorChange />
+      <ColorChange3 />
     </div>
   );
 };
