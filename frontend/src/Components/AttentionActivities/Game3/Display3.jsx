@@ -7,9 +7,9 @@ import Pipe from "../../../assets/background_images/AttentionGames/Game3/pot1.pn
 import PiranhaPlant from "../../../assets/background_images/AttentionGames/Game3/plant1.png";
 import Soil from "../../../assets/background_images/AttentionGames/Game3/grass5.jpg";
 
-const Display1 = () => {
+const Display3 = () => {
   const [currMole, setCurrMole] = useState(null);
-  const [currPlant, setCurrPlant] = useState(null);
+  const [currPlants, setCurrPlants] = useState([]); // Array of 5 plant positions
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
@@ -20,7 +20,7 @@ const Display1 = () => {
   // Refs to avoid stale closures in setInterval callbacks
   const gameOverRef = useRef(gameOver);
   const currMoleRef = useRef(currMole);
-  const currPlantRef = useRef(currPlant);
+  const currPlantsRef = useRef(currPlants);
 
   // Update refs when state changes
   useEffect(() => {
@@ -32,44 +32,59 @@ const Display1 = () => {
   }, [currMole]);
 
   useEffect(() => {
-    currPlantRef.current = currPlant;
-  }, [currPlant]);
+    currPlantsRef.current = currPlants;
+  }, [currPlants]);
 
-  // Load bestScore from localStorage on mount
+  // Load bestScore for Display3 from localStorage using a unique key
   useEffect(() => {
-    const storedBestScore = localStorage.getItem("bestScore");
+    const storedBestScore = localStorage.getItem("bestScoreDisplay3");
     if (storedBestScore) {
       setBestScore(parseInt(storedBestScore, 10));
     }
   }, []);
 
-  // Helper function to generate a random tile index (0-8)
-  const getRandomTile = () => Math.floor(Math.random() * 9);
+  // Helper function to generate a random tile index (0-24 for a 5x5 grid)
+  const getRandomTile = () => Math.floor(Math.random() * 25);
+
+  // Helper function to get a random tile excluding provided indices
+  const getRandomTileExcluding = (exclusions) => {
+    let tile;
+    do {
+      tile = getRandomTile();
+    } while (exclusions.includes(tile));
+    return tile;
+  };
 
   // Start the game and intervals after user clicks Start Game
   useEffect(() => {
     if (!gameStarted) return;
 
-    // Reset score and game over state when starting
+    // Reset game state on start
     setScore(0);
     setGameOver(false);
     setCurrMole(null);
-    setCurrPlant(null);
+    setCurrPlants([]);
 
+    // Mole interval (updates every second)
     const moleInterval = setInterval(() => {
       if (gameOverRef.current) return;
       const random = getRandomTile();
-      // If the random tile is where the plant is, skip this cycle
-      if (currPlantRef.current === random) return;
+      // If the random tile is occupied by any plant, skip updating
+      if (currPlantsRef.current.includes(random)) return;
       setCurrMole(random);
     }, 1000);
 
+    // Plants interval (updates every 2 seconds)
     const plantInterval = setInterval(() => {
       if (gameOverRef.current) return;
-      const random = getRandomTile();
-      // If the random tile is where the mole is, skip this cycle
-      if (currMoleRef.current === random) return;
-      setCurrPlant(random);
+      // Exclude the current mole position (if it exists)
+      const exclusions =
+        currMoleRef.current !== null ? [currMoleRef.current] : [];
+      let newPlants = [];
+      for (let i = 0; i < 5; i++) {
+        newPlants.push(getRandomTileExcluding([...exclusions, ...newPlants]));
+      }
+      setCurrPlants(newPlants);
     }, 2000);
 
     return () => {
@@ -82,7 +97,7 @@ const Display1 = () => {
   useEffect(() => {
     if (gameOver && score > bestScore) {
       setBestScore(score);
-      localStorage.setItem("bestScore", score);
+      localStorage.setItem("bestScoreDisplay3", score);
     }
   }, [gameOver, score, bestScore]);
 
@@ -92,7 +107,7 @@ const Display1 = () => {
 
     if (index === currMole) {
       setScore((prev) => prev + 10);
-    } else if (index === currPlant) {
+    } else if (currPlants.includes(index)) {
       setGameOver(true);
     }
   };
@@ -104,7 +119,7 @@ const Display1 = () => {
 
   // Handler for retrying the game
   const handleRetry = () => {
-    // Reset the game by restarting the gameStarted flag.
+    // Restart the game by toggling gameStarted off and on.
     setGameStarted(false);
     setTimeout(() => {
       setGameStarted(true);
@@ -120,7 +135,7 @@ const Display1 = () => {
     return Array.from({ length: starCount });
   };
 
-  // Game Over overlay component with horizontal, circled buttons using only React Icons
+  // Game Over overlay component with horizontal, circled buttons using React Icons
   const GameOverOverlay = () => {
     const stars = getStars(score);
     return (
@@ -162,7 +177,7 @@ const Display1 = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Background image */}
+      {/* Background image with dark filter */}
       <div
         className="absolute inset-0 bg-fixed bg-cover"
         style={{
@@ -171,16 +186,16 @@ const Display1 = () => {
         }}
       />
 
-      {/* Intro Overlay before game starts */}
+      {/* Intro Overlay before the game starts */}
       {!gameStarted && !gameOver && (
         <div className="relative z-20 flex flex-col items-center justify-center h-screen text-center p-4">
           <h1 className="text-5xl font-bold text-yellow-300 mb-4">
-            Welcome to Fun Field!
+            Welcome to the Garden of Fun!
           </h1>
           <p className="text-xl text-white mb-6 max-w-lg">
-            Hey there, little hero! In this game, you need to tap on the sneaky
-            mole to earn points. But be careful! If you tap on the grumpy plant,
-            the game will end. Are you ready to have some fun?
+            Hello, little gardener! In this game, tap on the friendly mole to
+            collect points. But be careful – if you tap on any of the pesky
+            plants, the game is over. Ready to start your adventure?
           </p>
           <button
             onClick={handleStartGame}
@@ -191,39 +206,51 @@ const Display1 = () => {
         </div>
       )}
 
-      {/* Game Content: Only show when game is started and not over */}
+      {/* Game Content */}
       {gameStarted && !gameOver && (
         <div className="relative z-10 flex flex-col items-center py-8">
-          <h1 className="text-4xl font-bold text-white mb-4">Score: {score}</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">
+            {gameOver ? `GAME OVER: ${score}` : `Score: ${score}`}
+          </h1>
           <div
             id="board"
-            className="grid grid-cols-3 grid-rows-3 w-[480px] h-[480px] mx-auto border-4 border-white rounded-2xl bg-cover"
+            className="grid grid-cols-5 grid-rows-5 w-[480px] h-[480px] mx-auto border-4 border-white rounded-2xl bg-cover"
             style={{ backgroundImage: `url(${Soil})` }}
           >
-            {Array.from({ length: 9 }, (_, index) => (
+            {Array.from({ length: 25 }, (_, index) => (
               <div
                 key={index}
                 onClick={() => handleTileClick(index)}
-                className="w-[160px] h-[160px] flex items-center justify-center cursor-pointer bg-no-repeat bg-center bg-cover"
+                className="flex items-center justify-center cursor-pointer bg-no-repeat bg-center bg-cover"
                 style={{
+                  width: "96px",
+                  height: "96px",
                   backgroundImage: `url(${Pipe})`,
-                  backgroundSize: "80%",
+                  backgroundSize: "contain",
                 }}
               >
                 {index === currMole && (
                   <img
                     src={MontyMole}
                     alt="mole"
-                    className="w-[100px] h-[100px] pointer-events-none select-none"
-                    style={{ transform: "translateY(-20%)" }}
+                    className="pointer-events-none select-none"
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      transform: "translateY(-20%)",
+                    }}
                   />
                 )}
-                {index === currPlant && (
+                {currPlants.includes(index) && (
                   <img
                     src={PiranhaPlant}
                     alt="plant"
-                    className="w-[100px] h-[100px] pointer-events-none select-none"
-                    style={{ transform: "translateY(-30%)" }}
+                    className="pointer-events-none select-none"
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      transform: "translateY(-20%)",
+                    }}
                   />
                 )}
               </div>
@@ -238,4 +265,4 @@ const Display1 = () => {
   );
 };
 
-export default Display1;
+export default Display3;
