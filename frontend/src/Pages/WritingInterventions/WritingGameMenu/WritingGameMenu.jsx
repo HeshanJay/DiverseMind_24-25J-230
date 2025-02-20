@@ -22,7 +22,10 @@ const WritingGameMenu = () => {
         >
           පිල්ලම් හුරුව
         </button>
-        <button className="p-4 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-700 transition">
+        <button
+          className="p-4 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-700 transition"
+          onClick={() => navigate("/writing-game3-level1")}
+        >
           විරාම ලක්ෂණ හුරුව
         </button>
       </div>

@@ -19,9 +19,12 @@ import { ScoresProvider } from "./context/Score_context";
 import ScreeningMenu from "./Pages/ScreeningMenu/ScreeningMenu";
 import WritingGameMenu from "./Pages/WritingInterventions/WritingGameMenu/WritingGameMenu";
 import WritingGame2Menu from "./Pages/WritingInterventions/WritingGame2/WritingGame2Menu";
+import WritingGame3Menu from "./Pages/WritingInterventions/WritingGame3/WritingGame3Menu";
 import WritingGame2Level1 from "./Pages/WritingInterventions/WritingGame2/WritingGame2Level1";
 import WritingGame2Level2 from "./Pages/WritingInterventions/WritingGame2/WritingGame2Level2";
 import WritingGame2Level3 from "./Pages/WritingInterventions/WritingGame2/WritingGame2Level3";
+import WritingGame3Level1 from "./Pages/WritingInterventions/WritingGame3/WritingGame3Level1";
+import WritingGame3ScoreBoard from "./Pages/WritingInterventions/WritingGame3/WritingGame3ScoreBoard";
 
 const App = () => {
   return (
@@ -52,6 +55,7 @@ const App = () => {
             <Route path="/screening-menu" element={<ScreeningMenu />} />
             <Route path="/writing-game-menu" element={<WritingGameMenu />} />
             <Route path="/writing-game2-menu" element={<WritingGame2Menu />} />
+            <Route path="/writing-game3-menu" element={<WritingGame3Menu />} />
             <Route
               path="/writing-game2-level1"
               element={<WritingGame2Level1 />}
@@ -63,6 +67,14 @@ const App = () => {
             <Route
               path="/writing-game2-level3"
               element={<WritingGame2Level3 />}
+            />
+            <Route
+              path="/writing-game3-level1"
+              element={<WritingGame3Level1 />}
+            />
+            <Route
+              path="/writing-game3-scoreBoard"
+              element={<WritingGame3ScoreBoard />}
             />
           </Routes>
         </ScoresProvider>
