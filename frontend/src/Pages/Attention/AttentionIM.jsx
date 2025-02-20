@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./AttentionIM.css";
-import backgroundImage from "../../assets/background_images/backgd_ig.png";
-import game1 from "../../assets/background_images/game1.jpg";
-import game2 from "../../assets/background_images/game2.png";
-import game3 from "../../assets/background_images/game3.jpg";
+import backgroundImage from "../../assets/background_images/atten3.png";
+import game1 from "../../assets/background_images/game1ui5.png";
+import game2 from "../../assets/background_images/game2ui1.png";
+import game3 from "../../assets/background_images/game3ui1.png";
 
 const AttentionIM = () => {
   const navigate = useNavigate();

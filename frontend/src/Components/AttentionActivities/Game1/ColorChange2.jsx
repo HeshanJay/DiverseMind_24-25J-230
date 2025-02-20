@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import backgroundImage from "../../../assets/background_images/baord.png";
+import backgroundImage from "../../../assets/background_images/colorimg4.png";
+import { IoMdRefresh } from "react-icons/io";
+import { GiGamepad } from "react-icons/gi";
+import { FaArrowRight } from "react-icons/fa";
 
 const INITIAL_TIMER = 40;
 const MAX_ROUNDS = 5;
@@ -14,9 +17,10 @@ const ColorChange2 = () => {
   const [round, setRound] = useState(1);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(
-    () => parseInt(localStorage.getItem("bestScore")) || 0
+    () => parseInt(localStorage.getItem("colorChange2BestScore")) || 0
   );
   const [gameOver, setGameOver] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false); // New state to track if the game has started
 
   // Generate a random RGB color
   function generateRandomColor() {
@@ -67,7 +71,7 @@ const ColorChange2 = () => {
 
       if (newScore > bestScore) {
         setBestScore(newScore);
-        localStorage.setItem("bestScore", newScore);
+        localStorage.setItem("colorChange2BestScore", newScore); // Save specific to ColorChange2
       }
       resetRound();
     } else {
@@ -112,13 +116,45 @@ const ColorChange2 = () => {
     setGameOver(false);
   };
 
+  // Handler for starting the game
+  const handleStartGame = () => {
+    setGameStarted(true);
+  };
+
   return (
-    <div
-      className="min-h-screen bg-cover bg-center flex items-center justify-center"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
-      <div className="text-center p-5 font-sans bg-white/80 rounded shadow-md">
-        <div className="flex justify-around max-w-md mx-auto mb-4">
+    <div className="relative min-h-screen">
+      {/* Background Image with brightness filter */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          filter: "brightness(50%)",
+        }}
+      />
+
+      {/* Intro Overlay before the game starts */}
+      {!gameStarted && !gameOver && (
+        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black bg-opacity-50 p-4">
+          <h1 className="text-5xl font-bold text-yellow-300 mb-4">
+            Welcome to the Color Challenge!
+          </h1>
+          <p className="text-xl text-white mb-6 max-w-lg">
+            In this game, you need to guess the correct color by selecting one
+            of the options. But hurry up! The timer is ticking, and each round
+            gets harder. Are you ready to play?
+          </p>
+          <button
+            onClick={handleStartGame}
+            className="px-6 py-3 bg-green-500 rounded-full text-2xl text-white hover:bg-green-600 transition duration-200"
+          >
+            Start Game!
+          </button>
+        </div>
+      )}
+
+      {/* Top Bar: TIME, ROUND, SCORE, BEST */}
+      {gameStarted && (
+        <div className="absolute top-0 left-0 right-0 z-50 text-white flex justify-center items-center font-bold text-2xl space-x-8 p-4">
           <div>
             <p>TIME</p>
             <h2>{timer.toFixed(1)}</h2>
@@ -138,56 +174,88 @@ const ColorChange2 = () => {
             <h2>{bestScore}</h2>
           </div>
         </div>
-        {feedback && (
-          <div className="mb-4 text-2xl font-bold">
-            <span
-              className={
-                feedbackClass === "correct"
-                  ? "text-green-600"
-                  : feedbackClass === "wrong" || feedbackClass === "timeout"
-                  ? "text-red-600"
-                  : ""
-              }
-            >
-              {feedback}
-            </span>
+      )}
+
+      {/* Feedback fixed at top right */}
+      {gameStarted && feedback && (
+        <div
+          className={`fixed top-4 right-4 text-4xl font-bold ${
+            feedbackClass === "correct"
+              ? "text-green-600"
+              : feedbackClass === "wrong" || feedbackClass === "timeout"
+              ? "text-red-600"
+              : ""
+          }`}
+        >
+          {feedback}
+        </div>
+      )}
+
+      {/* Main Content */}
+      {gameStarted && (
+        <div className="relative z-10 flex items-center justify-center min-h-screen">
+          <div className="relative text-center p-5 font-sans">
+            {!gameOver ? (
+              <>
+                <div
+                  className="p-5 m-5 max-w-sm mx-auto rounded-xl"
+                  style={{ backgroundColor: rgbColor }}
+                >
+                  <h2 className="text-white">What COLOR is this?</h2>
+                </div>
+                <div className="grid grid-cols-3 gap-5 w-full max-w-xs mx-auto">
+                  {options.map((color) => (
+                    <button
+                      key={color}
+                      onClick={() => handleGuess(color)}
+                      className="w-24 h-24 rounded-full shadow-md border-0 cursor-pointer"
+                      style={{ backgroundColor: color }}
+                      aria-label={`Choose color ${color}`}
+                    ></button>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="mt-10 text-center p-4">
+                <h2 className="text-3xl font-bold text-yellow-300">
+                  Game Over, Champ!
+                </h2>
+                <p className="text-xl text-yellow-300 mt-2">
+                  Your Total Score: <strong>{score}</strong>
+                </p>
+                <div className="flex justify-center gap-4 mt-6">
+                  {/* Restart button */}
+                  <button
+                    onClick={restartGame}
+                    className="w-16 h-16 bg-green-400 rounded-full shadow-md flex items-center justify-center hover:bg-green-500 transition"
+                    aria-label="Restart Game"
+                  >
+                    <IoMdRefresh size={32} color="#fff" />
+                  </button>
+                  {/* Button directing to attentiongame1 */}
+                  <button
+                    onClick={() => (window.location.href = "/attentiongame1")}
+                    className="w-16 h-16 bg-blue-400 rounded-full shadow-md flex items-center justify-center hover:bg-blue-500 transition"
+                    aria-label="Attention Game"
+                  >
+                    <GiGamepad size={32} color="#fff" />
+                  </button>
+                  {/* Next button directing to /attentionInterventions */}
+                  <button
+                    onClick={() =>
+                      (window.location.href = "/attentionInterventions")
+                    }
+                    className="w-16 h-16 bg-red-400 rounded-full shadow-md flex items-center justify-center hover:bg-red-500 transition"
+                    aria-label="Next"
+                  >
+                    <FaArrowRight size={32} color="#fff" />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-        )}
-        {!gameOver ? (
-          <>
-            <div
-              className="p-5 m-5 max-w-sm mx-auto rounded-xl"
-              style={{ backgroundColor: rgbColor }}
-            >
-              <h2 className="text-white">What KOLOR is this?</h2>
-            </div>
-            <div className="grid grid-cols-3 gap-5 w-full max-w-xs mx-auto">
-              {options.map((color) => (
-                <button
-                  key={color}
-                  onClick={() => handleGuess(color)}
-                  className="w-24 h-24 rounded-full shadow-md border-0 cursor-pointer"
-                  style={{ backgroundColor: color }}
-                  aria-label={`Choose color ${color}`}
-                ></button>
-              ))}
-            </div>
-          </>
-        ) : (
-          <div className="mt-10">
-            <h2 className="text-2xl">Game Over! Thanks for playing.</h2>
-            <p>
-              Your Total Score: <strong>{score}</strong>
-            </p>
-            <button
-              onClick={restartGame}
-              className="mt-4 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-            >
-              Restart Game
-            </button>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

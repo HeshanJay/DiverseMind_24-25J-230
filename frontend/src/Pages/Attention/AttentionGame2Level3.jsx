@@ -1,4 +1,3 @@
-// AttentionGame2Level3.jsx
 import React, { useState, useEffect } from "react";
 import Game2Level3Screen1 from "../../Components/AttentionActivities/Game2Level3/Game2Level3Screen1/Game2Level3Screen1.jsx";
 import Game2Level3Screen2 from "../../Components/AttentionActivities/Game2Level3/Game2Level3Screen2/Game2Level3Screen2.jsx";
@@ -76,6 +75,14 @@ const AttentionGame2Level3 = () => {
     }
   };
 
+  // New function to reset the game
+  const handleGameComplete = () => {
+    // Reset the game state to the first screen
+    setUserAnswers(Array(5).fill(null));
+    setCurrentIndex(0); // Go back to Game2Level3Screen1
+    setIsNextEnabled(false);
+  };
+
   const CurrentComponent = components[currentIndex];
 
   return (
@@ -83,8 +90,8 @@ const AttentionGame2Level3 = () => {
       <CurrentComponent
         onTileSelect={handleTileSelection}
         onTimeout={handleTimeout}
-        // For results screen (index 5) pass userAnswers so that the score can be calculated.
         userAnswers={currentIndex === 5 ? userAnswers : undefined}
+        onGameComplete={handleGameComplete} // Pass the reset function to Screen6
       />
 
       {currentIndex > 0 && (

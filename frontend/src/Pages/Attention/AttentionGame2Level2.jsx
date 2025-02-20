@@ -1,4 +1,3 @@
-// AttentionGame2Level2.jsx
 import React, { useState, useEffect } from "react";
 import Game2Screen1 from "../../Components/AttentionActivities/Game2Level2/Game2Screen1/Game2Screen1.jsx";
 import Game2Screen2 from "../../Components/AttentionActivities/Game2Level2/Game2Screen2/Game2Screen2.jsx";
@@ -33,7 +32,7 @@ const AttentionGame2Level2 = () => {
     setIsNextEnabled(false);
   }, []);
 
-  // Called from quiz screens with the tile id that the user selected.
+  // Handle tile selection and update answer state
   const handleTileSelection = (tileId) => {
     if (currentIndex < 5) {
       const isCorrect = tileId === correctAnswers[currentIndex];
@@ -44,14 +43,14 @@ const AttentionGame2Level2 = () => {
     }
   };
 
-  // If the timer runs out, mark the answer as incorrect (if not answered yet)
+  // Handle timeout (answering incorrectly when time runs out)
   const handleTimeout = () => {
     if (currentIndex < 5 && userAnswers[currentIndex] === null) {
       const updatedAnswers = [...userAnswers];
       updatedAnswers[currentIndex] = false;
       setUserAnswers(updatedAnswers);
     }
-    // move to next screen if available
+    // Move to next screen if available
     if (currentIndex < components.length - 1) {
       setCurrentIndex(currentIndex + 1);
       // For quiz screens 1-5, disable Next until answered. For results screen, no Next button.
@@ -79,6 +78,14 @@ const AttentionGame2Level2 = () => {
     }
   };
 
+  // New function to reset the game
+  const handleGameComplete = () => {
+    // Reset the game state to the first screen
+    setUserAnswers(Array(5).fill(null));
+    setCurrentIndex(0); // Go back to Game2Screen1
+    setIsNextEnabled(false);
+  };
+
   const CurrentComponent = components[currentIndex];
 
   return (
@@ -86,8 +93,8 @@ const AttentionGame2Level2 = () => {
       <CurrentComponent
         onTileSelect={handleTileSelection}
         onTimeout={handleTimeout}
-        // For Game2Screen6 (results), pass the userAnswers array for calculation.
         userAnswers={currentIndex === 5 ? userAnswers : undefined}
+        onGameComplete={handleGameComplete} // Pass the reset function to Screen6
       />
 
       {currentIndex > 0 && (

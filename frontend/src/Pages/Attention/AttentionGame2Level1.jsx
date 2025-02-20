@@ -17,7 +17,7 @@ const AttentionGame2Level1 = () => {
   // For quiz screens 0 to 4, store each answer (true/false); for unanswered, null.
   const [userAnswers, setUserAnswers] = useState(Array(5).fill(null));
   const [currentIndex, setCurrentIndex] = useState(0);
-  // isNextEnabled will be true when the current screen has been answered (or it’s Screen6)
+  // isNextEnabled will be true when the current screen has been answered (or it's Screen6)
   const [isNextEnabled, setIsNextEnabled] = useState(false);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const AttentionGame2Level1 = () => {
     if (currentIndex < components.length - 1) {
       setCurrentIndex(currentIndex + 1);
       // For quiz screens (0-4), Next remains disabled until answered;
-      // For Screen6 (results) there’s no Next button.
+      // For Screen6 (results) there's no Next button.
       setIsNextEnabled(
         currentIndex + 1 < 5 ? userAnswers[currentIndex + 1] !== null : false
       );
@@ -72,6 +72,15 @@ const AttentionGame2Level1 = () => {
     }
   };
 
+  // New function to handle game restart
+  const handleGameComplete = () => {
+    // Reset the game state
+    setUserAnswers(Array(5).fill(null));
+    // Return to the first quiz screen (Screen1, index 0)
+    setCurrentIndex(0);
+    setIsNextEnabled(false);
+  };
+
   const CurrentComponent = components[currentIndex];
 
   return (
@@ -79,8 +88,9 @@ const AttentionGame2Level1 = () => {
       <CurrentComponent
         onTileSelect={handleTileSelection}
         onTimeout={handleTimeout}
-        // When on Screen6, pass the userAnswers so that the results are calculated.
+        // When on Screen6, pass the userAnswers and restart handler
         userAnswers={currentIndex === 5 ? userAnswers : undefined}
+        onGameComplete={currentIndex === 5 ? handleGameComplete : undefined}
       />
 
       {currentIndex > 0 && (

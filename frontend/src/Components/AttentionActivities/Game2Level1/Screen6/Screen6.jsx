@@ -1,11 +1,20 @@
-// Screen6.jsx
 import React from "react";
 import BackImage from "../../../../assets/background_images/AttentionGames/Game2/backimg1_game2.png";
+import { IoMdRefresh } from "react-icons/io";
+import { GiGamepad } from "react-icons/gi";
+import { FaArrowRight } from "react-icons/fa";
 
-const Screen6 = ({ userAnswers }) => {
+const Screen6 = ({ userAnswers, onGameComplete }) => {
   const totalQuestions = userAnswers.length;
   const correctCount = userAnswers.filter((ans) => ans === true).length;
   const stars = correctCount; // 1 star per correct answer
+
+  const handleRestart = () => {
+    // Call the onGameComplete function to reset game state in parent component
+    if (onGameComplete) {
+      onGameComplete();
+    }
+  };
 
   return (
     <div
@@ -30,6 +39,36 @@ const Screen6 = ({ userAnswers }) => {
         ) : (
           <p className="text-2xl text-orange-300">Good try! Keep practicing!</p>
         )}
+
+        {/* Kid-Friendly Buttons */}
+        <div className="flex gap-6 mt-8">
+          {/* Restart Button - Now uses the handleRestart function */}
+          <button
+            onClick={handleRestart}
+            className="w-16 h-16 bg-green-400 rounded-full shadow-md flex items-center justify-center hover:bg-green-500 transition"
+            aria-label="Restart Game"
+          >
+            <IoMdRefresh size={32} color="#fff" />
+          </button>
+
+          {/* Go to Attention Game 2 */}
+          <button
+            onClick={() => (window.location.href = "/attentiongame2")}
+            className="w-16 h-16 bg-blue-400 rounded-full shadow-md flex items-center justify-center hover:bg-blue-500 transition"
+            aria-label="Go to Attention Game 2"
+          >
+            <GiGamepad size={32} color="#fff" />
+          </button>
+
+          {/* Next Button */}
+          <button
+            onClick={() => (window.location.href = "/attentionInterventions")}
+            className="w-16 h-16 bg-red-400 rounded-full shadow-md flex items-center justify-center hover:bg-red-500 transition"
+            aria-label="Next"
+          >
+            <FaArrowRight size={32} color="#fff" />
+          </button>
+        </div>
       </div>
     </div>
   );
