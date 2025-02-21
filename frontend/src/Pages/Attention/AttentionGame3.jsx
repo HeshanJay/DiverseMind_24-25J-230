@@ -4,9 +4,16 @@ import game1 from "../../assets/background_images/number1.png";
 import game2 from "../../assets/background_images/number2.png";
 import game3 from "../../assets/background_images/number3.png";
 import backgroundImage from "../../assets/background_images/garden3.png";
+import clickSound from "../../assets/Audios/click_sound.mp3";
 
 const AttentionGame3 = () => {
   const navigate = useNavigate();
+
+  // Function to play the click sound
+  const playClickSound = () => {
+    const audio = new Audio(clickSound);
+    audio.play();
+  };
 
   // Array of game buttons with their corresponding routes
   const games = [
@@ -34,7 +41,10 @@ const AttentionGame3 = () => {
           <button
             key={index}
             className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full transition-transform transform hover:scale-110 bg-transparent border-none animate-bounce"
-            onClick={() => navigate(game.route)}
+            onClick={() => {
+              playClickSound(); // Play sound on click
+              navigate(game.route);
+            }}
             style={{
               outline: "none",
               padding: 0,

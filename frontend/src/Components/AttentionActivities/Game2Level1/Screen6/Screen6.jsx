@@ -27,21 +27,26 @@ const Screen6 = ({ userAnswers, onGameComplete }) => {
         <p className="text-2xl mb-4">
           ඔබේ ලකුණු: {correctCount} / {totalQuestions}
         </p>
-        <div className="flex justify-center mb-4">
-          {[...Array(stars)].map((_, i) => (
-            <span key={i} className="text-4xl">
-              ⭐
-            </span>
-          ))}
+
+        {/* Fixed container for stars to ensure it doesn't affect button position */}
+        <div className="mb-4">
+          <div className="flex justify-center">
+            {[...Array(stars)].map((_, i) => (
+              <span key={i} className="text-4xl">
+                ⭐
+              </span>
+            ))}
+          </div>
         </div>
+
         {correctCount === totalQuestions ? (
           <p className="text-2xl text-green-300">ඉතා හොඳයි 🌿 </p>
         ) : (
           <p className="text-2xl text-orange-300">උත්සාහය අතාරින්න එපා! 🌿</p>
         )}
 
-        {/* Kid-Friendly Buttons */}
-        <div className="flex gap-6 mt-8">
+        {/* Kid-Friendly Buttons - now fixed position */}
+        <div className="flex gap-6 mt-8 justify-center">
           {/* Restart Button - Now uses the handleRestart function */}
           <button
             onClick={handleRestart}

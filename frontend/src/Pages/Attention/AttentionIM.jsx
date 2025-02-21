@@ -5,9 +5,15 @@ import backgroundImage from "../../assets/background_images/atten3.png";
 import game1 from "../../assets/background_images/game1ui5.png";
 import game2 from "../../assets/background_images/game2ui1.png";
 import game3 from "../../assets/background_images/game3ui1.png";
+import clickSound from "../../assets/Audios/click_sound.mp3";
 
 const AttentionIM = () => {
   const navigate = useNavigate();
+
+  const playClickSound = () => {
+    const audio = new Audio(clickSound);
+    audio.play();
+  };
 
   return (
     <div
@@ -19,14 +25,20 @@ const AttentionIM = () => {
         <div className="options-container">
           <div
             className="option-card"
-            onClick={() => navigate("/attentiongame1")}
+            onClick={() => {
+              playClickSound();
+              navigate("/attentiongame1");
+            }}
           >
             <img src={game1} alt="Sudoku" className="option-icon" />
             <h2>වර්ණ හඳුනා ගනිමු</h2>
           </div>
           <div
             className="option-card"
-            onClick={() => navigate("/attentiongame2")}
+            onClick={() => {
+              playClickSound();
+              navigate("/attentiongame2");
+            }}
           >
             <br></br>
             <img
@@ -41,7 +53,10 @@ const AttentionIM = () => {
           </div>
           <div
             className="option-card"
-            onClick={() => navigate("/attentiongame3")}
+            onClick={() => {
+              playClickSound();
+              navigate("/attentiongame3");
+            }}
           >
             <img src={game3} alt="Matching Cards" className="option-icon" />
             <h2>ඉලක්කය හරිද බලමු</h2>
