@@ -25,9 +25,9 @@ const Game2Level3Screen6 = ({ userAnswers, onGameComplete }) => {
     >
       <div className="absolute inset-0 bg-black bg-opacity-40"></div>
       <div className="relative z-10 text-center text-white">
-        <h1 className="text-4xl font-bold mb-4">Quiz Results</h1>
+        <h1 className="text-4xl font-bold mb-4">ලකුණු පුවරුව</h1>
         <p className="text-2xl mb-4">
-          You got {correctCount} out of {totalQuestions} correct!
+          ඔබේ ලකුණු: {correctCount} / {totalQuestions}
         </p>
         <div className="flex justify-center mb-4">
           {[...Array(stars)].map((_, i) => (
@@ -37,9 +37,9 @@ const Game2Level3Screen6 = ({ userAnswers, onGameComplete }) => {
           ))}
         </div>
         {correctCount === totalQuestions ? (
-          <p className="text-2xl text-green-300">Amazing job!</p>
+          <p className="text-2xl text-green-300">ඉතා හොඳයි 🌿</p>
         ) : (
-          <p className="text-2xl text-orange-300">Good try! Keep practicing!</p>
+          <p className="text-2xl text-orange-300">උත්සාහය අතාරින්න එපා! 🌿</p>
         )}
 
         {/* Kid-Friendly Buttons */}

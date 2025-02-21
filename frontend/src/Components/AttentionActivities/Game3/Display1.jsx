@@ -125,9 +125,11 @@ const Display1 = () => {
     const stars = getStars(score);
     return (
       <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black bg-opacity-50 p-4">
-        <h2 className="text-5xl font-bold text-yellow-300 mb-4">Great Job!</h2>
-        <p className="text-3xl text-white mb-2">Your Score: {score}</p>
-        <p className="text-3xl text-white mb-2">Best Score: {bestScore}</p>
+        <h2 className="text-5xl font-bold text-yellow-300 mb-4">
+          ක්‍රිඩාව අවසන් !
+        </h2>
+        <p className="text-3xl text-white mb-2">ඔබේ ලකුණු: {score}</p>
+        <p className="text-3xl text-white mb-2">වැඩිම ලකුණු: {bestScore}</p>
         <div className="flex mb-6">
           {stars.map((_, index) => (
             <span key={index} className="text-4xl text-yellow-400">
@@ -175,7 +177,7 @@ const Display1 = () => {
       {!gameStarted && !gameOver && (
         <div className="relative z-20 flex flex-col items-center justify-center h-screen text-center p-4">
           <h1 className="text-5xl font-bold text-yellow-300 mb-4">
-            Welcome to Fun Field!
+            පලමු අදිරයෙන් විනෝද වෙමු !
           </h1>
           <p className="text-xl text-white mb-6 max-w-lg">
             Hey there, little hero! In this game, you need to tap on the sneaky
@@ -186,7 +188,7 @@ const Display1 = () => {
             onClick={handleStartGame}
             className="px-6 py-3 bg-green-500 rounded-full text-2xl text-white hover:bg-green-600 transition duration-200"
           >
-            Start Game!
+            ආරම්භ කරමු
           </button>
         </div>
       )}

@@ -64,7 +64,7 @@ const ColorChange = () => {
     if (gameOver) return;
 
     if (guess === rgbColor) {
-      setFeedback("✔ Correct!");
+      setFeedback("✔ නිවැරදි!");
       setFeedbackClass("correct");
       const newScore = score + SCORE_INCREMENT;
       setScore(newScore);
@@ -75,7 +75,7 @@ const ColorChange = () => {
       }
       resetRound();
     } else {
-      setFeedback("✗ Wrong!");
+      setFeedback("✗ වැරදි!");
       setFeedbackClass("wrong");
     }
   };
@@ -97,7 +97,7 @@ const ColorChange = () => {
   // Handle timeout
   useEffect(() => {
     if (timer <= 0 && !gameOver) {
-      setFeedback("✗ Timeout!");
+      setFeedback("✗ කාලය අවසන්!");
       setFeedbackClass("timeout");
       resetRound();
     }
@@ -136,18 +136,18 @@ const ColorChange = () => {
       {!gameStarted && !gameOver && (
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black bg-opacity-50 p-4">
           <h1 className="text-5xl font-bold text-yellow-300 mb-4">
-            Welcome to the Color Challenge!
+            පලමු අදිරයෙන් විනෝද වෙමු !
           </h1>
           <p className="text-xl text-white mb-6 max-w-lg">
-            In this game, you need to guess the correct color by selecting one
-            of the options. But hurry up! The timer is ticking, and each round
-            gets harder. Are you ready to play?
+            මෙම ක්‍රිඩාවේ ඔබ කළ යුත්තේ නිවැරදි වර්ණය හඳුනා ගැනීම. මෙහි කාලය ගැන
+            සැලකිලිමත් වීම අනිවාර්යයි. අදිරයෙන් අදිරය අභ්‍යාස සංකිරණය වන බව මතක
+            තබා ගන්න.ඔබ සුදානම් ද?
           </p>
           <button
             onClick={handleStartGame}
             className="px-6 py-3 bg-green-500 rounded-full text-2xl text-white hover:bg-green-600 transition duration-200"
           >
-            Start Game!
+            ආරම්භ කරමු
           </button>
         </div>
       )}
@@ -156,22 +156,30 @@ const ColorChange = () => {
       {gameStarted && (
         <div className="absolute top-0 left-0 right-0 z-50 text-white flex justify-center items-center font-bold text-2xl space-x-8 p-4">
           <div>
-            <p>TIME</p>
-            <h2>{timer.toFixed(1)}</h2>
+            <p>කාලය</p>
+            <center>
+              <h2>{timer.toFixed(1)}</h2>
+            </center>
           </div>
           <div>
-            <p>ROUND</p>
+            <p>වාර</p>
             <h2>
-              {round}/{MAX_ROUNDS}
+              <center>
+                {round}/{MAX_ROUNDS}{" "}
+              </center>
             </h2>
           </div>
           <div>
-            <p>SCORE</p>
-            <h2>{score}</h2>
+            <p>ලකුණු</p>
+            <center>
+              <h2>{score}</h2>
+            </center>
           </div>
           <div>
-            <p>BEST</p>
-            <h2>{bestScore}</h2>
+            <p>වැඩිම ලකුණු</p>
+            <center>
+              <h2>{bestScore}</h2>
+            </center>
           </div>
         </div>
       )}
@@ -201,7 +209,7 @@ const ColorChange = () => {
                   className="p-5 m-5 max-w-sm mx-auto rounded-xl"
                   style={{ backgroundColor: rgbColor }}
                 >
-                  <h2 className="text-white">What COLOR is this?</h2>
+                  <h2 className="text-white">මෙම වර්ණය කුමක් ද?</h2>
                 </div>
                 <div className="flex justify-center flex-wrap gap-5 w-72 mx-auto">
                   {options.map((color) => (
@@ -218,10 +226,10 @@ const ColorChange = () => {
             ) : (
               <div className="mt-10 text-center p-4">
                 <h2 className="text-3xl font-bold text-yellow-300">
-                  Game Over, Champ!
+                  ක්‍රිඩාව අවසන් !
                 </h2>
                 <p className="text-xl text-yellow-300 mt-2">
-                  Your Total Score: <strong>{score}</strong>
+                  ඔබේ ලකුණු: <strong>{score}</strong>
                 </p>
                 <div className="flex justify-center gap-4 mt-6">
                   {/* Restart button */}

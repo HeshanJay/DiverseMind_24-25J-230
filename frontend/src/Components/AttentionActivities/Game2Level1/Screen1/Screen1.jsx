@@ -69,18 +69,17 @@ const Screen1 = ({ onTileSelect, onTimeout, onGameComplete }) => {
       {!gameStarted && !gameEnded && (
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black bg-opacity-50 p-4">
           <h1 className="text-5xl font-bold text-yellow-300 mb-4">
-            Spot the Difference Game!
+            පලමු අදිරයෙන් විනෝද වෙමු !
           </h1>
           <p className="text-xl text-white mb-6 max-w-lg">
-            In this game, you need to spot the differences between two images.
-            Click on the tiles to find them before time runs out. Ready to
-            start?
+            මෙම ක්‍රිඩාවේ ඔබ කළ යුත්තේ නොගලපෙන රූපය සොයාගැනීම.මෙහි කාලය ගැන
+            සැලකිලිමත් වීම අනිවාර්යයි. ඔබ සුදානම් ද?
           </p>
           <button
             onClick={handleStartGame}
             className="px-6 py-3 bg-green-500 rounded-full text-2xl text-white hover:bg-green-600 transition duration-200"
           >
-            Start Game!
+            ආරම්භ කරමු
           </button>
         </div>
       )}
