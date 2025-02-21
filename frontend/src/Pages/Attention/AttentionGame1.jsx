@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import game1 from "../../assets/background_images/levelbutton1.png";
-import game2 from "../../assets/background_images/levelbutton2.png";
-import game3 from "../../assets/background_images/levelbutton3.png";
-import backgroundImage from "../../assets/background_images/backgd2_ig2.png";
+import game1 from "../../assets/background_images/game1box11.png";
+import game2 from "../../assets/background_images/game1box2.png";
+import game3 from "../../assets/background_images/game1box33.png";
+import backgroundImage from "../../assets/background_images/square1.png";
 
 const AttentionGame1 = () => {
   const navigate = useNavigate();
@@ -25,12 +25,17 @@ const AttentionGame1 = () => {
       {/* Semi-transparent overlay */}
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
+      {/* Title - Kid-friendly, visible, and attractive */}
+      <h1 className="absolute top-12 text-4xl sm:text-5xl font-bold text-white text-center drop-shadow-lg">
+        අදිරය
+      </h1>
+
       {/* Content should be on top of the overlay */}
       <div className="relative flex space-x-6">
         {games.map((game, index) => (
           <button
             key={index}
-            className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full transition-transform transform hover:scale-110 bg-transparent border-none"
+            className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full transition-transform transform bg-transparent border-none bounce-btn"
             onClick={() => navigate(game.route)}
             style={{
               outline: "none",
@@ -51,6 +56,27 @@ const AttentionGame1 = () => {
           </button>
         ))}
       </div>
+
+      {/* Add CSS for continuous bounce animation */}
+      <style>
+        {`
+          .bounce-btn {
+            animation: bounce 1s infinite ease-in-out;
+          }
+
+          @keyframes bounce {
+            0% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(-10px);
+            }
+            100% {
+              transform: translateY(0);
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };
