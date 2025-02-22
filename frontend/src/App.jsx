@@ -24,7 +24,9 @@ import WritingGame2Level1 from "./Pages/WritingInterventions/WritingGame2/Writin
 import WritingGame2Level2 from "./Pages/WritingInterventions/WritingGame2/WritingGame2Level2";
 import WritingGame2Level3 from "./Pages/WritingInterventions/WritingGame2/WritingGame2Level3";
 import WritingGame3Level1 from "./Pages/WritingInterventions/WritingGame3/WritingGame3Level1";
+import WritingGame1Level1 from "./Pages/WritingInterventions/WritingGame1/WritingGame1Level1";
 import WritingGame3ScoreBoard from "./Pages/WritingInterventions/WritingGame3/WritingGame3ScoreBoard";
+import WritingGame1ScoreBoard from "./Pages/WritingInterventions/WritingGame1/WritingGame1ScoreBoard";
 
 const App = () => {
   return (
@@ -75,6 +77,14 @@ const App = () => {
             <Route
               path="/writing-game3-scoreBoard"
               element={<WritingGame3ScoreBoard />}
+            />
+            <Route
+              path="/writing-game1-level1"
+              element={<WritingGame1Level1 />}
+            />
+            <Route
+              path="/writing-game1-scoreBoard"
+              element={<WritingGame1ScoreBoard />}
             />
           </Routes>
         </ScoresProvider>
