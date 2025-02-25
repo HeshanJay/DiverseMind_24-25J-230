@@ -1,8 +1,6 @@
 import React from "react";
 import BackImage from "../../../../assets/background_images/AttentionGames/Game2/backimg1_game2.png";
-import { IoMdRefresh } from "react-icons/io";
-import { GiGamepad } from "react-icons/gi";
-import { FaArrowRight } from "react-icons/fa";
+import { FaRedo, FaArrowRight, FaEllipsisH } from "react-icons/fa";
 
 const Screen6 = ({ userAnswers, onGameComplete }) => {
   const totalQuestions = userAnswers.length;
@@ -28,7 +26,7 @@ const Screen6 = ({ userAnswers, onGameComplete }) => {
           ඔබේ ලකුණු: {correctCount} / {totalQuestions}
         </p>
 
-        {/* Fixed container for stars to ensure it doesn't affect button position */}
+        {/* Fixed container for stars */}
         <div className="mb-4">
           <div className="flex justify-center">
             {[...Array(stars)].map((_, i) => (
@@ -45,33 +43,33 @@ const Screen6 = ({ userAnswers, onGameComplete }) => {
           <p className="text-2xl text-orange-300">උත්සාහය අතාරින්න එපා! 🌿</p>
         )}
 
-        {/* Kid-Friendly Buttons - now fixed position */}
+        {/* Kid-Friendly Buttons */}
         <div className="flex gap-6 mt-8 justify-center">
-          {/* Restart Button - Now uses the handleRestart function */}
+          {/* Restart Button */}
           <button
             onClick={handleRestart}
-            className="w-16 h-16 bg-green-400 rounded-full shadow-md flex items-center justify-center hover:bg-green-500 transition"
+            className="w-16 h-16 flex items-center justify-center bg-blue-500 rounded-full text-white hover:bg-blue-600 transition duration-200"
             aria-label="Restart Game"
           >
-            <IoMdRefresh size={32} color="#fff" />
+            <FaRedo size={28} />
           </button>
 
-          {/* Go to Attention Game 2 */}
+          {/* Next Game Button */}
           <button
             onClick={() => (window.location.href = "/attentiongame2")}
-            className="w-16 h-16 bg-blue-400 rounded-full shadow-md flex items-center justify-center hover:bg-blue-500 transition"
-            aria-label="Go to Attention Game 2"
+            className="w-16 h-16 flex items-center justify-center bg-green-500 rounded-full text-white hover:bg-green-600 transition duration-200"
+            aria-label="Next Game"
           >
-            <GiGamepad size={32} color="#fff" />
+            <FaArrowRight size={28} />
           </button>
 
-          {/* Next Button */}
+          {/* More Options Button */}
           <button
             onClick={() => (window.location.href = "/attentionInterventions")}
-            className="w-16 h-16 bg-red-400 rounded-full shadow-md flex items-center justify-center hover:bg-red-500 transition"
-            aria-label="Next"
+            className="w-16 h-16 flex items-center justify-center bg-purple-500 rounded-full text-white hover:bg-purple-600 transition duration-200"
+            aria-label="More Options"
           >
-            <FaArrowRight size={32} color="#fff" />
+            <FaEllipsisH size={28} />
           </button>
         </div>
       </div>

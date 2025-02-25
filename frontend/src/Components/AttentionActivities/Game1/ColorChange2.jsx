@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import backgroundImage from "../../../assets/background_images/colorimg4.png";
-import { IoMdRefresh } from "react-icons/io";
-import { GiGamepad } from "react-icons/gi";
-import { FaArrowRight } from "react-icons/fa";
+import { FaRedo, FaArrowRight, FaEllipsisH } from "react-icons/fa";
 
 const INITIAL_TIMER = 40;
 const MAX_ROUNDS = 5;
@@ -20,7 +18,7 @@ const ColorChange2 = () => {
     () => parseInt(localStorage.getItem("colorChange2BestScore")) || 0
   );
   const [gameOver, setGameOver] = useState(false);
-  const [gameStarted, setGameStarted] = useState(false); // New state to track if the game has started
+  const [gameStarted, setGameStarted] = useState(false);
 
   // Generate a random RGB color
   function generateRandomColor() {
@@ -71,7 +69,7 @@ const ColorChange2 = () => {
 
       if (newScore > bestScore) {
         setBestScore(newScore);
-        localStorage.setItem("colorChange2BestScore", newScore); // Save specific to ColorChange2
+        localStorage.setItem("colorChange2BestScore", newScore);
       }
       resetRound();
     } else {
@@ -231,32 +229,29 @@ const ColorChange2 = () => {
                 <p className="text-xl text-yellow-300 mt-2">
                   ඔබේ ලකුණු: <strong>{score}</strong>
                 </p>
-                <div className="flex justify-center gap-4 mt-6">
-                  {/* Restart button */}
+                <div className="flex flex-row gap-4 mt-6">
                   <button
                     onClick={restartGame}
-                    className="w-16 h-16 bg-green-400 rounded-full shadow-md flex items-center justify-center hover:bg-green-500 transition"
+                    className="w-16 h-16 flex items-center justify-center bg-blue-500 rounded-full text-white hover:bg-blue-600 transition duration-200"
                     aria-label="Restart Game"
                   >
-                    <IoMdRefresh size={32} color="#fff" />
+                    <FaRedo size={28} />
                   </button>
-                  {/* Button directing to attentiongame1 */}
                   <button
                     onClick={() => (window.location.href = "/attentiongame1")}
-                    className="w-16 h-16 bg-blue-400 rounded-full shadow-md flex items-center justify-center hover:bg-blue-500 transition"
-                    aria-label="Attention Game"
+                    className="w-16 h-16 flex items-center justify-center bg-green-500 rounded-full text-white hover:bg-green-600 transition duration-200"
+                    aria-label="Next Game"
                   >
-                    <GiGamepad size={32} color="#fff" />
+                    <FaArrowRight size={28} />
                   </button>
-                  {/* Next button directing to /attentionInterventions */}
                   <button
                     onClick={() =>
                       (window.location.href = "/attentionInterventions")
                     }
-                    className="w-16 h-16 bg-red-400 rounded-full shadow-md flex items-center justify-center hover:bg-red-500 transition"
-                    aria-label="Next"
+                    className="w-16 h-16 flex items-center justify-center bg-purple-500 rounded-full text-white hover:bg-purple-600 transition duration-200"
+                    aria-label="More Options"
                   >
-                    <FaArrowRight size={32} color="#fff" />
+                    <FaEllipsisH size={28} />
                   </button>
                 </div>
               </div>

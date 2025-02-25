@@ -195,9 +195,9 @@ const Display3 = () => {
             තුන්වැනි අදිරයෙන් විනෝද වෙමු!
           </h1>
           <p className="text-xl text-white mb-6 max-w-lg">
-            Hello, little gardener! In this game, tap on the friendly mole to
-            collect points. But be careful – if you tap on any of the pesky
-            plants, the game is over. Ready to start your adventure?
+            ආයුබෝවන් පුංච් වීරයා, මෙහි ඇති පෝච්චි වලින් මොල් නමැති සත්වයා
+            සහ කෝපයට පත් පැළෑටියක් මතු වේ. පැළෑටියට තට්ටු නොකර හැකි ඉක්මනින්
+            සත්වයාට තට්ටු කරන්න. ඔබ සූදානම් ද විනෝදවන්න!
           </p>
           <button
             onClick={handleStartGame}

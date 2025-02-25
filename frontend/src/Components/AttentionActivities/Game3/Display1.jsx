@@ -180,9 +180,9 @@ const Display1 = () => {
             පලමු අදිරයෙන් විනෝද වෙමු !
           </h1>
           <p className="text-xl text-white mb-6 max-w-lg">
-            Hey there, little hero! In this game, you need to tap on the sneaky
-            mole to earn points. But be careful! If you tap on the grumpy plant,
-            the game will end. Are you ready to have some fun?
+            ආයුබෝවන් පුංච් වීරයා, මෙහි ඇති පෝච්චි වලින් මොල් නමැති සත්වයා
+            සහ කෝපයට පත් පැළෑටියක් මතු වේ. පැළෑටියට තට්ටු නොකර හැකි ඉක්මනින්
+            සත්වයාට තට්ටු කරන්න. ඔබ සූදානම් ද විනෝදවන්න!
           </p>
           <button
             onClick={handleStartGame}

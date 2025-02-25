@@ -203,9 +203,9 @@ const Display2 = () => {
             දෙවැනි අදිරයෙන් විනෝද වෙමු!
           </h1>
           <p className="text-xl text-white mb-6 max-w-lg">
-            Hi there, little explorer! In this game, tap on the cute mole to
-            score points. But be extra careful – if you tap on one of the grumpy
-            plants, the game ends. Ready for some fun?
+            ආයුබෝවන් පුංච් වීරයා, මෙහි ඇති පෝච්චි වලින් මොල් නමැති සත්වයා
+            සහ කෝපයට පත් පැළෑටියක් මතු වේ. පැළෑටියට තට්ටු නොකර හැකි ඉක්මනින්
+            සත්වයාට තට්ටු කරන්න. ඔබ සූදානම ද විනෝදවන්න!
           </p>
           <button
             onClick={handleStartGame}
