@@ -12,6 +12,14 @@ import random
 import string
 from math import sqrt
 from jose import jwt, JWTError
+from app.model.predictor import predict_math_outcome
+from app.model.predictor import predict_memory_outcome
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+from fastapi.responses import RedirectResponse, JSONResponse
 from pydantic import BaseModel, EmailStr, Field
 from app.utils import (
     hash_password,
@@ -37,6 +45,12 @@ from app.model.predictor import predict_memory_outcome
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+from typing import List
+import numpy as np
+import string
+import random
+from fastapi.security import OAuth2PasswordBearer
+from jose import jwt, JWTError
 
 # Initialize FastAPI app
 app = FastAPI()
