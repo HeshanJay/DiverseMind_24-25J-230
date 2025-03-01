@@ -623,14 +623,16 @@ const WritingTest = () => {
       console.log("Final Evaluation:", finalData);
 
       // 2) Save to DB
+      const studentId = localStorage.getItem("student_id");
       const report = {
+        student_id: studentId,
         skill_level: finalData.skill_level,
         letter_formation_score: finalData.letter_formation_score,
         vowel_symbol_score: finalData.vowel_symbol_score,
         punctuation_score: finalData.punctuation_score,
       };
 
-      const saveResponse = await fetch(
+      await fetch(
         "http://127.0.0.1:8000/save_writing_results",
         {
           method: "POST",
@@ -638,8 +640,8 @@ const WritingTest = () => {
           body: JSON.stringify(report),
         }
       );
-      const saveData = await saveResponse.json();
-      console.log("Save Response:", saveData);
+      // const saveData = await saveResponse.json();
+      // console.log("Save Response:", saveData);
 
       // Optionally show popup with finalData
       setFinalPrediction(finalData);

@@ -17,6 +17,13 @@ import WorkingMemory from "./Pages/WorkingMemory/WorkingMemory";
 import ScoreBoard from "./Components/Score_board";
 import { ScoresProvider } from "./context/Score_context";
 import ScreeningMenu from "./Pages/ScreeningMenu/ScreeningMenu";
+import MathMenu from "./Pages/MathematicActivities/MathMenu";
+import MathActivityEntrencePage from "./Pages/MathematicActivities/MathActivityEntrencePage";
+import MathAdditionGuidancePage from "./Components/MathComponents/Activities/Guidence/MathAdditionGuidancePage";
+import MathSubstractionGuidancePage from "./Components/MathComponents/Activities/Guidence/MathSubstractionGuidancePage";
+import MathMultiplicationGuidancePage from "./Components/MathComponents/Activities/Guidence/MathMultiplicationGuidancePage";
+import MathDivisionGuidancePage from "./Components/MathComponents/Activities/Guidence/MathDivisionGuidancePage";
+import MathAdditionGamePage from "./Components/MathComponents/Activities/MathGames/MathAdditionGamePage";
 import AttentionIM from "./Pages/Attention/AttentionIM";
 import AttentionGame1 from "./Pages/Attention/AttentionGame1";
 import AttentionGame2 from "./Pages/Attention/AttentionGame2";
@@ -30,6 +37,7 @@ import AttentionGame1Level3 from "./Pages/Attention/AttentionGame1Level3";
 import AttentionGame3Level1 from "./Pages/Attention/AttentionGame3Level1";
 import AttentionGame3Level2 from "./Pages/Attention/AttentionGame3Level2";
 import AttentionGame3Level3 from "./Pages/Attention/AttentionGame3Level3";
+
 import WritingGameMenu from "./Pages/WritingInterventions/WritingGameMenu/WritingGameMenu";
 import WritingGame2Menu from "./Pages/WritingInterventions/WritingGame2/WritingGame2Menu";
 import WritingGame3Menu from "./Pages/WritingInterventions/WritingGame3/WritingGame3Menu";
@@ -114,6 +122,31 @@ const App = () => {
             <Route path="/scoreboard" element={<ScoreBoard />} />
             <Route path="/splash" element={<SplashScreen />} />
             <Route path="/screening-menu" element={<ScreeningMenu />} />
+            <Route path="/math-menu" element={<MathMenu />} />
+            <Route
+              path="/math-entrence"
+              element={<MathActivityEntrencePage />}
+            />
+            <Route
+              path="/math-addition-guidance"
+              element={<MathAdditionGuidancePage />}
+            />
+            <Route
+              path="/math-substraction-guidance"
+              element={<MathSubstractionGuidancePage />}
+            />
+            <Route
+              path="/math-multiplication-guidance"
+              element={<MathMultiplicationGuidancePage />}
+            />
+            <Route
+              path="/math-division-guidance"
+              element={<MathDivisionGuidancePage />}
+            />
+            <Route
+              path="/math-addition-game"
+              element={<MathAdditionGamePage />}
+            />
             <Route path="/writing-game-menu" element={<WritingGameMenu />} />
             <Route path="/writing-game2-menu" element={<WritingGame2Menu />} />
             <Route path="/writing-game3-menu" element={<WritingGame3Menu />} />

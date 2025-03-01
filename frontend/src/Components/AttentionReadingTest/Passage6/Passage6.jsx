@@ -22,16 +22,18 @@ const Passage6 = ({ onPrevious, onNext }) => {
       const attentionData = resultResponse.data;
 
       // Save the results to database
+      const studentId = localStorage.getItem("student_id");
       if (attentionData) {
-        const saveResponse = await axios.post(
+        await axios.post(
           "http://localhost:8000/save_attention_span",
           {
             average_score: attentionData.average_score,
             status: attentionData.status,
             total_time: attentionData.total_time,
+            student_id: studentId, // include student id here
           }
         );
-        console.log("Attention data saved successfully:", saveResponse.data);
+        //console.log("Attention data saved successfully:", saveResponse.data);
       }
 
       onNext(); // Navigate to the next page after stopping and saving
