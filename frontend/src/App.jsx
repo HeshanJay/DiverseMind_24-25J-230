@@ -17,6 +17,19 @@ import WorkingMemory from "./Pages/WorkingMemory/WorkingMemory";
 import ScoreBoard from "./Components/Score_board";
 import { ScoresProvider } from "./context/Score_context";
 import ScreeningMenu from "./Pages/ScreeningMenu/ScreeningMenu";
+import AttentionIM from "./Pages/Attention/AttentionIM";
+import AttentionGame1 from "./Pages/Attention/AttentionGame1";
+import AttentionGame2 from "./Pages/Attention/AttentionGame2";
+import AttentionGame2Level1 from "./Pages/Attention/AttentionGame2level1";
+import AttentionGame2Level2 from "./Pages/Attention/AttentionGame2Level2";
+import AttentionGame2Level3 from "./Pages/Attention/AttentionGame2Level3";
+import AttentionGame3 from "./Pages/Attention/AttentionGame3";
+import AttentionGame1Level1 from "./Pages/Attention/AttentionGame1Level1";
+import AttentionGame1Level2 from "./Pages/Attention/AttentionGame1Level2";
+import AttentionGame1Level3 from "./Pages/Attention/AttentionGame1Level3";
+import AttentionGame3Level1 from "./Pages/Attention/AttentionGame3Level1";
+import AttentionGame3Level2 from "./Pages/Attention/AttentionGame3Level2";
+import AttentionGame3Level3 from "./Pages/Attention/AttentionGame3Level3";
 import WritingGameMenu from "./Pages/WritingInterventions/WritingGameMenu/WritingGameMenu";
 import WritingGame2Menu from "./Pages/WritingInterventions/WritingGame2/WritingGame2Menu";
 import WritingGame3Menu from "./Pages/WritingInterventions/WritingGame3/WritingGame3Menu";
@@ -42,6 +55,52 @@ const App = () => {
               path="/attentionreadingtest"
               element={<AttentionReadingTest />}
             />
+            <Route path="/attentiongame1" element={<AttentionGame1 />} />
+
+            <Route
+              path="/attentiongame1level1"
+              element={<AttentionGame1Level1 />}
+            />
+            <Route
+              path="/attentiongame1level2"
+              element={<AttentionGame1Level2 />}
+            />
+            <Route
+              path="/attentiongame1level3"
+              element={<AttentionGame1Level3 />}
+            />
+
+            <Route path="/attentiongame2" element={<AttentionGame2 />} />
+            <Route
+              path="/attentiongame2level1"
+              element={<AttentionGame2Level1 />}
+            />
+            <Route
+              path="/attentiongame2level2"
+              element={<AttentionGame2Level2 />}
+            />
+            <Route
+              path="/attentiongame2level3"
+              element={<AttentionGame2Level3 />}
+            />
+
+            <Route path="/attentiongame3" element={<AttentionGame3 />} />
+
+            <Route
+              path="/attentiongame3level1"
+              element={<AttentionGame3Level1 />}
+            />
+
+            <Route
+              path="/attentiongame3level2"
+              element={<AttentionGame3Level2 />}
+            />
+            <Route
+              path="/attentiongame3level3"
+              element={<AttentionGame3Level3 />}
+            />
+
+            <Route path="/attentionInterventions" element={<AttentionIM />} />
             <Route path="/math" element={<MathScreeningTest />} />
             <Route path="/writingtest" element={<WritingTest />} />
             <Route path="/working-memory" element={<WorkingMemory />} />
