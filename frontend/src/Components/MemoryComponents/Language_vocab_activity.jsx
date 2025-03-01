@@ -815,8 +815,8 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
                         key={index}
                         className="falling-snowball"
                         style={{
-                          left: `${Math.random() * 100}%`,  // Random horizontal position
-                          animationDelay: `${Math.random() * 3}s`,  // Random animation delay
+                          left: `${Math.random() * 100}%`,  
+                          animationDelay: `${Math.random() * 3}s`,  
                         }}
                       ></div>
                     ))}

@@ -421,7 +421,7 @@ const VisualTestActivity = ({ onNext, onBack }) => {
   const [isCompleted, setIsCompleted] = useState(false);
 
   // We’ll keep your local timers, states, etc.
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(1);
   const [showImage, setShowImage] = useState(true);
   const [showAnswers, setShowAnswers] = useState(false);
 
@@ -434,7 +434,7 @@ const VisualTestActivity = ({ onNext, onBack }) => {
             setShowImage(false);
             setShowAnswers(true);
             clearInterval(interval);
-            setTimer(300);
+            setTimer(1);
           }
           return prevTimer - 1;
         });

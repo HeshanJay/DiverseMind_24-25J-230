@@ -18,7 +18,6 @@ const MemoryFinal_Feedback = ({ predictionResult, onGoHome, onGoMenu, onRetry, o
       feedbackText = "උනන්දු විය යුතුයි!";
     }
   }
-
   return (
     <div className="min-h-screen bg-cover bg-center bg-fixed relative flex flex-col" style={{ backgroundImage: `url(${img5})` }}>
       
