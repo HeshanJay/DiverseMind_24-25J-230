@@ -19,9 +19,11 @@ const StudentEntrance = () => {
         teacher_code: teacherCode,
         student_name: studentName,
       });
+      const studentId = response.data.student_id;
+      localStorage.setItem("student_id", studentId);
       setMessage(response.data.message);
       setTimeout(() => {
-        navigate("/math");
+        navigate("/screening-menu");
       }, 1500);
     } catch (error) {
       setMessage(error.response?.data?.detail || "Entrance failed");
