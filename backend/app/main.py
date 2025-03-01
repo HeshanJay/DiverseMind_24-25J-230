@@ -38,6 +38,7 @@ from app.model.predictor import (
     load_face_cascade,
     load_face_mesh
 )
+from app.model.predictor import predict_outcome_writing
 from app.model.evaluate import evaluate_student_writing_skills
 from app.model.predictor import predict_math_outcome
 from app.model.predictor import predict_memory_outcome
