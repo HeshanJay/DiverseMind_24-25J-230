@@ -17,6 +17,13 @@ import WorkingMemory from "./Pages/WorkingMemory/WorkingMemory";
 import ScoreBoard from "./Components/Score_board";
 import { ScoresProvider } from "./context/Score_context";
 import ScreeningMenu from "./Pages/ScreeningMenu/ScreeningMenu";
+import MathMenu from "./Pages/MathematicActivities/MathMenu";
+import MathActivityEntrencePage from "./Pages/MathematicActivities/MathActivityEntrencePage";
+import MathAdditionGuidancePage from "./Components/MathComponents/Activities/Guidence/MathAdditionGuidancePage";
+import MathSubstractionGuidancePage from "./Components/MathComponents/Activities/Guidence/MathSubstractionGuidancePage";
+import MathMultiplicationGuidancePage from "./Components/MathComponents/Activities/Guidence/MathMultiplicationGuidancePage";
+import MathDivisionGuidancePage from "./Components/MathComponents/Activities/Guidence/MathDivisionGuidancePage";
+import MathAdditionGamePage from "./Components/MathComponents/Activities/MathGames/MathAdditionGamePage";
 
 const App = () => {
   return (
@@ -45,6 +52,13 @@ const App = () => {
             <Route path="/scoreboard" element={<ScoreBoard />} />
             <Route path="/splash" element={<SplashScreen />} />
             <Route path="/screening-menu" element={<ScreeningMenu />} />
+            <Route path="/math-menu" element={<MathMenu />} />
+            <Route path="/math-entrence" element={<MathActivityEntrencePage />} />
+            <Route path="/math-addition-guidance" element={<MathAdditionGuidancePage />} /> 
+            <Route path="/math-substraction-guidance" element={<MathSubstractionGuidancePage />} /> 
+            <Route path="/math-multiplication-guidance" element={<MathMultiplicationGuidancePage />} /> 
+            <Route path="/math-division-guidance" element={<MathDivisionGuidancePage />} />
+            <Route path="/math-addition-game" element={<MathAdditionGamePage />} />
           </Routes>
         </ScoresProvider>
       </BrowserRouter>

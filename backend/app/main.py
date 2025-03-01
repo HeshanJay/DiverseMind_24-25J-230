@@ -14,6 +14,7 @@ from math import sqrt
 from jose import jwt, JWTError
 from app.model.predictor import predict_math_outcome
 from app.model.predictor import predict_memory_outcome
+from typing import Optional  
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -123,6 +124,25 @@ class InputData(BaseModel):
     multiplication_score: int
     fraction_score: int
 
+from pydantic import BaseModel, Field
+
+class MathResults(BaseModel):
+    student_id: str = Field(..., description="ID of the student")
+    addition_time: float = Field(..., description="Time spent on addition")
+    substraction_time: float = Field(..., description="Time spent on subtraction")
+    division_time: float = Field(..., description="Time spent on division")
+    multiplication_time: float = Field(..., description="Time spent on multiplication")
+    fraction_time: float = Field(..., description="Time spent on fractions")
+    total_time: float = Field(..., description="Total time taken")
+    total_accuracy: float = Field(..., description="Total accuracy across all topics")
+    addition_score: int = Field(..., description="Score for addition")
+    substraction_score: int = Field(..., description="Score for subtraction")
+    division_score: int = Field(..., description="Score for division")
+    multiplication_score: int = Field(..., description="Score for multiplication")
+    fraction_score: int = Field(..., description="Score for fraction")
+    skillPhrase: str = Field(..., description="Final feedback string, e.g. 'ඉතා හොඳයි!'")
+
+
 class WorkingMemoryInput(BaseModel):
     Language_vocab: float
     Memory: float
@@ -143,6 +163,7 @@ class ResetPasswordModel(BaseModel):
     new_password: str
 
 class AttentionSpanResult(BaseModel):
+    student_id: str = Field(..., description="ID of the student")
     average_score: float
     status: str
     total_time: float
@@ -235,17 +256,45 @@ def add_student(student: StudentEnrollmentModel):
         "teacher_id": str(teacher["_id"]),
         "activities": []
     }
-    students_collection.insert_one(student_doc)
-    return {"message": "ඇතුලත් කිරීම සාර්ථකයි "}
+    result = students_collection.insert_one(student_doc)
+    student_id = str(result.inserted_id)
+    return {"message": "ඇතුලත් කිරීම සාර්ථකයි", "student_id": student_id}
+    # students_collection.insert_one(student_doc)
+    # return {"message": "ඇතුලත් කිරීම සාර්ථකයි "}
 
 @app.get("/dashboard/")
 def dashboard(current_teacher: dict = Depends(get_current_teacher)):
     students = list(students_collection.find({"teacher_id": str(current_teacher["_id"])}))
 
     for student in students:
+        student_id = str(student["_id"])
+        # Fetch math, writing, and attention results for this student
+        math_results = list(db["math_results"].find({"student_id": student_id}))
+        writing_results = list(db["writing_results"].find({"student_id": student_id}))
+        attention_results_data = list(db["attention_results"].find({"student_id": student_id}))
+        
+        # Convert ObjectIds to strings for each result document
+        for result in math_results:
+            result["_id"] = str(result["_id"])
+        for result in writing_results:
+            result["_id"] = str(result["_id"])
+        for result in attention_results_data:
+            result["_id"] = str(result["_id"])
+        
+        # Attach the results to the student document
+        student["math_results"] = math_results
+        student["writing_results"] = writing_results
+        student["attention_results"] = attention_results_data
+        
         student["_id"] = str(student["_id"])
         student["teacher_id"] = str(student["teacher_id"])
-    return {"students": students, "teacher_email": current_teacher["email"], "unique_code": current_teacher.get("unique_code", "")}
+
+    return {
+        "students": students,
+        "teacher_email": current_teacher["email"],
+        "unique_code": current_teacher.get("unique_code", "")
+    }
+
 
 @app.post("/reset-password/")
 def reset_password(reset_data: ResetPasswordModel, current_teacher: dict = Depends(get_current_teacher)):
@@ -276,6 +325,21 @@ def predict(input_data: InputData):
     data = input_data.dict()
     math_prediction = predict_math_outcome(data)
     return {"prediction": math_prediction}
+
+@app.post("/save-math-results/")
+def save_math_results(math_data: MathResults):
+    db = get_database()
+    if db is None:
+        raise HTTPException(status_code=500, detail="Database connection failed")
+
+    math_results_collection = db["math_results"]
+    data = math_data.dict()
+
+    try:
+        result = math_results_collection.insert_one(data)
+        return {"message": "Math results saved successfully", "inserted_id": str(result.inserted_id)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save math results: {e}")
 
 @app.post("/working_memory_prediction/")
 def working_memory_prediction(input_data: WorkingMemoryInput):
@@ -354,6 +418,7 @@ def final_evaluation(data: EvaluationInput):
 
 # 1) Pydantic model for the final report data
 class ReportData(BaseModel):
+    student_id: str = Field(..., description="ID of the student")
     skill_level: str
     letter_formation_score: int
     vowel_symbol_score: int
@@ -524,3 +589,28 @@ def save_attention_span(result: AttentionSpanResult):
         return {"message": "Attention span result saved successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save attention span result: {e}")
+    
+@app.get("/get-student-performance/{student_id}")
+def get_student_performance(student_id: str):
+    db = get_database()
+    if db is None:
+        raise HTTPException(status_code=500, detail="Database connection failed")
+    
+    math_results = list(db["math_results"].find({"student_id": student_id}))
+    writing_results = list(db["writing_results"].find({"student_id": student_id}))
+    attention_results = list(db["attention_results"].find({"student_id": student_id}))
+    
+    # Convert ObjectId to string if needed
+    for doc in math_results:
+        doc["_id"] = str(doc["_id"])
+    for doc in writing_results:
+        doc["_id"] = str(doc["_id"])
+    for doc in attention_results:
+        doc["_id"] = str(doc["_id"])
+    
+    return {
+        "math_results": math_results,
+        "writing_results": writing_results,
+        "attention_results": attention_results
+    }
+
