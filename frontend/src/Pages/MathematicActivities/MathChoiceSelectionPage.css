@@ -1,0 +1,39 @@
+.math-choice-selection-page { 
+    background: url("../../assets/background_images/jungle_entrence.png") no-repeat center center;
+    background-size: cover;
+    min-height: 100vh;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(20px, 23vw, 500px); 
+    padding: 10px;
+  }
+  
+  .choice-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    outline: none;
+    appearance: none; 
+  }
+  
+  .choice-button::-moz-focus-inner {
+    border: 0;
+  }
+  
+  .choice-button:hover,
+  .choice-button:focus,
+  .choice-button:active {
+    transform: scale(1.05);
+    background-color: transparent;
+    outline: none;
+  }
+  
+  .choice-button img {
+    width: 350px; 
+    height: auto;
+    display: block;
+  }
+  
