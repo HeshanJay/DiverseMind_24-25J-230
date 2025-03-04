@@ -18,7 +18,6 @@ import ScoreBoard from "./Components/Score_board";
 import { ScoresProvider } from "./context/Score_context";
 import ScreeningMenu from "./Pages/ScreeningMenu/ScreeningMenu";
 import MathMenu from "./Pages/MathematicActivities/MathMenu";
-import MathActivityEntrencePage from "./Pages/MathematicActivities/MathActivityEntrencePage";
 import MathAdditionGuidancePage from "./Components/MathComponents/Activities/Guidence/MathAdditionGuidancePage";
 import MathSubstractionGuidancePage from "./Components/MathComponents/Activities/Guidence/MathSubstractionGuidancePage";
 import MathMultiplicationGuidancePage from "./Components/MathComponents/Activities/Guidence/MathMultiplicationGuidancePage";
@@ -37,6 +36,7 @@ import AttentionGame1Level3 from "./Pages/Attention/AttentionGame1Level3";
 import AttentionGame3Level1 from "./Pages/Attention/AttentionGame3Level1";
 import AttentionGame3Level2 from "./Pages/Attention/AttentionGame3Level2";
 import AttentionGame3Level3 from "./Pages/Attention/AttentionGame3Level3";
+import MathChoiceSelectionPage from "./Pages/MathematicActivities/MathChoiceSelectionPage";
 
 import WritingGameMenu from "./Pages/WritingInterventions/WritingGameMenu/WritingGameMenu";
 import WritingGame2Menu from "./Pages/WritingInterventions/WritingGame2/WritingGame2Menu";
@@ -123,6 +123,27 @@ const App = () => {
             <Route path="/splash" element={<SplashScreen />} />
             <Route path="/screening-menu" element={<ScreeningMenu />} />
             <Route path="/math-menu" element={<MathMenu />} />
+            <Route
+              path="/math-addition-guidance"
+              element={<MathAdditionGuidancePage />}
+            />
+            <Route
+              path="/math-substraction-guidance"
+              element={<MathSubstractionGuidancePage />}
+            />
+            <Route
+              path="/math-multiplication-guidance"
+              element={<MathMultiplicationGuidancePage />}
+            />
+            <Route
+              path="/math-division-guidance"
+              element={<MathDivisionGuidancePage />}
+            />
+            <Route
+              path="/math-addition-game"
+              element={<MathAdditionGamePage />}
+            />
+            <Route path="/math-choice" element={<MathChoiceSelectionPage />} />
             <Route
               path="/math-entrence"
               element={<MathActivityEntrencePage />}

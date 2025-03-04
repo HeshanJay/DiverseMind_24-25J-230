@@ -1,8 +1,6 @@
-/* Import a playful Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap');
 
-/* Base Styles */
-.math-addition-game-page {
+.magp-math-addition-game-page {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,8 +15,7 @@
   overflow: hidden;
 }
 
-/* Game Header */
-.game-header {
+.magp-game-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -31,55 +28,54 @@
   margin-bottom: 30px;
 }
 
-.game-stats {
+.magp-game-stats {
   display: flex;
   gap: 25px;
   font-size: 1.5rem;
   color: #333;
 }
 
-.unlocked-characters h3 {
+.magp-unlocked-characters h3 {
   color: #D81B60;
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
-.character-list {
+.magp-character-list {
   display: flex;
   gap: 15px;
 }
 
-.character-avatar {
+.magp-character-avatar {
   width: 60px;
   height: 60px;
   border-radius: 50%;
   border: 4px solid #2196F3;
   transition: transform 0.3s ease;
-  animation: popIn 0.5s ease;
+  animation: magp-popIn 0.5s ease;
 }
 
-.character-avatar:hover {
+.magp-character-avatar:hover {
   transform: scale(1.15);
 }
 
-/* Game Content */
-.game-content {
+.magp-game-content {
   background: rgba(255, 255, 255, 0.9);
   padding: 30px;
   border-radius: 25px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   text-align: center;
-  animation: slideIn 0.5s ease;
+  animation: magp-slideIn 0.5s ease;
 }
 
-.game-content h2 {
+.magp-game-content h2 {
   color: #4CAF50;
   font-size: 2.5rem;
   margin-bottom: 20px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.problem {
+.magp-problem {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,7 +86,7 @@
   margin-bottom: 30px;
 }
 
-.answer-box {
+.magp-answer-box {
   width: 150px;
   height: 80px;
   display: flex;
@@ -104,30 +100,30 @@
   transition: all 0.3s ease;
 }
 
-.answer-box:hover {
+.magp-answer-box:hover {
   background: #FFF176;
 }
 
-.correct-feedback {
-  animation: bounce 0.5s ease;
+.magp-answer-box.magp-correct-feedback {
+  animation: magp-bounce 0.5s ease;
   background: #4CAF50;
   color: white;
 }
 
-.incorrect-feedback {
-  animation: shake 0.5s ease;
+.magp-answer-box.magp-incorrect-feedback {
+  animation: magp-shake 0.5s ease;
   background: #F44336;
   color: white;
 }
 
-.answer-cards {
+.magp-answer-cards {
   display: flex;
   justify-content: center;
   gap: 20px;
   margin-top: 30px;
 }
 
-.answer-card {
+.magp-answer-card {
   width: 100px;
   height: 100px;
   display: flex;
@@ -142,46 +138,44 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.answer-card:hover {
+.magp-answer-card:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.answer-card:active {
+.magp-answer-card:active {
   transform: scale(0.95);
   cursor: grabbing;
 }
 
-/* Character Unlock Modal */
-.character-unlock-modal {
+.magp-character-unlock-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensures it’s on top */
+  z-index: 1000;
 }
 
-.modal-content {
+.magp-modal-content {
   background: rgb(255, 199, 199);
   padding: 40px;
   border-radius: 30px;
   text-align: center;
-  animation: popIn 0.5s ease; /* Pop-in animation */
+  animation: magp-popIn 0.5s ease;
 }
 
-.celebration-character {
+.magp-celebration-character {
   width: 150px;
   height: 240px;
   margin: 2px 0;
 }
 
-/* Level Complete Screen */
-.level-complete {
+.magp-level-complete {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -192,21 +186,20 @@
   text-align: center;
   color: white;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-  animation: slideIn 0.5s ease;
+  animation: magp-slideIn 0.5s ease;
 }
 
-.level-complete h2 {
+.magp-level-complete h2 {
   font-size: 2.5rem;
   margin-bottom: 20px;
 }
 
-.level-complete p {
+.magp-level-complete p {
   font-size: 1.5rem;
   margin-bottom: 20px;
 }
 
-/* Game Over Screen */
-.game-over {
+.magp-game-over {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -217,21 +210,20 @@
   text-align: center;
   color: white;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-  animation: slideIn 0.5s ease;
+  animation: magp-slideIn 0.5s ease;
 }
 
-.game-over h2 {
+.magp-game-over h2 {
   font-size: 2.5rem;
   margin-bottom: 20px;
 }
 
-.game-over p {
+.magp-game-over p {
   font-size: 1.5rem;
   margin-bottom: 20px;
 }
 
-/* Buttons */
-button {
+.magp-math-addition-game-page button {
   padding: 15px 30px;
   font-size: 1.5rem;
   color: white;
@@ -243,239 +235,34 @@ button {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-button:hover {
+.magp-math-addition-game-page button:hover {
   background-color: #1976D2;
   transform: scale(1.05);
 }
 
-button:active {
+.magp-math-addition-game-page button:active {
   transform: scale(0.95);
 }
 
-/* Animations */
-@keyframes bounce {
+@keyframes magp-bounce {
   0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
   40% { transform: translateY(-30px); }
   60% { transform: translateY(-15px); }
 }
 
-@keyframes shake {
+@keyframes magp-shake {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
   20%, 40%, 60%, 80% { transform: translateX(10px); }
 }
 
-@keyframes slideIn {
+@keyframes magp-slideIn {
   from { transform: translate(-50%, -60%); opacity: 0; }
   to { transform: translate(-50%, -50%); opacity: 1; }
 }
 
-@keyframes popIn {
+@keyframes magp-popIn {
   from { transform: scale(0); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
-
-
-/* .math-addition-game-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    color: white;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    padding: 20px;
-    box-sizing: border-box;
-    position: relative;
-  }
-  
-  .game-header {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 800px;
-    margin-bottom: 20px;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  }
-  
-  .game-stats {
-    display: flex;
-    gap: 20px;
-    font-size: 1.2rem;
-  }
-  
-  .unlocked-characters {
-    text-align: right;
-  }
-  
-  .unlocked-characters h3 {
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-  }
-  
-  .character-list {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .character-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid white;
-    transition: transform 0.3s ease;
-  }
-  
-  .character-avatar:hover {
-    transform: scale(1.1);
-  }
-  
-  .game-content {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    animation: fadeIn 0.5s ease-in-out;
-  }
-  
-  .game-content h2 {
-    margin-bottom: 20px;
-    font-size: 2rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  }
-  
-  .problem {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
-  
-  .answer-box {
-    width: 120px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px dashed white;
-    border-radius: 10px;
-    font-size: 1.5rem;
-    transition: background-color 0.3s ease;
-  }
-  
-  .answer-box:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-  }
-  
-  .answer-cards {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .answer-card {
-    width: 80px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid white;
-    border-radius: 10px;
-    font-size: 1.5rem;
-    cursor: grab;
-    transition: transform 0.2s ease, background-color 0.3s ease;
-  }
-  
-  .answer-card:active {
-    cursor: grabbing;
-    transform: scale(1.1);
-  }
-  
-  .answer-card:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-  }
-  
-  .level-complete {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.8);
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    animation: fadeIn 0.5s ease-in-out;
-  }
-  
-  .level-complete h2 {
-    margin-bottom: 20px;
-    font-size: 2rem;
-  }
-  
-  .level-complete button {
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    color: white;
-    background-color: #4caf50;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .level-complete button:hover {
-    background-color: #45a049;
-  }
-  
-  .game-over {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.8);
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    animation: fadeIn 0.5s ease-in-out;
-  }
-  
-  .game-over h2 {
-    margin-bottom: 20px;
-    font-size: 2rem;
-  }
-  
-  .game-over button {
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    color: white;
-    background-color: #f44336;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .game-over button:hover {
-    background-color: #d32f2f;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  } */

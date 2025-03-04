@@ -4,11 +4,11 @@ import correctSound from "../../../../assets/Audios/design_sounds/correct.mp3";
 import incorrectSound from "../../../../assets/Audios/design_sounds/incorrect.mp3";
 import levelUpSound from "../../../../assets/Audios/design_sounds/level_up.mp3";
 import characterUnlockSound from "../../../../assets/Audios/design_sounds/character_unlock.mp3";
-import backgroundImage from "../../../../assets/background_images/bg_23.png"; // Game background image
-import character1 from "../../../../assets/characters/angel.png"; // Character images
+import backgroundImage from "../../../../assets/background_images/bg_23.png";
+import character1 from "../../../../assets/characters/angel.png";
 import character2 from "../../../../assets/characters/knight.png";
 import character3 from "../../../../assets/characters/kid.png";
-import Confetti from "react-confetti"; // Celebration animation
+import Confetti from "react-confetti";
 
 const MathAdditionGamePage = () => {
   const [currentLevel, setCurrentLevel] = useState(1);
@@ -23,11 +23,10 @@ const MathAdditionGamePage = () => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [isLevelComplete, setIsLevelComplete] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [feedback, setFeedback] = useState(null); // For correct/incorrect feedback
-  const [showCharacterUnlock, setShowCharacterUnlock] = useState(false); // For character unlock celebration
-  const [celebrationCharacter, setCelebrationCharacter] = useState(null); // For the character being celebrated
+  const [feedback, setFeedback] = useState(null);
+  const [showCharacterUnlock, setShowCharacterUnlock] = useState(false);
+  const [celebrationCharacter, setCelebrationCharacter] = useState(null);
 
-  // Generate a random addition problem based on the level
   function generateProblem(level) {
     let num1, num2;
     if (level <= 3) {
@@ -42,7 +41,6 @@ const MathAdditionGamePage = () => {
     return { num1, num2, answer, cards };
   }
 
-  // Generate answer cards with one correct and random incorrect answers
   function generateAnswerCards(correctAnswer) {
     const cards = [correctAnswer];
     while (cards.length < 4) {
@@ -51,20 +49,17 @@ const MathAdditionGamePage = () => {
         cards.push(randomAnswer);
       }
     }
-    return cards.sort(() => Math.random() - 0.5); // Shuffle cards
+    return cards.sort(() => Math.random() - 0.5);
   }
 
-  // Handle drag start
   const handleDragStart = (e, answer) => {
     setSelectedAnswer(answer);
   };
 
-  // Handle drag over
   const handleDragOver = (e) => {
     e.preventDefault();
   };
 
-  // Handle drop with feedback
   const handleDrop = (e) => {
     e.preventDefault();
     if (selectedAnswer === problem.answer) {
@@ -76,7 +71,7 @@ const MathAdditionGamePage = () => {
       setTimeout(() => {
         setFeedback(null);
         if (currentQuestion === 2) {
-          unlockCharacter(); // Trigger character unlock celebration
+          unlockCharacter();
         } else {
           setCurrentQuestion(currentQuestion + 1);
           setProblem(generateProblem(currentLevel));
@@ -95,7 +90,6 @@ const MathAdditionGamePage = () => {
     }
   };
 
-  // Unlock a new character and trigger celebration
   const unlockCharacter = () => {
     const characters = [
       { name: "Angel", image: character1 },
@@ -111,7 +105,6 @@ const MathAdditionGamePage = () => {
     }
   };
 
-  // Move to the next level
   const nextLevel = () => {
     if (currentLevel < 3) {
       setCurrentLevel(currentLevel + 1);
@@ -124,7 +117,6 @@ const MathAdditionGamePage = () => {
     }
   };
 
-  // Reset the game
   const resetGame = () => {
     setCurrentLevel(1);
     setCurrentQuestion(1);
@@ -147,18 +139,18 @@ const MathAdditionGamePage = () => {
 
   return (
     <div
-      className="math-addition-game-page"
+      className="magp-math-addition-game-page"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {showCharacterUnlock && <Confetti />}
       {showCharacterUnlock && celebrationCharacter && (
-        <div className="character-unlock-modal">
-          <div className="modal-content">
+        <div className="magp-character-unlock-modal">
+          <div className="magp-modal-content">
             <h2>You Unlocked {celebrationCharacter.name}!</h2>
             <img
               src={celebrationCharacter.image}
               alt={celebrationCharacter.name}
-              className="celebration-character"
+              className="magp-celebration-character"
             />
             <button
               onClick={() => {
@@ -172,38 +164,38 @@ const MathAdditionGamePage = () => {
         </div>
       )}
 
-      <div className="game-header">
-        <div className="game-stats">
+      <div className="magp-game-header">
+        <div className="magp-game-stats">
           <span>Level: {currentLevel}</span>
           <span>Score: {score}</span>
           <span>Health: {"❤️".repeat(health)}</span>
           <span>Stars: {"⭐".repeat(stars)}</span>
         </div>
-        <div className="unlocked-characters">
+        <div className="magp-unlocked-characters">
           <h3>Unlocked Friends:</h3>
-          <div className="character-list">
+          <div className="magp-character-list">
             {unlockedCharacters.map((character, index) => (
               <img
                 key={index}
                 src={character.image}
                 alt={character.name}
-                className="character-avatar"
+                className="magp-character-avatar"
               />
             ))}
           </div>
         </div>
       </div>
 
-      <div className="game-content">
+      <div className="magp-game-content">
         <h2>Let’s Solve This!</h2>
-        <div className="problem">
+        <div className="magp-problem">
           <span>{problem.num1}</span>
           <span>+</span>
           <span>{problem.num2}</span>
           <span>=</span>
           <div
-            className={`answer-box ${feedback === "correct" ? "correct-feedback" : ""} ${
-              feedback === "incorrect" ? "incorrect-feedback" : ""
+            className={`magp-answer-box ${feedback === "correct" ? "magp-correct-feedback" : ""} ${
+              feedback === "incorrect" ? "magp-incorrect-feedback" : ""
             }`}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
@@ -211,11 +203,11 @@ const MathAdditionGamePage = () => {
             {selectedAnswer !== null ? selectedAnswer : "?"}
           </div>
         </div>
-        <div className="answer-cards">
+        <div className="magp-answer-cards">
           {problem.cards.map((card, index) => (
             <div
               key={index}
-              className="answer-card"
+              className="magp-answer-card"
               draggable
               onDragStart={(e) => handleDragStart(e, card)}
             >
@@ -226,7 +218,7 @@ const MathAdditionGamePage = () => {
       </div>
 
       {isLevelComplete && (
-        <div className="level-complete">
+        <div className="magp-level-complete">
           <h2>Level {currentLevel} Done!</h2>
           <p>You got {stars} stars! 🌟</p>
           <button onClick={nextLevel}>
@@ -236,7 +228,7 @@ const MathAdditionGamePage = () => {
       )}
 
       {isGameOver && (
-        <div className="game-over">
+        <div className="magp-game-over">
           <h2>{currentLevel === 3 ? "You’re a Math Hero!" : "Oops, Try Again!"}</h2>
           <p>Your Score: {score}</p>
           <button onClick={resetGame}>Play Again</button>
