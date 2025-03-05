@@ -152,12 +152,21 @@ class WorkingMemoryInput(BaseModel):
     Visual_discrimination: float
     Audio_Discrimination: float
 
+class MemoryResults(BaseModel):
+    student_id: str = Field(..., description="ID of the student")
+    visualDiscriminationScore: float = Field(..., description="Visual Discrimination score")
+    memoryScore: float = Field(..., description="Memory score")
+    languageVocabScore: float = Field(..., description="Language Vocabulary score")
+    audioDiscriminationScore: float = Field(..., description="Audio Discrimination score")
+    speedScore: float = Field(..., description="Speed score")
+    prediction: str = Field(..., description="Final model prediction")
 class TeacherUpdateModel(BaseModel):
     pass
 
 class StudentEnrollmentModel(BaseModel):
     teacher_code: str = Field(..., description="Unique code of the teacher")
     student_name: str = Field(..., description="Name of the student")
+
 
 class ResetPasswordModel(BaseModel):
     email: EmailStr
@@ -353,6 +362,20 @@ def working_memory_prediction(input_data: WorkingMemoryInput):
     except Exception as e:
         logging.error(f"Error during prediction: {e}")
         raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
+
+@app.post("/save-memory-results/")
+def save_memory_results(memory_data: MemoryResults):
+    db = get_database()
+    if db is None:
+        raise HTTPException(status_code=500, detail="Database connection failed")
+    memory_results_collection = db["memory_results"]
+    data = memory_data.dict()
+    try:
+        result = memory_results_collection.insert_one(data)
+        return {"message": "Memory results saved successfully", "inserted_id": str(result.inserted_id)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save memory results: {e}")
+
 
 #################################################
 # Writing
