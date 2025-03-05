@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home/Home";
-import About from "./Pages//About/About";
+import About from "./Pages/About/About";  // Fixed extra slash here
 import AttentionReadingTest from "./Pages/ReadingDashboardpage";
 import MathScreeningTest from "./Pages/math/MathScreeningTest";
 import WritingTest from "./Pages/Writing/WritingTest";
@@ -55,7 +55,6 @@ import WM_Game3Menu from "./Pages/WorkingMemoryInterventions/WorkingMemoryGame3/
 import WM_Menu from "./Pages/WorkingMemoryInterventions/WorkingMemoryMenu/WM_Menu";
 import Writing_menu from "./Components/Writing_menu";
 
-
 const App = () => {
   return (
     <div>
@@ -65,55 +64,19 @@ const App = () => {
             <Route index element={<SplashScreen />} />
             <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route
-              path="/attentionreadingtest"
-              element={<AttentionReadingTest />}
-            />
+            <Route path="/attentionreadingtest" element={<AttentionReadingTest />} />
             <Route path="/attentiongame1" element={<AttentionGame1 />} />
-
-            <Route
-              path="/attentiongame1level1"
-              element={<AttentionGame1Level1 />}
-            />
-            <Route
-              path="/attentiongame1level2"
-              element={<AttentionGame1Level2 />}
-            />
-            <Route
-              path="/attentiongame1level3"
-              element={<AttentionGame1Level3 />}
-            />
-
+            <Route path="/attentiongame1level1" element={<AttentionGame1Level1 />} />
+            <Route path="/attentiongame1level2" element={<AttentionGame1Level2 />} />
+            <Route path="/attentiongame1level3" element={<AttentionGame1Level3 />} />
             <Route path="/attentiongame2" element={<AttentionGame2 />} />
-            <Route
-              path="/attentiongame2level1"
-              element={<AttentionGame2Level1 />}
-            />
-            <Route
-              path="/attentiongame2level2"
-              element={<AttentionGame2Level2 />}
-            />
-            <Route
-              path="/attentiongame2level3"
-              element={<AttentionGame2Level3 />}
-            />
-
+            <Route path="/attentiongame2level1" element={<AttentionGame2Level1 />} />
+            <Route path="/attentiongame2level2" element={<AttentionGame2Level2 />} />
+            <Route path="/attentiongame2level3" element={<AttentionGame2Level3 />} />
             <Route path="/attentiongame3" element={<AttentionGame3 />} />
-
-            <Route
-              path="/attentiongame3level1"
-              element={<AttentionGame3Level1 />}
-            />
-
-            <Route
-              path="/attentiongame3level2"
-              element={<AttentionGame3Level2 />}
-            />
-            <Route
-              path="/attentiongame3level3"
-              element={<AttentionGame3Level3 />}
-            />
-
+            <Route path="/attentiongame3level1" element={<AttentionGame3Level1 />} />
+            <Route path="/attentiongame3level2" element={<AttentionGame3Level2 />} />
+            <Route path="/attentiongame3level3" element={<AttentionGame3Level3 />} />
             <Route path="/attentionInterventions" element={<AttentionIM />} />
             <Route path="/math" element={<MathScreeningTest />} />
             <Route path="/writingtest" element={<WritingTest />} />
@@ -129,13 +92,12 @@ const App = () => {
             <Route path="/splash" element={<SplashScreen />} />
             <Route path="/screening-menu" element={<ScreeningMenu />} />
             <Route path="/math-menu" element={<MathMenu />} />
-            <Route path="/math-addition-guidance" element={<MathAdditionGuidancePage />} /> 
-            <Route path="/math-substraction-guidance" element={<MathSubstractionGuidancePage />} /> 
-            <Route path="/math-multiplication-guidance" element={<MathMultiplicationGuidancePage />} /> 
+            <Route path="/math-addition-guidance" element={<MathAdditionGuidancePage />} />
+            <Route path="/math-substraction-guidance" element={<MathSubstractionGuidancePage />} />
+            <Route path="/math-multiplication-guidance" element={<MathMultiplicationGuidancePage />} />
             <Route path="/math-division-guidance" element={<MathDivisionGuidancePage />} />
             <Route path="/math-addition-game" element={<MathAdditionGamePage />} />
             <Route path="/math-choice" element={<MathChoiceSelectionPage />} />
-          </Routes>
             <Route path="/screening_and_interventions" element={<Screening_and_interventions />} />
             <Route path="/interventions-menu" element={<Intervention_menu />} />
             <Route path="/working-memory-game1/Level1/*" element={<WM_Game1_Level1 />} />
@@ -152,8 +114,7 @@ const App = () => {
             <Route path="/WM_Game3Menu" element={<WM_Game3Menu />} />
             <Route path="/WM_Menu" element={<WM_Menu />} />
             <Route path="/Writing_menu" element={<Writing_menu />} />
-
-        </Routes>
+          </Routes>
         </ScoresProvider>
       </BrowserRouter>
     </div>
