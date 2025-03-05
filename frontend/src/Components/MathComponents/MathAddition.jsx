@@ -565,27 +565,23 @@ const MathAddition = () => {
   const handleNextQuestion = async () => {
     const userAnswer = inputRef.current.value.trim();
     const currentAnswers = questions[currentTopic].answers;
-    const isCorrect =
-      userAnswer === currentAnswers[currentQuestion - 1] ? 1 : 0;
-
+    const isCorrect = userAnswer === currentAnswers[currentQuestion - 1] ? 1 : 0;
+  
     setScores([...scores, isCorrect]);
-
+  
     if (currentQuestion < 2) {
-      // Move to the next question
       setCurrentQuestion(currentQuestion + 1);
       inputRef.current.value = "";
     } else {
-      // Save time for the current topic
       const topicScore = scores.reduce((sum, score) => sum + score, isCorrect);
       setTimeData((prevData) => ({
         ...prevData,
         [`${currentTopic}_time`]: timer,
         [`${currentTopic}_score`]: topicScore,
       }));
-
+  
       const currentTopicIndex = topicOrder.indexOf(currentTopic);
       if (currentTopicIndex < topicOrder.length - 1) {
-        // Move to the next topic
         const nextTopic = topicOrder[currentTopicIndex + 1];
         setCurrentTopic(nextTopic);
         setCurrentQuestion(1);
@@ -594,7 +590,6 @@ const MathAddition = () => {
         setScores([]);
         inputRef.current.value = "";
       } else {
-        // All topics completed: calculate overall stats and request prediction.
         const totalTime = topicOrder.reduce(
           (sum, topic) => sum + (timeData[`${topic}_time`] || 0),
           timer
@@ -603,25 +598,45 @@ const MathAddition = () => {
           (sum, topic) => sum + (timeData[`${topic}_score`] || 0),
           0
         );
-
+  
         const requestData = {
           ...timeData,
           total_time: totalTime,
           total_accuracy: totalAccuracy,
         };
-
+  
         try {
-          console.log("Sending Data:", requestData);
-          const response = await axios.post(
+          console.log("Sending Data for Prediction:", requestData);
+  
+          // Step 1: Get Prediction Outcome
+          const predictionResponse = await axios.post(
             "http://127.0.0.1:8000/math-prediction/",
             requestData
           );
-          const mappedResult = mapPredictionToText(response.data.prediction);
+  
+          const predictionOutcome = predictionResponse.data.prediction;
+          const mappedResult = mapPredictionToText(predictionOutcome);
           setPredictionResult(mappedResult);
+  
+          // Step 2: Save Math Results (Including Prediction Outcome)
+          const studentId = localStorage.getItem("student_id");
+          const finalData = {
+            ...requestData,
+            addition_score: timeData.addition_score,
+            substraction_score: timeData.substraction_score,
+            division_score: timeData.division_score,
+            multiplication_score: timeData.multiplication_score,
+            fraction_score: timeData.fraction_score,
+            skillPhrase: mappedResult,
+            student_id: studentId  // include student ID here
+          };
+  
+          await axios.post("http://127.0.0.1:8000/save-math-results/", finalData);
+  
           setShowFinalFeedback(true);
         } catch (error) {
-          console.error("Error making prediction:", error);
-          setPredictionResult("Error: Unable to get prediction.");
+          console.error("Error:", error);
+          setPredictionResult("Error: Unable to process results.");
           setShowFinalFeedback(true);
         }
       }

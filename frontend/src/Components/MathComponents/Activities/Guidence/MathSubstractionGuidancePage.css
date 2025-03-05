@@ -1,0 +1,140 @@
+.math-substraction-guidance-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-color: #f0f8ff; 
+    font-family: "Comic Sans MS", cursive, sans-serif; 
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative; 
+  }
+  
+  .video-container {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 50px 10px rgba(0, 0, 0, 1);
+    margin-top: 10px;
+  }
+  
+  .guidance-video {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .previous-button,
+  .replay-button,
+  .next-button,
+  .finish-button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .previous-button {
+    background-color: #ff9800; 
+  }
+  
+  .previous-button:hover {
+    background-color: #f57c00;
+    transform: scale(1.05);
+  }
+  
+  .replay-button {
+    background-color: #2196f3; 
+  }
+  
+  .replay-button:hover {
+    background-color: #1976d2;
+    transform: scale(1.05);
+  }
+  
+  .next-button {
+    background-color: #4caf50; 
+  }
+  
+  .next-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+  }
+  
+  .finish-button {
+    background-color: #f44336; 
+  }
+  
+  .finish-button:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+  }
+  
+  .progress-indicator {
+    position: absolute; 
+    top: 60px; 
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8); 
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+  
+  .progress-circle {
+    width: 15px;
+    height: 15px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin: 0 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .progress-circle.active {
+    background-color: #4caf50; 
+    transform: scale(1.2);
+  }
+  
+  @media (max-width: 768px) {
+    .video-container {
+      width: 95%;
+      padding: 10px;
+    }
+  
+    .previous-button,
+    .replay-button,
+    .next-button,
+    .finish-button {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  
+    .progress-circle {
+      width: 12px;
+      height: 12px;
+      margin: 0 8px;
+    }
+  
+    .progress-indicator {
+      top: 10px; 
+      padding: 8px;
+    }
+  }
+  
