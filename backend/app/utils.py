@@ -3,10 +3,6 @@ from jose import jwt
 from datetime import datetime, timedelta
 import smtplib
 from email.mime.text import MIMEText
-import numpy as np
-from math import sqrt
-import cv2
-
 
 # Constants
 SECRET_KEY = "5gRyaZcBis" 
@@ -104,7 +100,9 @@ def send_verification_email(email: str, token: str):
 #         return "Expired"
 #     except jwt.JWTError:
 #         return "Invalid"
-
+import numpy as np
+from math import sqrt
+import cv2
 
 def landmarks_detection(image, results):
     """Detect landmarks and return coordinates."""
