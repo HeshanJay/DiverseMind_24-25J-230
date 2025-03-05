@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import backgroundImage from "../../../assets/background_images/colorimg2.png";
+import popupboard from "../../../assets/Attention/wooden.jpg";
 import { FaRedo, FaArrowRight, FaEllipsisH } from "react-icons/fa";
 
 const INITIAL_TIMER = 40;
@@ -78,9 +79,9 @@ const ColorChange = () => {
     }
   };
 
-  // Timer countdown
+  // Timer countdown (only when the game has started)
   useEffect(() => {
-    if (gameOver || timer <= 0) return;
+    if (!gameStarted || gameOver || timer <= 0) return;
 
     const interval = setInterval(() => {
       setTimer((prevTimer) => {
@@ -90,16 +91,17 @@ const ColorChange = () => {
     }, 10);
 
     return () => clearInterval(interval);
-  }, [timer, gameOver]);
+  }, [gameStarted, timer, gameOver]);
 
-  // Handle timeout
+  // Handle timeout (only when the game has started)
   useEffect(() => {
+    if (!gameStarted) return;
     if (timer <= 0 && !gameOver) {
       setFeedback("✗ කාලය අවසන්!");
       setFeedbackClass("timeout");
       resetRound();
     }
-  }, [timer, gameOver]);
+  }, [gameStarted, timer, gameOver]);
 
   // Restart game when game over
   const restartGame = () => {
@@ -130,23 +132,43 @@ const ColorChange = () => {
         }}
       />
 
-      {/* Intro Overlay before the game starts */}
+      {/* Intro Overlay before the game starts (UPDATED STYLING) */}
       {!gameStarted && !gameOver && (
-        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black bg-opacity-50 p-4">
-          <h1 className="text-5xl font-bold text-yellow-300 mb-4">
-            පලමු අදිරයෙන් විනෝද වෙමු !
-          </h1>
-          <p className="text-xl text-white mb-6 max-w-lg">
-            මෙම ක්‍රිඩාවේ ඔබ කළ යුත්තේ නිවැරදි වර්ණය හඳුනා ගැනීම. මෙහි කාලය ගැන
-            සැලකිලිමත් වීම අනිවාර්යයි. අදිරයෙන් අදිරය අභ්‍යාස සංකිරණය වන බව මතක
-            තබා ගන්න.ඔබ සුදානම් ද?
-          </p>
-          <button
-            onClick={handleStartGame}
-            className="px-6 py-3 bg-green-500 rounded-full text-2xl text-white hover:bg-green-600 transition duration-200"
-          >
-            ආරම්භ කරමු
-          </button>
+        <div className="absolute inset-0 z-30 flex items-center justify-center p-4 bg-black bg-opacity-50">
+          {/* Popup container with wooden background */}
+          <div className="relative w-[320px] md:w-[400px] rounded-xl shadow-lg overflow-hidden">
+            {/* Wooden texture background */}
+            <div
+              className="absolute inset-0 bg-center bg-cover"
+              style={{
+                backgroundImage: `url(${popupboard})`,
+                opacity: 0.9,
+              }}
+            />
+
+            {/* Content on top of background */}
+            <div className="relative p-6 flex flex-col items-center text-center">
+              {/* Title bubble */}
+              <div className="bg-yellow-300 text-[#5B3E1B] font-bold text-2xl px-4 py-2 rounded-full shadow-md mb-4">
+                පලමු අදිරයෙන් විනෝද වෙමු !
+              </div>
+
+              {/* Body text */}
+              <p className="text-white text-lg leading-relaxed px-4 mb-6">
+                මෙම ක්‍රිඩාවේ ඔබ කළ යුත්තේ නිවැරදි වර්ණය හඳුනා ගැනීම. මෙහි කාලය
+                ගැන සැලකිලිමත් වීම අනිවාර්යයි. අදිරයෙන් අදිරය අභ්‍යාස සංකිරණය වන
+                බව මතක තබා ගන්න. ඔබ සුදානම් ද?
+              </p>
+
+              {/* Start Button */}
+              <button
+                onClick={handleStartGame}
+                className="bg-green-500 text-white font-semibold text-xl px-6 py-2 rounded-full shadow-md hover:bg-green-600 transition"
+              >
+                ආරම්භ කරමු
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
@@ -163,7 +185,7 @@ const ColorChange = () => {
             <p>වාර</p>
             <h2>
               <center>
-                {round}/{MAX_ROUNDS}{" "}
+                {round}/{MAX_ROUNDS}
               </center>
             </h2>
           </div>
