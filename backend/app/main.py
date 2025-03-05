@@ -630,4 +630,4 @@ def save_attention_span(result: AttentionSpanResult):
         attention_collection.insert_one(result_data)
         return {"message": "Attention span result saved successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to save attention span result: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to save attention span result: {e}")
