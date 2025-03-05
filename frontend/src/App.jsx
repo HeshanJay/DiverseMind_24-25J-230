@@ -14,7 +14,6 @@ import ResetPassword from "./Components/ResetPassword/ResetPassword";
 import StudentEntrance from "./Components/StudentEntrence/StudentEntrence";
 import HomePage from "./Pages/HomePage/home_page";
 import WorkingMemory from "./Pages/WorkingMemory/WorkingMemory";
-import ScoreBoard from "./Components/Score_board";
 import { ScoresProvider } from "./context/Score_context";
 import ScreeningMenu from "./Pages/ScreeningMenu/ScreeningMenu";
 import MathMenu from "./Pages/MathematicActivities/MathMenu";
@@ -53,7 +52,6 @@ import WM_Game1Menu from "./Pages/WorkingMemoryInterventions/WorkingMemoryGame1/
 import WM_Game2Menu from "./Pages/WorkingMemoryInterventions/WorkingMmeoryGame2/WM_Game2Menu";
 import WM_Game3Menu from "./Pages/WorkingMemoryInterventions/WorkingMemoryGame3/WM_Game3Menu"; 
 import WM_Menu from "./Pages/WorkingMemoryInterventions/WorkingMemoryMenu/WM_Menu";
-import Writing_menu from "./Components/Writing_menu";
 
 const App = () => {
   return (
@@ -88,7 +86,6 @@ const App = () => {
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/student-entrance" element={<StudentEntrance />} />
             <Route path="/home-page" element={<HomePage />} />
-            <Route path="/scoreboard" element={<ScoreBoard />} />
             <Route path="/splash" element={<SplashScreen />} />
             <Route path="/screening-menu" element={<ScreeningMenu />} />
             <Route path="/math-menu" element={<MathMenu />} />
@@ -113,7 +110,6 @@ const App = () => {
             <Route path="/WM_Game2Menu" element={<WM_Game2Menu />} />
             <Route path="/WM_Game3Menu" element={<WM_Game3Menu />} />
             <Route path="/WM_Menu" element={<WM_Menu />} />
-            <Route path="/Writing_menu" element={<Writing_menu />} />
           </Routes>
         </ScoresProvider>
       </BrowserRouter>

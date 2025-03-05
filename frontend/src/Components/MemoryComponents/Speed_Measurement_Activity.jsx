@@ -823,7 +823,6 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
       correctAnswer: "↑",
       imageWidth: "260px",
       imageHeight: "200px",
-      imageMarginTop: "40px",
     },
     {
       image: question2Image,
@@ -831,7 +830,6 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
       correctAnswer: "♢",
       imageWidth: "379px",
       imageHeight: "211px",
-      imageMarginTop: "10px",
     },
     {
       image: question3Image,
@@ -839,7 +837,6 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
       correctAnswer: "R",
       imageWidth: "378px",
       imageHeight: "178px",
-      imageMarginTop: "10px",
     },
     {
       image: question4Image,
@@ -847,37 +844,46 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
       correctAnswer: "✰",
       imageWidth: "335px",
       imageHeight: "140px",
-      imageMarginTop: "20px",
     },
   ];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showImage, setShowImage] = useState(true);
   const [showAnswers, setShowAnswers] = useState(false);
-  const [timer, setTimer] = useState(3);
+  const [timer, setTimer] = useState(2);
   const [score, setScore] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
+    let interval;
     if (showImage) {
-      const id = setInterval(() => {
+      interval = setInterval(() => {
         setTimer((prevTimer) => {
           if (prevTimer === 1) {
             setShowImage(false);
             setShowAnswers(true);
-            setTimer(4);
-            clearInterval(id);
+            setTimer(20);
+            clearInterval(interval);
           }
           return prevTimer - 1;
         });
       }, 1000);
-      return () => clearInterval(id);
+    } else if (showAnswers) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer === 1) {
+            handleAnswerClick(null);
+          }
+          return prevTimer - 1;
+        });
+      }, 1000);
     }
-  }, [showImage]);
+    return () => clearInterval(interval);
+  }, [showImage, showAnswers]);
 
   const handleAnswerClick = (answer) => {
+    setTimer(0);
     if (answer === questions[currentQuestion].correctAnswer) {
-      // For speed test, add 0.25 points per correct answer.
       setSpeedScore((prev) => prev + 0.25);
     }
     moveToNextQuestion();
@@ -888,7 +894,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(4);
+      setTimer(2);
     } else {
       setIsCompleted(true);
       onNext();
@@ -927,17 +933,18 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
                     className="absolute bottom-[1px] right-[230px] w-[220px] h-auto"
                   />
 
-                  <img
-                    src={questions[currentQuestion].image}
-                    alt={`Question ${currentQuestion + 1}`}
-                    className="object-contain rounded-lg border-8 border-white shadow-lg"
-                    style={{
-                      width: questions[currentQuestion].imageWidth,
-                      height: questions[currentQuestion].imageHeight,
-                      marginTop: questions[currentQuestion].imageMarginTop,
-                      boxShadow: "0px 10px 35px rgba(0, 0, 0, 0.8)",
-                    }}
-                  />
+                  <div className="flex-grow flex justify-center items-center w-full">
+                    <img
+                      src={questions[currentQuestion].image}
+                      alt={`Question ${currentQuestion + 1}`}
+                      className="object-contain rounded-lg border-8 border-white shadow-lg"
+                      style={{
+                        width: questions[currentQuestion].imageWidth,
+                        height: questions[currentQuestion].imageHeight,
+                        boxShadow: "0px 10px 35px rgba(0, 0, 0, 0.8)",
+                      }}
+                    />
+                  </div>
                 </div>
                 <div className="mt-6">
                   <div className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg text-center">
@@ -957,7 +964,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
                       <button
                         key={index}
                         onClick={() => handleAnswerClick(answer)}
-                        className="bg-gradient-to-r from-green-400 to-blue-500 text-white px-12 py-8 rounded-[30px] text-4xl font-bold flex items-center justify-center hover:scale-110 transition-transform shadow-md"
+                        className="bg-gradient-to-r from-green-300 to-emerald-600 text-white px-12 py-8 rounded-[30px] text-4xl font-bold flex items-center justify-center hover:scale-110 transition-transform shadow-md"
                       >
                         <span className="mr-4">{index + 1}.</span>
                         <span>{answer}</span>
@@ -966,7 +973,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
                   </div>
                 </div>
                 <div className="mt-6">
-                  <div className="text-xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 px-6 py-3 rounded-md shadow-lg text-center">
+                  <div className="text-xl font-bold bg-gradient-to-r from-cyan-600 to-green-500 hover:from-cyan-500 hover:to-blue-700 px-6 py-3 rounded-md shadow-lg text-center">
                     ⏳ කාලය: {timer} තත්පර
                   </div>
                 </div>

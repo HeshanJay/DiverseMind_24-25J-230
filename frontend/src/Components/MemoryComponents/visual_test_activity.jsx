@@ -763,30 +763,41 @@ const VisualTestActivity = ({ onNext, onBack }) => {
           if (prevTimer === 1) {
             setShowImage(false);
             setShowAnswers(true);
-            clearInterval(interval);
-            setTimer(1);
+            setTimer(1); // Reset timer for answers display
+          }
+          return prevTimer - 1;
+        });
+      }, 1000);
+    } else if (showAnswers) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer === 1) {
+            // Auto-submit after timer ends
+            handleAnswerClick(null); // Pass null to indicate timeout
           }
           return prevTimer - 1;
         });
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [showImage]);
-
+  }, [showImage, showAnswers]); // Add showAnswers to dependencies
+  
   const handleAnswerClick = (id) => {
+    // Clear any existing intervals
+    setTimer(0);
+    
     if (id === questions[currentQuestion].correctAnswer) {
-      // For visual test, add 0.25 points per correct answer.
       setVisualDiscriminationScore((prev) => prev + 0.25);
     }
     handleNextQuestion();
   };
-
+  
   const handleNextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(3);
+      setTimer(1);
     } else {
       setIsCompleted(true);
       onNext();
@@ -869,83 +880,93 @@ const VisualTestActivity = ({ onNext, onBack }) => {
         )}
         {showAnswers && (
           <>
-            <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-lg mb-8 max-w-5xl mx-auto">
-              <h2 className="text-3xl font-semibold mb-6 text-center">
-                නිවැරදි පිළිතුර තෝරන්න
-              </h2>
-              <table className="w-full text-lg border-separate border-spacing-4">
-                <tbody>
-                  {questions[currentQuestion].answers.map((answer, index) => {
-                    const answerId = answer.id || index + 1;
-                    const isFirstCol = index % 2 === 0;
-                    if (isFirstCol) {
-                      return (
-                        <tr key={index}>
-                          <td
-                            className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg cursor-pointer hover:scale-105 transition-transform"
-                            onClick={() => handleAnswerClick(answerId)}
-                          >
-                            <div className="flex justify-center items-center h-full w-full">
-                              <strong className="text-xl text-white">
-                                {index + 1}.&nbsp;
-                              </strong>
-                              {answer.src ? (
-                                <img
-                                  src={answer.src}
-                                  alt={`Answer ${index + 1}`}
-                                  className="w-full max-h-28 object-contain rounded-md"
-                                />
-                              ) : (
-                                <span className="text-xl text-white">{answer}</span>
+                <div className="bg-gray-800 bg-opacity-70 p-6 rounded-2xl shadow-lg mb-8 max-w-5xl mx-auto border-4 border-white">
+                  <h2 className="text-3xl font-semibold mb-6 text-center">
+                    නිවැරදි පිළිතුර තෝරන්න
+                  </h2>
+  
+                {/* Responsive Table Layout */}
+                <table className="w-full text-lg border-separate border-spacing-4">
+                    <tbody>
+                      {questions[currentQuestion].answers.map((answer, index) => {
+                        const isFirstCol = index % 2 === 0;
+                        const answerId = answer.id || index + 1;
+  
+                        if (isFirstCol) {
+                          return (
+                            <tr key={index}>
+                              <td
+                                className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-lg cursor-pointer hover:scale-105 transition-transform"
+                                onClick={() => handleAnswerClick(answerId)}
+                              >
+                                <div className="flex justify-center items-center h-full w-full">
+                                  <strong className="text-xl text-white align-center">
+                                    {index + 1}.&nbsp;
+                                  </strong>
+                                  {answer.src ? (
+                                    <img
+                                      src={answer.src}
+                                      alt={`Answer ${index + 1}`}
+                                      className="w-full max-h-28 object-contain rounded-md"
+                                    />
+                                  ) : (
+                                    <span className="text-white">{answer}</span>
+                                  )}
+                                </div>
+                              </td>
+                              {questions[currentQuestion].answers[index + 1] && (
+                                <td
+                                  className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105 transition-transform rounded-lg shadow-lg cursor-pointer"
+                                  onClick={() =>
+                                    handleAnswerClick(
+                                      questions[currentQuestion].answers[index + 1].id ||
+                                        index + 2
+                                    )
+                                  }
+                                >
+                                  <div className="flex justify-center items-center h-full w-full">
+                                    <strong className="text-xl text-white">
+                                      {index + 2}.&nbsp;
+                                    </strong>
+                                    {questions[currentQuestion].answers[index + 1].src ? (
+                                      <img
+                                        src={questions[currentQuestion].answers[index + 1].src}
+                                        alt={`Answer ${index + 2}`}
+                                        className="w-full max-h-28 object-contain rounded-md"
+                                      />
+                                    ) : (
+                                      <span className="text-white">
+                                        {questions[currentQuestion].answers[index + 1]}
+                                      </span>
+                                    )}
+                                  </div>
+                                </td>
                               )}
-                            </div>
-                          </td>
-                          {questions[currentQuestion].answers[index + 1] && (
-                            <td
-                              className="p-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105 transition-transform rounded-lg shadow-lg cursor-pointer"
-                              onClick={() =>
-                                handleAnswerClick(
-                                  questions[currentQuestion].answers[index + 1].id ||
-                                    index + 2
-                                )
-                              }
-                            >
-                              <div className="flex justify-center items-center h-full w-full">
-                                <strong className="text-xl text-white">
-                                  {index + 2}.&nbsp;
-                                </strong>
-                                {questions[currentQuestion].answers[index + 1].src ? (
-                                  <img
-                                    src={questions[currentQuestion].answers[index + 1].src}
-                                    alt={`Answer ${index + 2}`}
-                                    className="w-full max-h-28 object-contain rounded-md"
-                                  />
-                                ) : (
-                                  <span className="text-white">
-                                    {questions[currentQuestion].answers[index + 1]}
-                                  </span>
-                                )}
-                              </div>
-                            </td>
-                          )}
-                        </tr>
-                      );
-                    }
-                    return null;
-                  })}
-                </tbody>
-              </table>
-            </div>
-            <div className="flex justify-center mt-4">
-              <div className="text-xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 px-6 py-3 rounded-md shadow-lg text-center">
-                ⏳ කාලය: {timer} තත්පර
-              </div>
-            </div>
-          </>
-        )}
-      </div>
+                            </tr>
+                          );
+                        }
+                        return null;
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+  
+                
+  
+                {/* Timer Section for Answer Page */}
+                <div className="text-xl font-bold bg-gradient-to-r from-yellow-500 to-red-500 px-6 py-3 rounded-md shadow-lg text-center">
+  ⏳ කාලය: {timer} තත්පර
+</div>
+            </>
+          )}   </div>
     </div>
   );
 };
 
 export default VisualTestActivity;
+
+
+
+
+
+
