@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import L3_img1 from "../../../../assets/WM_Interventions_images/L3_images/L3_img1.png";
 import puffer_fish1 from "../../../../assets/WM_Interventions_images/L1_images/puffer_fish1.png";
-import puffer_fish5 from "../../../../assets/WM_Interventions_images/L1_images/puffer_fish5.png"; // Replaced buffer_fish2
+import puffer_fish5 from "../../../../assets/WM_Interventions_images/L1_images/puffer_fish5.png";
 import puffer_fish3 from "../../../../assets/WM_Interventions_images/L1_images/puffer_fish3.png";
 import bubble from "../../../../assets/WM_Interventions_images/L1_images/bubble.png";
 import sea_back3 from "../../../../assets/WM_Interventions_images/L1_images/sea_back3.png";
-import sea_back4 from "../../../../assets/WM_Interventions_images/L1_images/sea_back4.jpg"; // Fixed import
-import fish20 from "../../../../assets/WM_Interventions_images/L1_images/fish20.png"; // Import the celebration image
+import sea_back4 from "../../../../assets/WM_Interventions_images/L1_images/sea_back4.jpg";
+import fish20 from "../../../../assets/WM_Interventions_images/L1_images/fish20.png";
 
 const questions = [
   {
@@ -19,7 +19,7 @@ const questions = [
       "වෛද්‍යවරයා අනතුර දෙස බලමින් සිටී.",
     ],
     correctAnswerIndex: 0,
-    questionPhaseDuration: 5, // Set to 5 seconds for the initial question
+    questionPhaseDuration: 5,
     answerPhaseDuration: 5,
   },
   {
@@ -31,7 +31,7 @@ const questions = [
       "මිනිසුන් සියලුදෙනා මෝටර් රථය අසල සිටී.",
     ],
     correctAnswerIndex: 1,
-    questionPhaseDuration: 0, // No question phase for subsequent questions
+    questionPhaseDuration: 0,
     answerPhaseDuration: 5,
   },
   {
@@ -43,28 +43,26 @@ const questions = [
       "පොලිස් නිලධාරියා පාරේ දිගේ සැරිසරණ සතුන්ට ආදරය පිරි ඇසියි.",
     ],
     correctAnswerIndex: 0,
-    questionPhaseDuration: 0, // No question phase for subsequent questions
+    questionPhaseDuration: 0,
     answerPhaseDuration: 5,
   },
 ];
 
-// Positions for fish and bubbles
 const fishPositions = [
-  { top: "29%", left: "5%" },  // Fish 1
-  { top: "30%", left: "46%" }, // Fish 2
-  { top: "62%", left: "14%" }, // Fish 3
+  { top: "29%", left: "5%" },
+  { top: "30%", left: "46%" },
+  { top: "62%", left: "14%" },
 ];
 
 const bubblePositions = [
-  { top: "30%", left: "-22%" }, // Bubble 1
-  { top: "26%", left: "60%" },  // Bubble 2
-  { top: "60%", left: "27%" },  // Bubble 3
+  { top: "30%", left: "-22%" },
+  { top: "26%", left: "60%" },
+  { top: "60%", left: "27%" },
 ];
 
 function Activity1({ onNext }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const currentQuestion = questions[currentQuestionIndex];
-  
   const [showQuestionPhase, setShowQuestionPhase] = useState(
     currentQuestion.questionPhaseDuration > 0
   );
@@ -75,7 +73,7 @@ function Activity1({ onNext }) {
     currentQuestion.answerPhaseDuration
   );
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [showCelebration, setShowCelebration] = useState(false); // State for celebration
+  const [showCelebration, setShowCelebration] = useState(false);
   const [score, setScore] = useState(0);
 
   // Reset timers & selection when moving to new question
@@ -110,7 +108,7 @@ function Activity1({ onNext }) {
     return () => clearTimeout(timer);
   }, [answerTimer, showQuestionPhase]);
 
-  // Once an answer is selected, it cannot be changed
+  // Handle answer selection
   const handleSelect = (index) => {
     if (selectedAnswer === null) {
       setSelectedAnswer(index);
@@ -135,17 +133,29 @@ function Activity1({ onNext }) {
     }
   };
 
+  // Reset Activity1 to its initial state
+  const handleRetry = () => {
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setSelectedAnswer(null);
+    const firstQuestion = questions[0];
+    setQuestionTimer(firstQuestion.questionPhaseDuration);
+    setAnswerTimer(firstQuestion.answerPhaseDuration);
+    setShowQuestionPhase(firstQuestion.questionPhaseDuration > 0);
+  };
+
   return (
     <div
       key={currentQuestionIndex}
       className="relative flex flex-col items-center justify-center min-h-screen p-4 bg-fixed"
       style={{
-        backgroundImage: `url(${showQuestionPhase && currentQuestionIndex === 0 ? sea_back4 : sea_back3})`, // Use sea_back4 for question phase, sea_back3 for answer phase
+        backgroundImage: `url(${showQuestionPhase && currentQuestionIndex === 0 ? sea_back4 : sea_back3})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         height: "90vh",
       }}
     >
+     
       {/* Show question and timer only once at the beginning */}
       {showQuestionPhase && currentQuestionIndex === 0 ? (
         <div className="flex flex-col items-center">
@@ -156,12 +166,12 @@ function Activity1({ onNext }) {
             </div>
           )}
           {currentQuestion.questionImage && (
-  <img
-    src={currentQuestion.questionImage}
-    alt="Question"
-    className="w-[405px] h-[500px] object-contain rounded-lg shadow-lg border-4 border-white box-border" // Added box-border to include border in dimensions
-  />
-)}
+            <img
+              src={currentQuestion.questionImage}
+              alt="Question"
+              className="w-[405px] h-[500px] object-contain rounded-lg shadow-lg border-4 border-white box-border" // Added box-border to include border in dimensions
+            />
+          )}
           {/* Timer with white border */}
           <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-6 py-3 rounded-md shadow-lg mt-10 w-64 mx-auto">
             ⏳ කාලය: {questionTimer} තත්පර
@@ -232,7 +242,7 @@ function Activity1({ onNext }) {
             }`}
             disabled={selectedAnswer === null}
           >
-            <FaArrowRight size={24} />
+            <FaArrowRight size={35} />
           </button>
         </div>
       )}

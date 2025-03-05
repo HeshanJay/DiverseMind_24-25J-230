@@ -4,9 +4,9 @@ import menuBack from "../../../assets/WM_Interventions_images/menu_images/menuBa
 import visual from "../../../assets/WM_Interventions_images/menu_images/visual.png";
 import memory from "../../../assets/WM_Interventions_images/menu_images/memory.png";
 import audio from "../../../assets/WM_Interventions_images/menu_images/audio.png";
-import rb from "../../../assets/WM_Interventions_images/menu_images/rb.png"; // Import rb.png
-import sq from "../../../assets/WM_Interventions_images/menu_images/sq.png"; // Import sq.png
-import zb from "../../../assets/WM_Interventions_images/menu_images/zb.png"; // Import zb.png
+import rb from "../../../assets/WM_Interventions_images/menu_images/rb.png"; 
+import sq from "../../../assets/WM_Interventions_images/menu_images/sq.png"; 
+import zb from "../../../assets/WM_Interventions_images/menu_images/zb.png"; 
 
 const WM_Menu = () => {
   const navigate = useNavigate();
@@ -36,9 +36,11 @@ const WM_Menu = () => {
         backgroundPosition: "center",
       }}
     >
-      <h1 className="text-5xl font-bold text-white mb-10 drop-shadow-2xl bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent animate-pulse relative left-3">
-  <span className="bg-black/-10 px-4 py-2 rounded-lg">මතකය වර්ධනය සඳහා මගහුරුව</span>
-</h1>
+      <h1 className="text-5xl font-bold text-white mb-[55px] drop-shadow-2xl bg-clip-text text-transparent animate-pulse relative left-3">
+    <span className="bg-black/30 px-4 py-2 rounded-3xl shadow-xl border border-white/90 text-shadow-xl">
+      මතකය වර්ධනය සඳහා මගහුරුව
+    </span>
+  </h1>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-8xl mx-auto">
         {/* Visual Games Card */}
         <div

@@ -16,8 +16,8 @@ import mon4 from "../../../../assets/WM_Interventions_images/L3_images/mon4.png"
 import flowerImage from "../../../../assets/WM_Interventions_images/L3_images/flower.png"; 
 import sadMonImage  from "../../../../assets/WM_Interventions_images/L3_images/sad_mon.png"; 
 import snowman from "../../../../assets/WM_Interventions_images/L3_images/snowman.png";
-
-
+import duck1 from "../../../../assets/WM_Interventions_images/L3_images/duck1.png";
+import duck2 from "../../../../assets/WM_Interventions_images/L3_images/duck2.png";
 
 function Activity1({ onNext }) {
   const questions = [
@@ -52,9 +52,9 @@ function Activity1({ onNext }) {
       audio: Q5_audio,
       answers: [
         { text: "රන්වන් හිරු සෙමෙන් ක්ෂිතිජයෙන් පහළට බැස එමින්,රෝස සහ තැඹිලි වර්ණවලින් අහස පින්තාරු කළේය.", isCorrect: true },
-        { text: "රන්වන් හිරු සෙමෙන් කඳු පිටුපසින්<br>බැස, රෝස සහ තැඹිලි වර්ණවලින් අහස පින්තාරු කළේය.", isCorrect: false },
-        { text: "රන්වන් හිරු සෙමෙන් ක්ෂිතිජයෙන් පහළට බැස, රෝස සහ<br>රතු වර්ණවලින්<br>අහස පින්තාරු<br>කළේය.", isCorrect: false },
-        { text: "රන් හිරු<br>කඳුකරයෙන් පිටතට වියැකී ගියේ රතු<br>සහ රන්වන් ඉරි වලින් අහස<br>විහිදුවමිනි.", isCorrect: false }
+        { text: "රන්වන් හිරු සෙමෙන් කඳු පිටුපසින්<br>බැස, රෝස ,කහ,කොළ පාට<br>සහ තැඹිලි වර්ණවලින් අහස<br>පින්තාරු කළේය.", isCorrect: false },
+        { text: "රන්වන් හිරු සෙමෙන් ක්ෂිතිජයෙන් පහළට බැස, රෝස<br>සහ රතු වර්ණවලින්<br>අහස පින්තාරු<br>කළේය.", isCorrect: false },
+        { text: "රන් හිරු<br>කඳුකරයෙන් පිටතට වියැකී ගියේ රතු<br>සහ රන්වන්<br>ඉරි වලින්<br>අහස<br>විහිදුවමිනි.", isCorrect: false }
       ]
     }
   ];
@@ -73,10 +73,9 @@ function Activity1({ onNext }) {
   const handleAudioEnded = () => {
     if (playCountRef.current < 1) {
       playCountRef.current += 1;
-      audioRef.current.play();
-      setAudioStarted(true);
+      audioRef.current.play(); // Play the audio again
     } else {
-      setShowAnswers(true);
+      setShowAnswers(true); // Move to the answer page after playing twice
     }
   };
 
@@ -91,20 +90,10 @@ function Activity1({ onNext }) {
       audioRef.current.pause();
       audioRef.current.src = currentQuestion.audio;
       audioRef.current.load();
+      audioRef.current.play(); // Automatically start playing the audio
+      setAudioStarted(true);
     }
   }, [currentQuestionIndex, currentQuestion.audio]);
-
-  const handlePlayButtonClick = () => {
-    if (!audioRef.current) return;
-
-    if (audioRef.current.paused) {
-      audioRef.current.play();
-      setAudioStarted(true);
-    } else {
-      audioRef.current.pause();
-      setAudioStarted(false);
-    }
-  };
 
   const handleAnswerClick = (index) => {
     setSelectedAnswer(index);
@@ -126,8 +115,13 @@ function Activity1({ onNext }) {
     }
   };
 
-  // Increase container width only for Q5_audio question
-  const containerStyle = currentQuestion.audio === Q5_audio ? { width: '80%' } : {};
+  // Adjusted sizes for each monster image
+  const monsterSizes = [
+    { width: "120px", height: "170px" }, // Size for mon1
+    { width: "140px", height: "140px" }, // Size for mon2
+    { width: "130px", height: "130px" }, // Size for mon3
+    { width: "150px", height: "150px" }, // Size for mon4
+  ];
 
   return (
     <div
@@ -153,14 +147,13 @@ function Activity1({ onNext }) {
       )}
 
       {/* Instructions when audio is playing */}
-{!showAnswers && (
-  <div className="absolute top-20 px-6 py-3 bg-black text-white text-5xl font-bold bg-opacity-60 rounded-xl">
-    හොඳින් සවන් දෙන්න
-  </div>
-)}
+      {!showAnswers && (
+        <div className="absolute top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full bg-black bg-opacity-50 border-4 border-white w-[40%] mx-auto flex items-center justify-center">
+          <p className="text-white text-5xl font-bold text-center">හොඳින් සවන් දෙන්න</p>
+        </div>
+      )}
 
-
-      {/* Audio controls (Play/Pause button) */}
+      {/* Audio button (non-interactive, just for display) */}
       {!showAnswers && (
         <div className="flex flex-col items-center justify-center mt-[-80px] space-y-3 z-30">
           <div
@@ -171,52 +164,50 @@ function Activity1({ onNext }) {
               src={audioStarted ? pauseIcon : playButton}
               alt={audioStarted ? "Pause" : "Play"}
               className="absolute inset-0 m-auto w-[125px] h-[125px] cursor-pointer z-40"
-              onClick={handlePlayButtonClick}
+              style={{ pointerEvents: "none" }} // Disable interaction
             />
           </div>
         </div>
       )}
 
-     {/* Answer selection page */}
-{showAnswers && (
+      {showAnswers && (
   <div
     className="mt-8 text-center w-full max-w-4xl mx-auto px-4"
-    style={currentQuestion.audio === Q5_audio ? { width: '100%' } : {}}
+    style={currentQuestion.audio === Q5_audio ? { width: '90%' } : {}}
   >
-  <div className="flex justify-center items-center mt-[-60px] mb-6">
-  <div className="bg-white bg-opacity-50 p-4 rounded-xl shadow-md">
-    <p className="text-blue-900 text-4xl font-bold text-center">
-      නිවැරදි පිළිතුර තෝරන්න
-    </p>
-  </div>
-</div>
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {currentQuestion.answers.map((ans, index) => {
-              const monsterImages = [mon1, mon2, mon3, mon4];
-              return (
-                <div
-                  key={index}
-                  className={`p-6 rounded-xl border-4 cursor-pointer transition-all duration-300 ${
-                    selectedAnswer === index
-                      ? ans.isCorrect
-                        ? "border-blue-700 bg-white/20 scale-105"
-                        : "border-red-500 bg-white/20 scale-105"
-                      : "border-white bg-white/10 hover:scale-105"
-                  } ${
-                    selectedAnswer !== null && selectedAnswer !== index
-                      ? "opacity-50 cursor-not-allowed"
-                      : ""
-                  }`}
-            
+    <div className="flex justify-center items-center mt-[-60px] mb-6">
+      <div className="bg-white bg-opacity-50 p-4 rounded-xl shadow-md">
+        <p className="text-black-900 text-4xl font-bold text-center">
+          නිවැරදි පිළිතුර තෝරන්න
+        </p>
+      </div>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {currentQuestion.answers.map((ans, index) => {
+        const monsterImages = [mon1, mon2, mon3, mon4];
+        return (
+          <div
+            key={index}
+            className={`p-6 rounded-xl border-4 cursor-pointer transition-all duration-300 ${
+              selectedAnswer === index
+                ? ans.isCorrect
+                  ? "border-blue-700 bg-white/20 scale-105"
+                  : "border-red-500 bg-white/20 scale-105"
+                : "border-white bg-white/10 hover:scale-105"
+            } ${
+              selectedAnswer !== null && selectedAnswer !== index
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }`}
             style={{
-              height: '350px', // Increased height for the container in Q5_audio
+              height: currentQuestion.audio === Q5_audio ? '430px' : '350px', // Increase height for Q5_audio
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              width: currentQuestion.audio === Q5_audio ? '105%' : 'auto', // Apply 100% width only to Q5_audio
+              width: currentQuestion.audio === Q5_audio ? '100%' : 'auto', // Increase width for Q5_audio
             }}
             onClick={() => {
-              if (selectedAnswer === null) { // Ensure the user can only select once
+              if (selectedAnswer === null) {
                 handleAnswerClick(index);
               }
             }}
@@ -228,53 +219,67 @@ function Activity1({ onNext }) {
             />
             
             {/* Monster or flower image inside container */}
-<div className="flex justify-center items-center w-full h-full">
-  {selectedAnswer === index ? (
-    ans.isCorrect ? (
-      <img
-        src={flowerImage}
-        alt={`Correct Answer`}
-        className="object-contain w-40 h-40 rounded-lg"
-      />
-    ) : (
-      <img
-        src={sadMonImage}
-        alt={`Sad Monster`}
-        className="sad-mon-image object-contain w-32 h-32 rounded-lg"
-      />
-    )
-  ) : (
-    <img
-      src={monsterImages[index]}
-      alt={`Answer ${index + 1}`}
-      className="object-contain w-32 h-32 rounded-lg"
-    />
-  )}
-</div>
+            <div className="flex justify-center items-center w-full h-full">
+              {selectedAnswer === index ? (
+                ans.isCorrect ? (
+                  <img
+                    src={flowerImage}
+                    alt={`Correct Answer`}
+                    className="object-contain w-40 h-40 rounded-lg"
+                  />
+                ) : (
+                  <img
+                    src={sadMonImage}
+                    alt={`Sad Monster`}
+                    className="sad-mon-image object-contain w-32 h-32 rounded-lg"
+                  />
+                )
+              ) : (
+                <img
+                  src={monsterImages[index]}
+                  alt={`Answer ${index + 1}`}
+                  className="object-contain rounded-lg"
+                  style={{
+                    width: monsterSizes[index].width,
+                    height: monsterSizes[index].height,
+                  }}
+                />
+              )}
+            </div>
           </div>
         );
       })}
     </div>
   </div>
 )}
-
-        {/* Next button */}
-        {showAnswers && (
+   {/* Modified bear section with ducks - precise margins */}
+{!showAnswers && (
+  <div className="absolute bottom-[-130px] left-[190px] z-20 flex items-end gap-8">
+    
+    {/* Right Duck */}
+    <img
+      src={duck2}
+      alt="duck"
+      className="w-[150px] h-auto mb-[140px] ml-[350px] relative z-30"
+    />
+  </div>
+)}
+      {/* Next button */}
+      {showAnswers && (
         <button
-          className={`absolute bottom-8 right-8 p-4 rounded-full shadow-lg flex items-center space-x-2 transition ${
-            selectedAnswer === null
-              ? "bg-gray-400 cursor-not-allowed text-gray-200"
-              : "bg-blue-500 hover:bg-blue-600 text-white"
+          className={`absolute bottom-8 right-8 p-4 rounded-full shadow-lg flex items-center justify-center transition ${
+            selectedAnswer === null 
+              ? "bg-gradient-to-r from-gray-400 to-gray-700 cursor-not-allowed" // Grey with black gradient
+              : "bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
           }`}
           onClick={moveToNextQuestion}
           disabled={selectedAnswer === null}
         >
-          <span>Next</span>
-          <FaArrowRight />
+          <FaArrowRight className="text-white text-2xl" />
         </button>
       )}
 
-
+      {/* Celebration animation */}
       {showCelebration && (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-80 z-50">
           <div className="absolute inset-0 pointer-events-none">
@@ -282,16 +287,18 @@ function Activity1({ onNext }) {
               <div key={i} className={`firework firework-${i + 1}`}></div>
             ))}
           </div>
-          <h1 className="relative z-10 text-6xl text-white font-bold mb-[-120px] animate-fadeIn">
-            ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
-          </h1>
+          <h1 className="relative z-10 text-6xl font-bold mb-[-100px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
+      ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
+    </h1>
           <img
             src={snowman}
             alt="Celebration snowman"
-            className="relative z-10 w-1/4 h-auto animate-wave mt-10"
+            className="relative z-10 w-1/4 h-auto animate-wave mt-8"
           />
         </div>
       )}
+
+
       <style>
         {`
           @keyframes fadeIn {

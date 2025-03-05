@@ -150,9 +150,9 @@ function Activity1({ onNext, setTotalScore }) {
       </audio>
 
       {!showAnswers && (
-        <div className="absolute top-20 px-6 py-3 border-4 border-white rounded-full bg-transparent">
-          <p className="text-white text-5xl font-bold">හොඳින් සවන් දෙන්න</p>
-        </div>
+        <div className="absolute top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full bg-black bg-opacity-50 border-4 border-white w-[40%] mx-auto flex items-center justify-center">
+  <p className="text-white text-5xl font-bold text-center">හොඳින් සවන් දෙන්න</p>
+</div>
       )}
 
       {!showAnswers && (
@@ -201,77 +201,78 @@ function Activity1({ onNext, setTotalScore }) {
           </div>
         </div>
       )}
-
       {showAnswers && (
-        <div className="mt-8 text-center w-full max-w-4xl mx-auto">
-          <p className="text-white text-4xl mb-10 font-bold">නිවැරදි පිළිතුර තෝරන්න</p>
-          <div className="flex flex-wrap justify-center gap-8">
-            {currentQuestion.answers.map((ans, index) => (
-              <div
-                key={index}
-                className={`relative transition-all duration-300 ${
-                  index === 1 ? "mt-12" : ""
-                }`}
-                style={{
-                  transformStyle: 'preserve-3d',
-                  perspective: '1000px',
-                }}
-              >
-                <img
-                  src={ans.image}
-                  alt={`Answer ${index + 1}`}
-                  className={`object-cover cursor-pointer border-4 rounded-xl shadow-xl transition-all ${
-                    selectedAnswer === index 
-                      ? "border-green-500 scale-105" 
-                      : "border-white"
-                  } ${
-                    index === 1 
-                      ? "w-64 h-64" 
-                      : "w-52 h-52"
-                  } ${
-                    selectedAnswer !== null && selectedAnswer !== index 
-                      ? "opacity-50 cursor-not-allowed" 
-                      : "hover:scale-105 hover:shadow-2xl"
-                  }`}
-                  style={{
-                    transform: 'translateZ(20px)',
-                    backfaceVisibility: 'hidden',
-                  }}
-                  onClick={() => {
-                    if (selectedAnswer === null) {
-                      handleAnswerClick(index);
-                    }
-                  }}
-                />
-                <div 
-                  className="absolute inset-0 rounded-xl shadow-lg"
-                  style={{
-                    background: 'linear-gradient(145deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.1) 100%)',
-                    transform: 'translateZ(10px)',
-                    zIndex: -1,
-                  }}
-                ></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+  <div className="mt-8 text-center w-full max-w-3xl mx-auto"> {/* Reduced width */}
+    {/* Black container with border for the text */}
+    <div className="bg-black bg-opacity-50 p-4 rounded-2xl border-4 border-white mb-14 w-[50%] mx-auto"> {/* Reduced width */}
+      <p className="text-white text-4xl font-bold">නිවැරදි පිළිතුර තෝරන්න</p>
+    </div>
 
-      {showAnswers && (
-        <button
-          className={`absolute bottom-8 right-8 p-4 rounded-full shadow-lg flex items-center space-x-2 transition ${
-            selectedAnswer === null 
-              ? "bg-gray-400 cursor-not-allowed text-gray-200" 
-              : "bg-blue-500 hover:bg-blue-600 text-white"
+    <div className="flex flex-wrap justify-center gap-8">
+      {currentQuestion.answers.map((ans, index) => (
+        <div
+          key={index}
+          className={`relative transition-all duration-300 ${
+            index === 1 ? "mt-12" : ""
           }`}
-          onClick={moveToNextQuestion}
-          disabled={selectedAnswer === null}
+          style={{
+            transformStyle: 'preserve-3d',
+            perspective: '1000px',
+          }}
         >
-          <span>Next</span>
-          <FaArrowRight />
-        </button>
-      )}
+          <img
+            src={ans.image}
+            alt={`Answer ${index + 1}`}
+            className={`object-cover cursor-pointer border-4 rounded-xl shadow-xl transition-all ${
+              selectedAnswer === index 
+                ? "border-green-500 scale-105" 
+                : "border-white"
+            } ${
+              index === 1 
+                ? "w-64 h-64" 
+                : "w-52 h-52"
+            } ${
+              selectedAnswer !== null && selectedAnswer !== index 
+                ? "opacity-50 cursor-not-allowed" 
+                : "hover:scale-105 hover:shadow-2xl"
+            }`}
+            style={{
+              transform: 'translateZ(20px)',
+              backfaceVisibility: 'hidden',
+            }}
+            onClick={() => {
+              if (selectedAnswer === null) {
+                handleAnswerClick(index);
+              }
+            }}
+          />
+          <div 
+            className="absolute inset-0 rounded-xl shadow-lg"
+            style={{
+              background: 'linear-gradient(145deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.1) 100%)',
+              transform: 'translateZ(10px)',
+              zIndex: -1,
+            }}
+          ></div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
 
+{showAnswers && (
+  <button
+    className={`absolute bottom-8 right-8 p-4 rounded-full shadow-lg flex items-center justify-center transition ${
+      selectedAnswer === null 
+        ? "bg-gradient-to-r from-gray-400 to-gray-700 cursor-not-allowed" // Grey with black gradient
+        : "bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
+    }`}
+    onClick={moveToNextQuestion}
+    disabled={selectedAnswer === null}
+  >
+    <FaArrowRight className="text-white text-2xl" />
+  </button>
+)}
       {!showAnswers && (
         <img
           src={penguin5}
@@ -288,9 +289,9 @@ function Activity1({ onNext, setTotalScore }) {
               <div key={i} className={`firework firework-${i + 1}`}></div>
             ))}
           </div>
-          <h1 className="relative z-10 text-6xl text-white font-bold mb-[-20px] animate-fadeIn">
-            ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
-          </h1>
+          <h1 className="relative z-10 text-6xl font-bold mb-[-100px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
+      ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
+    </h1>
           <img
             src={penguin_feedback}
             alt="Celebration Penguin"

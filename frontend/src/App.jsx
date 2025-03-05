@@ -17,6 +17,8 @@ import WorkingMemory from "./Pages/WorkingMemory/WorkingMemory";
 import ScoreBoard from "./Components/Score_board";
 import { ScoresProvider } from "./context/Score_context";
 import ScreeningMenu from "./Pages/ScreeningMenu/ScreeningMenu";
+import Screening_and_interventions from "./Pages/ScreeningMenu_interventions/Screening_and_interventions";
+import Intervention_menu from "./Pages/Intervention_Menu/Intervention_menu";
 import AttentionIM from "./Pages/Attention/AttentionIM";
 import AttentionGame1 from "./Pages/Attention/AttentionGame1";
 import AttentionGame2 from "./Pages/Attention/AttentionGame2";
@@ -43,6 +45,7 @@ import WM_Game1Menu from "./Pages/WorkingMemoryInterventions/WorkingMemoryGame1/
 import WM_Game2Menu from "./Pages/WorkingMemoryInterventions/WorkingMmeoryGame2/WM_Game2Menu";
 import WM_Game3Menu from "./Pages/WorkingMemoryInterventions/WorkingMemoryGame3/WM_Game3Menu"; 
 import WM_Menu from "./Pages/WorkingMemoryInterventions/WorkingMemoryMenu/WM_Menu";
+import Writing_menu from "./Components/Writing_menu";
 
 
 const App = () => {
@@ -117,6 +120,8 @@ const App = () => {
             <Route path="/scoreboard" element={<ScoreBoard />} />
             <Route path="/splash" element={<SplashScreen />} />
             <Route path="/screening-menu" element={<ScreeningMenu />} />
+            <Route path="/screening_and_interventions" element={<Screening_and_interventions />} />
+            <Route path="/interventions-menu" element={<Intervention_menu />} />
             <Route path="/working-memory-game1/Level1/*" element={<WM_Game1_Level1 />} />
             <Route path="/working-memory-game1/Level2/*" element={<WM_Game1_Level2 />} />
             <Route path="/working-memory-game1/Level3/*" element={<WM_Game1_Level3 />} />
@@ -130,6 +135,8 @@ const App = () => {
             <Route path="/WM_Game2Menu" element={<WM_Game2Menu />} />
             <Route path="/WM_Game3Menu" element={<WM_Game3Menu />} />
             <Route path="/WM_Menu" element={<WM_Menu />} />
+            <Route path="/Writing_menu" element={<Writing_menu />} />
+
         </Routes>
         </ScoresProvider>
       </BrowserRouter>

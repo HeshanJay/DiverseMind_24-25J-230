@@ -147,8 +147,8 @@ function Activity1({ onNext }) {
       </audio>
 
       {!audioPlayed && !showAnswers && (
-        <div className="absolute top-20 px-6 py-3 border-4 border-white rounded-full bg-transparent">
-          <p className="text-white text-5xl font-bold">හොඳින් සවන් දෙන්න</p>
+        <div className="absolute top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full bg-black bg-opacity-50 border-4 border-white w-[40%] mx-auto flex items-center justify-center">
+          <p className="text-white text-5xl font-bold text-center">හොඳින් සවන් දෙන්න</p>
           <img
             src={rabbit_icon}
             alt="rabbit_icon"
@@ -226,21 +226,20 @@ function Activity1({ onNext }) {
     </div>
   </div>
 )}
-      {showAnswers && (
+     {/* Next button */}
+     {showAnswers && (
         <button
-          className={`absolute bottom-8 right-8 p-4 rounded-full shadow-lg flex items-center space-x-2 transition ${
-            !answerSubmitted
-              ? "bg-gray-400 cursor-not-allowed text-gray-200"
-              : "bg-blue-500 hover:bg-blue-600 text-white"
+          className={`absolute bottom-8 right-8 p-4 rounded-full shadow-lg flex items-center justify-center transition ${
+            selectedAnswer === null 
+              ? "bg-gradient-to-r from-gray-400 to-gray-700 cursor-not-allowed" // Grey with black gradient
+              : "bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
           }`}
           onClick={moveToNextQuestion}
-          disabled={!answerSubmitted}
+          disabled={selectedAnswer === null}
         >
-          <span>{currentQuestionIndex === questions.length - 1 ? "Finish" : "Next"}</span>
-          <FaArrowRight />
+          <FaArrowRight className="text-white text-2xl" />
         </button>
       )}
-
       {showCelebration && (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-80 z-50">
           <div className="absolute inset-0 pointer-events-none">
@@ -248,9 +247,9 @@ function Activity1({ onNext }) {
               <div key={i} className={`firework firework-${i + 1}`}></div>
             ))}
           </div>
-          <h1 className="relative z-10 text-6xl text-white font-bold mb-[-100px] animate-fadeIn">
-            ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
-          </h1>
+          <h1 className="relative z-10 text-6xl font-bold mb-[-100px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
+      ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
+    </h1>
           <img
             src={snow_feedback}
             alt="Celebration Penguin"

@@ -5,7 +5,7 @@ import snow_img30 from "../../../../assets/WM_Interventions_images/L3_images/sno
 
 const G3_L1_instructionPage = ({ onNext }) => {
   const handleStart = () => {
-    onNext(); // Move to the next step
+    onNext(); 
   };
 
   return (
@@ -48,9 +48,9 @@ const G3_L1_instructionPage = ({ onNext }) => {
                 උපදෙස් නිවැරදිව කියවා පිළිතුරු සපයන්න.
               </p>
               <ul className="text-lg md:text-xl mb-10 list-disc list-inside leading-relaxed text-left text-black ml-16">
-                <li>රූපය නිවැරදිව මතක තබා ගන්න.</li>
-                <li>රූපය නැරඹීම සඳහා තත්පර 10 ක් ලබා දේ.</li>
-                <li>නිවැරදිව පිළිතුර තෝරන්න.</li>
+                <li>හඩ පටයට හොඳින් සවන් දෙන්න.</li>
+                <li>ඔබට හඩ පටයට දෙවරක් සවන් දිය හැකිය.</li>
+                <li>නිවැරදිව පිළිතුරු තෝරන්න.</li>
               </ul>
             </div>
           </div>

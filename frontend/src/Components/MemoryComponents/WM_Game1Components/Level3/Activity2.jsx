@@ -7,7 +7,7 @@ import octopus5 from "../../../../assets/WM_Interventions_images/L1_images/octop
 const fillQuestions = [
   {
     id: 1,
-    sentenceTemplate: "1. ___මහත්මිය ___ හරස් කරයි.",
+    sentenceTemplate: " ___මහත්මිය ___ හරස් කරයි.",
     correctAnswers: ["වයස්ගත", "මාර්ගය"],
     choicesPerBlank: [
       ["වයස්ගත", "ගිනි", "පුද්ගලයෙකු", "පොලිස්"],
@@ -114,7 +114,7 @@ function Activity2({ onNext }) {
 
       {/* White container box for header text */}
       {page === 1 && (
-        <div className="bg-white bg-opacity-60 p-4 rounded-2xl mb-8 z-20">
+        <div className="bg-white bg-opacity-50 p-4 rounded-2xl border-4 border-black mb-8 z-20">
           <h1 className="text-3xl font-bold text-black">නිවැරදි පිළිතුර තෝරන්න</h1>
         </div>
       )}
@@ -168,8 +168,8 @@ function Activity2({ onNext }) {
   onClick={handleNextPage}
   className={`mt-8 bg-gradient-to-r from-blue-700 to-teal-500 text-white font-bold text-xl md:text-2xl px-6 py-4 rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 hover:rotate-1 ${
     isAllFilled()
-      ? "bg-gradient-to-r from-teal-400 to-cyan-500 text-white hover:from-teal-500 hover:to-cyan-600"
-      : "bg-gradient-to-r from-gray-100 to-gray-300 text-gray-500 cursor-not-allowed"
+      ? "bg-gradient-to-r from-teal-400 to-cyan-700 text-white hover:from-teal-500 hover:to-cyan-600"
+      : "bg-gradient-to-r from-gray-400 to-gray-300 text-gray-500 cursor-not-allowed"
   }`}
   disabled={!isAllFilled()}
 >

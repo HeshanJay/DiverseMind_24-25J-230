@@ -210,9 +210,9 @@ function Activity1({ onNext }) {
             <div className="firework firework-23"></div>
             <div className="firework firework-24"></div>
           </div>
-          <h1 className="relative z-10 text-6xl text-white font-bold mb-[-60px] animate-fadeIn">
-            ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
-          </h1>
+          <h1 className="relative z-10 text-6xl font-bold mb-[-100px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
+      ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
+    </h1>
           <img
             src={dino_img}
             alt="Celebration Dino"

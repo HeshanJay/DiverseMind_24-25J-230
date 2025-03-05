@@ -75,6 +75,9 @@ const Activity1 = () => {
   const [score, setScore] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
   const current = questions[currentQuestion];
+  
+  // Add state to track if at least one selection has been made
+  const [hasSelectedAtLeastOne, setHasSelectedAtLeastOne] = useState(false);
 
   // ----- Question Phase (if questionImages exist) -----
   const [showQuestion, setShowQuestion] = useState(true);
@@ -103,11 +106,12 @@ const Activity1 = () => {
   const [previewActive, setPreviewActive] = useState(false);
   const [answerTimer, setAnswerTimer] = useState(null);
 
-  // Reset revealed state on question change
+  // Reset states on question change
   useEffect(() => {
     setRevealed(Array(current.answerImages.length).fill(false));
     setAnswerTimer(null);
     setPreviewActive(false);
+    setHasSelectedAtLeastOne(false); // Reset the selection state
   }, [currentQuestion, current.answerImages.length]);
 
   // --- Answer Phase Preview Sequence ---
@@ -140,11 +144,16 @@ const Activity1 = () => {
   const handleSelect = (index) => {
     if (previewActive || (answerTimer !== null && answerTimer <= 0)) return;
     if (revealed[index]) return;
+    
+    // Set that the user has made at least one selection
+    setHasSelectedAtLeastOne(true);
+    
     setRevealed((prev) => {
       const newArr = [...prev];
       newArr[index] = true;
       return newArr;
     });
+    
     if (current.correctIndices.includes(index)) {
       setScore((prevScore) => prevScore + 2);
     } else {
@@ -268,23 +277,27 @@ const Activity1 = () => {
             </div>
           )}
 
-          {/* Next Button: Show only in the answer section and when not in preview phase or fish image phase */}
+          {/* Next Button: Updated to allow progress if at least one selection has been made */}
           {!previewActive && answerTimer !== null && (
             <button
-              onClick={() => (allCorrectRevealed || (answerTimer !== null && answerTimer <= 0)) && handleNext()}
+              onClick={() => {
+                // Allow next if timer expired, all correct answers revealed, or at least one selection made
+                if (allCorrectRevealed || (answerTimer !== null && answerTimer <= 0) || hasSelectedAtLeastOne) {
+                  handleNext();
+                }
+              }}
               className={`absolute bottom-[-2] right-[-120px] p-4 rounded-full shadow-lg transition ${
-                (allCorrectRevealed || (answerTimer !== null && answerTimer <= 0))
+                (allCorrectRevealed || (answerTimer !== null && answerTimer <= 0) || hasSelectedAtLeastOne)
                   ? "bg-gradient-to-r from-teal-400 to-cyan-500 text-white hover:from-teal-500 hover:to-cyan-600"
                   : "bg-gradient-to-r from-gray-100 to-gray-300 text-gray-500 cursor-not-allowed"
               }`}
-              disabled={!(allCorrectRevealed || (answerTimer !== null && answerTimer <= 0))}
+              disabled={!(allCorrectRevealed || (answerTimer !== null && answerTimer <= 0) || hasSelectedAtLeastOne)}
             >
               <FaArrowRight size={24} />
             </button>
           )}
         </div>
       )}
-
 
       <style jsx>{`
         .flip-container {

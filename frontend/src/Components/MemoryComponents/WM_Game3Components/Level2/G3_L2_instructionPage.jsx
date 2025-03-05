@@ -38,7 +38,7 @@ const G3_L2_instructionPage = ({ onNext }) => {
             {/* Heading with gradient matching snow theme */}
             <div className="mb-4">
               <h1 className="text-4xl md:text-6xl font-bold text-center bg-gradient-to-r from-blue-800 via-blue-900 to-gray-900 bg-clip-text text-transparent leading-tight py-2">
-                ක්‍රියාකාරකම් 1
+                ක්‍රියාකාරකම් 2
               </h1>
             </div>
 
@@ -48,9 +48,9 @@ const G3_L2_instructionPage = ({ onNext }) => {
                 උපදෙස් නිවැරදිව කියවා පිළිතුරු සපයන්න.
               </p>
               <ul className="text-lg md:text-xl mb-10 list-disc list-inside leading-relaxed text-left text-black ml-16">
-                <li>රූපය නිවැරදිව මතක තබා ගන්න.</li>
-                <li>රූපය නැරඹීම සඳහා තත්පර 10 ක් ලබා දේ.</li>
-                <li>නිවැරදිව පිළිතුර තෝරන්න.</li>
+                <li>හඩ පටයට හොඳින් සවන් දෙන්න.</li>
+                <li>ඔබට හඩ පටයට දෙවරක් සවන් දිය හැකිය.</li>
+                <li>නිවැරදිව පිළිතුරු තෝරන්න.</li>
               </ul>
             </div>
           </div>

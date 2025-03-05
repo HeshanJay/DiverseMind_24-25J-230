@@ -171,9 +171,9 @@ function Activity1({ onNext }) {
               <div key={i} className={`firework firework-${i + 1}`}></div>
             ))}
           </div>
-          <h1 className="relative z-10 text-6xl text-white font-bold mb-[-10px] animate-fadeIn">
-            ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
-          </h1>
+          <h1 className="relative z-10 text-6xl font-bold mb-[-100px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
+      ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
+    </h1>
           <img
             src={dog}
             alt="Celebration Feedback"
