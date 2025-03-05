@@ -13,6 +13,7 @@
     "@heroicons/react": "^2.2.0",
     "@react-pdf/renderer": "^4.1.6",
     "@react-spring/web": "^9.7.5",
+    "@shopify/react-native-skia": "^1.11.11",
     "axios": "^1.7.9",
     "frontend": "file:",
     "react": "^18.3.1",

@@ -398,7 +398,7 @@ function Activity1({ onNext }) {
                 {(score >= 20 || gameWon) && (
                   <button
                     onClick={() =>
-                      (window.location.href = "/writing-game2-level3")
+                      (window.location.href = "/writing-game2-level2")
                     }
                     className="bg-yellow-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:bg-yellow-600 transition-colors"
                   >

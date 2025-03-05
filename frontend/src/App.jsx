@@ -37,7 +37,6 @@ import AttentionGame3Level1 from "./Pages/Attention/AttentionGame3Level1";
 import AttentionGame3Level2 from "./Pages/Attention/AttentionGame3Level2";
 import AttentionGame3Level3 from "./Pages/Attention/AttentionGame3Level3";
 import MathChoiceSelectionPage from "./Pages/MathematicActivities/MathChoiceSelectionPage";
-
 import WritingGameMenu from "./Pages/WritingInterventions/WritingGameMenu/WritingGameMenu";
 import WritingGame2Menu from "./Pages/WritingInterventions/WritingGame2/WritingGame2Menu";
 import WritingGame3Menu from "./Pages/WritingInterventions/WritingGame3/WritingGame3Menu";
@@ -144,10 +143,6 @@ const App = () => {
               element={<MathAdditionGamePage />}
             />
             <Route path="/math-choice" element={<MathChoiceSelectionPage />} />
-            <Route
-              path="/math-entrence"
-              element={<MathActivityEntrencePage />}
-            />
             <Route
               path="/math-addition-guidance"
               element={<MathAdditionGuidancePage />}

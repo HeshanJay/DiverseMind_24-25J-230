@@ -75,56 +75,56 @@ const cardStyles = `
   .magic-star { animation: magicStar 1.5s ease-in-out infinite; }
 
   .celebration-animation {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.celebration-star {
-  font-size: 8rem;
-  animation: star-pop 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  transform-origin: center;
-}
-
-.celebration-item {
-  position: absolute;
-  font-size: 2rem;
-  opacity: 0;
-  animation: celebration-flow 1.5s ease-out both;
-}
-
-@keyframes star-pop {
-  0% { transform: scale(0); opacity: 0; }
-  80% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes celebration-flow {
-  0% {
-    opacity: 1;
-    transform: translate(0, 0) scale(1) rotate(0deg);
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  100% {
+
+  .celebration-star {
+    font-size: 8rem;
+    animation: star-pop 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    transform-origin: center;
+  }
+
+  .celebration-item {
+    position: absolute;
+    font-size: 2rem;
     opacity: 0;
-    transform: 
-      translate(
-        calc(var(--dx) * 300px), 
-        calc(var(--dy) * 300px)
-      )
-      scale(0.5)
-      rotate(360deg);
+    animation: celebration-flow 1.5s ease-out both;
   }
-}
 
-/* Different directions */
-.item-0 { --dx: 0.5; --dy: -0.5; color: #FFD700; }
-.item-1 { --dx: -0.5; --dy: -0.5; color: #FF69B4; }
-.item-2 { --dx: 0.3; --dy: 0.7; color: #7FFF00; }
-.item-3 { --dx: -0.3; --dy: 0.7; color: #00BFFF; }
+  @keyframes star-pop {
+    0% { transform: scale(0); opacity: 0; }
+    80% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes celebration-flow {
+    0% {
+      opacity: 1;
+      transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: 
+        translate(
+          calc(var(--dx) * 300px), 
+          calc(var(--dy) * 300px)
+        )
+        scale(0.5)
+        rotate(360deg);
+    }
+  }
+
+  /* Different directions */
+  .item-0 { --dx: 0.5; --dy: -0.5; color: #FFD700; }
+  .item-1 { --dx: -0.5; --dy: -0.5; color: #FF69B4; }
+  .item-2 { --dx: 0.3; --dy: 0.7; color: #7FFF00; }
+  .item-3 { --dx: -0.3; --dy: 0.7; color: #00BFFF; }
 `;
 
 const consonants = [
@@ -244,12 +244,13 @@ function Activity1({ onNext }) {
   const [gameWon, setGameWon] = useState(false);
 
   // Helper function to determine star rating based on score
+  // Fix: Use equality (===) instead of assignment (=)
   const getStars = (score) => {
-    if ((score = 80)) return 5;
-    else if ((score = 60)) return 4;
-    else if ((score = 50)) return 3;
-    else if ((score = 40)) return 2;
-    else if ((score = 30)) return 1;
+    if (score === 80) return 5;
+    else if (score === 60) return 4;
+    else if (score === 50) return 3;
+    else if (score === 40) return 2;
+    else if (score === 30) return 1;
     else return 0;
   };
 
@@ -408,7 +409,6 @@ function Activity1({ onNext }) {
             <div className="celebration-animation">
               {/* Main burst */}
               <div className="celebration-star">🎉</div>
-
               {/* Floating emojis */}
               {[...Array(12)].map((_, i) => (
                 <div
