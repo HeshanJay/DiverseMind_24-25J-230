@@ -1,0 +1,9 @@
+/* WritingGame1ScoreBoard.css */
+.nav-button {
+  @apply w-16 h-16 flex items-center justify-center rounded-full text-white 
+         transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 
+         active:scale-95;
+}
+
+/* Remove the body::before styles from the original CSS as we're now 
+   handling the background directly in the component */
