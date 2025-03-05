@@ -4,7 +4,7 @@ import Home from "./Pages/Home/Home";
 import About from "./Pages/About/About"; // Fixed extra slash here
 import AttentionReadingTest from "./Pages/ReadingDashboardpage";
 import MathScreeningTest from "./Pages/math/MathScreeningTest";
-import WritingTest from "./Pages/Writing/WritingTest";
+import WritingTest from "./Pages/WritingScreening/WritingTest";
 import Login from "./Components/Login/Login";
 import Signup from "./Components/Signup/Signup";
 import TeacherDashboard from "./Pages/TeacherDashboard/TeacherDashboard";
@@ -38,6 +38,16 @@ import AttentionGame3Level1 from "./Pages/Attention/AttentionGame3Level1";
 import AttentionGame3Level2 from "./Pages/Attention/AttentionGame3Level2";
 import AttentionGame3Level3 from "./Pages/Attention/AttentionGame3Level3";
 import MathChoiceSelectionPage from "./Pages/MathematicActivities/MathChoiceSelectionPage";
+import WritingGameMenu from "./Pages/WritingInterventions/WritingGameMenu/WritingGameMenu";
+import WritingGame2Menu from "./Pages/WritingInterventions/WritingGame2/WritingGame2Menu";
+import WritingGame3Menu from "./Pages/WritingInterventions/WritingGame3/WritingGame3Menu";
+import WritingGame2Level1 from "./Pages/WritingInterventions/WritingGame2/WritingGame2Level1";
+import WritingGame2Level2 from "./Pages/WritingInterventions/WritingGame2/WritingGame2Level2";
+import WritingGame2Level3 from "./Pages/WritingInterventions/WritingGame2/WritingGame2Level3";
+import WritingGame3Level1 from "./Pages/WritingInterventions/WritingGame3/WritingGame3Level1";
+import WritingGame1Level1 from "./Pages/WritingInterventions/WritingGame1/WritingGame1Level1";
+import WritingGame3ScoreBoard from "./Pages/WritingInterventions/WritingGame3/WritingGame3ScoreBoard";
+import WritingGame1ScoreBoard from "./Pages/WritingInterventions/WritingGame1/WritingGame1ScoreBoard";
 
 import WM_Game1_Level1 from "./Pages/WorkingMemoryInterventions/WorkingMemoryGame1/WM_Game1_Level1";
 import WM_Game1_Level2 from "./Pages/WorkingMemoryInterventions/WorkingMemoryGame1/WM_Game1_Level2";
@@ -139,6 +149,26 @@ const App = () => {
               path="/math-addition-game"
               element={<MathAdditionGamePage />}
             />
+            <Route
+              path="/math-addition-guidance"
+              element={<MathAdditionGuidancePage />}
+            />
+            <Route
+              path="/math-substraction-guidance"
+              element={<MathSubstractionGuidancePage />}
+            />
+            <Route
+              path="/math-multiplication-guidance"
+              element={<MathMultiplicationGuidancePage />}
+            />
+            <Route
+              path="/math-division-guidance"
+              element={<MathDivisionGuidancePage />}
+            />
+            <Route
+              path="/math-addition-game"
+              element={<MathAdditionGamePage />}
+            />
             <Route path="/math-choice" element={<MathChoiceSelectionPage />} />
             <Route
               path="/screening_and_interventions"
@@ -185,6 +215,57 @@ const App = () => {
             <Route path="/WM_Game2Menu" element={<WM_Game2Menu />} />
             <Route path="/WM_Game3Menu" element={<WM_Game3Menu />} />
             <Route path="/WM_Menu" element={<WM_Menu />} />
+            <Route
+              path="/math-addition-guidance"
+              element={<MathAdditionGuidancePage />}
+            />
+            <Route
+              path="/math-substraction-guidance"
+              element={<MathSubstractionGuidancePage />}
+            />
+            <Route
+              path="/math-multiplication-guidance"
+              element={<MathMultiplicationGuidancePage />}
+            />
+            <Route
+              path="/math-division-guidance"
+              element={<MathDivisionGuidancePage />}
+            />
+            <Route
+              path="/math-addition-game"
+              element={<MathAdditionGamePage />}
+            />
+            <Route path="/writing-game-menu" element={<WritingGameMenu />} />
+            <Route path="/writing-game2-menu" element={<WritingGame2Menu />} />
+            <Route path="/writing-game3-menu" element={<WritingGame3Menu />} />
+            <Route
+              path="/writing-game2-level1"
+              element={<WritingGame2Level1 />}
+            />
+            <Route
+              path="/writing-game2-level2"
+              element={<WritingGame2Level2 />}
+            />
+            <Route
+              path="/writing-game2-level3"
+              element={<WritingGame2Level3 />}
+            />
+            <Route
+              path="/writing-game3-level1"
+              element={<WritingGame3Level1 />}
+            />
+            <Route
+              path="/writing-game3-scoreBoard"
+              element={<WritingGame3ScoreBoard />}
+            />
+            <Route
+              path="/writing-game1-level1"
+              element={<WritingGame1Level1 />}
+            />
+            <Route
+              path="/writing-game1-scoreBoard"
+              element={<WritingGame1ScoreBoard />}
+            />
           </Routes>
         </ScoresProvider>
       </BrowserRouter>
