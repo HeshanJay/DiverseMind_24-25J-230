@@ -12,14 +12,14 @@ import random
 import string
 from math import sqrt
 from jose import jwt, JWTError
+from app.model.predictor import predict_math_outcome
+from app.model.predictor import predict_memory_outcome
+from typing import Optional  
 import app.utils as utils
-
-
-
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(_name_)
 
 from fastapi.responses import RedirectResponse, JSONResponse
 from pydantic import BaseModel, EmailStr, Field
@@ -47,7 +47,7 @@ from app.model.predictor import predict_memory_outcome
 #################################################
 # Configure logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(_name_)
 from typing import List
 import numpy as np
 import string
@@ -152,12 +152,21 @@ class WorkingMemoryInput(BaseModel):
     Visual_discrimination: float
     Audio_Discrimination: float
 
+class MemoryResults(BaseModel):
+    student_id: str = Field(..., description="ID of the student")
+    visualDiscriminationScore: float = Field(..., description="Visual Discrimination score")
+    memoryScore: float = Field(..., description="Memory score")
+    languageVocabScore: float = Field(..., description="Language Vocabulary score")
+    audioDiscriminationScore: float = Field(..., description="Audio Discrimination score")
+    speedScore: float = Field(..., description="Speed score")
+    prediction: str = Field(..., description="Final model prediction")
 class TeacherUpdateModel(BaseModel):
     pass
 
 class StudentEnrollmentModel(BaseModel):
     teacher_code: str = Field(..., description="Unique code of the teacher")
     student_name: str = Field(..., description="Name of the student")
+
 
 class ResetPasswordModel(BaseModel):
     email: EmailStr
@@ -343,6 +352,8 @@ def save_math_results(math_data: MathResults):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save math results: {e}")
 
+#################################################
+# Working Memory Prediction Routes
 @app.post("/working_memory_prediction/")
 def working_memory_prediction(input_data: WorkingMemoryInput):
     try:
@@ -354,8 +365,22 @@ def working_memory_prediction(input_data: WorkingMemoryInput):
         logging.error(f"Error during prediction: {e}")
         raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
 
+@app.post("/save-memory-results/")
+def save_memory_results(memory_data: MemoryResults):
+    db = get_database()
+    if db is None:
+        raise HTTPException(status_code=500, detail="Database connection failed")
+    memory_results_collection = db["memory_results"]
+    data = memory_data.dict()
+    try:
+        result = memory_results_collection.insert_one(data)
+        return {"message": "Memory results saved successfully", "inserted_id": str(result.inserted_id)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save memory results: {e}")
+
+
 #################################################
-# Writing
+# Writing Prediction Routes
 @app.post("/predict_letters")
 async def predict_letters(images: List[UploadFile] = File(...)):
     logger.info(f"Received request with {len(images)} images")
@@ -442,7 +467,7 @@ def save_report(report_data: ReportData):
         raise HTTPException(status_code=500, detail="Failed to save report")
 
 #################################################
-# Attention Detection
+# Attention Detection Prediction Routes
 attention_results = {
     "average_score": None,
     "status": None,
@@ -605,4 +630,4 @@ def save_attention_span(result: AttentionSpanResult):
         attention_collection.insert_one(result_data)
         return {"message": "Attention span result saved successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to save attention span result: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to save attention span result: {e}")

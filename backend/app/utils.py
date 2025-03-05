@@ -3,6 +3,10 @@ from jose import jwt
 from datetime import datetime, timedelta
 import smtplib
 from email.mime.text import MIMEText
+import numpy as np
+from math import sqrt
+import cv2
+
 
 # Constants
 SECRET_KEY = "5gRyaZcBis" 
@@ -123,8 +127,10 @@ def blink_ratio(landmarks, right_eye_indices, left_eye_indices):
     """Calculate blink ratio."""
     try:
         # Right eye distances
+        # Right eye distances
         rh_distance = euclidean_distance(landmarks[right_eye_indices[0]], landmarks[right_eye_indices[8]])
         rv_distance = euclidean_distance(landmarks[right_eye_indices[12]], landmarks[right_eye_indices[4]])
+        # Left eye distances
         # Left eye distances
         lh_distance = euclidean_distance(landmarks[left_eye_indices[0]], landmarks[left_eye_indices[8]])
         lv_distance = euclidean_distance(landmarks[left_eye_indices[12]], landmarks[left_eye_indices[4]])
@@ -133,6 +139,88 @@ def blink_ratio(landmarks, right_eye_indices, left_eye_indices):
         return (right_ratio + left_ratio) / 2
     except IndexError as e:
         print(f"Error calculating blink ratio: {e}")
+        return 0
+
+def compute_gaze_ratio(landmarks, left_eye_indices, right_eye_indices):
+    """
+    Compute gaze ratio based on pupil positions relative to eye corners.
+    Uses the inner and outer corners of each eye for normalization.
+    """
+    try:
+        # For left eye: inner corner at index 362, outer corner at index 263
+        left_inner = landmarks[362]
+        left_outer = landmarks[263]
+        # For right eye: inner corner at index 33, outer corner at index 133
+        right_inner = landmarks[33]
+        right_outer = landmarks[133]
+
+        # Calculate pupil positions as average x-values from provided indices
+        left_pupil_x = np.mean([landmarks[i][0] for i in left_eye_indices])
+        right_pupil_x = np.mean([landmarks[i][0] for i in right_eye_indices])
+
+        # Horizontal ratios relative to eye corners
+        left_ratio = (left_pupil_x - left_inner[0]) / (left_outer[0] - left_inner[0])
+        right_ratio = (right_pupil_x - right_inner[0]) / (right_outer[0] - right_inner[0])
+        gaze_ratio = (left_ratio + right_ratio) / 2
+        return min(max(gaze_ratio, 0), 1)
+    except Exception as e:
+        print(f"Error calculating gaze ratio: {e}")
+        return 0.5
+
+def get_head_pose(landmarks, frame):
+    """
+    Estimate head pose using a subset of facial landmarks via solvePnP.
+    Updated to use cv2.decomposeProjectionMatrix for reliable Euler angle extraction.
+    """
+    try:
+        required_indices = [1, 152, 33, 263, 61, 291]
+        if any(i >= len(landmarks) for i in required_indices):
+            return 0, 0, 0
+
+        # 2D image points
+        image_points = np.array([
+            landmarks[1],    # Nose tip
+            landmarks[152],  # Chin
+            landmarks[33],   # Left eye left corner
+            landmarks[263],  # Right eye right corner
+            landmarks[61],   # Left Mouth corner
+            landmarks[291]   # Right mouth corner
+        ], dtype="double")
+
+        # 3D model points of a generic face model
+        model_points = np.array([
+            (0.0, 0.0, 0.0),             # Nose tip
+            (0.0, -63.6, -12.5),         # Chin
+            (-43.3, 32.7, -26.0),        # Left eye left corner
+            (43.3, 32.7, -26.0),         # Right eye right corner
+            (-28.9, -28.9, -24.1),       # Left Mouth corner
+            (28.9, -28.9, -24.1)         # Right mouth corner
+        ])
+
+        size = frame.shape
+        focal_length = size[1]
+        center = (size[1] / 2, size[0] / 2)
+        camera_matrix = np.array(
+            [[focal_length, 0, center[0]],
+             [0, focal_length, center[1]],
+             [0, 0, 1]], dtype="double"
+        )
+        dist_coeffs = np.zeros((4, 1))  # Assuming no lens distortion
+
+        success, rotation_vector, translation_vector = cv2.solvePnP(
+            model_points, image_points, camera_matrix, dist_coeffs, flags=cv2.SOLVEPNP_ITERATIVE
+        )
+        if not success:
+            return 0, 0, 0
+
+        rotation_matrix, _ = cv2.Rodrigues(rotation_vector)
+        proj_matrix = np.hstack((rotation_matrix, np.zeros((3, 1))))
+        _, _, _, _, _, _, euler_angles = cv2.decomposeProjectionMatrix(proj_matrix)
+        yaw, pitch, roll = euler_angles.flatten()[:3]
+        return yaw, pitch, roll
+    except Exception as e:
+        print(f"Error in head pose estimation: {e}")
+        return 0, 0, 0
         return 0
 
 def compute_gaze_ratio(landmarks, left_eye_indices, right_eye_indices):
@@ -225,7 +313,22 @@ def calculate_attention_score(emotion, gaze_ratio, blink_rate, yaw, pitch, roll)
       - Increase bonuses and adjust blink rate scoring so that a focused state yields higher scores.
     """
     # Revised baseline scores
+    """
+    Calculate the attention score based on various metrics with recalibrated thresholds.
+    Adjustments:
+      - Normalize yaw to be the deviation from frontal (0°).
+      - Reduce head pose penalty impact by using a higher divisor.
+      - Increase bonuses and adjust blink rate scoring so that a focused state yields higher scores.
+    """
+    # Revised baseline scores
     emotion_scores = {
+        "Happy": 4,
+        "Neutral": 3,
+        "Sad": 1,
+        "Angry": 0,
+        "Disgusted": -1,
+        "Fearful": -1,
+        "Surprised": 0
         "Happy": 4,
         "Neutral": 3,
         "Sad": 1,
@@ -239,8 +342,12 @@ def calculate_attention_score(emotion, gaze_ratio, blink_rate, yaw, pitch, roll)
     # Gaze scoring: if gaze ratio is optimal, add more bonus.
     if 0.35 <= gaze_ratio <= 0.65:
         score += 4
+    # Gaze scoring: if gaze ratio is optimal, add more bonus.
+    if 0.35 <= gaze_ratio <= 0.65:
+        score += 4
     elif 0.3 <= gaze_ratio <= 0.7:
         score += 2
+    else:
     else:
         score -= 1
 
@@ -249,7 +356,16 @@ def calculate_attention_score(emotion, gaze_ratio, blink_rate, yaw, pitch, roll)
     if blink_rate >= 15 and blink_rate <= 20:
         score += 3
     elif blink_rate < 15:
+
+    # Blink rate scoring (expected 15-20 per minute)
+    # Reward if in range; penalize if too low (eyes closed/drowsy) or too high (excessive blinking)
+    if blink_rate >= 15 and blink_rate <= 20:
+        score += 3
+    elif blink_rate < 15:
         score -= 2
+    elif blink_rate > 20 and blink_rate <= 30:
+        score -= 1
+    elif blink_rate > 30:
     elif blink_rate > 20 and blink_rate <= 30:
         score -= 1
     elif blink_rate > 30:
