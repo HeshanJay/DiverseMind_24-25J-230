@@ -44,7 +44,13 @@ const ScoreBoard = ({ onRestart }) => {
   };
 
   const getFeedbackMessage = (status) => {
-    return status === "Focused" ? "ඉතා හොඳයි 😊" : "හොඳ නැහැ 😐";
+    if (status === "Focused") {
+      return "ඉතා හොඳයි 😊";
+    } else if (status === "Moderately Focused") {
+      return "හොඳයි 😊";
+    } else {
+      return "හොඳ උත්සාහයක් !🌿";
+    }
   };
 
   return (

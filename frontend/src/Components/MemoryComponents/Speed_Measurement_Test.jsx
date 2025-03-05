@@ -104,10 +104,10 @@ const SpeedMeasurementTest = ({ onNext, onBack }) => {
               උපදෙස් නිවැරදිව කියවා පිළිතුරු සපයන්න.
             </p>
             <ul className="text-lg md:text-xl mb-8 list-disc list-outside leading-relaxed text-left text-black ml-16 pl-7 ">
-            <li className="pl-4">උපදෙස් නිවැරදිව කියවා පිළිතුරු සපයන්න.</li>
-            <li className="pl-4">ප්‍රශ්න 5 කට පිළිතුරු සැපයිය යුතුයි.</li>
-            <li className="pl-4">එක් ප්‍රශ්නයකට 10 තත්පර ලබා දේ.</li>
-            <li className="pl-4">නිවැරදි පිළිතුර පින්තූරය දෙස බලා මතක තබා ගන්න.</li>
+            <li className="pl-4">රූපය හොඳින් බලා වෙනස් රූපය හඳුනා ගන්න.</li>
+            <li className="pl-4">නිවැරදිව හඳුනාගත් රූපය පිළිතුරු අතුරින් තෝරන්න.</li>
+            <li className="pl-4">ප්‍රශ්න 4 කට පිළිතුරු සැපයිය යුතුයි.</li>
+            <li className="pl-4">එක් ප්‍රශ්නයක් සඳහා තත්පර 10 ක් ලබා දේ.</li>
             </ul>
           </div>
         </div>
