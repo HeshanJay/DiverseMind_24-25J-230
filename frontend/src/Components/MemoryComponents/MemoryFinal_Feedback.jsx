@@ -1,4 +1,3 @@
-
 import React from "react";
 import { FaRedoAlt, FaHome, FaBars } from "react-icons/fa";
 import img5 from "../../assets/Working_Memory/img8.png";
