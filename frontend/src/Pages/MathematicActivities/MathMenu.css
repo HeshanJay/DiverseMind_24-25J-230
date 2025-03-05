@@ -1,0 +1,125 @@
+.forest-theme {
+  background-image: url('../../assets/Math/math-background_1.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  overflow: hidden;
+}
+
+.forest-theme h1 {
+  font-size: 2.6rem;
+  margin-bottom: 5px;
+  text-shadow: 5px 5px 9px #000;
+  animation: bounceIn 2s ease-in-out, glowText 1.5s ease-in-out infinite alternate;
+}
+
+.forest-theme p {
+  font-size: 1.5rem;
+  margin-bottom: 40px;
+  text-shadow: 1px 1px 2px #000;
+  animation: typing 3s steps(30) 1s forwards, fadeInText 2s ease-in-out;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu-buttons button {
+  background-image: url('../../assets/design_images/math_activity/wood-rectangle.png');
+  background-size: cover;
+  background-position: center;
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  width: 300px;
+  height: 80px;
+  position: relative;
+}
+
+.menu-buttons button:hover {
+  background-color: #A0522D;
+  transform: scale(1.1);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.menu-buttons button:hover .button-symbol {
+  animation: rotateSymbol 1s linear 1 forwards;
+}
+
+.symbol-container {
+  position: absolute;
+  left: -67px;
+  top: 28%;
+  transform: translateY(-50%);
+  background-image: url('../../assets/design_images/math_activity/wood-round.png');
+  background-size: cover;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-symbol {
+  width: 70px;
+  height: 78px;
+  margin-bottom: -30px; 
+  margin-left: -1px; 
+}
+
+@keyframes rotateSymbol {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.button-text {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-left: 40px;
+}
+
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes typing {
+  from { width: 0; white-space: nowrap; }
+  to { width: 100%; }
+}
+
+@keyframes fadeInText {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
