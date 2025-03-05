@@ -352,6 +352,8 @@ def save_math_results(math_data: MathResults):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save math results: {e}")
 
+#################################################
+# Working Memory Prediction Routes
 @app.post("/working_memory_prediction/")
 def working_memory_prediction(input_data: WorkingMemoryInput):
     try:
@@ -378,7 +380,7 @@ def save_memory_results(memory_data: MemoryResults):
 
 
 #################################################
-# Writing
+# Writing Prediction Routes
 @app.post("/predict_letters")
 async def predict_letters(images: List[UploadFile] = File(...)):
     logger.info(f"Received request with {len(images)} images")
@@ -465,7 +467,7 @@ def save_report(report_data: ReportData):
         raise HTTPException(status_code=500, detail="Failed to save report")
 
 #################################################
-# Attention Detection
+# Attention Detection Prediction Routes
 attention_results = {
     "average_score": None,
     "status": None,
@@ -629,4 +631,3 @@ def save_attention_span(result: AttentionSpanResult):
         return {"message": "Attention span result saved successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save attention span result: {e}")
-
