@@ -1,65 +1,108 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./AttentionIM.css";
+import clickSound from "../../assets/Audios/click_sound.mp3";
 import backgroundImage from "../../assets/background_images/atten3.png";
 import game1 from "../../assets/background_images/game1ui5.png";
 import game2 from "../../assets/background_images/game2ui1.png";
 import game3 from "../../assets/background_images/game3ui1.png";
-import clickSound from "../../assets/Audios/click_sound.mp3";
+import rb from "../../assets/WM_Interventions_images/menu_images/rb.png";
+import sq from "../../assets/WM_Interventions_images/menu_images/sq.png";
+import zb from "../../assets/WM_Interventions_images/menu_images/zb.png";
 
 const AttentionIM = () => {
   const navigate = useNavigate();
 
   const playClickSound = () => {
-    const audio = new Audio(clickSound);
-    audio.play();
+    new Audio(clickSound).play();
+  };
+
+  const handleNavigation = (path) => {
+    playClickSound();
+    navigate(path);
   };
 
   return (
-    <div
-      className="attention-container"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
-      <div className="overlay">
-        <h1 className="attention-title">අවධානය වර්ධනය සඳහා මඟ හුරුව</h1>
-        <div className="options-container">
+    <div className="min-h-screen flex flex-col justify-center items-center p-4 relative">
+      <div 
+        className="absolute inset-0 z-0" 
+        style={{ 
+          backgroundImage: `url(${backgroundImage})`, 
+          backgroundSize: "cover", 
+          backgroundPosition: "center",
+          opacity: 1
+        }}
+      ></div>
+      
+      <div className="relative z-10 flex flex-col items-center justify-center w-full">
+       <h1 className="text-5xl font-bold text-white mb-[55px] drop-shadow-2xl bg-clip-text text-transparent animate-pulse relative left-3">
+       <span className="bg-black/30 px-4 py-2 rounded-3xl shadow-xl border border-white/90 text-shadow-xl">
+      අවධානය වර්ධනය සඳහා මඟ හුරුව
+    </span>
+  </h1>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-8xl mx-auto">
+          {/* Game 1 Card */}
           <div
-            className="option-card"
-            onClick={() => {
-              playClickSound();
-              navigate("/attentiongame1");
-            }}
+            onClick={() => handleNavigation("/attentiongame1")}
+            className="cursor-pointer bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-6 transform hover:scale-105 transition duration-300 flex flex-col items-center justify-center relative w-90 h-99"
           >
-            <img src={game1} alt="Sudoku" className="option-icon" />
-            <h2>වර්ණ හඳුනා ගනිමු</h2>
-          </div>
-          <div
-            className="option-card"
-            onClick={() => {
-              playClickSound();
-              navigate("/attentiongame2");
-            }}
-          >
-            <br></br>
             <img
-              src={game2}
-              alt="Spot the Difference"
-              className="option-icon"
+              src={rb}
+              alt="Decorative"
+              className="w-32 h-32 object-contain mb-[-65px]"
             />
-            <h2>
-              නොගලපෙන රූපය <br></br>
-              <center>සොයමු</center>
+            <img
+              src={game1}
+              alt="වර්ණ හඳුනා ගනිමු"
+              className="w-48 h-48 object-contain mb-2 rounded-xl"
+            />
+            <h2 className="text-center text-3xl font-semibold text-gray-800 mt-[-26px]">
+              වර්ණ හඳුනා
+              <br />
+              <center>ගනිමු</center>
             </h2>
           </div>
+
+          {/* Game 2 Card */}
           <div
-            className="option-card"
-            onClick={() => {
-              playClickSound();
-              navigate("/attentiongame3");
-            }}
+            onClick={() => handleNavigation("/attentiongame2")}
+            className="cursor-pointer bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-6 transform hover:scale-105 transition duration-300 flex flex-col items-center justify-center relative w-90 h-99"
           >
-            <img src={game3} alt="Matching Cards" className="option-icon" />
-            <h2>ඉලක්කය හරිද බලමු</h2>
+            <img
+              src={sq}
+              alt="Decorative"
+              className="w-32 h-32 object-contain mb-[-65px]"
+            />
+            <img
+              src={game2}
+              alt="නොගලපෙන රූපය සොයමු"
+              className="w-48 h-48 object-contain mb-2 rounded-lg"
+            />
+            <h2 className="text-center text-3xl font-semibold text-gray-800 mt-[-26px]">
+              නොගැලපෙන රූපය <br />
+              <center>සොයමු</center>
+            </h2>
+          </div>
+
+          {/* Game 3 Card */}
+          <div
+            onClick={() => handleNavigation("/attentiongame3")}
+            className="cursor-pointer bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-6 transform hover:scale-105 transition duration-300 flex flex-col items-center justify-center relative w-90 h-99"
+          >
+            <img
+              src={zb}
+              alt="Decorative"
+              className="w-32 h-32 object-contain mb-[-65px]"
+            />
+            <img
+              src={game3}
+              alt="ඉලක්කය හරිද බලමු"
+              className="w-48 h-48 object-contain mb-2 rounded-lg"
+            />
+            <h2 className="text-center text-3xl font-semibold text-gray-800 mt-[-26px]">
+              ඉලක්කය හරිද
+              <br />
+              <center>බලමු</center>
+            </h2>
           </div>
         </div>
       </div>

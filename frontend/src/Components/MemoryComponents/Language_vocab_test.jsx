@@ -106,10 +106,10 @@ const LanguageVocabTest = ({ onNext }) => {
               උපදෙස් නිවැරදිව කියවා පිළිතුරු සපයන්න.
             </p>
             <ul className="text-lg md:text-xl mb-8 list-disc list-outside leading-relaxed text-left text-black ml-16 pl-7 ">
-            <li className="pl-4">උපදෙස් නිවැරදිව කියවා පිළිතුරු සපයන්න.</li>
+            <li className="pl-4">රූපය නිවැරදිව හඳුනා ගන්න.</li>
+            <li className="pl-4">නිවැරදිව හඳුනාගත් රූපය පිළිතුරු අතුරින් තෝරන්න.</li>
             <li className="pl-4">ප්‍රශ්න 5 කට පිළිතුරු සැපයිය යුතුයි.</li>
-            <li className="pl-4">එක් ප්‍රශ්නයකට 10 තත්පර ලබා දේ.</li>
-            <li className="pl-4">නිවැරදි පිළිතුර පින්තූරය දෙස බලා මතක තබා ගන්න.</li>
+            <li className="pl-4">එක් ප්‍රශ්නයක් සඳහා තත්පර 10 ක් ලබා දේ.</li>
             </ul>
           </div>
         </div>
@@ -117,7 +117,7 @@ const LanguageVocabTest = ({ onNext }) => {
         {/* Start Button */}
         <button
           onClick={handleStart}
-          className="mt-8 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xl md:text-2xl px-6 py-4 rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 hover:rotate-1"
+          className="mt-8 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xl md:text-2xl px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 hover:rotate-1"
         >
           ආරම්භ කරන්න
         </button>
