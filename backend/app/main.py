@@ -19,7 +19,7 @@ import app.utils as utils
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(_name_)
+logger = logging.getLogger(__name__)
 
 from fastapi.responses import RedirectResponse, JSONResponse
 from pydantic import BaseModel, EmailStr, Field
@@ -47,7 +47,7 @@ from app.model.predictor import predict_memory_outcome
 #################################################
 # Configure logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(_name_)
+logger = logging.getLogger(__name__)
 from typing import List
 import numpy as np
 import string
