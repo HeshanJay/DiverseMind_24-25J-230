@@ -12,6 +12,10 @@ import random
 import string
 from math import sqrt
 from jose import jwt, JWTError
+import app.utils as utils
+
+
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -388,7 +392,7 @@ emotion_model = load_emotion_model('./app/model/emotion_model.json', './app/mode
 face_cascade = load_face_cascade('./app/model/haarcascade_frontalface_default.xml')
 face_mesh = load_face_mesh()
 
-# Define eye indices for Mediapipe
+# Define Mediapipe indices for eyes
 LEFT_EYE = [362, 382, 381, 380, 374, 373, 390, 249, 263, 466, 388, 387, 386, 385, 384, 398]
 RIGHT_EYE = [33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161, 246]
 
@@ -397,77 +401,84 @@ emotions_map = {
     3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"
 }
 
-# Placeholder for missing function
-# If you have this function from a library or file, import or define it properly
-def landmarks_detection(frame, results):
-    # TODO: implement the actual logic to extract landmarks from Mediapipe results.
-    # For demonstration, returning an empty list.
-    return []
 
-# Placeholder for blink_ratio function
-def blink_ratio(landmarks, right_eye, left_eye):
-    # TODO: implement your actual blink ratio logic using landmarks.
-    # For demonstration, returning 2.0 as a placeholder.
-    return 2.0
-
-# Placeholder for calculate_attention_score function
-def calculate_attention_score(emotion_label, gaze_ratio, blink_rate, yaw, pitch, roll):
-    # TODO: implement your actual attention scoring logic.
-    # For demonstration, we'll just return 1.0 as a placeholder.
-    return 1.0
-
-# Real-Time Attention Detection Function
 def attention_detection_thread():
-    global attention_results, stop_detection
+    global stop_detection
+    logger.info("Starting real-time attention detection...")
 
-    print("Starting real-time attention detection...")
     cap = cv2.VideoCapture(0)
-
     if not cap.isOpened():
-        print("Error: Unable to access the webcam.")
-        attention_results = {
+        logger.error("Error: Unable to access the webcam.")
+        attention_results.update({
             "average_score": None,
             "status": "Error: Camera not accessible",
             "total_time": 0,
-        }
+        })
         return
 
     total_scores = []
     total_blinks = 0
     frame_count = 0
-    frame_rate = 30.0
+    frame_rate = 30.0  # assuming 30 fps
+    closed_frames = 0  # count how many consecutive frames the eyes are closed
+    blink_threshold_frames = 3  # only count as a blink if closed for 3+ frames
+
+    start_time = cv2.getTickCount()  # start time measurement
 
     try:
         while not stop_detection.is_set():
             ret, frame = cap.read()
             if not ret:
-                print("Error: Unable to read a frame.")
+                logger.error("Error: Unable to read a frame.")
                 break
 
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            results = face_mesh.process(rgb_frame)
             gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            results = face_mesh.process(rgb_frame)
 
             if results.multi_face_landmarks:
-                landmarks = landmarks_detection(frame, results)
-                if len(landmarks) >= max(max(LEFT_EYE), max(RIGHT_EYE)):
-                    blink_ratio_value = blink_ratio(landmarks, RIGHT_EYE, LEFT_EYE)
-                    if blink_ratio_value > 3.0:
-                        total_blinks += 1
+                landmarks = utils.landmarks_detection(frame, results)
+                if landmarks and len(landmarks) > max(max(LEFT_EYE), max(RIGHT_EYE)):
+                    current_blink_ratio = utils.blink_ratio(landmarks, RIGHT_EYE, LEFT_EYE)
+                    
+                    # Use a counter to register a blink only after eyes have been closed for enough frames
+                    if current_blink_ratio > 3.0:
+                        closed_frames += 1
+                    else:
+                        if closed_frames >= blink_threshold_frames:
+                            total_blinks += 1
+                        closed_frames = 0
 
-                # Example placeholders for a real scoring
-                yaw, pitch, roll = 0, 0, 0
-                gaze_ratio = 0.5
-                blink_rate = (total_blinks / frame_count * frame_rate * 60) if frame_count > 0 else 0
+                    # Updated gaze ratio calculation based on pupil positions
+                    gaze_ratio = utils.compute_gaze_ratio(landmarks, LEFT_EYE, RIGHT_EYE)
+                    yaw, pitch, roll = utils.get_head_pose(landmarks, frame)
 
-                # Just for demonstration, let's consider emotion_label as "Neutral"
-                emotion_label = "Neutral"
+                    faces = face_cascade.detectMultiScale(gray_frame, 1.3, 5)
+                    if len(faces) > 0:
+                        (x, y, w, h) = faces[0]
+                        face_roi = gray_frame[y:y+h, x:x+w]
+                        face_roi = cv2.resize(face_roi, (48,48))
+                        face_roi = face_roi.astype("float") / 255.0
+                        face_roi = face_roi[None, ..., None]
+                        emotion_prediction = emotion_model.predict(face_roi)
+                        emotion_label = emotions_map[np.argmax(emotion_prediction)]
+                    else:
+                        emotion_label = "Neutral"
 
-                attention_score = calculate_attention_score(
-                    emotion_label, gaze_ratio, blink_rate, yaw, pitch, roll
-                )
-                total_scores.append(attention_score)
-                frame_count += 1
+                    frame_count += 1
+
+                    # Calculate elapsed time in seconds using frame_count and frame_rate.
+                    time_in_seconds = frame_count / frame_rate
+                    if time_in_seconds > 0:
+                        blink_rate = total_blinks / time_in_seconds  # blinks per second
+                        blink_rate = blink_rate * 60  # convert to blinks per minute
+                    else:
+                        blink_rate = 0
+
+                    attention_score = utils.calculate_attention_score(
+                        emotion_label, gaze_ratio, blink_rate, yaw, pitch, roll
+                    )
+                    total_scores.append(attention_score)
 
             cv2.imshow("Webcam Feed", frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -478,18 +489,26 @@ def attention_detection_thread():
         cv2.destroyAllWindows()
         if total_scores:
             average_score = np.mean(total_scores)
-            attention_results = {
+            # Adjust thresholds if needed; for example, if average_score >= 4 can be "Focused"
+            if average_score >= 5:
+                status = "Focused"
+            elif average_score >= 3.8:
+                status = "Moderately Focused"
+            else:
+                status = "Not Focused"
+            attention_results.update({
                 "average_score": round(average_score, 2),
-                "status": "Focused" if average_score > 0 else "Not Focused",
+                "status": status,
                 "total_time": round(frame_count / frame_rate, 2),
-            }
+            })
         else:
-            attention_results = {
+            attention_results.update({
                 "average_score": 0,
                 "status": "No Data",
                 "total_time": 0,
-            }
-        print("Final Attention Results:", attention_results)
+            })
+        logger.info("Final Attention Results: %s", attention_results)
+
 
 @app.get("/attention/start")
 def start_attention_detection():
