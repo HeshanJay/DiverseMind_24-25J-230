@@ -8,7 +8,7 @@ const WM_Game3_Level1 = () => {
   const [totalScore, setTotalScore] = useState(0);
 
   const handleRetry = () => {
-    setCurrentStep(2); // Go back to activity
+    setCurrentStep(2);
     setTotalScore(0);
   };
 

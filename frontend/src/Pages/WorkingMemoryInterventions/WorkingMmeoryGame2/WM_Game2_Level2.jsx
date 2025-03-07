@@ -13,19 +13,16 @@ const WM_Game2_Level2 = () => {
 
   const handleNext = (newScores) => {
     if (typeof newScores === 'object') {
-      // Coming from feedback retry
+  
       setCurrentStep(2);
       setScores({ activity1: 0, activity2: 0 });
     } else if (currentStep === 2) {
-      // From Activity1
       setScores(prev => ({ ...prev, activity1: newScores }));
       setCurrentStep(3);
     } else if (currentStep === 3) {
-      // From Activity2
       setScores(prev => ({ ...prev, activity2: newScores }));
       setCurrentStep(4);
     } else {
-      // Normal navigation
       setCurrentStep(prev => prev + 1);
     }
   };

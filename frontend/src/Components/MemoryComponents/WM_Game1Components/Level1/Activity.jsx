@@ -25,12 +25,11 @@ const Activity = () => {
   const [timeLeft, setTimeLeft] = useState(3);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [score, setScore] = useState(0); // Track the user's score
-  const [showFeedback, setShowFeedback] = useState(false); // Control feedback display
-
+  const [score, setScore] = useState(0); 
+  const [showFeedback, setShowFeedback] = useState(false); 
   useEffect(() => {
     setShowImage(true);
-    setTimeLeft(1);
+    setTimeLeft(10);
     setSelectedAnswer(null);
     setShowCelebration(false);
   }, [currentQuestion]);
@@ -95,7 +94,7 @@ const Activity = () => {
   const handleAnswerClick = (index) => {
     setSelectedAnswer(index);
     if (questionData[currentQuestion].answers[index].isCorrect) {
-      setScore((prevScore) => prevScore + 5); // Increment score by 5 for correct answer
+      setScore((prevScore) => prevScore + 5); 
       setShowCelebration(true);
       setTimeout(() => setShowCelebration(false), 3000);
     }
@@ -105,18 +104,18 @@ const Activity = () => {
     if (currentQuestion < 5) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      setShowFeedback(true); // Show feedback page when all questions are completed
+      setShowFeedback(true); 
     }
   };
 
   const handleRetry = () => {
-    setCurrentQuestion(1); // Reset to the first question
-    setShowImage(true); // Show the image again
-    setTimeLeft(3); // Reset the timer
-    setSelectedAnswer(null); // Clear the selected answer
-    setShowCelebration(false); // Hide celebration
-    setScore(0); // Reset the score
-    setShowFeedback(false); // Hide the feedback page
+    setCurrentQuestion(1); 
+    setShowImage(true); 
+    setTimeLeft(3);
+    setSelectedAnswer(null); 
+    setShowCelebration(false); 
+    setScore(0); 
+    setShowFeedback(false); 
   };
 
   if (showFeedback) {
@@ -124,7 +123,7 @@ const Activity = () => {
       <G1_L1_Feedback
         score={score}
         totalQuestions={5}
-        handleRetry={handleRetry} // Pass the handleRetry function
+        handleRetry={handleRetry} 
       />
     );
   }
@@ -187,7 +186,7 @@ const Activity = () => {
 <img
   src={fish4}
   alt="Fish 4"
-  className="absolute bottom-[-150px] left-[160px] w-20 h-28 animate-fish4" // Adjusted position
+  className="absolute bottom-[-150px] left-[160px] w-20 h-28 animate-fish4" 
 />
 <img
   src={fish5}
@@ -289,10 +288,9 @@ const Activity = () => {
             
           {/* Celebration Content */}
           <div className="relative z-10 flex flex-col items-center animate-bounce">
-            {/* Celebration Text */}
-            <div className=" text-5xl font-bold text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
-              ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
-            </div>
+            <h1 className="relative z-10 text-6xl font-bold mb-[30px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
+           ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
+          </h1>
             
             {/* Pearl Image at Bottom */}
             <div className="mt-8">

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
-// Image Imports
 import L1_background from "../../../../assets/WM_Interventions_images/L1_images/L1_background.png";
 import woodenBoard from "../../../../assets/WM_Interventions_images/L2_images/wooden_board.png";
 import frame1 from "../../../../assets/WM_Interventions_images/L1_images/frame1.png";
@@ -39,7 +37,7 @@ const questions = [
 
 function Activity1({ onNext }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(3);
+  const [timeLeft, setTimeLeft] = useState(10);
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
   const [score, setScore] = useState(0);
   const [timeUp, setTimeUp] = useState(false);
@@ -49,7 +47,7 @@ function Activity1({ onNext }) {
   const currentQuestion = questions[currentQuestionIndex];
 
   useEffect(() => {
-    setTimeLeft(3);
+    setTimeLeft(10);
     setSelectedAnswerIndex(null);
     setTimeUp(false);
     setShowCelebration(false);
@@ -100,7 +98,6 @@ function Activity1({ onNext }) {
       className="relative min-h-screen bg-no-repeat bg-cover bg-center"
       style={{ backgroundImage: `url(${L1_background})` }}
     >
-      {/* Celebration Overlay */}
       {showCelebration && (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-80 z-50">
           <div className="absolute inset-0 pointer-events-none">
@@ -108,7 +105,7 @@ function Activity1({ onNext }) {
               <div key={i} className={`firework firework-${i + 1}`}></div>
             ))}
           </div>
-          <h1 className="relative z-10 text-6xl font-bold mb-[-100px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="relative z-10 text-6xl font-bold mb-[30px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
       ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
     </h1>
           <img
@@ -119,7 +116,6 @@ function Activity1({ onNext }) {
         </div>
       )}
 
-      {/* Question Frame */}
       <div className="absolute top-[150px] left-1/2 transform -translate-x-1/2 w-[450px]">
         <img src={frame1} alt="frame" className="w-full h-auto" />
         <div className="absolute inset-0 flex items-center justify-center p-4">
@@ -129,14 +125,12 @@ function Activity1({ onNext }) {
         </div>
       </div>
 
-      {/* Timer */}
       <div className="absolute bottom-[215px] left-1/2 transform -translate-x-1/2 text-xl text-white px-6 py-3 rounded-xl font-semibold
                     bg-gradient-to-r from-[#8B4513] via-[#CD653F] to-[#8B4513]
                     min-w-[200px] max-w-[300px] text-center shadow-lg">
         ⏳ කාලය: {timeLeft} තත්පර
       </div>
 
-      {/* Answer Options */}
       <div className="absolute bottom-[15px] left-0 right-0 flex justify-center space-x-6">
       {currentQuestion.options.map((option, i) => {
       const isCorrect = i === currentQuestion.correctAnswer;
@@ -144,7 +138,7 @@ function Activity1({ onNext }) {
 
        let textColor = "text-black";
         if (isSelected) {
-         textColor = isCorrect ? "text-blue-800" : "text-red-600"; // Changed to dark blue
+         textColor = isCorrect ? "text-blue-800" : "text-red-600"; 
         }
 
 
@@ -172,22 +166,21 @@ function Activity1({ onNext }) {
   );
 })}
       </div>
-
-      {/* Next Button */}
       <button
         onClick={handleNextQuestion}
         disabled={!timeUp && selectedAnswerIndex === null}
         className={`absolute bottom-6 right-6 rounded-full p-3 shadow-lg transition ${
           (!timeUp && selectedAnswerIndex === null) 
-          ? "bg-gradient-to-r from-[#4B3621] to-[#6E4B3A] text-white hover:from-[#5C4530] hover:to-[#7E5D45]"
-          : "bg-gradient-to-r from-[#2D1B0F] to-[#3C2A1A] text-gray-500 cursor-not-allowed"
+          ? "bg-gradient-to-r from-[#2D1B0F] to-[#3C2A1A] text-gray-500 cursor-not-allowed"
+          : "bg-gradient-to-r from-[#4B3621] to-[#6E4B3A] text-white hover:from-[#5C4530] hover:to-[#7E5D45]"
+          
 
         }`}
       >
         <FaArrowRight size={24} />
       </button>
 
-      {/* Fireworks CSS */}
+     
       <style>
         {`
           @keyframes firework {

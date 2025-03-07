@@ -14,13 +14,13 @@ const WM_Menu = () => {
   const handleNavigate = (game) => {
     switch (game) {
       case "visual":
-        navigate("/WM_Game1Menu"); // Navigate to Visual Games
+        navigate("/WM_Game1Menu"); 
         break;
       case "memory":
-        navigate("/WM_Game2Menu"); // Navigate to Memory Games
+        navigate("/WM_Game2Menu"); 
         break;
       case "audio":
-        navigate("/WM_Game3Menu"); // Navigate to Audio Games
+        navigate("/WM_Game3Menu"); 
         break;
       default:
         break;
@@ -31,7 +31,7 @@ const WM_Menu = () => {
     <div
       className="min-h-screen flex flex-col justify-center items-center p-4"
       style={{
-        backgroundImage: `url(${menuBack})`, // Use the imported variable
+        backgroundImage: `url(${menuBack})`, 
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -48,12 +48,12 @@ const WM_Menu = () => {
           className="cursor-pointer bg-white/50 backdrop-blur-sm rounded-2xl shadow-2xl p-8 transform hover:scale-105 transition duration-300 flex flex-col items-center justify-center relative w-90 h-99"
         >
           <img
-            src={rb} // Add rb.png here
+            src={rb} 
             alt="Visual Games Decoration"
             className="w-32 h-32 object-contain mb-[-15px]"
           />
           <img
-            src={visual} // Use the imported variable
+            src={visual} 
             alt="Visual Games"
             className="w-48 h-48 object-contain mb-4 rounded-lg"
           />
@@ -67,12 +67,12 @@ const WM_Menu = () => {
           className="cursor-pointer bg-white/50 backdrop-blur-sm rounded-2xl shadow-2xl p-8 transform hover:scale-105 transition duration-300 flex flex-col items-center justify-center relative w-90 h-97"
         >
           <img
-            src={sq} // Add sq.png here
+            src={sq} 
             alt="Memory Games Decoration"
             className="w-32 h-32 object-contain mb-[-15px]"
           />
           <img
-            src={memory} // Use the imported variable
+            src={memory} 
             alt="Memory Games"
             className="w-48 h-48 object-contain mb-4 rounded-lg"
           />
@@ -86,12 +86,12 @@ const WM_Menu = () => {
           className="cursor-pointer bg-white/50 backdrop-blur-sm rounded-2xl shadow-2xl p-8 transform hover:scale-105 transition duration-300 flex flex-col items-center justify-center relative w-90 h-99"
         >
           <img
-            src={zb} // Add zb.png here
+            src={zb} 
             alt="Audio Games Decoration"
             className="w-32 h-32 object-contain mb-[-15px]"
           />
           <img
-            src={audio} // Use the imported variable
+            src={audio} 
             alt="Audio Games"
             className="w-48 h-48 object-contain mb-4 rounded-lg"
           />

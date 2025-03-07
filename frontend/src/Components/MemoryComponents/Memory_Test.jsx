@@ -1,124 +1,60 @@
-// import React from "react";
-// import { Link, Routes, Route } from "react-router-dom"; // Import Routes and Route
-// import { useScores } from "../context/Score_context";
- //import backImg from "../../assets/background_images/back3.jpg";
-
-// // Importing all test activity components
-// import LanguageVocabTest from "../Components/MemoryComponents/Language_vocab_test";
-// import LanguageVocabActivity from "../Components/MemoryComponents/Language_vocab_activity";
-// import SpeedMeasurementTest from "../Components/MemoryComponents/Speed_Measurement_Test";
-// import SpeedMeasurementActivity from "../Components/MemoryComponents/Speed_Measurement_Activity";
-// import MemoryMeasurementTest from "../Components/MemoryComponents/memory_measurement_test";
-// import MemoryTestActivity from "../Components/MemoryComponents/memory_test_activity"; 
-// import VisualTest from "../Components/MemoryComponents/visual_test";
-// import VisualTestActivity from "../Components/MemoryComponents/visual_test_activity";
-// import ScoreBoard from "../Components/Score_board"; 
-// import AudioMeasurementActivity from "../Components/MemoryComponents/Audio_measurement_activity";
-// import AudioTest from "../Components/MemoryComponents/Audio_test"; 
-
-// const MemoryTests = () => {
-//   const tests = [
-//     { id: 1, name: "දෘශ්‍ය විෂමතා පරීක්ෂණය", link: "/visual-test" },
-//     { id: 2, name: "මතක පරීක්ෂණය", link: "/memory-test-activity" },
-//     { id: 3, name: "වේගය විශ්ලේෂණ පරීක්ෂණය", link: "/speed-measurement-activity" },
-//     { id: 4, name: "ශ්‍රව්‍ය විෂමතා පරීක්ෂණය", link: "/audio-measurement-activity" },
-//     { id: 5, name: "භාෂා ශබ්ද කෝෂ දැනුම පරීක්ෂණය", link: "/language-vocab-activity" },
-//   ];
-
-//   const { setCurrentTestName } = useScores();
-
-//   return (
-//     <div
-//       className="h-screen w-full bg-cover bg-center relative"
-//       style={{
-//         backgroundImage: `url(${backImg})`, 
-//       }}
-//     >
-//       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-//       <div className="relative z-10 flex flex-col justify-center items-center h-full text-center">
-//         <h1 className="text-white text-4xl md:text-6xl font-bold mb-8 animate-pulse">
-//           මතකය පරීක්ෂා කරමු
-//         </h1>
-
-//         {/* Test Buttons */}
-//         <div className="flex flex-col items-center gap-6">
-//           {tests.map((test) => (
-//             <Link
-//               key={test.id}
-//               to={test.link}
-//               className="text-lg md:text-2xl font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-500 h-16 w-72 flex items-center justify-center rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 hover:rotate-1 hover:bg-gradient-to-l"
-//               onClick={() => setCurrentTestName(test.name)}
-//             >
-//               {test.name}
-//             </Link>
-//           ))}
-//         </div>
-
-//         {/* Nested Routes for Test Activities */}
-//         <Routes>
-//           <Route path="/visual-test" element={<VisualTest />} />
-//           <Route path="/speed-measurement-activity" element={<SpeedMeasurementActivity />} />
-//           <Route path="/audio-measurement-activity" element={<AudioMeasurementActivity />} />
-//           <Route path="/language-vocab-activity" element={<LanguageVocabActivity />} />
-//           <Route path="/memory-test-activity" element={<MemoryTestActivity />} />
-//           <Route path="/scoreboard" element={<ScoreBoard />} />
-//         </Routes>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default MemoryTests;
-
-
 import React from "react";
-import backImg from "../../assets/background_images/back3.jpg";
+import memoryBoard from "../../assets/Working_Memory/memory_board1.png";
 import { useScores } from "../../context/Score_context";
 
 const MemoryTests = ({ onNext }) => {
-  const tests = [
-    { id: 1, name: "දෘශ්‍ය විෂමතා පරීක්ෂණය" },
-    { id: 2, name: "මතක පරීක්ෂණය" },
-    { id: 3, name: "වේගය විශ්ලේෂණ පරීක්ෂණය" },
-    { id: 4, name: "ශ්‍රව්‍ය විෂමතා පරීක්ෂණය" },
-    { id: 5, name: "භාෂා ශබ්ද කෝෂ දැනුම පරීක්ෂණය" },
-  ];
-
   const { setCurrentTestName } = useScores();
 
   const handleStart = () => {
-    setCurrentTestName("දෘශ්‍ය විෂමතා පරීක්ෂණය"); 
-    onNext();  
+    setCurrentTestName("මතක පරීක්ෂණය");
+    onNext();
   };
 
   return (
     <div
       className="h-screen w-full bg-cover bg-center relative"
-      style={{ backgroundImage: `url(${backImg})` }}
+      style={{ backgroundImage: `url(${memoryBoard})` }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-      <div className="relative z-10 flex flex-col justify-center items-center h-full text-center">
-        <h1 className="text-white text-4xl md:text-6xl font-bold mb-8 animate-pulse">
-          මතකය පරීක්ෂා කරමු
-        </h1>
-
-        <div className="flex flex-col items-center gap-6 mb-10">
-          {tests.map((test) => (
-            <div
-              key={test.id}
-              className="text-lg md:text-2xl font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-500 h-16 w-72 flex items-center justify-center rounded-full shadow-lg"
-            >
-              {test.name}
-            </div>
-          ))}
-        </div>
-
-        <button
-          onClick={handleStart}
-          className="text-lg md:text-2xl font-semibold text-white bg-green-500 py-3 px-6 rounded-full shadow-lg hover:bg-green-700 transition-colors"
-        >
-          ආරම්භ කරමු
-        </button>
+      <div className="relative z-10 flex flex-col justify-between items-center h-full text-center pb-8">
+  
+<div className="mt-auto mb-40 space-y-6" style={{ width: '100%' }}>
+  <h1 className="text-white text-7xl md:text-7xl font-bold">
+    <div style={{ 
+      textAlign: 'right',
+      paddingRight: '360px' 
+    }}>
+      <span className="bg-gradient-to-r from-emerald-200 via-green-200 to-teal-200 to-blue-600 text-transparent bg-clip-text drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
+        මතකය පරීක්ෂා
+      </span>
+    </div>
+    <div style={{
+      paddingLeft: '20px' 
+    }}>
+      <span className="bg-gradient-to-l from-emerald-200 via-green-200 to-teal-200 text-transparent bg-clip-text drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
+        කරමු
+      </span>
+    </div>
+  </h1>
+</div>
+<button
+  onClick={handleStart}
+  style={{
+    marginLeft: 'auto',
+    marginRight: '415px',
+    padding: '20px 64px',
+    border: '2px solid rgb(110 231 183)', 
+    transform: 'scale(1)',
+  }}
+  className="mb-8 text-3xl font-bold text-white 
+           rounded-full shadow-2xl
+           bg-gradient-to-br from-[#15803d] via-[#34d399] to-[#075985]
+           hover:bg-gradient-to-bl hover:from-[#16a34a] hover:via-[#10b981] hover:to-[#0369a1]
+           transition-all duration-500 hover:scale-110
+           animate-pulse-slow"
+>
+  ආරම්භ කරමු
+</button>
       </div>
     </div>
   );

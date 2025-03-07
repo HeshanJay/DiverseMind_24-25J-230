@@ -14,8 +14,6 @@ import img9 from "../../../../assets/WM_Interventions_images/Activity_images/img
 import img17 from "../../../../assets/WM_Interventions_images/Activity_images/img17.png";
 import img15 from "../../../../assets/WM_Interventions_images/img15.jpg";
 import img16 from "../../../../assets/WM_Interventions_images/img16.jpg";
-
-// New images for the second question:
 import img20 from "../../../../assets/WM_Interventions_images/Activity_images/img20.png";
 import img21 from "../../../../assets/WM_Interventions_images/Activity_images/img21.png";
 import img23 from "../../../../assets/WM_Interventions_images/Activity_images/img23.png";
@@ -75,18 +73,14 @@ const Activity1 = () => {
   const [score, setScore] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
   const current = questions[currentQuestion];
-  
-  // Add state to track if at least one selection has been made
   const [hasSelectedAtLeastOne, setHasSelectedAtLeastOne] = useState(false);
-
-  // ----- Question Phase (if questionImages exist) -----
   const [showQuestion, setShowQuestion] = useState(true);
   const [questionTimer, setQuestionTimer] = useState(2);
 
   useEffect(() => {
     if (current.questionImages && current.questionImages.length > 0) {
       setShowQuestion(true);
-      setQuestionTimer(2);
+      setQuestionTimer(10);
     } else {
       setShowQuestion(false);
     }
@@ -101,20 +95,17 @@ const Activity1 = () => {
     }
   }, [questionTimer, showQuestion]);
 
-  // ----- Answer Phase States -----
   const [revealed, setRevealed] = useState(Array(current.answerImages.length).fill(false));
   const [previewActive, setPreviewActive] = useState(false);
   const [answerTimer, setAnswerTimer] = useState(null);
 
-  // Reset states on question change
   useEffect(() => {
     setRevealed(Array(current.answerImages.length).fill(false));
     setAnswerTimer(null);
     setPreviewActive(false);
-    setHasSelectedAtLeastOne(false); // Reset the selection state
+    setHasSelectedAtLeastOne(false); 
   }, [currentQuestion, current.answerImages.length]);
 
-  // --- Answer Phase Preview Sequence ---
   useEffect(() => {
     let timer1, timer2;
     if (!showQuestion) {
@@ -132,7 +123,6 @@ const Activity1 = () => {
     };
   }, [showQuestion, currentQuestion]);
 
-  // Answer timer countdown
   useEffect(() => {
     if (answerTimer !== null && !previewActive && answerTimer > 0) {
       const timerId = setTimeout(() => setAnswerTimer(answerTimer - 1), 1000);
@@ -140,12 +130,10 @@ const Activity1 = () => {
     }
   }, [answerTimer, previewActive]);
 
-  // Handle answer selection
   const handleSelect = (index) => {
     if (previewActive || (answerTimer !== null && answerTimer <= 0)) return;
     if (revealed[index]) return;
-    
-    // Set that the user has made at least one selection
+  
     setHasSelectedAtLeastOne(true);
     
     setRevealed((prev) => {
@@ -166,11 +154,8 @@ const Activity1 = () => {
       }, 1000);
     }
   };
-
-  // Determine if all correct answers have been selected
   const allCorrectRevealed = current.correctIndices.every((idx) => revealed[idx]);
 
-  // Proceed to next question
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
@@ -207,7 +192,6 @@ const Activity1 = () => {
       }}
     >
       {showQuestion ? (
-        // ----- Question Phase -----
         <div className="flex flex-col items-center ">
           {current.questionImages.length > 0 && (
             <div className="flex space-x-8">
@@ -221,21 +205,19 @@ const Activity1 = () => {
               ))}
             </div>
           )}
-          <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-6 py-3 rounded-md shadow-lg mt-10 w-60 mx-auto">
+          <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-6 py-3 rounded-md shadow-lg mt-10 w-70 mx-auto">
             ⏳ කාලය: {questionTimer} තත්පර
           </div>
         </div>
       ) : (
-        // ----- Answer Phase -----
         <div className="w-full max-w-3xl relative">
-          {/* Question Text */}
+      
           <div className="bg-black bg-opacity-60 rounded-lg p-4 mb-6 mx-auto w-[360px] mt-[-30px]">
             <h1 className="text-3xl font-bold text-center text-white border-4 border-white">
               {current.questionText}
             </h1>
           </div>
 
-          {/* Answer Images */}
           <div className="grid grid-cols-4 gap-4">
             {current.answerImages.map((img, index) => (
               <div
@@ -269,19 +251,15 @@ const Activity1 = () => {
               </div>
             ))}
           </div>
-
-          {/* Answer Timer */}
           {answerTimer !== null && (
             <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-6 py-3 rounded-md shadow-lg mt-10 w-64 mx-auto">
               ⏳ කාලය: {answerTimer} තත්පර
             </div>
           )}
 
-          {/* Next Button: Updated to allow progress if at least one selection has been made */}
           {!previewActive && answerTimer !== null && (
             <button
               onClick={() => {
-                // Allow next if timer expired, all correct answers revealed, or at least one selection made
                 if (allCorrectRevealed || (answerTimer !== null && answerTimer <= 0) || hasSelectedAtLeastOne) {
                   handleNext();
                 }

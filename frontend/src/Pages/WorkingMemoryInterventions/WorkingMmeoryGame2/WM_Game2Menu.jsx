@@ -82,24 +82,24 @@ src={monkey5}
 alt="Monkey"
 style={{
   position: 'absolute',
-  bottom: '161px', // Adjust bottom position as needed
-  left: '20%', // Center horizontally
-  transform: 'translateX(-50%)', // Center horizontally
-  width: '240px', // Adjust size as needed
+  bottom: '161px', 
+  left: '20%', 
+  transform: 'translateX(-50%)', 
+  width: '240px', 
   height: 'auto',
 
 }}
       />
-      {/* monkey image at the bottom center with bouncing animation */}
+      
 <img
 src={monkey3}
 alt="Monkey"
 style={{
   position: 'absolute',
-  bottom: '170px', // Adjust bottom position as needed
-  left: '82%', // Center horizontally
-  transform: 'translateX(-50%)', // Center horizontally
-  width: '205px', // Adjust size as needed
+  bottom: '170px', 
+  left: '82%', 
+  transform: 'translateX(-50%)',
+  width: '205px', 
   height: 'auto',
 }}
       />
@@ -109,12 +109,12 @@ src={monkey1}
 alt="Monkey"
 style={{
   position: 'absolute',
-  bottom: '115px', // Adjust bottom position as needed
-  left: '49%', // Center horizontally
-  transform: 'translateX(-50%)', // Center horizontally
-  width: '280px', // Adjust size as needed
+  bottom: '115px', 
+  left: '49%', 
+  transform: 'translateX(-50%)', 
+  width: '280px', 
   height: 'auto',
-  animation: 'bounce 2s ease-in-out infinite', // Add bouncing animation
+  animation: 'bounce 2s ease-in-out infinite', 
 }}
       />
 

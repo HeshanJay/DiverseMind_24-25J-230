@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
-
-// Import assets (adjust the paths as needed)
 import img2_back from "../../../../assets/WM_Interventions_images/L2_images/img2_back.png";
 import L2_img3 from "../../../../assets/WM_Interventions_images/L2_images/L2_img3.jpg";
 import img13 from "../../../../assets/WM_Interventions_images/L2_images/img13.png";
 import img14 from "../../../../assets/WM_Interventions_images/L2_images/img14.png";
-import img18 from "../../../../assets/WM_Interventions_images/L2_images/img18.png"; // Replacing img15 with img18
+import img18 from "../../../../assets/WM_Interventions_images/L2_images/img18.png";
 import img16 from "../../../../assets/WM_Interventions_images/L2_images/img16.png";
-
-// Import question text images (imgQ) for each question screen
 import imgQ1 from "../../../../assets/WM_Interventions_images/L2_images/imgQ1.png";
 import imgQ2 from "../../../../assets/WM_Interventions_images/L2_images/imgQ2.png";
 import imgQ3 from "../../../../assets/WM_Interventions_images/L2_images/imgQ3.png";
 import imgQ4 from "../../../../assets/WM_Interventions_images/L2_images/imgQ4.png";
-
-// Import celebration image
 import dino_img from "../../../../assets/WM_Interventions_images/L2_images/dino_img.png";
 
 const questions = [
@@ -61,17 +55,15 @@ const questions = [
   },
 ];
 
-// Array of question text images corresponding to each question screen
 const questionImages = [imgQ1, imgQ2, imgQ3, imgQ4];
-function Activity2({ onNext }) {  // Accept onNext prop
+function Activity2({ onNext }) {  
   const [showIntro, setShowIntro] = useState(true);
-  const [timer, setTimer] = useState(4);
+  const [timer, setTimer] = useState(10);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [score, setScore] = useState(0);  // Add score state
+  const [score, setScore] = useState(0);  
 
-  // Intro timer effect
   useEffect(() => {
     if (showIntro) {
       const interval = setInterval(() => {
@@ -88,7 +80,6 @@ function Activity2({ onNext }) {  // Accept onNext prop
     }
   }, [showIntro]);
 
-  // Reset states on question change
   useEffect(() => {
     setSelectedAnswer(null);
     setShowCelebration(false);
@@ -101,7 +92,7 @@ function Activity2({ onNext }) {  // Accept onNext prop
     setSelectedAnswer(option);
     
     if (option === currentQuestion.correctAnswer) {
-      setScore(prev => prev + 3);  // Add 3 points for correct answer
+      setScore(prev => prev + 3);  
       setShowCelebration(true);
       setTimeout(() => {
         setShowCelebration(false);
@@ -120,7 +111,7 @@ function Activity2({ onNext }) {  // Accept onNext prop
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      onNext(score);  // Pass final score to parent
+      onNext(score);  
     }
   };
 
@@ -176,8 +167,6 @@ function Activity2({ onNext }) {  // Accept onNext prop
   </div>
 </div>
 
-      {/* Answer Boards placed absolutely */}
-      {/* Top Answer */}
       <div
         className="group absolute"
         style={{
@@ -198,8 +187,6 @@ function Activity2({ onNext }) {  // Accept onNext prop
 </div>
 
       </div>
-
-      {/* Right Answer */}
       <div
         className="group absolute"
         style={{
@@ -220,7 +207,6 @@ function Activity2({ onNext }) {  // Accept onNext prop
         </div>
       </div>
 
-      {/* Bottom Answer */}
       <div
         className="group absolute"
         style={{
@@ -240,8 +226,6 @@ function Activity2({ onNext }) {  // Accept onNext prop
           {currentQuestion.options[2]}
         </div>
       </div>
-
-      {/* Left Answer */}
       <div
         className="group absolute"
         style={{
@@ -261,8 +245,6 @@ function Activity2({ onNext }) {  // Accept onNext prop
           {currentQuestion.options[3]}
         </div>
       </div>
-
-      {/* Forward Arrow Button (bottom right) */}
       <button
         onClick={handleNext}
         disabled={!selectedAnswer}
@@ -275,7 +257,6 @@ function Activity2({ onNext }) {  // Accept onNext prop
         <FaArrowRight size={24} />
       </button>
 
-      {/* Celebration Overlay (if correct answer is given) */}
       {showCelebration && (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-80 z-50">
           <div className="absolute inset-0 pointer-events-none">

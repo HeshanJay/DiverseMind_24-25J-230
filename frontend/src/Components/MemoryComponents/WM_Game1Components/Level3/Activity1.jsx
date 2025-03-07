@@ -19,7 +19,7 @@ const questions = [
       "වෛද්‍යවරයා අනතුර දෙස බලමින් සිටී.",
     ],
     correctAnswerIndex: 0,
-    questionPhaseDuration: 5,
+    questionPhaseDuration: 10,
     answerPhaseDuration: 5,
   },
   {
@@ -76,7 +76,6 @@ function Activity1({ onNext }) {
   const [showCelebration, setShowCelebration] = useState(false);
   const [score, setScore] = useState(0);
 
-  // Reset timers & selection when moving to new question
   useEffect(() => {
     setSelectedAnswer(null);
     setAnswerTimer(currentQuestion.answerPhaseDuration);
@@ -88,7 +87,6 @@ function Activity1({ onNext }) {
     }
   }, [currentQuestionIndex]);
 
-  // Countdown for question phase
   useEffect(() => {
     let timer;
     if (showQuestionPhase && questionTimer > 0) {
@@ -99,7 +97,7 @@ function Activity1({ onNext }) {
     return () => clearTimeout(timer);
   }, [questionTimer, showQuestionPhase]);
 
-  // Countdown for answer phase
+
   useEffect(() => {
     let timer;
     if (!showQuestionPhase && answerTimer > 0) {
@@ -108,32 +106,29 @@ function Activity1({ onNext }) {
     return () => clearTimeout(timer);
   }, [answerTimer, showQuestionPhase]);
 
-  // Handle answer selection
   const handleSelect = (index) => {
     if (selectedAnswer === null) {
       setSelectedAnswer(index);
       if (index === currentQuestion.correctAnswerIndex) {
-        setScore((prev) => prev + 4); // Award 4 marks per correct answer
-        setShowCelebration(true); // Show celebration for correct answer
+        setScore((prev) => prev + 4); 
+        setShowCelebration(true); 
         setTimeout(() => {
-          setShowCelebration(false); // Hide celebration after 3 seconds
+          setShowCelebration(false); 
         }, 3000);
       }
     }
   };
 
-  // Move to next question or call onNext when done with last question
   const handleNext = () => {
     if (selectedAnswer !== null) {
       if (currentQuestionIndex < questions.length - 1) {
         setCurrentQuestionIndex((prev) => prev + 1);
       } else {
-        onNext(score); // Pass final score to parent
+        onNext(score); 
       }
     }
   };
 
-  // Reset Activity1 to its initial state
   const handleRetry = () => {
     setCurrentQuestionIndex(0);
     setScore(0);
@@ -156,10 +151,8 @@ function Activity1({ onNext }) {
       }}
     >
      
-      {/* Show question and timer only once at the beginning */}
       {showQuestionPhase && currentQuestionIndex === 0 ? (
         <div className="flex flex-col items-center">
-          {/* Hide question text when question image is displayed */}
           {!currentQuestion.questionImage && (
             <div className="text-xl font-bold mb-[30px] text-center text-white">
               {currentQuestion.questionText}
@@ -172,21 +165,18 @@ function Activity1({ onNext }) {
               className="w-[405px] h-[500px] object-contain rounded-lg shadow-lg border-4 border-white box-border" // Added box-border to include border in dimensions
             />
           )}
-          {/* Timer with white border */}
           <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-6 py-3 rounded-md shadow-lg mt-10 w-64 mx-auto">
             ⏳ කාලය: {questionTimer} තත්පර
           </div>
         </div>
       ) : (
         <div className="w-full max-w-3xl relative h-screen">
-          {/* Black container for question text with reduced opacity and white border */}
           <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-3/4 bg-black bg-opacity-50 p-4 rounded-lg text-center border-4 border-white">
             <h1 className="text-3xl font-bold text-white">
               {currentQuestion.questionText}
             </h1>
           </div>
           <div className="relative h-full">
-            {/* Render fish images with reduced sizes */}
             {currentQuestion.answers.map((answer, index) => (
               <img
                 key={`fish-${index}`}
@@ -205,7 +195,6 @@ function Activity1({ onNext }) {
                 }}
               />
             ))}
-            {/* Render bubbles with answers and hover effect */}
             {currentQuestion.answers.map((answer, index) => (
               <div
                 key={`bubble-${index}`}
@@ -225,14 +214,13 @@ function Activity1({ onNext }) {
                 <img src={bubble} alt="Bubble" className="w-64 h-64" />
                 <div
                   className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-black font-semibold"
-                  style={{ fontSize: "21px", wordSpacing: "-2px" }} // Reduced word spacing
+                  style={{ fontSize: "21px", wordSpacing: "-2px" }} 
                 >
                   {answer}
                 </div>
               </div>
             ))}
           </div>
-          {/* Arrow button on the right side corner */}
           <button
             onClick={handleNext}
             className={`absolute bottom-10 right-8 p-4 rounded-full shadow-lg transition ${
@@ -247,28 +235,26 @@ function Activity1({ onNext }) {
         </div>
       )}
 
-      {/* Celebration for correct answer */}
       {showCelebration && (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-80 z-50">
-          {/* Fireworks */}
+  
           <div className="absolute inset-0 pointer-events-none">
             {[...Array(24)].map((_, i) => (
               <div key={i} className={`firework firework-${i + 1}`}></div>
             ))}
           </div>
-          <h1 className="relative z-10 text-6xl text-white font-bold mb-[-90px] animate-fadeIn">
-            ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
-          </h1>
-          {/* Celebration Fish */}
+          <h1 className="relative z-10 text-6xl font-bold mb-[-40px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
+      ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
+    </h1>
+        
           <img
             src={fish20}
             alt="Celebration Fish"
-            className="w-1/3 h-auto animate-bounce z-10"
+            className="w-1/3 h-auto animate-bounce z-10 mb-30"
           />
         </div>
       )}
 
-      {/* Fireworks CSS */}
       <style>
         {`
           @keyframes firework {

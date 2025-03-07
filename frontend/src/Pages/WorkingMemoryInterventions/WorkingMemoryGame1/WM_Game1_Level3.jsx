@@ -13,21 +13,19 @@ const WM_Game1_Level3 = () => {
     console.log("Current step:", currentStep);
   }, [currentStep]);
 
-  // Handle moving to the next step
   const onNext = (score = null) => {
     if (currentStep === 2 && score !== null) {
-      setActivity1Score(score); // Set score for Activity1
+      setActivity1Score(score); 
     }
     if (currentStep === 3 && score !== null) {
-      setActivity2Score(score); // Set score for Activity2
+      setActivity2Score(score); 
     }
-    setCurrentStep((prev) => prev + 1); // Move to the next step
+    setCurrentStep((prev) => prev + 1); 
   };
 
-  // Handle retry for Activity1
   const handleRetryActivity1 = () => {
-    setCurrentStep(2); // Go back to Activity1
-    setActivity1Score(0); // Reset Activity1 score
+    setCurrentStep(2); 
+    setActivity1Score(0); 
   };
 
   return (
@@ -39,7 +37,7 @@ const WM_Game1_Level3 = () => {
         <G1_L3_Feedback
           activity1Score={activity1Score}
           activity2Score={activity2Score}
-          handleRetry={handleRetryActivity1} // Pass handleRetry to Feedback
+          handleRetry={handleRetryActivity1} 
         />
       )}
     </>
