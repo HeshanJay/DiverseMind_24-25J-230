@@ -516,6 +516,8 @@ const WritingTest = () => {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
+      console.log("Prediction Response:", response.data);
+      alert("Prediction Response: " + JSON.stringify(response.data));
 
       if (response.data && typeof response.data.total_score === "number") {
         setCnnOutputScore(response.data.total_score);
@@ -632,14 +634,11 @@ const WritingTest = () => {
         punctuation_score: finalData.punctuation_score,
       };
 
-      await fetch(
-        "http://127.0.0.1:8000/save_writing_results",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(report),
-        }
-      );
+      await fetch("http://127.0.0.1:8000/save_writing_results", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(report),
+      });
       // const saveData = await saveResponse.json();
       // console.log("Save Response:", saveData);
 

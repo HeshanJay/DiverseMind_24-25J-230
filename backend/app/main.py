@@ -16,6 +16,7 @@ from app.model.predictor import predict_math_outcome
 from app.model.predictor import predict_memory_outcome
 from typing import Optional  
 import app.utils as utils
+from bson import ObjectId
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -273,17 +274,40 @@ def add_student(student: StudentEnrollmentModel):
     # students_collection.insert_one(student_doc)
     # return {"message": "ඇතුලත් කිරීම සාර්ථකයි "}
 
+@app.delete("/delete-student/{student_id}")
+def delete_student(student_id: str, current_teacher: dict = Depends(get_current_teacher)):
+    # Verify that the student exists and belongs to the current teacher
+    student = students_collection.find_one({
+        "_id": ObjectId(student_id),
+        "teacher_id": str(current_teacher["_id"])
+    })
+    if not student:
+        raise HTTPException(status_code=404, detail="Student not found or unauthorized")
+    
+    # Delete the student record
+    result = students_collection.delete_one({"_id": ObjectId(student_id)})
+    if result.deleted_count == 1:
+        # Optionally, delete associated results from other collections
+        db["math_results"].delete_many({"student_id": student_id})
+        db["writing_results"].delete_many({"student_id": student_id})
+        db["attention_results"].delete_many({"student_id": student_id})
+        db["memory_results"].delete_many({"student_id": student_id})
+        return {"message": "Student deleted successfully"}
+    else:
+        raise HTTPException(status_code=404, detail="Student not found")
+
 @app.get("/dashboard/")
 def dashboard(current_teacher: dict = Depends(get_current_teacher)):
     students = list(students_collection.find({"teacher_id": str(current_teacher["_id"])}))
 
     for student in students:
         student_id = str(student["_id"])
-        # Fetch math, writing, and attention results for this student
+        # Fetch math, writing, attention, and working memory results for this student
         math_results = list(db["math_results"].find({"student_id": student_id}))
         writing_results = list(db["writing_results"].find({"student_id": student_id}))
         attention_results_data = list(db["attention_results"].find({"student_id": student_id}))
-        
+        memory_results = list(db["memory_results"].find({"student_id": student_id}))
+
         # Convert ObjectIds to strings for each result document
         for result in math_results:
             result["_id"] = str(result["_id"])
@@ -291,12 +315,15 @@ def dashboard(current_teacher: dict = Depends(get_current_teacher)):
             result["_id"] = str(result["_id"])
         for result in attention_results_data:
             result["_id"] = str(result["_id"])
-        
+        for result in memory_results:
+            result["_id"] = str(result["_id"])
+
         # Attach the results to the student document
         student["math_results"] = math_results
         student["writing_results"] = writing_results
         student["attention_results"] = attention_results_data
-        
+        student["memory_results"] = memory_results 
+
         student["_id"] = str(student["_id"])
         student["teacher_id"] = str(student["teacher_id"])
 
@@ -305,7 +332,6 @@ def dashboard(current_teacher: dict = Depends(get_current_teacher)):
         "teacher_email": current_teacher["email"],
         "unique_code": current_teacher.get("unique_code", "")
     }
-
 
 @app.post("/reset-password/")
 def reset_password(reset_data: ResetPasswordModel, current_teacher: dict = Depends(get_current_teacher)):
@@ -630,4 +656,4 @@ def save_attention_span(result: AttentionSpanResult):
         attention_collection.insert_one(result_data)
         return {"message": "Attention span result saved successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to save attention span result: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to save attention span result: {e}")
