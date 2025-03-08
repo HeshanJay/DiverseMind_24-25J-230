@@ -10,6 +10,7 @@ import Signup from "./Components/Signup/Signup";
 import TeacherDashboard from "./Pages/TeacherDashboard/TeacherDashboard";
 import SplashScreen from "./Pages/SplashScreen/SplashScreen";
 import Dashboard from "./Components/Dashboard/Dashboard";
+import Report from "./Pages/Report/ReportView";
 import ResetPassword from "./Components/ResetPassword/ResetPassword";
 import StudentEntrance from "./Components/StudentEntrence/StudentEntrence";
 import HomePage from "./Pages/HomePage/home_page";
@@ -48,7 +49,6 @@ import WritingGame3Level1 from "./Pages/WritingInterventions/WritingGame3/Writin
 import WritingGame1Level1 from "./Pages/WritingInterventions/WritingGame1/WritingGame1Level1";
 import WritingGame3ScoreBoard from "./Pages/WritingInterventions/WritingGame3/WritingGame3ScoreBoard";
 import WritingGame1ScoreBoard from "./Pages/WritingInterventions/WritingGame1/WritingGame1ScoreBoard";
-
 import WM_Game1_Level1 from "./Pages/WorkingMemoryInterventions/WorkingMemoryGame1/WM_Game1_Level1";
 import WM_Game1_Level2 from "./Pages/WorkingMemoryInterventions/WorkingMemoryGame1/WM_Game1_Level2";
 import WM_Game1_Level3 from "./Pages/WorkingMemoryInterventions/WorkingMemoryGame1/WM_Game1_Level3";
@@ -123,6 +123,7 @@ const App = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/dashboardTeacher" element={<TeacherDashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/report-view/:id" element={<Report />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/student-entrance" element={<StudentEntrance />} />
             <Route path="/home-page" element={<HomePage />} />
