@@ -1,0 +1,334 @@
+
+@keyframes mfa-pulse {
+    0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); }
+    50% { box-shadow: 0 0 25px rgba(255, 215, 0, 1); }
+    100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); }
+  }
+  
+  @keyframes mfa-popupBounce {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.1); }
+    80% { transform: scale(0.95); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  @keyframes mfa-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  @keyframes mfa-particleExplode {
+    0% {
+      opacity: 1;
+      transform: translate(0, 0) scale(0);
+    }
+    100% {
+      opacity: 0;
+      transform: 
+        translate(
+          calc(var(--particle-x) * 1px),
+          calc(var(--particle-y) * 1px)
+        )
+        scale(1.5);
+    }
+  }
+  
+  .mfa-particle:nth-child(1) { --particle-x: -120; --particle-y: -80; }
+  .mfa-particle:nth-child(2) { --particle-x: 90; --particle-y: -150; }
+  .mfa-particle:nth-child(3) { --particle-x: -200; --particle-y: 30; }
+
+  
+  @keyframes mfa-resultEntrance {
+    0% { transform: translate(-50%, -50%) rotateX(90deg) scale(0); opacity: 0; }
+    100% { transform: translate(-50%, -50%) rotateX(0) scale(1); opacity: 1; }
+  }
+  
+  .mfa-main {
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .mfa-progress {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .mfa-question-progress {
+    margin-right: 20px;
+  }
+
+  .mfa-score {
+    color: #ff6347;
+  }
+  
+  .mfa-game-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 30px;
+    width: 80%;
+    max-width: 800px;
+    height: 80vh;
+    max-height: 600px;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .mfa-transition-in { opacity: 1; }
+  .mfa-transition-out { opacity: 0; }
+  
+  .mfa-question-image {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border: 5px solid #ffd700;
+    border-radius: 15px;
+    animation: mfa-pulse 2s infinite;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+  }
+  
+  .mfa-card {
+    width: 120px;
+    height: 120px;
+    border: 3px solid #ff69b4;
+    border-radius: 15px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+  }
+  
+  .mfa-card:hover {
+    transform: scale(1.15) rotateZ(5deg);
+    border-color: #ffd700;
+    filter: drop-shadow(0 10px 20px rgba(255, 223, 0, 0.7));
+  }
+
+  .mfa-correct-answer {
+    margin-top: 20px;
+    color: #fff;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .mfa-correct-option-image {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+    border: 3px solid #fff;
+    border-radius: 10px;
+  }
+  
+  .mfa-restart-button {
+    padding: 15px 30px;
+    font-size: 24px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+  }
+  
+  .mfa-restart-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+  }
+  
+  .mfa-correct .mfa-particle {
+    background: rgba(144, 255, 144, 0.8);
+  }
+  
+  .mfa-incorrect .mfa-particle {
+    background: rgba(255, 144, 144, 0.8);
+  }
+  
+  .mfa-card-top { grid-column: 2/3; grid-row: 1/2; justify-self: center; align-self: end; }
+  .mfa-card-left { grid-column: 1/2; grid-row: 2/3; justify-self: end; align-self: center; }
+  .mfa-card-right { grid-column: 3/4; grid-row: 2/3; justify-self: start; align-self: center; }
+  .mfa-card-bottom { grid-column: 2/3; grid-row: 3/4; justify-self: center; align-self: start; }
+  
+  .mfa-popup-container {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    pointer-events: none;
+  }
+  
+  .mfa-popup-content {
+    display: flex;
+    flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center;
+}
+  
+  .mfa-popup-image {
+    width: 300px;
+    height: 300px;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+    animation: mfa-float 3s ease-in-out infinite;
+  }
+
+  .mfa-popup-text {
+    margin-top: 10px; 
+    font-size: 28px;
+    font-weight: bold;
+    color: white; 
+}
+  
+  .mfa-correct .mfa-popup-image { filter: drop-shadow(0 0 15px rgba(100,255,100,0.8)); }
+  .mfa-incorrect .mfa-popup-image { filter: drop-shadow(0 0 15px rgba(255,100,100,0.8)); }
+  .mfa-correct .mfa-popup-text { color: #90ff90; }
+  .mfa-incorrect .mfa-popup-text { color: #ff9090; }
+  
+  .mfa-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .mfa-particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 50%;
+    animation: mfa-particleExplode 1.2s ease-out both;
+  }
+  
+  .mfa-result-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    text-align: center;
+    padding: 40px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #f8bb37, #ff66cc);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 5px solid #fff;
+    animation: mfa-resultEntrance 1s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  
+  .mfa-result-score {
+    color: #fff;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+  }
+
+  .mfa-result-message {
+    color: #fff;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  
+  .mfa-result-image {
+    width: 300px;
+    height: 300px;
+    border: 5px solid #fff;
+    border-radius: 20px;
+  }
+  
+  @keyframes mfa-textScale {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.1); }
+  }
+
+.mfa-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    animation: mfa-fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes mfa-popupBounce {
+    0% { 
+      transform: scale(0) translateY(50px);
+      opacity: 0; 
+    }
+    80% { 
+      transform: scale(1.1) translateY(-10px);
+      opacity: 1;
+    }
+    100% { 
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes mfa-fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .mfa-popup-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+.mfa-hungry-bear {
+  position: absolute;
+  left: 20px;
+  bottom: -10px;
+  width: 250px;
+  z-index: 998;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3));
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+    .mfa-result-popup {
+      padding: 20px;
+    }
+    .mfa-result-score {
+      font-size: 2rem;
+    }
+    .mfa-result-message {
+      font-size: 1.5rem;
+    }
+    .mfa-result-image {
+      width: 200px;
+      height: 200px;
+    }
+    .mfa-restart-button {
+      padding: 10px 30px;
+      font-size: 1.5rem;
+    }
+    .mfa-progress {
+      font-size: 1.2rem;
+      padding: 8px 16px;
+    }
+  }

@@ -29,66 +29,77 @@ const MathMenu = () => {
   };
 
   return (
-    <div className="forest-theme">
-      <animated.h1 style={titleAnimation}>
-        නිවැරදිව ගණිතය ඉගෙන ගනිමින්
-      </animated.h1>
-      <animated.h1 style={titleAnimation}>
-        වනාන්තරයේ ඇවිදිමු
-      </animated.h1>
-      <animated.p style={titleAnimation}>
-      ගමන් මග තෝරන්න :
-      </animated.p>
-      <animated.div className="menu-buttons" style={buttonAnimation}>
-        <button 
-          onClick={() => window.location.href = '/math-addition-guidance'}
-          onMouseEnter={playHoverSound}
-        >
-          <div className="symbol-container">
-            <img src={addSymbol} alt="Addition" className="button-symbol" />
-          </div>
-          <span className="button-text">එකතු කිරීම හදුනා ගනිමු</span>
-        </button>
-        <button 
-          onClick={() => window.location.href = '/subtraction'}
-          onMouseEnter={playHoverSound}
-        >
-          <div className="symbol-container">
-            <img src={subSymbol} alt="Subtraction" className="button-symbol" />
-          </div>
-          <span className="button-text">අඩු කිරීම හදුනා ගනිමු</span>
-        </button>
-        <button 
-          onClick={() => window.location.href = '/multiplication'}
-          onMouseEnter={playHoverSound}
-        >
-          <div className="symbol-container">
-            <img src={mulSymbol} alt="Multiplication" className="button-symbol" />
-          </div>
-          <span className="button-text">ගුන කිරීම හදුනා ගනිමු</span>
-        </button>
-        <button 
-          onClick={() => window.location.href = '/division'}
-          onMouseEnter={playHoverSound}
-        >
-          <div className="symbol-container">
-            <img src={divSymbol} alt="Division" className="button-symbol" />
-          </div>
-          <span className="button-text">බෙදීම හදුනා ගනිමු</span>
-        </button>
-        <button 
-          onClick={() => window.location.href = '/fractions'}
-          onMouseEnter={playHoverSound}
-        >
-          <div className="symbol-container">
-            <img src={fracSymbol} alt="Fractions" className="button-symbol" />
-          </div>
-          <span className="button-text">භාග හදුනා ගනිමු</span>
-        </button>
+    <div className="math-menu-forest-theme">
+      <animated.div className="title-container">
+        <animated.h1 style={titleAnimation} className="math-menu-title1">
+          නිවැරදිව ගණිතය ඉගෙන ගනිමින්
+        </animated.h1>
+        <animated.h2 style={titleAnimation} className="math-menu-title2">
+          වනාන්තරයේ ඇවිදිමු
+        </animated.h2>
+      </animated.div>
+      <animated.div className="math-menu-buttons" style={buttonAnimation}>
+        <div className="math-menu-button-row">
+          <button
+            onClick={() => window.location.href = '/math-addition-guidance'}
+            onMouseEnter={playHoverSound}
+            className="math-menu-button"
+          >
+            <div className="math-menu-symbol-container">
+              <img src={addSymbol} alt="Addition" className="math-menu-button-symbol" />
+            </div>
+            <span className="math-menu-button-text">එකතු කිරීම හදුනා ගනිමු</span>
+          </button>
+          <button
+            onClick={() => window.location.href = '/math-substraction-guidance'}
+            onMouseEnter={playHoverSound}
+            className="math-menu-button"
+          >
+            <div className="math-menu-symbol-container">
+              <img src={subSymbol} alt="Subtraction" className="math-menu-button-symbol" />
+            </div>
+            <span className="math-menu-button-text">අඩු කිරීම හදුනා ගනිමු</span>
+          </button>
+        </div>
+        <div className="math-menu-button-row">
+          <button
+            onClick={() => window.location.href = '/math-multiplication-guidance'}
+            onMouseEnter={playHoverSound}
+            className="math-menu-button"
+          >
+            <div className="math-menu-symbol-container">
+              <img src={mulSymbol} alt="Multiplication" className="math-menu-button-symbol" />
+            </div>
+            <span className="math-menu-button-text">ගුන කිරීම හදුනා ගනිමු</span>
+          </button>
+          <button
+            onClick={() => window.location.href = '/math-division-guidance'}
+            onMouseEnter={playHoverSound}
+            className="math-menu-button"
+          >
+            <div className="math-menu-symbol-container">
+              <img src={divSymbol} alt="Division" className="math-menu-button-symbol" />
+            </div>
+            <span className="math-menu-button-text">බෙදීම හදුනා ගනිමු</span>
+          </button>
+        </div>
+        <div className="math-menu-button-row math-menu-centered">
+          <button
+            onClick={() => window.location.href = '/fractions'}
+            onMouseEnter={playHoverSound}
+            className="math-menu-button"
+          >
+            <div className="math-menu-symbol-container">
+              <img src={fracSymbol} alt="Fractions" className="math-menu-button-symbol" />
+            </div>
+            <span className="math-menu-button-text">භාග හදුනා ගනිමු</span>
+          </button>
+        </div>
       </animated.div>
     </div>
   );
 };
 
 export default MathMenu;
+
 
