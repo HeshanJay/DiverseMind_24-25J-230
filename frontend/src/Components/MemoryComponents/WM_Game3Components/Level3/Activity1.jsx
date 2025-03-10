@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaArrowRight } from "react-icons/fa";
-import LastActivityAudio from "../../../../assets/WM_Interventions_images/L3_audios/Q6_audio.mp3";
 import snow10 from "../../../../assets/WM_Interventions_images/L3_images/snow10.png";
 import playButton from "../../../../assets/WM_Interventions_images/L3_images/play_icon.png";
 import pauseIcon from "../../../../assets/WM_Interventions_images/L3_images/pause_icon.png";
@@ -17,6 +16,7 @@ import cold from "../../../../assets/WM_Interventions_images/L3_images/cold.png"
 import penguinA_20 from "../../../../assets/WM_Interventions_images/L3_images/penguinA_20.png"; 
 import rabbit_icon from "../../../../assets/WM_Interventions_images/L3_images/rabbit_icon.png";
 import rabbit2 from "../../../../assets/WM_Interventions_images/L3_images/rabbit2.png";
+import L3_LastAudio from "../../../../assets/WM_Interventions_images/L3_audios/L3_LastAudio.mp3";
 
 function Activity1({ onNext }) {
   const questions = [
@@ -95,7 +95,7 @@ function Activity1({ onNext }) {
   };
 
   const handleAnswerClick = (index) => {
-    if (selectedAnswer !== null) return; // Prevent multiple selections
+    if (selectedAnswer !== null) return; 
     
     setSelectedAnswer(index);
     setAnswerSubmitted(true);
@@ -110,7 +110,7 @@ function Activity1({ onNext }) {
   };
 
   const moveToNextQuestion = () => {
-    if (!answerSubmitted) return; // Prevent moving without answer
+    if (!answerSubmitted) return; 
     
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
@@ -142,7 +142,7 @@ function Activity1({ onNext }) {
         onEnded={handleAudioEnded}
         style={{ display: "none" }}
       >
-        <source src={LastActivityAudio} type="audio/mpeg" />
+        <source src={L3_LastAudio } type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
 
@@ -231,7 +231,7 @@ function Activity1({ onNext }) {
         <button
           className={`absolute bottom-8 right-8 p-4 rounded-full shadow-lg flex items-center justify-center transition ${
             selectedAnswer === null 
-              ? "bg-gradient-to-r from-gray-400 to-gray-700 cursor-not-allowed" // Grey with black gradient
+              ? "bg-gradient-to-r from-gray-400 to-gray-700 cursor-not-allowed" 
               : "bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
           }`}
           onClick={moveToNextQuestion}

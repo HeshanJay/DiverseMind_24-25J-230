@@ -13,7 +13,7 @@ function WM_Game1Menu() {
   return (
     <div
       style={{
-        backgroundImage: `url(${snow_menu1})`, // Use sea_menu_back1 here
+        backgroundImage: `url(${snow_menu1})`, 
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         width: '100vw',
@@ -21,85 +21,83 @@ function WM_Game1Menu() {
         position: 'relative'
       }}
     >
-      {/* sea_icon3 at the top-right corner */}
+     
       <img
         src={snowNb_icon3}
         alt="Sea Icon 3"
-        onClick={() => navigate('/working-memory-game3/Level3/*')} // Navigate to Level 3
+        onClick={() => navigate('/working-memory-game3/Level3/*')} 
         style={{
           position: 'absolute',
-          top: '120px', // Adjust top position as needed
-          right: '330px', // Adjust right position as needed
-          width: '190px', // Adjust size as needed
+          top: '120px', 
+          right: '330px', 
+          width: '190px', 
           height: 'auto',
           cursor: 'pointer',
-          transition: 'transform 0.2s ease', // Add transition for smooth animation
+          transition: 'transform 0.2s ease', 
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')} // Scale up on hover
-        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')} // Scale back to normal
+        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')} 
+        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')} 
       />
 
-      {/* sea2_icon at the top-center */}
       <img
         src={snowNb_icon2}
         alt="Sea Icon 2"
-        onClick={() => navigate('/working-memory-game3/Level2/*')} // Navigate to Level 2
+        onClick={() => navigate('/working-memory-game3/Level2/*')}
         style={{
           position: 'absolute',
-          top: '250px', // Adjust top position as needed
-          left: '400px', // Adjust left position as needed
-          width: '190px', // Adjust size as needed
+          top: '250px', 
+          left: '400px', 
+          width: '190px', 
           height: 'auto',
           cursor: 'pointer',
-          transition: 'transform 0.2s ease', // Add transition for smooth animation
+          transition: 'transform 0.2s ease', 
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')} // Scale up on hover
-        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')} // Scale back to normal
+        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')} 
+        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')} 
       />
 
-      {/* sea1_icon at the top-left corner */}
       <img
         src={snowNb_icon1}
         alt="Sea Icon 1"
-        onClick={() => navigate('/working-memory-game3/Level1/*')} // Navigate to Level 1
+        onClick={() => navigate('/working-memory-game3/Level1/*')} 
         style={{
           position: 'absolute',
-          top: '400px', // Adjust top position as needed
-          left: '650px', // Adjust left position as needed
-          width: '190px', // Adjust size as needed
+          top: '400px', 
+          left: '650px', 
+          width: '190px', 
           height: 'auto',
           cursor: 'pointer',
-          transition: 'transform 0.2s ease', // Add transition for smooth animation
+          transition: 'transform 0.2s ease', 
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')} // Scale up on hover
-        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')} // Scale back to normal
+        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')} 
+        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')} 
       />
-       {/* star1 image at the bottom with animation */}
+      
        <img
         src={penguin_menu}
         alt="penguin"
         style={{
           position: 'absolute',
-          bottom: '340px', // Adjust bottom position as needed
-          left: '70%', // Center horizontally
-          width: '200px', // Adjust size as needed
+          bottom: '340px', 
+          left: '70%', 
+          width: '200px', 
           height: 'auto',
         }}
       />
-      {/* star1 image at the bottom with animation */}
+    
       <img
         src={penguin_3}
         alt="penguin_3"
         style={{
           position: 'absolute',
-          bottom: '5px', // Adjust bottom position as needed
-          left: '25%', // Center horizontally
-          width: '150px', // Adjust size as needed
+          bottom: '5px', 
+          left: '25%',
+          width: '150px',
           height: 'auto',
           animation: 'bounce 2s ease-in-out infinite', 
         }}
       />
-      {/* Define the bounce animation */}
+    
       <style>
         {`
           @keyframes bounce {

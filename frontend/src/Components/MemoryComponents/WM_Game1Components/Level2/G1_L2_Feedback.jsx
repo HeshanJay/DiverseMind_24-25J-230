@@ -73,7 +73,7 @@ const G1_L2_Feedback = ({ score, totalQuestions, handleRetry }) => {
             <FaRedo size={28} />
           </button>
           <button
-            onClick={() => navigate("/WM_Game2Menu")}
+            onClick={() => navigate("/WM_Game1Menu")}
             className="w-16 h-16 flex items-center justify-center bg-green-500 rounded-full text-white hover:bg-green-600 transition duration-200"
           >
             <FaArrowRight size={28} />

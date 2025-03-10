@@ -110,7 +110,7 @@ function Activity1({ onNext, setTotalScore }) {
   };
 
   const handleAnswerClick = (index) => {
-    if (selectedAnswer !== null) return; // Prevent multiple selections
+    if (selectedAnswer !== null) return; 
     setSelectedAnswer(index);
     
     if (currentQuestion.answers[index].isCorrect) {
@@ -123,7 +123,7 @@ function Activity1({ onNext, setTotalScore }) {
   };
 
   const moveToNextQuestion = () => {
-    if (selectedAnswer === null) return; // Prevent moving without answering
+    if (selectedAnswer === null) return; 
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
@@ -202,9 +202,8 @@ function Activity1({ onNext, setTotalScore }) {
         </div>
       )}
       {showAnswers && (
-  <div className="mt-8 text-center w-full max-w-3xl mx-auto"> {/* Reduced width */}
-    {/* Black container with border for the text */}
-    <div className="bg-black bg-opacity-50 p-4 rounded-2xl border-4 border-white mb-14 w-[50%] mx-auto"> {/* Reduced width */}
+  <div className="mt-8 text-center w-full max-w-3xl mx-auto"> 
+    <div className="bg-black bg-opacity-50 p-4 rounded-2xl border-4 border-white mb-14 w-[50%] mx-auto"> 
       <p className="text-white text-4xl font-bold">නිවැරදි පිළිතුර තෝරන්න</p>
     </div>
 
@@ -289,7 +288,7 @@ function Activity1({ onNext, setTotalScore }) {
               <div key={i} className={`firework firework-${i + 1}`}></div>
             ))}
           </div>
-          <h1 className="relative z-10 text-6xl font-bold mb-[-100px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="relative z-10 text-6xl font-bold mb-[30px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
       ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
     </h1>
           <img
