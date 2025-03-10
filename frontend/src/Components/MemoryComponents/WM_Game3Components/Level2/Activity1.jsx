@@ -9,15 +9,15 @@ import bear from "../../../../assets/WM_Interventions_images/L3_images/bear1.png
 import playButton from "../../../../assets/WM_Interventions_images/L3_images/play_icon.png";
 import pauseIcon from "../../../../assets/WM_Interventions_images/L3_images/pause_icon.png";
 import snowball from "../../../../assets/WM_Interventions_images/L3_images/snowball.png";
-import mon1 from "../../../../assets/WM_Interventions_images/L3_images/mon1.png";  // Monster 1 image
-import mon2 from "../../../../assets/WM_Interventions_images/L3_images/mon2.png";  // Monster 2 image
-import mon3 from "../../../../assets/WM_Interventions_images/L3_images/mon3.png";  // Monster 3 image
+import mon1 from "../../../../assets/WM_Interventions_images/L3_images/mon1.png";  
+import mon2 from "../../../../assets/WM_Interventions_images/L3_images/mon2.png";  
+import mon3 from "../../../../assets/WM_Interventions_images/L3_images/mon3.png";  
 import mon4 from "../../../../assets/WM_Interventions_images/L3_images/mon4.png"; 
 import flowerImage from "../../../../assets/WM_Interventions_images/L3_images/flower.png"; 
 import sadMonImage  from "../../../../assets/WM_Interventions_images/L3_images/sad_mon.png"; 
 import snowman from "../../../../assets/WM_Interventions_images/L3_images/snowman.png";
-import duck1 from "../../../../assets/WM_Interventions_images/L3_images/duck1.png";
 import duck2 from "../../../../assets/WM_Interventions_images/L3_images/duck2.png";
+
 
 function Activity1({ onNext }) {
   const questions = [
@@ -64,7 +64,7 @@ function Activity1({ onNext }) {
   const [audioStarted, setAudioStarted] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [score, setScore] = useState(0);  // Added score state
+  const [score, setScore] = useState(0);  
   const audioRef = useRef(null);
   const playCountRef = useRef(0);
 
@@ -73,9 +73,9 @@ function Activity1({ onNext }) {
   const handleAudioEnded = () => {
     if (playCountRef.current < 1) {
       playCountRef.current += 1;
-      audioRef.current.play(); // Play the audio again
+      audioRef.current.play(); 
     } else {
-      setShowAnswers(true); // Move to the answer page after playing twice
+      setShowAnswers(true); 
     }
   };
 
@@ -90,7 +90,7 @@ function Activity1({ onNext }) {
       audioRef.current.pause();
       audioRef.current.src = currentQuestion.audio;
       audioRef.current.load();
-      audioRef.current.play(); // Automatically start playing the audio
+      audioRef.current.play(); 
       setAudioStarted(true);
     }
   }, [currentQuestionIndex, currentQuestion.audio]);
@@ -98,7 +98,7 @@ function Activity1({ onNext }) {
   const handleAnswerClick = (index) => {
     setSelectedAnswer(index);
     if (currentQuestion.answers[index].isCorrect) {
-      setScore(prev => prev + 5);  // Increment score for correct answers
+      setScore(prev => prev + 5);  
       setShowCelebration(true);
       setTimeout(() => {
         setShowCelebration(false);
@@ -111,16 +111,16 @@ function Activity1({ onNext }) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
     } else {
-      onNext(score);  // Call onNext with final score when done
+      onNext(score);  
     }
   };
 
-  // Adjusted sizes for each monster image
+  
   const monsterSizes = [
-    { width: "120px", height: "170px" }, // Size for mon1
-    { width: "140px", height: "140px" }, // Size for mon2
-    { width: "130px", height: "130px" }, // Size for mon3
-    { width: "150px", height: "150px" }, // Size for mon4
+    { width: "120px", height: "170px" }, 
+    { width: "140px", height: "140px" }, 
+    { width: "130px", height: "130px" }, 
+    { width: "150px", height: "150px" }, 
   ];
 
   return (
@@ -137,7 +137,6 @@ function Activity1({ onNext }) {
         Your browser does not support the audio element.
       </audio>
 
-      {/* Bear image only shown during audio playback */}
       {!showAnswers && (
         <img
           src={bear}
@@ -146,14 +145,12 @@ function Activity1({ onNext }) {
         />
       )}
 
-      {/* Instructions when audio is playing */}
       {!showAnswers && (
         <div className="absolute top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full bg-black bg-opacity-50 border-4 border-white w-[40%] mx-auto flex items-center justify-center">
           <p className="text-white text-5xl font-bold text-center">හොඳින් සවන් දෙන්න</p>
         </div>
       )}
 
-      {/* Audio button (non-interactive, just for display) */}
       {!showAnswers && (
         <div className="flex flex-col items-center justify-center mt-[-80px] space-y-3 z-30">
           <div
@@ -164,7 +161,7 @@ function Activity1({ onNext }) {
               src={audioStarted ? pauseIcon : playButton}
               alt={audioStarted ? "Pause" : "Play"}
               className="absolute inset-0 m-auto w-[125px] h-[125px] cursor-pointer z-40"
-              style={{ pointerEvents: "none" }} // Disable interaction
+              style={{ pointerEvents: "none" }} 
             />
           </div>
         </div>
@@ -200,11 +197,11 @@ function Activity1({ onNext }) {
                 : ""
             }`}
             style={{
-              height: currentQuestion.audio === Q5_audio ? '430px' : '350px', // Increase height for Q5_audio
+              height: currentQuestion.audio === Q5_audio ? '430px' : '350px', 
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              width: currentQuestion.audio === Q5_audio ? '100%' : 'auto', // Increase width for Q5_audio
+              width: currentQuestion.audio === Q5_audio ? '100%' : 'auto',
             }}
             onClick={() => {
               if (selectedAnswer === null) {
@@ -252,11 +249,10 @@ function Activity1({ onNext }) {
     </div>
   </div>
 )}
-   {/* Modified bear section with ducks - precise margins */}
+  
 {!showAnswers && (
   <div className="absolute bottom-[-130px] left-[190px] z-20 flex items-end gap-8">
-    
-    {/* Right Duck */}
+  
     <img
       src={duck2}
       alt="duck"
@@ -264,12 +260,12 @@ function Activity1({ onNext }) {
     />
   </div>
 )}
-      {/* Next button */}
+
       {showAnswers && (
         <button
           className={`absolute bottom-8 right-8 p-4 rounded-full shadow-lg flex items-center justify-center transition ${
             selectedAnswer === null 
-              ? "bg-gradient-to-r from-gray-400 to-gray-700 cursor-not-allowed" // Grey with black gradient
+              ? "bg-gradient-to-r from-gray-400 to-gray-700 cursor-not-allowed" 
               : "bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
           }`}
           onClick={moveToNextQuestion}
@@ -279,7 +275,7 @@ function Activity1({ onNext }) {
         </button>
       )}
 
-      {/* Celebration animation */}
+
       {showCelebration && (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-80 z-50">
           <div className="absolute inset-0 pointer-events-none">

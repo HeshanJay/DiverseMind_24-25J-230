@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import L3_Back2 from "../../../../assets/WM_Interventions_images/L3_images/L3_Back2.jpg"; // Passage background
-import L3_Back3 from "../../../../assets/WM_Interventions_images/L3_images/L3_Back3.jpg"; // Answer background
-
-// Import images for questions and options
+import L3_Back2 from "../../../../assets/WM_Interventions_images/L3_images/L3_Back2.jpg"; 
+import L3_Back3 from "../../../../assets/WM_Interventions_images/L3_images/L3_Back3.jpg"; 
 import L3_img2 from "../../../../assets/WM_Interventions_images/L3_images/L3_img2.png";
 import L3_img4 from "../../../../assets/WM_Interventions_images/L3_images/L3_img4.png";
 import L3_img6 from "../../../../assets/WM_Interventions_images/L3_images/L3_img6.jpg";
@@ -12,7 +10,7 @@ import L3_img9 from "../../../../assets/WM_Interventions_images/L3_images/L3_img
 import L3_img10 from "../../../../assets/WM_Interventions_images/L3_images/L3_img10.jpg";
 import L3_img11 from "../../../../assets/WM_Interventions_images/L3_images/L3_img11.png";
 import L3_img12 from "../../../../assets/WM_Interventions_images/L3_images/L3_img12.jpg";
-import dog from "../../../../assets/WM_Interventions_images/L2_images/dog.png";
+import deer1 from "../../../../assets/WM_Interventions_images/L3_images/deer1.png";
 import { FaArrowRight } from 'react-icons/fa';
 
 const questions = [
@@ -44,12 +42,11 @@ const questions = [
 function Activity1({ onNext }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [timer, setTimer] = useState(4);
+  const [timer, setTimer] = useState(10);
   const [showCelebration, setShowCelebration] = useState(false);
   const [score, setScore] = useState(0);
   const [timeUp, setTimeUp] = useState(false);
 
-  // Timer countdown effect
   useEffect(() => {
     let countdown;
     if (currentQuestion > 0 && timer > 0 && !timeUp) {
@@ -58,7 +55,6 @@ function Activity1({ onNext }) {
     return () => clearInterval(countdown);
   }, [currentQuestion, timer, timeUp]);
 
-  // Detect when timer reaches 0
   useEffect(() => {
     if (timer === 0 && currentQuestion > 0) setTimeUp(true);
   }, [timer, currentQuestion]);
@@ -78,7 +74,7 @@ function Activity1({ onNext }) {
       setCurrentQuestion(prev => prev + 1);
       setTimeUp(false);
       setSelectedAnswer(null);
-      setTimer(4);
+      setTimer(10);
     }
     if (currentQuestion === questions.length) onNext(score);
   };
@@ -171,11 +167,11 @@ function Activity1({ onNext }) {
               <div key={i} className={`firework firework-${i + 1}`}></div>
             ))}
           </div>
-          <h1 className="relative z-10 text-6xl font-bold mb-[-100px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="relative z-10 text-6xl font-bold mb-[-30px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
       ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
     </h1>
           <img
-            src={dog}
+            src={deer1}
             alt="Celebration Feedback"
             className="relative z-10 w-1/3 h-auto animate-wave mt-10"
           />

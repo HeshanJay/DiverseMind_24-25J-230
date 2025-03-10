@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
-
-// Background image for the answer page
 import L2_back3 from "../../../../assets/WM_Interventions_images/L2_images/L2_back3.png";
-// Egg and Dino images
 import img_egg1 from "../../../../assets/WM_Interventions_images/L2_images/img_egg1.png";
 import dino_img from "../../../../assets/WM_Interventions_images/L2_images/dino_img.png";
 import dino_break from "../../../../assets/WM_Interventions_images/L2_images/dino_break.png";
-// Intro image (displayed for 3 seconds now)
 import L2_img2 from "../../../../assets/WM_Interventions_images/L2_images/L2_img2.jpg";
 
 const questions = [
@@ -34,26 +30,18 @@ const questions = [
 ];
 
 function Activity1({ onNext }) {
-  // Show intro image for 3 seconds
   const [showImage, setShowImage] = useState(true);
-  const [timer, setTimer] = useState(3);
-  // Track current question (one question per screen)
+  const [timer, setTimer] = useState(10);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  // The selected answer for the current question
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  // Egg animation state: "intact" | "breaking" | "broken"
   const [eggAnimState, setEggAnimState] = useState("intact");
-  // Whether to show dino_break image (kept until celebration ends)
   const [showDinoBreak, setShowDinoBreak] = useState(false);
-  // State to show full-screen celebration overlay
   const [showCelebration, setShowCelebration] = useState(false);
-  // Score tracking
   const [score, setScore] = useState(0);
 
-  // Timer effect for the intro image display (3s countdown)
   useEffect(() => {
     if (showImage) {
-      setTimer(3);
+      setTimer(10);
       const intervalId = setInterval(() => {
         setTimer((prev) => {
           if (prev <= 1) {
@@ -68,7 +56,6 @@ function Activity1({ onNext }) {
     }
   }, [showImage]);
 
-  // Reset selection and egg state when the question changes
   useEffect(() => {
     setSelectedAnswer(null);
     setEggAnimState("intact");
@@ -83,21 +70,15 @@ function Activity1({ onNext }) {
     setSelectedAnswer(option);
 
     if (option === currentQuestion.correctAnswer) {
-      // Add 3 points for correct answer
       setScore(prev => prev + 3);
-      // Correct answer: start break animation (2s)
       setEggAnimState("breaking");
       setTimeout(() => {
         setEggAnimState("broken");
-        // Show dino_break image
         setShowDinoBreak(true);
-        // Keep dino_break visible for 1s before showing celebration
         setTimeout(() => {
-          // Then show celebration overlay for 4s
           setShowCelebration(true);
           setTimeout(() => {
             setShowCelebration(false);
-            // After celebration, switch to final dino_img
             setShowDinoBreak(false);
           }, 4000);
         }, 1000);
@@ -109,7 +90,6 @@ function Activity1({ onNext }) {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prev) => prev + 1);
     } else {
-      // Pass final score to parent component
       onNext(score);
     }
   };
@@ -124,7 +104,7 @@ function Activity1({ onNext }) {
     <img
       src={L2_img2}
       alt="Intro"
-      className="w-1/2 h-auto rounded-lg shadow-lg border-4 border-white" // Added border here
+      className="w-1/2 h-auto rounded-lg shadow-lg border-4 border-white" 
     />
     <p className="absolute bottom-[65px] left-1/2 transform -translate-x-1/2 text-xl text-white px-6 py-3 rounded-xl font-semibold
                     bg-gradient-to-r from-[#8B4513] via-[#CD653F] to-[#8B4513]
@@ -196,7 +176,6 @@ function Activity1({ onNext }) {
             <div className="firework firework-10"></div>
             <div className="firework firework-11"></div>
             <div className="firework firework-12"></div>
-            {/* Additional 12 fireworks */}
             <div className="firework firework-13"></div>
             <div className="firework firework-14"></div>
             <div className="firework firework-15"></div>
