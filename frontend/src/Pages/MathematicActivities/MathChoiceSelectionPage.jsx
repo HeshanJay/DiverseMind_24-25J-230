@@ -13,7 +13,7 @@ const MathChoiceSelectionPage = () => {
     };
   
     const handleButton2Click = () => {
-      navigate("/math-substraction-guidance"); 
+      navigate("/math-funny-game-menu"); 
     };
     
   return (
@@ -21,7 +21,7 @@ const MathChoiceSelectionPage = () => {
       <button className="choice-button" onClick={handleButton1Click}>
         <img src={button1Image} alt="Choice Button 1" />
       </button>
-      <button className="choice-button" onClick={handleButton1Click}>
+      <button className="choice-button" onClick={handleButton2Click}>
         <img src={button2Image} alt="Choice Button 2" />
       </button>
     </div>

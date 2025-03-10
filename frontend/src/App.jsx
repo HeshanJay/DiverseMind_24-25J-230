@@ -23,6 +23,17 @@ import MathSubstractionGuidancePage from "./Components/MathComponents/Activities
 import MathMultiplicationGuidancePage from "./Components/MathComponents/Activities/Guidence/MathMultiplicationGuidancePage";
 import MathDivisionGuidancePage from "./Components/MathComponents/Activities/Guidence/MathDivisionGuidancePage";
 import MathAdditionGamePage from "./Components/MathComponents/Activities/MathGames/MathAdditionGamePage";
+import MathFractionGamePage from "./Components/MathComponents/Activities/MathGames/MathFractionGamePage";
+import MathSubstractionGamePage from "./Components/MathComponents/Activities/MathGames/MathSubstractionGamePage";
+import MathMultiplicationGamePage from "./Components/MathComponents/Activities/MathGames/MathMultiplicationGamePage";
+import MathDivisionGamePage from "./Components/MathComponents/Activities/MathGames/MathDivisionGamePage";
+import MathInstruction1 from "./Components/MathComponents/Activities/Instructions/MathInstruction1";
+import MathInstruction2 from "./Components/MathComponents/Activities/Instructions/MathInstruction2";
+import MathInstruction3 from "./Components/MathComponents/Activities/Instructions/MathInstruction3";
+import MathInstruction4 from "./Components/MathComponents/Activities/Instructions/MathInstruction4";
+import MathInstruction5 from "./Components/MathComponents/Activities/Instructions/MathInstruction5";
+import MathFunnyGameMenu from "./Components/MathComponents/Activities/MathGames/MathFunnyGameMenu";
+
 import Screening_and_interventions from "./Pages/ScreeningMenu_interventions/Screening_and_interventions";
 import Intervention_menu from "./Pages/Intervention_Menu/Intervention_menu";
 import AttentionIM from "./Pages/Attention/AttentionIM";
@@ -266,6 +277,46 @@ const App = () => {
             <Route
               path="/writing-game1-scoreBoard"
               element={<WritingGame1ScoreBoard />}
+            />
+            <Route
+              path="/math-fraction-game"
+              element={<MathFractionGamePage />}
+            />
+            <Route
+              path="/math-substraction-game"
+              element={<MathSubstractionGamePage />}
+            />
+            <Route
+              path="/math-multiplication-game"
+              element={<MathMultiplicationGamePage />}
+            />
+            <Route
+              path="/math-division-game"
+              element={<MathDivisionGamePage />}
+            />
+            <Route
+              path="/math-instruction1"
+              element={<MathInstruction1 />}
+            />
+            <Route
+              path="/math-instruction2"
+              element={<MathInstruction2 />}
+            />
+            <Route
+              path="/math-instruction3"
+              element={<MathInstruction3 />}
+            />
+            <Route
+              path="/math-instruction4"
+              element={<MathInstruction4 />}
+            />
+            <Route
+              path="/math-instruction5"
+              element={<MathInstruction5 />}
+            />
+            <Route
+              path="/math-funny-game-menu"
+              element={<MathFunnyGameMenu />}
             />
           </Routes>
         </ScoresProvider>
