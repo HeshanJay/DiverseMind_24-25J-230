@@ -107,13 +107,13 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
   useEffect(() => {
     let interval;
     if (showImage) {
-      setTimer(10); 
+      setTimer(10);
       interval = setInterval(() => {
         setTimer((prevTimer) => {
           if (prevTimer === 1) {
             setShowImage(false);
             setShowAnswers(true);
-            setTimer(10); 
+            setTimer(10);
           }
           return prevTimer - 1;
         });
@@ -122,15 +122,15 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
       interval = setInterval(() => {
         setTimer((prevTimer) => {
           if (prevTimer === 1) {
-            handleAnswerClick(null); 
+            handleAnswerClick(null);
           }
           return prevTimer - 1;
         });
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [showImage, showAnswers]); 
-  
+  }, [showImage, showAnswers]);
+
   const handleAnswerClick = (answerId) => {
     setTimer(0);
     if (answerId === questions[currentQuestion].correctAnswer) {
@@ -199,69 +199,86 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
           </>
         )}
         {showAnswers && (
-  <>
-    <div className="bg-gray-800 bg-opacity-70 p-6 rounded-[3rem] shadow-lg mb-3 max-w-[960px] mx-auto border-4 border-white w-full">
-      <h2 className="text-3xl font-semibold mb-6 text-center">නිවැරදි පිළිතුර තෝරන්න</h2>
-      <table className="w-full text-lg border-separate border-spacing-4">
-        <tbody>
-          {questions[currentQuestion].answers.map((answer, index) => {
-            if (index % 2 === 0) {
-              return (
-                <tr key={index} className="flex gap-6 justify-center mb-4">
-                  <td className="p-3 text-center relative">
-                    <div className="absolute top-6 left-5 text-black w-8 h-8 flex items-center justify-center text-2xl font-bold z-10">
-                      {index + 1}
-                    </div>
-                    <button
-                      onClick={() => handleAnswerClick(answer.id)}
-                      className="bg-gradient-to-r from-green-400 to-lime-600 text-white px-6 py-3 rounded-xl text-2xl shadow-lg hover:scale-105 transition-transform relative"
-                      style={{ width: "400px", height: "150px" }}
-                    >
-                      <img
-                        src={answer.src}
-                        alt={`Answer ${answer.id}`}
-                        className="w-full h-full object-contain rounded-lg p-2"
-                      />
-                    </button>
-                  </td>
+          <>
+            <div className="bg-gray-800 bg-opacity-70 p-6 rounded-[3rem] shadow-lg mb-3 w-[940px] h-[485px] border-4 border-white">
+              <h2 className="text-4xl font-semibold mb-6 text-center">
+                නිවැරදි පිළිතුර තෝරන්න
+              </h2>
+              <table className="w-full text-lg border-separate border-spacing-4">
+                <tbody>
+                  {questions[currentQuestion].answers.map((answer, index) => {
+                    if (index % 2 === 0) {
+                      return (
+                        <tr
+                          key={index}
+                          className="flex gap-6 justify-center mb-4"
+                        >
+                          <td className="p-3 text-center relative">
+                            <div className="absolute top-6 left-5 text-black w-8 h-8 flex items-center justify-center text-2xl font-bold z-10">
+                              {index + 1}
+                            </div>
+                            <button
+                              onClick={() => handleAnswerClick(answer.id)}
+                              className="bg-gradient-to-r from-green-400 to-lime-600 text-white px-6 py-3 rounded-xl text-2xl shadow-lg hover:scale-105 transition-transform relative"
+                              style={{ width: "400px", height: "150px" }}
+                            >
+                              <img
+                                src={answer.src}
+                                alt={`Answer ${answer.id}`}
+                                className="w-full h-full object-contain rounded-lg p-2"
+                              />
+                            </button>
+                          </td>
 
-                  {/* Answer 2 */}
-                  {questions[currentQuestion].answers[index + 1] && (
-                    <td className="p-3 text-center relative">
-                      <div className="absolute top-6 left-4 text-black w-8 h-8 flex items-center justify-center text-2xl font-bold z-10">
-                        {index + 2}
-                      </div>
-                      <button
-                        onClick={() => handleAnswerClick(questions[currentQuestion].answers[index + 1].id)}
-                        className="bg-gradient-to-r from-green-400 to-lime-600 text-white px-6 py-3 rounded-xl text-2xl shadow-lg hover:scale-105 transition-transform"
-                        style={{ width: "400px", height: "150px" }}
-                      >
-                        <img
-                          src={questions[currentQuestion].answers[index + 1].src}
-                          alt={`Answer ${questions[currentQuestion].answers[index + 1].id}`}
-                          className="w-full h-full object-contain rounded-lg p-2"
-                        />
-                      </button>
-                    </td>
-                  )}
-                </tr>
-              );
-            }
-            return null;
-          })}
-        </tbody>
-      </table>
-    </div>
-    <div className="text-2xl font-bold bg-gradient-to-r from-green-500 to-emerald-700 px-5 py-3 rounded-xl shadow-lg mt-2">
-  ⏳ කාලය: {timer} තත්පර
-</div>
-  </>
-)}
+                          {/* Answer 2 */}
+                          {questions[currentQuestion].answers[index + 1] && (
+                            <td className="p-3 text-center relative">
+                              <div className="absolute top-6 left-4 text-black w-8 h-8 flex items-center justify-center text-2xl font-bold z-10">
+                                {index + 2}
+                              </div>
+                              <button
+                                onClick={() =>
+                                  handleAnswerClick(
+                                    questions[currentQuestion].answers[
+                                      index + 1
+                                    ].id
+                                  )
+                                }
+                                className="bg-gradient-to-r from-green-400 to-lime-600 text-white px-6 py-3 rounded-xl text-2xl shadow-lg hover:scale-105 transition-transform"
+                                style={{ width: "400px", height: "150px" }}
+                              >
+                                <img
+                                  src={
+                                    questions[currentQuestion].answers[
+                                      index + 1
+                                    ].src
+                                  }
+                                  alt={`Answer ${
+                                    questions[currentQuestion].answers[
+                                      index + 1
+                                    ].id
+                                  }`}
+                                  className="w-full h-full object-contain rounded-lg p-2"
+                                />
+                              </button>
+                            </td>
+                          )}
+                        </tr>
+                      );
+                    }
+                    return null;
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <div className="text-2xl font-bold bg-gradient-to-r from-green-500 to-emerald-700 px-5 py-3 rounded-xl shadow-lg mt-2">
+              ⏳ කාලය: {timer} තත්පර
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
 };
 
 export default MemoryTestActivity;
-
-
