@@ -196,7 +196,7 @@ const Display1 = () => {
       {/* Game Content: Only show when game is started and not over */}
       {gameStarted && !gameOver && (
         <div className="relative z-10 flex flex-col items-center py-8">
-          <h1 className="text-4xl font-bold text-white mb-4">Score: {score}</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">ලකුණු: {score}</h1>
           <div
             id="board"
             className="grid grid-cols-3 grid-rows-3 w-[480px] h-[480px] mx-auto border-4 border-white rounded-2xl bg-cover"
