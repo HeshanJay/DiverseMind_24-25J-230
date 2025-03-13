@@ -1,5 +1,5 @@
 import React from "react";
-import BackImage from "../../../../assets/background_images/AttentionGames/Game2/backimg1_game2.png";
+import BackImage from "../../../../assets/Attention/light.png";
 import { FaRedo, FaArrowRight, FaEllipsisH } from "react-icons/fa";
 
 const Game2Level3Screen6 = ({ userAnswers, onGameComplete }) => {
@@ -12,40 +12,51 @@ const Game2Level3Screen6 = ({ userAnswers, onGameComplete }) => {
     if (onGameComplete) {
       onGameComplete();
     } else {
-      window.location.href = "/game2level3screen1"; // Direct navigation to Game2Level3Screen1
+      window.location.href = "/game2level3screen1";
     }
   };
 
   return (
     <div
-      className="w-screen h-screen bg-cover bg-center flex flex-col items-center justify-center relative"
+      className="w-screen h-screen bg-cover bg-center flex items-center justify-center relative"
       style={{ backgroundImage: `url(${BackImage})` }}
     >
+      {/* Dark overlay to enhance contrast */}
       <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-      <div className="relative z-10 text-center text-white">
+
+      {/* Main container with a pretty border */}
+      <div
+        className="relative z-10 bg-black bg-opacity-90 p-8 md:p-10 text-center text-white 
+                   border-8 border-yellow-400 rounded-3xl shadow-2xl max-w-xl w-full mx-4"
+      >
         <h1 className="text-4xl font-bold mb-4">ලකුණු පුවරුව</h1>
         <p className="text-2xl mb-4">
           ඔබේ ලකුණු: {correctCount} / {totalQuestions}
         </p>
 
-        {/* Fixed container for stars */}
-        <div className="mb-4">
+        {/* Stars display */}
+        <div className="mb-6">
           <div className="flex justify-center">
             {[...Array(stars)].map((_, i) => (
-              <span key={i} className="text-4xl">
+              <span key={i} className="text-4xl mx-1">
                 ⭐
               </span>
             ))}
           </div>
         </div>
 
+        {/* Feedback text */}
         {correctCount === totalQuestions ? (
-          <p className="text-2xl text-green-300">ඉතා හොඳයි 🌿</p>
+          <p className="text-2xl text-green-600 font-semibold mb-6">
+            ඉතා හොඳයි 🌿
+          </p>
         ) : (
-          <p className="text-2xl text-orange-300">උත්සාහය අතාරින්න එපා! 🌿</p>
+          <p className="text-2xl text-orange-600 font-semibold mb-6">
+            උත්සාහය අතාරින්න එපා! 🌿
+          </p>
         )}
 
-        {/* Kid-Friendly Buttons */}
+        {/* Action Buttons */}
         <div className="flex gap-6 mt-8 justify-center">
           {/* Restart Button */}
           <button

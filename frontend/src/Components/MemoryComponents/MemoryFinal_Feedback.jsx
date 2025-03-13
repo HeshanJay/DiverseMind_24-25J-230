@@ -1,10 +1,15 @@
 import React from "react";
 import { FaRedoAlt, FaHome, FaBars } from "react-icons/fa";
 import img5 from "../../assets/Working_Memory/img8.png";
-import img12 from "../../assets/Working_Memory/img12.png"; 
+import img12 from "../../assets/Working_Memory/img12.png";
 import { useNavigate } from "react-router-dom";
 
-const MemoryFinal_Feedback = ({ predictionResult, onGoHome, onGoMenu, onRestart }) => {
+const MemoryFinal_Feedback = ({
+  predictionResult,
+  onGoHome,
+  onGoMenu,
+  onRestart,
+}) => {
   const navigate = useNavigate();
   let feedbackText = "ප්‍රතිපල ලබා ගැනෙමින්...";
 
@@ -27,11 +32,56 @@ const MemoryFinal_Feedback = ({ predictionResult, onGoHome, onGoMenu, onRestart 
       <div className="absolute inset-0 bg-black bg-opacity-40"></div>
 
       <div className="absolute inset-0 pointer-events-none">
-        <div className="snowball" style={{ left: "10%", animationDelay: "0s", width: "10px", height: "10px", "--color": "#FF69B4" }}></div>
-        <div className="snowball" style={{ left: "30%", animationDelay: "1s", width: "15px", height: "15px", "--color": "#1E90FF" }}></div>
-        <div className="snowball" style={{ left: "50%", animationDelay: "2s", width: "8px", height: "8px", "--color": "#FF69B4" }}></div>
-        <div className="snowball" style={{ left: "70%", animationDelay: "3s", width: "12px", height: "12px", "--color": "#1E90FF" }}></div>
-        <div className="snowball" style={{ left: "90%", animationDelay: "4s", width: "20px", height: "20px", "--color": "#FF69B4" }}></div>
+        <div
+          className="snowball"
+          style={{
+            left: "10%",
+            animationDelay: "0s",
+            width: "10px",
+            height: "10px",
+            "--color": "#FF69B4",
+          }}
+        ></div>
+        <div
+          className="snowball"
+          style={{
+            left: "30%",
+            animationDelay: "1s",
+            width: "15px",
+            height: "15px",
+            "--color": "#1E90FF",
+          }}
+        ></div>
+        <div
+          className="snowball"
+          style={{
+            left: "50%",
+            animationDelay: "2s",
+            width: "8px",
+            height: "8px",
+            "--color": "#FF69B4",
+          }}
+        ></div>
+        <div
+          className="snowball"
+          style={{
+            left: "70%",
+            animationDelay: "3s",
+            width: "12px",
+            height: "12px",
+            "--color": "#1E90FF",
+          }}
+        ></div>
+        <div
+          className="snowball"
+          style={{
+            left: "90%",
+            animationDelay: "4s",
+            width: "20px",
+            height: "20px",
+            "--color": "#FF69B4",
+          }}
+        ></div>
       </div>
 
       <div className="relative z-10 flex-grow flex flex-col items-center justify-center pb-10">
@@ -43,7 +93,7 @@ const MemoryFinal_Feedback = ({ predictionResult, onGoHome, onGoMenu, onRestart 
             🎉ඔබේ ප්‍රතිඵලය🎉
           </h1>
 
-          <div className="absolute right-[250px] top-[200px] flex flex-col items-center gap-6 z-20">
+          <div className="absolute right-[280px] top-[200px] flex flex-col items-center gap-6 z-20">
             <button
               onClick={() => {
                 if (onRestart) {
@@ -57,13 +107,17 @@ const MemoryFinal_Feedback = ({ predictionResult, onGoHome, onGoMenu, onRestart 
               <FaRedoAlt />
             </button>
             <button
-              onClick={() => onGoHome ? onGoHome() : navigate("/screening_and_interventions")}
+              onClick={() =>
+                onGoHome ? onGoHome() : navigate("/screening_and_interventions")
+              }
               className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg hover:scale-105 transition-transform duration-300"
             >
               <FaHome />
             </button>
             <button
-              onClick={() => onGoMenu ? onGoMenu() : navigate("/screening-menu")}
+              onClick={() =>
+                onGoMenu ? onGoMenu() : navigate("/screening-menu")
+              }
               className="bg-gradient-to-r from-pink-400 to-red-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg hover:scale-105 transition-transform duration-300"
             >
               <FaBars />
@@ -78,7 +132,11 @@ const MemoryFinal_Feedback = ({ predictionResult, onGoHome, onGoMenu, onRestart 
           </h2>
         </div>
         <div className="flex justify-center mt-16">
-          <img src={img12} alt="Celebration" className="w-24 h-auto animate-bounce mt-1" />
+          <img
+            src={img12}
+            alt="Celebration"
+            className="w-24 h-auto animate-bounce mt-1"
+          />
         </div>
       </div>
 

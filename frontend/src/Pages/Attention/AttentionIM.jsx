@@ -23,22 +23,22 @@ const AttentionIM = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center p-4 relative">
-      <div 
-        className="absolute inset-0 z-0" 
-        style={{ 
-          backgroundImage: `url(${backgroundImage})`, 
-          backgroundSize: "cover", 
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
           backgroundPosition: "center",
-          opacity: 1
+          opacity: 1,
         }}
       ></div>
-      
+
       <div className="relative z-10 flex flex-col items-center justify-center w-full">
-       <h1 className="text-5xl font-bold text-white mb-[55px] drop-shadow-2xl bg-clip-text text-transparent animate-pulse relative left-3">
-       <span className="bg-black/30 px-4 py-2 rounded-3xl shadow-xl border border-white/90 text-shadow-xl">
-      අවධානය වර්ධනය සඳහා මඟ හුරුව
-    </span>
-  </h1>
+        <h1 className="text-5xl font-bold text-white mb-[55px] drop-shadow-2xl bg-clip-text text-transparent animate-pulse relative left-3">
+          <span className="bg-black/30 px-4 py-2 rounded-3xl shadow-xl border border-white/90 text-shadow-xl">
+            අවධානය වර්ධනය සඳහා මඟ හුරුව
+          </span>
+        </h1>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-8xl mx-auto">
           {/* Game 1 Card */}
           <div
