@@ -98,13 +98,13 @@ const ScoreBoard = ({ onRestart }) => {
             <FaRedoAlt />
           </button>
           <button
-            onClick={() => navigate("/home")}
+            onClick={() => navigate("/screening_and_interventions")}
             className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg hover:scale-105 transition-transform duration-300"
           >
             <FaHome />
           </button>
           <button
-            onClick={() => navigate("/home")}
+            onClick={() => navigate("/screening-menu")}
             className="bg-gradient-to-r from-pink-400 to-red-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg hover:scale-105 transition-transform duration-300"
           >
             <FaBars />

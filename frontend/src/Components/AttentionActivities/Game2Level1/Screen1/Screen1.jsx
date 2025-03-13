@@ -2,16 +2,22 @@ import React, { useState, useEffect } from "react";
 import Level1_1 from "../../../../assets/background_images/AttentionGames/Game2/Level1_1.png";
 import Level1_1_1 from "../../../../assets/background_images/AttentionGames/Game2/Level1_1.1.png";
 import BackImage from "../../../../assets/background_images/AttentionGames/Game2/backimg1_game2.png";
+import IntroImage from "../../../../assets/Attention/intro4.png"; // New import for intro background image
 import { IoMdRefresh } from "react-icons/io";
 import { GiGamepad } from "react-icons/gi";
 import { FaArrowRight } from "react-icons/fa";
+
+// Replacing the patchy dashed outline with a solid line border
+const solidBorderStyle = {
+  border: "3px solid orange",
+};
 
 const Screen1 = ({ onTileSelect, onTimeout, onGameComplete }) => {
   const [selectedTile, setSelectedTile] = useState(null);
   const [timeLeft, setTimeLeft] = useState(10);
   const [progress, setProgress] = useState(100);
-  const [gameStarted, setGameStarted] = useState(false); // New state for game start
-  const [gameEnded, setGameEnded] = useState(false); // New state for game end
+  const [gameStarted, setGameStarted] = useState(false);
+  const [gameEnded, setGameEnded] = useState(false);
 
   useEffect(() => {
     if (!gameStarted) return;
@@ -21,7 +27,7 @@ const Screen1 = ({ onTileSelect, onTimeout, onGameComplete }) => {
         if (prevTime <= 1) {
           clearInterval(timer);
           onTimeout();
-          setGameEnded(true); // Mark the game as ended
+          setGameEnded(true);
           return 0;
         }
         return prevTime - 1;
@@ -57,30 +63,40 @@ const Screen1 = ({ onTileSelect, onTimeout, onGameComplete }) => {
     setGameEnded(false);
     setSelectedTile(null);
     setTimeLeft(10);
-    onGameComplete(); // Reset any game-related states or actions
+    onGameComplete();
   };
+
+  // Set the container background conditionally:
+  // Use the intro background if the game hasn't started yet, otherwise use the main game background.
+  const containerBackground =
+    !gameStarted && !gameEnded ? IntroImage : BackImage;
 
   return (
     <div
       className="relative w-screen h-screen bg-cover bg-center flex items-center justify-center"
-      style={{ backgroundImage: `url(${BackImage})` }}
+      style={{ backgroundImage: `url(${containerBackground})` }}
     >
       {/* Intro Overlay before the game starts */}
       {!gameStarted && !gameEnded && (
-        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black bg-opacity-50 p-4">
-          <h1 className="text-5xl font-bold text-yellow-300 mb-4">
-            පලමු අදිරයෙන් විනෝද වෙමු !
-          </h1>
-          <p className="text-xl text-white mb-6 max-w-lg">
-            මෙම ක්‍රිඩාවේ ඔබ කළ යුත්තේ නොගලපෙන රූපය සොයාගැනීම.මෙහි කාලය ගැන
-            සැලකිලිමත් වීම අනිවාර්යයි. ඔබ සුදානම් ද?
-          </p>
-          <button
-            onClick={handleStartGame}
-            className="px-6 py-3 bg-green-500 rounded-full text-2xl text-white hover:bg-green-600 transition duration-200"
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-black bg-opacity-50">
+          <div
+            className="p-8 rounded shadow-lg text-center bg-gray-900"
+            style={solidBorderStyle}
           >
-            ආරම්භ කරමු
-          </button>
+            <h1 className="text-5xl font-bold text-yellow-300 mb-4">
+              පලමු අදිරයෙන් විනෝද වෙමු !
+            </h1>
+            <p className="text-xl text-white mb-6 max-w-lg mx-auto">
+              මෙම ක්‍රිඩාවේ ඔබ කළ යුත්තේ නොගැලපෙන රූපය සොයාගැනීම. මෙහි කාලය ගැන
+              සැලකිලිමත් වීම අනිවාර්යයි. ඔබ සුදානම් ද?
+            </p>
+            <button
+              onClick={handleStartGame}
+              className="px-6 py-3 bg-green-500 rounded-full text-2xl text-white hover:bg-green-600 transition duration-200"
+            >
+              ආරම්භ කරමු
+            </button>
+          </div>
         </div>
       )}
 

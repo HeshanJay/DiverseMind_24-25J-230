@@ -212,7 +212,7 @@ const Display3 = () => {
       {gameStarted && !gameOver && (
         <div className="relative z-10 flex flex-col items-center py-8">
           <h1 className="text-4xl font-bold text-white mb-4">
-            {gameOver ? `GAME OVER: ${score}` : `Score: ${score}`}
+            {gameOver ? `GAME OVER: ${score}` : `ලකුණු: ${score}`}
           </h1>
           <div
             id="board"
