@@ -696,14 +696,14 @@ button:focus {
           </h1>
           <br />
           <p className="text-lg text-gray-700 mb-4">
-            👀 Watch the letters move across the screen!
+            👀 තිරය ​​හරහා අකුරු චලනය වන ආකාරය නරඹන්න!
             <br />
-            👆 Click "Correct" for proper letters and "Incorrect" for wrong
+            👆 නිවැරදි අකුරු සඳහා "නිවැරදි" සහ වැරදි සඳහා "වැරදි" ක්ලික් කරන්න.
             ones!
             <br />
-            ⭐ Get 5, 10, 15, 20, and 25 in a row to unlock special prizes!
+            ⭐ විශේෂ ත්‍යාග අගුළු ඇරීමට අඛණ්ඩව 5, 10, 15, 20, සහ 25 ලබා ගන්න!
             <br />
-            ❤️ You have 3 lives - be careful!
+            ❤️ ඔබට අවස්ථා 3ක් තිබෙනවා - ප්‍රවේශම් වන්න!
           </p>
           <br />
           <button
@@ -720,21 +720,21 @@ button:focus {
           <div className="flex justify-between items-center mb-4 px-4">
             <div className="bg-yellow-100 rounded-full py-2 px-6 border-4 border-yellow-400 shadow-lg flex items-center">
               <span className="text-2xl font-bold text-yellow-600 mr-2">
-                Score: {score} {score > 0 && "⭐"}
+                ලකුණු : {score} {score > 0 && "⭐"}
               </span>
               <div className="ml-4 flex">{renderHearts()}</div>
             </div>
             {combo > 0 && (
               <div className="bg-pink-100 rounded-full py-2 px-6 border-4 border-pink-400 shadow-lg">
                 <span className="text-2xl font-bold text-pink-600 animate-pulse">
-                  Combo: {combo}🔥
+                  අඛණ්ඩතාවය: {combo}🔥
                 </span>
               </div>
             )}
             {goldenPensCount > 0 && (
               <div className="bg-amber-100 rounded-full py-2 px-6 border-4 border-amber-400 shadow-lg flex items-center">
                 <span className="text-2xl font-bold text-amber-600 mr-2">
-                  Golden Pens:
+                  ත්‍යාග:
                 </span>
                 {[...Array(goldenPensCount)].map((_, i) => (
                   <img
@@ -768,7 +768,7 @@ button:focus {
               }`}
             >
               <span className="text-xl font-bold text-center px-2 text-blue-800">
-                Catch Zone 🎯
+                අල්ලා ගැනීමේ කලාපය 🎯
               </span>
               {popUp && <div className="popup z-50">{popUp}</div>}
             </div>

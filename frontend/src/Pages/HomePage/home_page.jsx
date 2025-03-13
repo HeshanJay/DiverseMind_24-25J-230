@@ -24,13 +24,15 @@ const HomePage = () => {
       }}
     >
       <div className="overlay">
-
         <div className="home-content">
-          <h1 className="welcome-title">Welcome to ForestQuest!</h1>
-          <p className="welcome-subtitle">Choose your path and embark on an adventure!</p>
+          <h1 className="welcome-title">
+            DiverseMind වෙත සාදරයෙන් පිළිගනිමු !
+          </h1>
+          <p className="welcome-subtitle">
+            ඔබේ මාර්ගය තෝරාගෙන ත්‍රාසජනක ගමනක් ආරම්භ කරන්න!
+          </p>
 
           <div className="options-container">
-
             <div className="option-card" onClick={handleTeacherClick}>
               <img src={teacherIcon} alt="Teacher" className="option-icon" />
               <h2>ගුරුවර ගිණුම</h2>
