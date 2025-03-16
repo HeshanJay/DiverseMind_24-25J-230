@@ -685,7 +685,7 @@ button:focus {
       )}
       {gameStarted && (
         <div className="best-score-container">
-          <span className="best-score-text">Best Score: {bestScore}</span>
+          <span className="best-score-text">හොඳම ලකුණු: {bestScore}</span>
         </div>
       )}
       {!gameStarted ? (
