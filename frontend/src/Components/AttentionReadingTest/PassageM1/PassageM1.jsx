@@ -29,9 +29,10 @@ const PassageM1 = ({ onPrevious, onNext }) => {
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
-      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-pink-400">
+      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl w-[768px] h-[473px] text-center border-4 border-pink-400">
         <h1 className="text-3xl font-extrabold text-pink-600 mb-6">
-          හිඹුටු කැලේ ගස්වල ගෙඩි කෙසේ තිබුණාද?
+          <p>හිඹුටු කැලේ ගස්වල ගෙඩි කෙසේ</p>
+          <p>තිබුණාද?</p>
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (

@@ -1,6 +1,6 @@
 import React from "react";
 import Game3Level1Activity1 from "../../../Components/WritingComponents/WritingGame3Components/Level1/Activity1";
-import backgroundImage from "../../../assets/writing_interventions/background/back14.jpeg";
+import backgroundImage from "../../../assets/writing_interventions/background/back_16.webp";
 import icon1 from "../../../assets/writing_interventions/icons/p1.png";
 import icon2 from "../../../assets/writing_interventions/icons/p2.png";
 import icon3 from "../../../assets/writing_interventions/icons/p3.png";

@@ -1,4 +1,15 @@
+/* Global styles */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0; /* optional background color */
+}
+
+/* Scoreboard container centered horizontally with margin auto */
 .scoreboard-container {
+  margin: 200px auto 0; /* 200px from the top, auto for left/right centering */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,7 +18,6 @@
   border: 2px solid #ff9800; /* thin orange border */
   border-radius: 15px;
   padding: 20px;
-  margin: 20px auto;
   max-width: 400px;
 }
 
