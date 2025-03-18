@@ -481,7 +481,7 @@ button:focus {
       setRewardMessage(
         `🏆 ${reachedCount}${getOrdinalSuffix(
           reachedCount
-        )} Golden Pencil Unlocked! ✨`
+        )} රන් පැන්සල අගුළු හරින ලදී! ✨`
       );
 
       // Clear any existing timers
@@ -835,17 +835,17 @@ button:focus {
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-2xl shadow-2xl border-8 border-red-500 max-w-md w-full animate-bounce-once">
             <h2 className="text-3xl font-bold text-center text-red-600 mb-4">
-              Game Over! 😢
+              ක්‍රීඩාව අවසන් 😢
             </h2>
             <p className="text-xl text-center mb-6">
-              You ran out of lives! Your score: {score}
+              ඔබට අවස්ථා අහිමි විය! ඔබේ ලකුණු: {score}
             </p>
             <div className="flex justify-center">
               <button
                 onClick={goToScoreBoard}
                 className="px-8 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl text-xl transform transition-transform duration-200 hover:scale-105 shadow-lg border-4 border-blue-700"
               >
-                See Final Score 🏆
+                අවසාන ලකුණු බලන්න 🏆
               </button>
             </div>
           </div>
@@ -857,14 +857,14 @@ button:focus {
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-2xl shadow-2xl border-8 border-green-500 max-w-md w-full animate-bounce-once">
             <h2 className="text-3xl font-bold text-center text-green-600 mb-4">
-              Game Completed! 🎉
+              ක්‍රීඩාව සම්පූර්ණයි! 🎉
             </h2>
             <p className="text-xl text-center mb-6">
-              Great job! You've completed all 25 letters!
+              නියම වැඩක්! ඔයා අකුරු 25ම සම්පූර්ණ කළා!
               <br />
-              Your final score: {score}
+              ඔබේ අවසාන ලකුණු: {score}
               <br />
-              Golden Pens:{" "}
+              රන් පැන්සල්:{" "}
               {[...Array(goldenPensCount)].map((_, i) => (
                 <img
                   key={i}
@@ -879,7 +879,7 @@ button:focus {
                 onClick={goToScoreBoard}
                 className="px-8 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl text-xl transform transition-transform duration-200 hover:scale-105 shadow-lg border-4 border-blue-700"
               >
-                See Final Score 🏆
+                අවසාන ලකුණු බලන්න 🏆
               </button>
             </div>
           </div>
