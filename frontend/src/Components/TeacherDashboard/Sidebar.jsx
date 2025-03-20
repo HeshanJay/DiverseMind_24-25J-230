@@ -9,6 +9,14 @@ import {
 } from "react-icons/fi";
 import Logo from "../../assets/logo/DiverseMind_logo.png";
 
+const optionnames = {
+  Dashboard: "පාලන පුවරුව",
+  "Screening Test": "හැකියා ඇගයීම",
+  Interventions: "මඟ හුරුව",
+  "Reset Password": "මුරපදය නැවත සකසන්න",
+  Logout: "පිටවීම",
+};
+
 const Sidebar = ({ routes }) => {
   return (
     <div className="fixed h-full w-64 bg-gray-800 text-white shadow-xl">
@@ -32,7 +40,7 @@ const Sidebar = ({ routes }) => {
                 {route.name === "Interventions" && (
                   <FiActivity className="w-5 h-5" />
                 )}
-                <span>{route.name}</span>
+                <span>{optionnames[route.name]}</span>
               </a>
             ) : (
               <button
@@ -43,7 +51,7 @@ const Sidebar = ({ routes }) => {
                   <FiKey className="w-5 h-5" />
                 )}
                 {route.name === "Logout" && <FiLogOut className="w-5 h-5" />}
-                <span>{route.name}</span>
+                <span>{optionnames[route.name]}</span>
               </button>
             )}
           </div>

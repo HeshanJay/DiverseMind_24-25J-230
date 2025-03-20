@@ -23,7 +23,7 @@ const StudentEntrance = () => {
       localStorage.setItem("student_id", studentId);
       setMessage(response.data.message);
       setTimeout(() => {
-        navigate("/screening-menu");
+        navigate("/screening_and_interventions");
       }, 1500);
     } catch (error) {
       setMessage(error.response?.data?.detail || "Entrance failed");

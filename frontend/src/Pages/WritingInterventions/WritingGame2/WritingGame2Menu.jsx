@@ -10,39 +10,69 @@ const WritingGame2Menu = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center p-6"
+      className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center p-6 relative overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)), url(${backgroundImage})`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${backgroundImage})`,
       }}
     >
-      {/* Title at the top */}
-      <h1 className="text-6xl font-bold text-white mb-4">
-        නිවැරදි පිල්ලම තෝරමු
-      </h1>
-      {/* Subheading added below the title */}
-      <h2 className="text-4xl font-semibold text-white mb-20">අදියරයන්</h2>
-
-      {/* Horizontal arrangement for level buttons */}
-      <div className="flex space-x-8 items-center justify-center">
-        <img
-          src={level1button}
-          alt="අදියර 1"
-          className="w-40 cursor-pointer hover:scale-125 transition-transform"
-          onClick={() => navigate("/writing-game2-level1")}
-        />
-        <img
-          src={level2button}
-          alt="අදියර 2"
-          className="w-40 cursor-pointer hover:scale-125 transition-transform"
-          onClick={() => navigate("/writing-game2-level2")}
-        />
-        <img
-          src={level3button}
-          alt="අදියර 3"
-          className="w-40 cursor-pointer hover:scale-125 transition-transform"
-          onClick={() => navigate("/writing-game2-level3")}
-        />
+      {/* Animated background elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-yellow-400 rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${i * 0.3}s`,
+            }}
+          />
+        ))}
       </div>
+
+      {/* Title section */}
+      <div className="text-center mb-8 animate-fade-in">
+        <h1 className="text-5xl md:text-6xl font-bold text-yellow-400 mb-4 drop-shadow-lg">
+          නිවැරදි පිල්ලම තෝරමු
+        </h1>
+        <h2 className="text-3xl md:text-4xl text-white mb-12 text-shadow-md">
+          අදියරයන්
+        </h2>
+      </div>
+
+      {/* Level buttons container */}
+      <div className="flex flex-wrap justify-center gap-8 md:gap-12 relative z-10">
+        {[level1button, level2button, level3button].map((button, index) => (
+          <div
+            key={index}
+            className="group relative flex flex-col items-center transition-transform hover:scale-105"
+          >
+            <div className="absolute -inset-4 bg-yellow-400/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <img
+              src={button}
+              alt={`අදියර ${index + 1}`}
+              className="w-32 md:w-48 cursor-pointer transform transition-all 
+                       hover:rotate-3 hover:drop-shadow-lg"
+              onClick={() => navigate(`/writing-game2-level${index + 1}`)}
+            />
+            <span
+              className="mt-3 text-4xl font-bold text-white opacity-0 
+                           group-hover:opacity-100 transition-opacity duration-300"
+            >
+              අදියර {index + 1}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Decorative elements */}
+      <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-30" />
+      <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-30" />
+
+      {/* Instruction text */}
+      <p className="absolute bottom-8 text-lg md:text-xl text-white/80 animate-pulse">
+        අදියරයක් තෝරාගැනීමට ක්ලික් කරන්න
+      </p>
     </div>
   );
 };

@@ -99,7 +99,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
   ];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(2);
   const [showImage, setShowImage] = useState(true);
   const [showAnswers, setShowAnswers] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -107,7 +107,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
   useEffect(() => {
     let interval;
     if (showImage) {
-      setTimer(10);
+      setTimer(2);
       interval = setInterval(() => {
         setTimer((prevTimer) => {
           if (prevTimer === 1) {

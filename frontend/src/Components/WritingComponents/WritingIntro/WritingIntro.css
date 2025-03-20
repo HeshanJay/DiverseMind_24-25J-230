@@ -2,48 +2,50 @@
 
 /* Button bobble animation */
 @keyframes bobble {
-    0%, 100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.05);
-    }
+  0%,
+  100% {
+    transform: scale(1);
   }
-  
-  /* Bobble animation class */
-  .bobble-animation {
-    animation: bobble 2s infinite ease-in-out;
+  50% {
+    transform: scale(1.05);
   }
-  
-  /* Rabbit jump animation */
-  @keyframes jump {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
+}
+
+/* Bobble animation class */
+.bobble-animation {
+  animation: bobble 2s infinite ease-in-out;
+}
+
+/* Rabbit jump animation */
+@keyframes jump {
+  0%,
+  100% {
+    transform: translateY(0);
   }
-  
-  /* Jump animation class */
-  .jump-animation {
-    animation: jump 1.5s infinite ease-in-out;
+  50% {
+    transform: translateY(-20px);
   }
-  
-  /* Monkey swing animation */
-  @keyframes swing {
-    0% {
-      transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(10deg);
-    }
-    100% {
-      transform: rotate(0deg);
-    }
+}
+
+/* Jump animation class */
+.jump-animation {
+  animation: jump 1.5s infinite ease-in-out;
+}
+
+/* Monkey swing animation */
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  /* Swing animation class */
-  .swing-animation {
-    animation: swing 2s infinite ease-in-out;
+  50% {
+    transform: rotate(10deg);
   }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Swing animation class */
+.swing-animation {
+  animation: swing 2s infinite ease-in-out;
+}

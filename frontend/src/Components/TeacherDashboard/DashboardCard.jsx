@@ -7,10 +7,12 @@ const DashboardCard = ({ title, count, icon, color }) => {
       className={`rounded-lg p-6 ${color} shadow-lg transition-all hover:shadow-xl`}
     >
       <div className="flex items-center gap-4">
-        <span className="text-3xl">{icon}</span>
+        <span className="text-4xl">{icon}</span>
         <div>
-          <h3 className="text-lg font-medium text-white opacity-90">{title}</h3>
-          <p className="text-3xl font-bold text-white">{count}</p>
+          <h3 className="text-2xl font-medium text-white opacity-90">
+            {title}
+          </h3>
+          <p className="text-5xl font-bold text-white">{count}</p>
         </div>
       </div>
     </div>
@@ -20,7 +22,7 @@ const DashboardCard = ({ title, count, icon, color }) => {
 DashboardCard.propTypes = {
   title: PropTypes.string.isRequired,
   count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  icon: PropTypes.string,
+  icon: PropTypes.node,
   color: PropTypes.string,
 };
 

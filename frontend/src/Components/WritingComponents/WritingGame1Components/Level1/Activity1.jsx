@@ -481,7 +481,7 @@ button:focus {
       setRewardMessage(
         `🏆 ${reachedCount}${getOrdinalSuffix(
           reachedCount
-        )} Golden Pencil Unlocked! ✨`
+        )} රන් පැන්සල අගුළු හරින ලදී! ✨`
       );
 
       // Clear any existing timers
@@ -685,7 +685,7 @@ button:focus {
       )}
       {gameStarted && (
         <div className="best-score-container">
-          <span className="best-score-text">Best Score: {bestScore}</span>
+          <span className="best-score-text">හොඳම ලකුණු: {bestScore}</span>
         </div>
       )}
       {!gameStarted ? (
@@ -696,14 +696,13 @@ button:focus {
           </h1>
           <br />
           <p className="text-lg text-gray-700 mb-4">
-            👀 Watch the letters move across the screen!
+            👀 තිරය ​​හරහා අකුරු චලනය වන ආකාරය නරඹන්න!
             <br />
-            👆 Click "Correct" for proper letters and "Incorrect" for wrong
-            ones!
+            👆 නිවැරදි අකුරු සඳහා "නිවැරදි" සහ වැරදි සඳහා "වැරදි" ක්ලික් කරන්න!
             <br />
-            ⭐ Get 5, 10, 15, 20, and 25 in a row to unlock special prizes!
+            ⭐ විශේෂ ත්‍යාග අගුළු ඇරීමට අඛණ්ඩව 5, 10, 15, 20, සහ 25 ලබා ගන්න!
             <br />
-            ❤️ You have 3 lives - be careful!
+            ❤️ ඔබට අවස්ථා 3ක් තිබෙනවා - ප්‍රවේශම් වන්න!
           </p>
           <br />
           <button
@@ -720,21 +719,21 @@ button:focus {
           <div className="flex justify-between items-center mb-4 px-4">
             <div className="bg-yellow-100 rounded-full py-2 px-6 border-4 border-yellow-400 shadow-lg flex items-center">
               <span className="text-2xl font-bold text-yellow-600 mr-2">
-                Score: {score} {score > 0 && "⭐"}
+                ලකුණු : {score} {score > 0 && "⭐"}
               </span>
               <div className="ml-4 flex">{renderHearts()}</div>
             </div>
             {combo > 0 && (
               <div className="bg-pink-100 rounded-full py-2 px-6 border-4 border-pink-400 shadow-lg">
                 <span className="text-2xl font-bold text-pink-600 animate-pulse">
-                  Combo: {combo}🔥
+                  අඛණ්ඩතාවය: {combo}🔥
                 </span>
               </div>
             )}
             {goldenPensCount > 0 && (
               <div className="bg-amber-100 rounded-full py-2 px-6 border-4 border-amber-400 shadow-lg flex items-center">
                 <span className="text-2xl font-bold text-amber-600 mr-2">
-                  Golden Pens:
+                  ත්‍යාග:
                 </span>
                 {[...Array(goldenPensCount)].map((_, i) => (
                   <img
@@ -768,7 +767,7 @@ button:focus {
               }`}
             >
               <span className="text-xl font-bold text-center px-2 text-blue-800">
-                Catch Zone 🎯
+                අල්ලා ගැනීමේ කලාපය 🎯
               </span>
               {popUp && <div className="popup z-50">{popUp}</div>}
             </div>
@@ -836,17 +835,17 @@ button:focus {
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-2xl shadow-2xl border-8 border-red-500 max-w-md w-full animate-bounce-once">
             <h2 className="text-3xl font-bold text-center text-red-600 mb-4">
-              Game Over! 😢
+              ක්‍රීඩාව අවසන් 😢
             </h2>
             <p className="text-xl text-center mb-6">
-              You ran out of lives! Your score: {score}
+              ඔබට අවස්ථා අහිමි විය! ඔබේ ලකුණු: {score}
             </p>
             <div className="flex justify-center">
               <button
                 onClick={goToScoreBoard}
                 className="px-8 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl text-xl transform transition-transform duration-200 hover:scale-105 shadow-lg border-4 border-blue-700"
               >
-                See Final Score 🏆
+                අවසාන ලකුණු බලන්න 🏆
               </button>
             </div>
           </div>
@@ -858,14 +857,14 @@ button:focus {
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-2xl shadow-2xl border-8 border-green-500 max-w-md w-full animate-bounce-once">
             <h2 className="text-3xl font-bold text-center text-green-600 mb-4">
-              Game Completed! 🎉
+              ක්‍රීඩාව සම්පූර්ණයි! 🎉
             </h2>
             <p className="text-xl text-center mb-6">
-              Great job! You've completed all 25 letters!
+              නියම වැඩක්! ඔයා අකුරු 25ම සම්පූර්ණ කළා!
               <br />
-              Your final score: {score}
+              ඔබේ අවසාන ලකුණු: {score}
               <br />
-              Golden Pens:{" "}
+              රන් පැන්සල්:{" "}
               {[...Array(goldenPensCount)].map((_, i) => (
                 <img
                   key={i}
@@ -880,7 +879,7 @@ button:focus {
                 onClick={goToScoreBoard}
                 className="px-8 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl text-xl transform transition-transform duration-200 hover:scale-105 shadow-lg border-4 border-blue-700"
               >
-                See Final Score 🏆
+                අවසාන ලකුණු බලන්න 🏆
               </button>
             </div>
           </div>

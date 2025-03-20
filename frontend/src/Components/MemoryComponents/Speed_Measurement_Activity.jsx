@@ -59,7 +59,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showImage, setShowImage] = useState(true);
   const [showAnswers, setShowAnswers] = useState(false);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(2);
   const [score, setScore] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
 
@@ -71,7 +71,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
           if (prevTimer === 1) {
             setShowImage(false);
             setShowAnswers(true);
-            setTimer(10);
+            setTimer(2);
             clearInterval(interval);
           }
           return prevTimer - 1;

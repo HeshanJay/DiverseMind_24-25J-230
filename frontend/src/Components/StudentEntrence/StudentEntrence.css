@@ -3,7 +3,7 @@
   --secondary-green: #388e3c;
   --light-green: #39883d;
   --error-red: #d32f2f;
-  --font-family: 'Comic Sans MS', cursive, sans-serif;
+  --font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 .student-entrance-container {
@@ -20,7 +20,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(60, 63, 60, 0.4); 
+  background-color: rgba(60, 63, 60, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -106,7 +106,7 @@
 .message {
   margin-top: 20px;
   font-size: 1rem;
-  color: var(--error-red);
+  color: green;
 }
 
 /* Decorative Trees */
