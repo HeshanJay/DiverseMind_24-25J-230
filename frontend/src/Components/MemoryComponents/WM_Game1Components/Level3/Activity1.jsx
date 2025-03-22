@@ -19,7 +19,7 @@ const questions = [
       "වෛද්‍යවරයා අනතුර දෙස බලමින් සිටී.",
     ],
     correctAnswerIndex: 0,
-    questionPhaseDuration: 10,
+    questionPhaseDuration: 2,
     answerPhaseDuration: 5,
   },
   {
@@ -55,9 +55,9 @@ const fishPositions = [
 ];
 
 const bubblePositions = [
-  { top: "30%", left: "-22%" },
-  { top: "26%", left: "60%" },
-  { top: "60%", left: "27%" },
+  { top: "20%", left: "-22%" },
+  { top: "24%", left: "60%" },
+  { top: "55%", left: "27%" },
 ];
 
 function Activity1({ onNext }) {
@@ -97,7 +97,6 @@ function Activity1({ onNext }) {
     return () => clearTimeout(timer);
   }, [questionTimer, showQuestionPhase]);
 
-
   useEffect(() => {
     let timer;
     if (!showQuestionPhase && answerTimer > 0) {
@@ -110,10 +109,10 @@ function Activity1({ onNext }) {
     if (selectedAnswer === null) {
       setSelectedAnswer(index);
       if (index === currentQuestion.correctAnswerIndex) {
-        setScore((prev) => prev + 4); 
-        setShowCelebration(true); 
+        setScore((prev) => prev + 4);
+        setShowCelebration(true);
         setTimeout(() => {
-          setShowCelebration(false); 
+          setShowCelebration(false);
         }, 3000);
       }
     }
@@ -124,7 +123,7 @@ function Activity1({ onNext }) {
       if (currentQuestionIndex < questions.length - 1) {
         setCurrentQuestionIndex((prev) => prev + 1);
       } else {
-        onNext(score); 
+        onNext(score);
       }
     }
   };
@@ -142,15 +141,18 @@ function Activity1({ onNext }) {
   return (
     <div
       key={currentQuestionIndex}
-      className="relative flex flex-col items-center justify-center min-h-screen p-4 bg-fixed"
+      className="relative flex flex-col items-center justify-center min-h-screen p-4 bg-fixed overflow-hidden"
       style={{
-        backgroundImage: `url(${showQuestionPhase && currentQuestionIndex === 0 ? sea_back4 : sea_back3})`,
+        backgroundImage: `url(${
+          showQuestionPhase && currentQuestionIndex === 0
+            ? sea_back4
+            : sea_back3
+        })`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         height: "90vh",
       }}
     >
-     
       {showQuestionPhase && currentQuestionIndex === 0 ? (
         <div className="flex flex-col items-center">
           {!currentQuestion.questionImage && (
@@ -162,16 +164,16 @@ function Activity1({ onNext }) {
             <img
               src={currentQuestion.questionImage}
               alt="Question"
-              className="w-[405px] h-[500px] object-contain rounded-lg shadow-lg border-4 border-white box-border" // Added box-border to include border in dimensions
+              className="w-[365px] h-[450px] object-contain rounded-lg shadow-lg border-4 border-white box-border" // Added box-border to include border in dimensions
             />
           )}
-          <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-6 py-3 rounded-md shadow-lg mt-10 w-64 mx-auto">
+          <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-6 py-3 rounded-md shadow-lg mt-10 w-72 mx-auto">
             ⏳ කාලය: {questionTimer} තත්පර
           </div>
         </div>
       ) : (
         <div className="w-full max-w-3xl relative h-screen">
-          <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-3/4 bg-black bg-opacity-50 p-4 rounded-lg text-center border-4 border-white">
+          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-3/4 bg-black bg-opacity-50 p-4 rounded-lg text-center border-4 border-white">
             <h1 className="text-3xl font-bold text-white">
               {currentQuestion.questionText}
             </h1>
@@ -214,7 +216,7 @@ function Activity1({ onNext }) {
                 <img src={bubble} alt="Bubble" className="w-64 h-64" />
                 <div
                   className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-black font-semibold"
-                  style={{ fontSize: "21px", wordSpacing: "-2px" }} 
+                  style={{ fontSize: "21px", wordSpacing: "-2px" }}
                 >
                   {answer}
                 </div>
@@ -237,16 +239,15 @@ function Activity1({ onNext }) {
 
       {showCelebration && (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-80 z-50">
-  
           <div className="absolute inset-0 pointer-events-none">
             {[...Array(24)].map((_, i) => (
               <div key={i} className={`firework firework-${i + 1}`}></div>
             ))}
           </div>
           <h1 className="relative z-10 text-6xl font-bold mb-[-40px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
-      ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
-    </h1>
-        
+            ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
+          </h1>
+
           <img
             src={fish20}
             alt="Celebration Fish"

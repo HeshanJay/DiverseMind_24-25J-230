@@ -29,9 +29,10 @@ const PassageK3 = ({ onPrevious, onNext }) => {
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
-      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-violet-400">
+      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl w-[768px] h-[473px] text-center border-4 border-violet-400">
         <h1 className="text-3xl font-extrabold text-violet-600 mb-6">
-          ගෙදර අය බබාගේ හැසිරීම ගැන කෙසේ ප්‍රතිචාර දක්වූවේද?
+          <p>ගෙදර අය බබාගේ හැසිරීම ගැන කෙසේ ප්‍රතිචාර</p>
+          <p>දක්වූවේද?</p>
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (

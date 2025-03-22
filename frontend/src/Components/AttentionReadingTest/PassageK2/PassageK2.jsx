@@ -27,9 +27,10 @@ const PassageK2 = ({ onPrevious, onNext }) => {
       className="bg-cover bg-center w-screen h-screen flex justify-center items-center relative m-0 p-0"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-lime-400">
+      <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl w-[768px] h-[473px] text-center border-4 border-lime-400">
         <h1 className="text-3xl font-extrabold text-lime-600 mb-6">
-          බබා ඇයි හැම විටම අඬමින් දේවල් ඉල්ලන්නේ?
+          <p>බබා ඇයි හැම විටම අඬමින් දේවල්</p>
+          <p>ඉල්ලන්නේ?</p>
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (

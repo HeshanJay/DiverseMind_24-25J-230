@@ -91,21 +91,21 @@ const MathFinalFeedback = ({ skillPhrase, onGoHome, onGoMenu, onRetry }) => {
       {/* Navigation buttons positioned at the top-right */}
       <div className="absolute right-[320px] top-[150px] flex flex-col items-center gap-6">
         <button
-          onClick={onRetry}
+          onClick={() => navigate("/math")}
           className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg hover:scale-105 transition-transform duration-300"
           title="Retry"
         >
           <FaRedoAlt />
         </button>
         <button
-          onClick={onGoHome}
+          onClick={() => navigate("/home")}
           className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg hover:scale-105 transition-transform duration-300"
           title="Home"
         >
           <FaHome />
         </button>
         <button
-          onClick={onGoMenu}
+          onClick={() => navigate("/screening-menu")}
           className="bg-gradient-to-r from-pink-400 to-red-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg hover:scale-105 transition-transform duration-300"
           title="Menu"
         >

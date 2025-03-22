@@ -96,7 +96,7 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
   ];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [timer, setTimer] = useState(10); 
+  const [timer, setTimer] = useState(2); 
   const [showImage, setShowImage] = useState(true);
   const [showAnswers, setShowAnswers] = useState(false);
   const [score, setScore] = useState(0);
@@ -109,7 +109,7 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
           if (prev === 1) {
             setShowImage(false);
             setShowAnswers(true);
-            setTimer(10); 
+            setTimer(2); 
             clearInterval(interval);
           }
           return prev - 1;

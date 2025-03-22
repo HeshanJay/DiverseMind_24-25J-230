@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { FiEye, FiTrash2, FiRefreshCw } from "react-icons/fi";
+import {
+  FiEye,
+  FiTrash2,
+  FiRefreshCw,
+  FiUsers,
+  FiClipboard,
+} from "react-icons/fi";
 import DashboardHeader from "../../Components/TeacherDashboard/DashboardHeader";
 import DashboardCard from "../../Components/TeacherDashboard/DashboardCard";
 import Sidebar from "../../Components/TeacherDashboard/Sidebar";
@@ -148,35 +154,45 @@ const TeacherDashboard = () => {
       <div className="main-content">
         <DashboardHeader />
 
-        <div className="metrics-grid">
+        <div className="metrics-grid text-xl">
           <DashboardCard
-            title="Students"
+            title="ශිෂ්‍ය සංඛ්‍යාව"
             count={students.length}
+            icon={<FiUsers size={40} color="white" />}
             color="bg-blue-500"
           />
-          <DashboardCard title="Classes" count="8" color="bg-green-500" />
-          <DashboardCard title="Assignments" count="15" color="bg-purple-500" />
-          <DashboardCard title="Completed" count="50" color="bg-teal-500" />
+          {/* <DashboardCard title="Classes" count="8" color="bg-purple-500" /> */}
+          <DashboardCard
+            title="ඇගයීම් සංඛ්‍යාව"
+            count="4"
+            icon={<FiClipboard size={40} color="white" />}
+            color="bg-green-500"
+          />
         </div>
 
         <div className="code-management">
           <div className="code-card">
-            <h3 className="code-title">Your Unique Code</h3>
+            <h3 className="code-title text-2xl" style={{ fontSize: "2rem" }}>
+              ඔබේ කේතය
+            </h3>
             <div className="code-display">
               <span className="code-value">{uniqueCode || "XXXX-XXXX"}</span>
               <div className="code-actions">
                 {!uniqueCode ? (
                   <button
                     onClick={handleGenerateCode}
-                    className="code-btn generate"
+                    className="code-btn generate text-xl"
                   >
                     <FiRefreshCw className="btn-icon" />
-                    Generate Code
+                    කේතය ලබා ගන්න
                   </button>
                 ) : (
-                  <button onClick={handleResetCode} className="code-btn reset">
+                  <button
+                    onClick={handleResetCode}
+                    className="code-btn reset text-xl"
+                  >
                     <FiRefreshCw className="btn-icon" />
-                    Reset Code
+                    කේතය යළි සකසන්න
                   </button>
                 )}
               </div>
@@ -186,19 +202,19 @@ const TeacherDashboard = () => {
 
         <div className="students-management">
           <div className="students-card">
-            <h3 className="students-title">Enrolled Students</h3>
+            <h3 className="students-title">ඇතුළත් වූ සිසුන්</h3>
             {students.length === 0 ? (
               <div className="empty-state">
-                <p>No students enrolled yet</p>
+                <p>තවමත් සිසුන් බඳවාගෙන නොමැත.</p>
               </div>
             ) : (
               <table className="students-table">
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Student Name</th>
-                    <th>Completed Assessments</th>
-                    <th>Actions</th>
+                    <th>ශිෂ්‍ය නම</th>
+                    <th>සම්පූර්ණ කරන ලද ඇගයීම්</th>
+                    <th>ක්‍රියා</th>
                   </tr>
                 </thead>
                 <tbody>
