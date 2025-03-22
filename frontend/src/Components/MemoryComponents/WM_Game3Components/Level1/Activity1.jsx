@@ -151,8 +151,8 @@ function Activity1({ onNext, setTotalScore }) {
 
       {!showAnswers && (
         <div className="absolute top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full bg-black bg-opacity-50 border-4 border-white w-[40%] mx-auto flex items-center justify-center">
-  <p className="text-white text-5xl font-bold text-center">හොඳින් සවන් දෙන්න</p>
-</div>
+          <p className="text-white text-5xl font-bold text-center">හොඳින් සවන් දෙන්න</p>
+        </div>
       )}
 
       {!showAnswers && (
@@ -195,83 +195,89 @@ function Activity1({ onNext, setTotalScore }) {
             <img
               src={penguin10}
               alt="penguin10"
-              className={`absolute bottom-[110px] left-[1000px] w-[95px] h-auto transition-all" `}
+              className={`absolute bottom-[110px] left-[1000px] w-[95px] h-auto transition-all`}
               style={{ zIndex: 4 }}
             />
           </div>
         </div>
       )}
+
       {showAnswers && (
-  <div className="mt-8 text-center w-full max-w-3xl mx-auto"> 
-    <div className="bg-black bg-opacity-50 p-4 rounded-2xl border-4 border-white mb-14 w-[50%] mx-auto"> 
-      <p className="text-white text-4xl font-bold">නිවැරදි පිළිතුර තෝරන්න</p>
-    </div>
+        <div className="mt-8 text-center w-full max-w-3xl mx-auto"> 
+          <div className="bg-black bg-opacity-50 p-4 rounded-2xl border-4 border-white mb-14 w-[50%] mx-auto"> 
+            <p className="text-white text-4xl font-bold">නිවැරදි පිළිතුර තෝරන්න</p>
+          </div>
+    
+          <div className="flex flex-wrap justify-center gap-8">
+            {currentQuestion.answers.map((ans, index) => (
+              <div
+                key={index}
+                className={`relative transition-all duration-300 ${
+                  index === 1 ? "mt-12" : ""
+                }`}
+                style={{
+                  transformStyle: 'preserve-3d',
+                  perspective: '1000px',
+                }}
+              >
+           <img
+  src={ans.image}
+  alt={`Answer ${index + 1}`}
+  className={`object-cover cursor-pointer border-4 rounded-xl shadow-xl transition-all ${
+    selectedAnswer === index 
+      ? currentQuestion.answers[index].isCorrect 
+        ? "border-green-500 scale-105" 
+        : "scale-105"
+      : "border-white"
+  } ${index === 1 ? "w-64 h-64" : "w-52 h-52"} ${
+    selectedAnswer !== null && selectedAnswer !== index 
+      ? "opacity-50 cursor-not-allowed" 
+      : "hover:scale-105 hover:shadow-2xl"
+  }`}
+  style={{
+    transform: 'translateZ(20px)',
+    backfaceVisibility: 'hidden',
+    ...(selectedAnswer === index 
+      ? (currentQuestion.answers[index].isCorrect
+          ? { boxShadow: '0 0 15px 5px green' }
+          : { boxShadow: '0 0 15px 5px red' })
+      : {})
+  }}
+  onClick={() => {
+    if (selectedAnswer === null) {
+      handleAnswerClick(index);
+    }
+  }}
+/>
 
-    <div className="flex flex-wrap justify-center gap-8">
-      {currentQuestion.answers.map((ans, index) => (
-        <div
-          key={index}
-          className={`relative transition-all duration-300 ${
-            index === 1 ? "mt-12" : ""
-          }`}
-          style={{
-            transformStyle: 'preserve-3d',
-            perspective: '1000px',
-          }}
-        >
-          <img
-            src={ans.image}
-            alt={`Answer ${index + 1}`}
-            className={`object-cover cursor-pointer border-4 rounded-xl shadow-xl transition-all ${
-              selectedAnswer === index 
-                ? "border-green-500 scale-105" 
-                : "border-white"
-            } ${
-              index === 1 
-                ? "w-64 h-64" 
-                : "w-52 h-52"
-            } ${
-              selectedAnswer !== null && selectedAnswer !== index 
-                ? "opacity-50 cursor-not-allowed" 
-                : "hover:scale-105 hover:shadow-2xl"
-            }`}
-            style={{
-              transform: 'translateZ(20px)',
-              backfaceVisibility: 'hidden',
-            }}
-            onClick={() => {
-              if (selectedAnswer === null) {
-                handleAnswerClick(index);
-              }
-            }}
-          />
-          <div 
-            className="absolute inset-0 rounded-xl shadow-lg"
-            style={{
-              background: 'linear-gradient(145deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.1) 100%)',
-              transform: 'translateZ(10px)',
-              zIndex: -1,
-            }}
-          ></div>
+                <div 
+                  className="absolute inset-0 rounded-xl shadow-lg"
+                  style={{
+                    background: 'linear-gradient(145deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.1) 100%)',
+                    transform: 'translateZ(10px)',
+                    zIndex: -1,
+                  }}
+                ></div>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-)}
+      )}
 
-{showAnswers && (
-  <button
-    className={`absolute bottom-8 right-8 p-4 rounded-full shadow-lg flex items-center justify-center transition ${
-      selectedAnswer === null 
-        ? "bg-gradient-to-r from-gray-400 to-gray-700 cursor-not-allowed" // Grey with black gradient
-        : "bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
-    }`}
-    onClick={moveToNextQuestion}
-    disabled={selectedAnswer === null}
-  >
-    <FaArrowRight className="text-white text-2xl" />
-  </button>
-)}
+      {showAnswers && (
+        <button
+          className={`absolute bottom-8 right-8 p-4 rounded-full shadow-lg flex items-center justify-center transition ${
+            selectedAnswer === null 
+              ? "bg-gradient-to-r from-gray-400 to-gray-700 cursor-not-allowed"
+              : "bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
+          }`}
+          onClick={moveToNextQuestion}
+          disabled={selectedAnswer === null}
+        >
+          <FaArrowRight className="text-white text-2xl" />
+        </button>
+      )}
+
       {!showAnswers && (
         <img
           src={penguin5}
@@ -281,6 +287,7 @@ function Activity1({ onNext, setTotalScore }) {
           }`}
         />
       )}
+
       {showCelebration && (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-80 z-50">
           <div className="absolute inset-0 pointer-events-none">
@@ -289,8 +296,8 @@ function Activity1({ onNext, setTotalScore }) {
             ))}
           </div>
           <h1 className="relative z-10 text-6xl font-bold mb-[30px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
-      ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
-    </h1>
+            ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
+          </h1>
           <img
             src={penguin_feedback}
             alt="Celebration Penguin"
@@ -298,6 +305,7 @@ function Activity1({ onNext, setTotalScore }) {
           />
         </div>
       )}
+
       <style>
         {`
           @keyframes whispering {

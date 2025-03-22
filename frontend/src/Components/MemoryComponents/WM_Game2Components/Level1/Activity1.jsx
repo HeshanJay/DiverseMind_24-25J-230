@@ -1,38 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import L1_background from "../../../../assets/WM_Interventions_images/L1_images/L1_background.png";
 import woodenBoard from "../../../../assets/WM_Interventions_images/L2_images/wooden_board.png";
 import frame1 from "../../../../assets/WM_Interventions_images/L1_images/frame1.png";
 import dog from "../../../../assets/WM_Interventions_images/L2_images/dog.png";
 
-
 const questions = [
   {
     question: "වඩු බාස් \nලග තියෙන \nරට",
     options: ["බුරුමය", "මතුරට", "කදුරට", "මාලේ"],
-    correctAnswer: 0
+    correctAnswer: 0,
   },
   {
     question: "නැට්ට නැති \nගෙඩිය",
-    options: [" අල \nගෙඩිය", "තිත්බටු \nගෙඩිය", "ගෝවා \nගෙඩිය", "බිත්තර \nගෙඩිය"],
-    correctAnswer: 3
+    options: [
+      " අල \nගෙඩිය",
+      "තිත්බටු \nගෙඩිය",
+      "ගෝවා \nගෙඩිය",
+      "බිත්තර \nගෙඩිය",
+    ],
+    correctAnswer: 3,
   },
   {
     question: "කටු නැති \nකැලේ ඇට \nනැති සතා",
     options: ["කුරුමිනියා", "මකුළුවා", "උකුණා", "දළඹුවා"],
-    correctAnswer: 2
+    correctAnswer: 2,
   },
   {
     question: "බෝතලේට \nදාන්න \nබැරි පැණි",
     options: ["කොම්පැණි", "මී පැණි", "බුද්ධි \nපැණි", "උණුසුම් \nපැණි"],
-    correctAnswer: 0
+    correctAnswer: 0,
   },
   {
     question: "කිසිම\nකෙනෙකු\nනොයා යුතු \nමග",
     options: ["අතරමග", "නොමග", "ධර්ම මග", "අවිධිමත් \nමග"],
-    correctAnswer: 1
-  }
+    correctAnswer: 1,
+  },
 ];
 
 function Activity1({ onNext }) {
@@ -59,17 +63,17 @@ function Activity1({ onNext }) {
       setTimeUp(true);
       return;
     }
-    
+
     const intervalId = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
     }, 1000);
-    
+
     return () => clearInterval(intervalId);
   }, [timeLeft]);
 
   const handleSelectAnswer = (answerIdx) => {
     if (selectedAnswerIndex !== null || timeUp) return;
-    
+
     setSelectedAnswerIndex(answerIdx);
     if (answerIdx === currentQuestion.correctAnswer) {
       setScore((prev) => prev + 5);
@@ -85,7 +89,7 @@ function Activity1({ onNext }) {
       alert("කරුණාකර පිළිතුරක් තෝරන්න!");
       return;
     }
-    
+
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prev) => prev + 1);
     } else {
@@ -106,8 +110,8 @@ function Activity1({ onNext }) {
             ))}
           </div>
           <h1 className="relative z-10 text-6xl font-bold mb-[30px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
-      ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
-    </h1>
+            ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
+          </h1>
           <img
             src={dog}
             alt="Celebration dog"
@@ -132,55 +136,56 @@ function Activity1({ onNext }) {
       </div>
 
       <div className="absolute bottom-[15px] left-0 right-0 flex justify-center space-x-6">
-      {currentQuestion.options.map((option, i) => {
-      const isCorrect = i === currentQuestion.correctAnswer;
-      const isSelected = i === selectedAnswerIndex;
+        {currentQuestion.options.map((option, i) => {
+          const isCorrect = i === currentQuestion.correctAnswer;
+          const isSelected = i === selectedAnswerIndex;
 
-       let textColor = "text-black";
-        if (isSelected) {
-         textColor = isCorrect ? "text-blue-800" : "text-red-600"; 
-        }
+          let textColor = "text-black";
+          if (isSelected) {
+            textColor = isCorrect ? "text-blue-800" : "text-red-600";
+          }
 
-
-        return (
-    <div
-      key={i}
-      className={`relative cursor-pointer transition-transform ${
-        (selectedAnswerIndex !== null || timeUp) ? "cursor-not-allowed" : ""
-      } ${isSelected ? "scale-110" : ""}`}
-      onClick={() => handleSelectAnswer(i)}
-    >
-      <div className="relative w-52 h-52">
-        <img 
-          src={woodenBoard} 
-          alt="answer-board" 
-          className="w-full h-full object-contain"
-        />
-        <div className="absolute inset-0 flex items-center justify-center p-6">
-          <span className={`text-2xl font-bold whitespace-pre-line text-center ${textColor}`}>
-            {option}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-})}
+          return (
+            <div
+              key={i}
+              className={`relative cursor-pointer transition-transform ${
+                (selectedAnswerIndex !== null || timeUp) ? "cursor-not-allowed" : ""
+              } ${isSelected ? "scale-110" : ""}`}
+              onClick={() => handleSelectAnswer(i)}
+            >
+              <div className="relative w-52 h-52">
+                <img
+                  src={woodenBoard}
+                  alt="answer-board"
+                  className="w-full h-full object-contain"
+                />
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
+                  <span
+                    className={`text-2xl font-bold whitespace-pre-line text-center ${textColor}`}
+                  >
+                    {option}
+                  </span>
+                  {isSelected && !isCorrect && (
+                    <FaTimes className="mt-1 text-3xl text-red-600" />
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
       <button
         onClick={handleNextQuestion}
         disabled={!timeUp && selectedAnswerIndex === null}
         className={`absolute bottom-6 right-6 rounded-full p-3 shadow-lg transition ${
-          (!timeUp && selectedAnswerIndex === null) 
-          ? "bg-gradient-to-r from-[#2D1B0F] to-[#3C2A1A] text-gray-500 cursor-not-allowed"
-          : "bg-gradient-to-r from-[#4B3621] to-[#6E4B3A] text-white hover:from-[#5C4530] hover:to-[#7E5D45]"
-          
-
+          (!timeUp && selectedAnswerIndex === null)
+            ? "bg-gradient-to-r from-[#2D1B0F] to-[#3C2A1A] text-gray-500 cursor-not-allowed"
+            : "bg-gradient-to-r from-[#4B3621] to-[#6E4B3A] text-white hover:from-[#5C4530] hover:to-[#7E5D45]"
         }`}
       >
         <FaArrowRight size={24} />
       </button>
 
-     
       <style>
         {`
           @keyframes firework {
@@ -200,7 +205,7 @@ function Activity1({ onNext }) {
           .firework-3 { top: 30%; left: 30%; --tx: -80px; --ty: 60px; animation-delay: 0.6s; background-color: #4dff4d; }
           .firework-4 { top: 45%; left: 90%; --tx: 60px; --ty: -80px; animation-delay: 0.8s; background-color: #4dd2ff; }
           .firework-5 { top: 60%; left: 20%; --tx: -70px; --ty: 70px; animation-delay: 1s; background-color: #b84d4f; }
-          .firework-6 { top: 70%; left: 50%; --tx: 50px; --ty: 50px; animation-delay: 1.2s; background-color: #ff4dff; }
+          .firework-6 { top: 70%; left: 50%; --tx: 50px; --ty: 50px; animation-delay: 1.2s; background-color: #ff4d4f; }
           .firework-7 { top: 80%; left: 10%; --tx: -50px; --ty: 50px; animation-delay: 1.4s; background-color: #4dffdb; }
           .firework-8 { top: 10%; left: 50%; --tx: 70px; --ty: -70px; animation-delay: 1.6s; background-color: #ffa64d; }
           .firework-9 { top: 25%; left: 25%; --tx: -60px; --ty: -60px; animation-delay: 1.8s; background-color: #66ccff; }
@@ -219,7 +224,6 @@ function Activity1({ onNext }) {
           .firework-22 { top: 55%; left: 60%; --tx: 30px; --ty: 30px; animation-delay: 2.1s; background-color: #00fa9a; }
           .firework-23 { top: 68%; left: 80%; --tx: 40px; --ty: -30px; animation-delay: 2.3s; background-color: #8a2be2; }
           .firework-24 { top: 80%; left: 20%; --tx: -40px; --ty: 30px; animation-delay: 2.5s; background-color: #ff6347; }
-          
         `}
       </style>
     </div>

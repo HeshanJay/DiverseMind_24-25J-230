@@ -32,10 +32,10 @@ function Activity1({ onNext }) {
     {
       question: "නමුත් මම කිසිම ක්‍රීඩාවක් කරලා නැහැ. ඒ නිසා මම දන්නේ නැහැ!",
       answers: [
-        { image: penguin_Iced, isCorrect: false, position: { top: "60%", left: "10%" }, text: "දිනුෂි විසින් සියලු දෙනාටමට පවසයි" },
+        { image: penguin_Iced, isCorrect: true, position: { top: "60%", left: "10%" }, text: "දිනුෂි විසින් සියලු දෙනාටමට පවසයි" },
         { image: bear, isCorrect: false, position: { top: "60%", left: "30%" }, text: "රවිඳු විසින් සියලු දෙනාටමට පවසයි" },
         { image: owl, isCorrect: false, position: { top: "30%", left: "50%" }, text: "දිනුෂි විසින් සුපුන්ට පවසයි" },
-        { image: fox, isCorrect: true, position: { top: "30%", left: "70%" }, text: "ගයාන් විසින් දිනුෂිට පවසයි" },
+        { image: fox, isCorrect: false, position: { top: "30%", left: "70%" }, text: "ගයාන් විසින් දිනුෂිට පවසයි" },
       ]
     },
     {
