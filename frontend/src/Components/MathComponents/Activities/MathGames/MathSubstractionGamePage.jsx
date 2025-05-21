@@ -430,7 +430,7 @@ const MathSubtractionGamePage = () => {
 
       <div
         className={`mtg-game-container level-${currentLevel}`}
-        style={{ backgroundImage: `url(${treasureMapImage})` }}
+        tyle={{ backgroundImage: `url(${treasureMapImage})` }}
       >
         <div className="mtg-header">
           <span>ඔබේ මට්ටම : {currentLevel}</span>
@@ -444,7 +444,7 @@ const MathSubtractionGamePage = () => {
           {grid.map((row, rowIdx) =>
             row.map((cell, colIdx) => (
               <div
-                key={`${rowIdx}-${colIdx}`}
+                key={`<span class="math-inline">\{rowIdx\}\-</span>{colIdx}`}
                 className={`mtg-grid-cell ${cell.revealed ? "revealed" : ""}`}
               >
                 {cell.revealed && cell.content && (
