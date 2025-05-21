@@ -680,31 +680,31 @@ const ReportView = () => {
                     <div className="metric-row">
                       <span>දෘශ්‍ය විෂමතා පරීක්ෂණය:</span>
                       <span className="metric-value">
-                        {result.visualDiscriminationScore}/10
+                        {result.visualDiscriminationScore}/1.0
                       </span>
                     </div>
                     <div className="metric-row">
                       <span>ශ්‍රව්‍ය විෂමතා පරීක්ෂණය:</span>
                       <span className="metric-value">
-                        {result.memoryScore}/10
+                        {result.memoryScore}/1.0
                       </span>
                     </div>
                     <div className="metric-row">
                       <span>භාෂා ශබ්ද කෝෂ පරීක්ෂණය:</span>
                       <span className="metric-value">
-                        {result.languageVocabScore}/10
+                        {result.languageVocabScore}/1.0
                       </span>
                     </div>
                     <div className="metric-row">
                       <span>මතක මිනුම් පරීක්ෂණය:</span>
                       <span className="metric-value">
-                        {result.audioDiscriminationScore}/10
+                        {result.audioDiscriminationScore}/1.0
                       </span>
                     </div>
                     <div className="metric-row">
                       <span>වේගය විශ්ලේෂණ පරීක්ෂණය:</span>
                       <span className="metric-value">
-                        {result.speedScore}/10
+                        {result.speedScore}/1.0
                       </span>
                     </div>
                   </div>
