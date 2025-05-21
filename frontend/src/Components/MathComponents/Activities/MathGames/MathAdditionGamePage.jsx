@@ -8,8 +8,10 @@ import character1 from "../../../../assets/characters/angel.png";
 import character2 from "../../../../assets/characters/knight.png";
 import character3 from "../../../../assets/characters/kid.png";
 import bearKid from "../../../../assets/Math/bear_kid.png";
+import popBoardWood from "../../../../assets/Math/pop_board_wood.png";
+import popBoardWood1 from "../../../../assets/Math/pop_board_wood1.png";
 import Confetti from "react-confetti";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const MathAdditionGamePage = () => {
   const [currentLevel, setCurrentLevel] = useState(1);
@@ -29,7 +31,9 @@ const MathAdditionGamePage = () => {
   const [celebrationCharacter, setCelebrationCharacter] = useState(null);
   const [isOverDropZone, setIsOverDropZone] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [showTutorial, setShowTutorial] = useState(!localStorage.getItem("hasPlayed"));
+  const [showTutorial, setShowTutorial] = useState(
+    !localStorage.getItem("hasPlayed")
+  );
 
   function generateProblem(level) {
     let num1, num2;
@@ -108,9 +112,9 @@ const MathAdditionGamePage = () => {
 
   const unlockCharacter = () => {
     const characters = [
-      { name: "Angel", image: character1 },
-      { name: "Knight", image: character2 },
-      { name: "Kid", image: character3 },
+      { name: "සුරගන", image: character1 },
+      { name: "ආරක්ෂකයා", image: character2 },
+      { name: "ළමයා", image: character3 },
     ];
     const newCharacter = characters[unlockedCharacters.length];
     if (newCharacter) {
@@ -131,6 +135,7 @@ const MathAdditionGamePage = () => {
     } else {
       setShowConfetti(true);
       setIsGameOver(true);
+      setIsLevelComplete(false); // Added this line to hide the level complete section
     }
   };
 
@@ -164,7 +169,7 @@ const MathAdditionGamePage = () => {
   return (
     <div
       className="magp-math-addition-game-page"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      style={{ backgroundImage: `url(${backgroundImage})` }} // Corrected: Enclose in backticks
     >
       {/* Inline scoped CSS */}
       <style>{`
@@ -365,7 +370,8 @@ const MathAdditionGamePage = () => {
         }
 
         .magp-math-addition-game-page .magp-modal-content {
-          background: linear-gradient(135deg, #ffffff, #e0f7fa);
+          background: url(${popBoardWood1}) no-repeat center center;
+          background-size: cover;
           padding: 30px;
           border-radius: 20px;
           text-align: center;
@@ -399,7 +405,8 @@ const MathAdditionGamePage = () => {
         }
 
         .magp-math-addition-game-page .magp-level-complete {
-          background: linear-gradient(135deg, #4CAF50, #81C784);
+          background: url(${popBoardWood}) no-repeat center center;
+          background-size: cover;
         }
 
         .magp-math-addition-game-page .magp-level-complete > *:nth-child(odd),
@@ -510,6 +517,20 @@ const MathAdditionGamePage = () => {
           border: 0;
         }
 
+        .magp-level-complete-modal,
+        .magp-game-over-modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+        }
+
         @keyframes magp-bounce {
           0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
           40% { transform: translateY(-20px); }
@@ -583,15 +604,22 @@ const MathAdditionGamePage = () => {
       {showTutorial && (
         <div className="magp-tutorial-modal">
           <div className="magp-modal-content">
-            <h2 className="magp-animate-fade-in" style={{ animationDelay: '0s' }}>
-              ඔන්න පුංචි දක්ෂයෝ! තරගයට පිළිගන්නවා 
+            <h2
+              className="magp-animate-fade-in"
+              style={{ animationDelay: "0s" }}
+            >
+              ඔන්න පුංචි දක්ෂයෝ! තරගයට පිළිගන්නවා
             </h2>
-            <p className="magp-animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              Drag or click an answer card to the box to solve the addition problem.
+            <p
+              className="magp-animate-fade-in"
+              style={{ animationDelay: "0.2s" }}
+            >
+              Drag or click an answer card to the box to solve the addition
+              problem.
             </p>
             <button
               className="magp-animate-fade-in"
-              style={{ animationDelay: '0.4s' }}
+              style={{ animationDelay: "0.4s" }}
               onClick={() => {
                 setShowTutorial(false);
                 localStorage.setItem("hasPlayed", "true");
@@ -606,7 +634,7 @@ const MathAdditionGamePage = () => {
         <div className="magp-character-unlock-modal">
           <Confetti />
           <div className="magp-modal-content">
-            <h2>You Unlocked {celebrationCharacter.name}!</h2>
+            <h2>ඔයා දක්ෂයි ..! {celebrationCharacter.name}!</h2>
             <img
               src={celebrationCharacter.image}
               alt={celebrationCharacter.name}
@@ -618,7 +646,7 @@ const MathAdditionGamePage = () => {
                 setIsLevelComplete(true);
               }}
             >
-              Yay!
+              ඉදිරියට!
             </button>
           </div>
         </div>
@@ -628,17 +656,20 @@ const MathAdditionGamePage = () => {
         <div className="magp-game-stats">
           <span>මට්ටම: {currentLevel}</span>
           <span>ලකුණු : {score}</span>
-          <span>අවස්ථා : {"❤️".repeat(health)}</span>
+          <span>අවස්ථා : {"❤".repeat(health)}</span>
           <span>තාරකා : {"⭐".repeat(stars)}</span>
           <span>ප්‍රශ්න: {currentQuestion}/2</span>
         </div>
         <div className="magp-controls">
-          <button onClick={() => setIsMuted(!isMuted)} className="magp-mute-btn">
+          <button
+            onClick={() => setIsMuted(!isMuted)}
+            className="magp-mute-btn"
+          >
             {isMuted ? "🔇" : "🔊"}
           </button>
         </div>
         <div className="magp-unlocked-characters">
-          <h3>Unlocked Characters:</h3>
+          <h3>ලබාගත් ප්‍රසාද:</h3>
           <div className="magp-character-list">
             {unlockedCharacters.map((char, idx) => (
               <img
@@ -660,7 +691,10 @@ const MathAdditionGamePage = () => {
 
       <div className="magp-game-content">
         <h2>එන්න අපි ඔයාගේ හැකියාවන් බලමු !</h2>
-        <div className="magp-problem" aria-label={`What is ${problem.num1} plus ${problem.num2}?`}>
+        <div
+          className="magp-problem"
+          aria-label={`What is ${problem.num1} plus ${problem.num2}?`}
+        >
           <span>{problem.num1}</span>
           <span>+</span>
           <span>{problem.num2}</span>
@@ -679,7 +713,7 @@ const MathAdditionGamePage = () => {
           >
             {selectedAnswer !== null ? selectedAnswer : "?"}
             {feedbackIcon === "correct" && (
-              <span className="magp-feedback-icon correct">✔️</span>
+              <span className="magp-feedback-icon correct">✔</span>
             )}
             {feedbackIcon === "incorrect" && (
               <span className="magp-feedback-icon incorrect">❌</span>
@@ -711,24 +745,35 @@ const MathAdditionGamePage = () => {
       </div>
 
       {isLevelComplete && (
-        <div className="magp-level-complete">
-          <img src={bearKid} alt="Bear Kid" className="magp-bear-kid" />
-          <h2 className="magp-animate-fade-in" style={{ animationDelay: '0.5s' }}>
-            විශිෂ්ටයි පුංචි දක්ෂයෝ !
-          </h2>
-          <p className="magp-animate-fade-in" style={{ animationDelay: '0.7s' }}>
-            ඔබේ මට්ටම  {currentLevel} !
-          </p>
-          <p className="magp-animate-fade-in" style={{ animationDelay: '0.9s' }}>
-            ඔයා තරු {stars} ක් අරන්! 🌟
-          </p>
-          <button
-            className="magp-animate-fade-in"
-            style={{ animationDelay: '1.1s' }}
-            onClick={nextLevel}
-          >
-            {currentLevel < 3 ? "ඊළග තරගයට " : "සමරමු !"}
-          </button>
+        <div className="magp-level-complete-modal">
+          <div className="magp-level-complete">
+            <img src={bearKid} alt="Bear Kid" className="magp-bear-kid" />
+            <h2
+              className="magp-animate-fade-in"
+              style={{ animationDelay: "0.5s" }}
+            >
+              විශිෂ්ටයි පුංචි දක්ෂයෝ !
+            </h2>
+            <p
+              className="magp-animate-fade-in"
+              style={{ animationDelay: "0.7s" }}
+            >
+              ඔබේ මට්ටම {currentLevel} !
+            </p>
+            <p
+              className="magp-animate-fade-in"
+              style={{ animationDelay: "0.9s" }}
+            >
+              ඔයා තරු {stars} ක් අරන්! 🌟
+            </p>
+            <button
+              className="magp-animate-fade-in"
+              style={{ animationDelay: "1.1s" }}
+              onClick={nextLevel}
+            >
+              {currentLevel < 3 ? "ඊළග තරගයට " : "සමරමු !"}
+            </button>
+          </div>
         </div>
       )}
 
@@ -741,8 +786,8 @@ const MathAdditionGamePage = () => {
           </h2>
           <p> ඔබේ ලකුණ : {score}</p>
           <div className="magp-button-container">
-            <button onClick={resetGame}>නැවත උත්සාහා කරමු</button>
-            <button onClick={goToMainMenu}>Main Menu</button>
+            <button onClick={resetGame}>නැවත කරමු</button>
+            <button onClick={goToMainMenu}>ප්‍රධාන මෙනුවට </button>
           </div>
         </div>
       )}

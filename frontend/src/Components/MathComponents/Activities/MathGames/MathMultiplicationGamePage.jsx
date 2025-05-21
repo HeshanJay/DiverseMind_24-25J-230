@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Add this import
 import correctSound from "../../../../assets/Audios/design_sounds/correct.mp3";
 import incorrectSound from "../../../../assets/Audios/design_sounds/incorrect.mp3";
@@ -37,7 +37,11 @@ const MathMultiplicationGamePage = () => {
     const options = [correctAnswer];
     while (options.length < 4) {
       const distractor = correctAnswer + Math.floor(Math.random() * 10) - 5;
-      if (distractor >= 0 && !options.includes(distractor) && distractor !== correctAnswer) {
+      if (
+        distractor >= 0 &&
+        !options.includes(distractor) &&
+        distractor !== correctAnswer
+      ) {
         options.push(distractor);
       }
     }
@@ -225,14 +229,27 @@ const MathMultiplicationGamePage = () => {
         }
 
         .mmg-game-complete h2 {
-          font-size: 3.5rem;
+          font-size: 2rem;
           margin-bottom: 20px;
           text-shadow: 2px 2px 4px #000;
         }
 
         .mmg-game-complete p {
-          font-size: 2.5rem;
+          font-size: 2rem;
           margin-bottom: 25px;
+        }
+
+        .mmg-game-complete-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 3;
         }
 
         .mmg-button-container {
@@ -243,7 +260,7 @@ const MathMultiplicationGamePage = () => {
 
         .mmg-game-complete button {
           padding: 15px 30px;
-          font-size: 2rem;
+          font-size: 1.2rem;
           background-color: #32CD32;
           color: #fff;
           border: none;
@@ -324,7 +341,9 @@ const MathMultiplicationGamePage = () => {
         <img src={clownImage} alt="Clown" className="mmg-clown" />
 
         <div className="mmg-header">
-          <span>🎈 ප්‍රශ්නය : {currentQuestion} / {totalQuestions}</span>
+          <span>
+            🎈 ප්‍රශ්නය : {currentQuestion} / {totalQuestions}
+          </span>
           <span>⭐ ලකුණු : {score}</span>
         </div>
 
@@ -352,12 +371,14 @@ const MathMultiplicationGamePage = () => {
         </div>
 
         {isGameComplete && (
-          <div className="mmg-game-complete">
-            <h2>🎉 ඔන්න පුංචි දක්ෂයෝ.. බැලුම් තරගය දිනුම් ! 🎉</h2>
-            <p>ඔබේ ලකුණු : {score} තරු ! 🌟</p>
-            <div className="mmg-button-container">
-              <button onClick={resetGame}>නැවත සෙල්ලම් කරමු! 🎈</button>
-              <button onClick={goToMainMenu}>ප්‍රධාන මෙනුවට 🎲</button>
+          <div className="mmg-game-complete-overlay">
+            <div className="mmg-game-complete">
+              <h2>🎉 ඔන්න පුංචි දක්ෂයෝ.. බැලුම් තරගය දිනුම් ! 🎉</h2>
+              <p>ඔබේ ලකුණු : {score} තරු ! 🌟</p>
+              <div className="mmg-button-container">
+                <button onClick={resetGame}>නැවත සෙල්ලම් කරමු! 🎈</button>
+                <button onClick={goToMainMenu}>ප්‍රධාන මෙනුවට 🎲</button>
+              </div>
             </div>
           </div>
         )}

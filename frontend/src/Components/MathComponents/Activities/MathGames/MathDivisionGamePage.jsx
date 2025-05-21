@@ -15,7 +15,7 @@ import divx_04 from "../../../../assets/Math/divx_04.png";
 import divx_05 from "../../../../assets/Math/divx_05.png";
 import div_good from "../../../../assets/Math/div_good.png";
 import div_bad from "../../../../assets/Math/div_bad.png";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 // Define questions
 const questions = [
@@ -226,8 +226,8 @@ const DivisionGamePage = () => {
         }
         .button-container {
           display: flex;
-          justify-content: center;
-          gap: 20px;
+          justify-content: space-between;
+          width: 95%;
           margin-top: 20px;
         }
         .button-container button {
@@ -252,19 +252,58 @@ const DivisionGamePage = () => {
       `}</style>
 
       {/* Floating Background Elements */}
-      <div className="floating-element orange" style={{ top: '10%', left: '20%', animationDelay: '0s' }}></div>
-      <div className="floating-element blue" style={{ top: '30%', left: '50%', animationDelay: '2s' }}></div>
-      <div className="floating-element green" style={{ top: '50%', left: '80%', animationDelay: '4s' }}></div>
-      <div className="floating-element orange" style={{ top: '30%', left: '10%', animationDelay: '1s' }}></div>
-      <div className="floating-element orange" style={{ top: '80%', left: '5%', animationDelay: '1s' }}></div>
-      <div className="floating-element blue" style={{ top: '90%', left: '90%', animationDelay: '2s' }}></div>
-      <div className="floating-element orange" style={{ top: '5%', left: '10%', animationDelay: '0s' }}></div>
-      <div className="floating-element blue" style={{ top: '60%', left: '10%', animationDelay: '2s' }}></div>
-      <div className="floating-element green" style={{ top: '75%', left: '12%', animationDelay: '4s' }}></div>
-      <div className="floating-element orange" style={{ top: '30%', left: '97%', animationDelay: '1s' }}></div>
-      <div className="floating-element green" style={{ top: '10%', left: '90%', animationDelay: '1s' }}></div>
-      <div className="floating-element orange" style={{ top: '70%', left: '89%', animationDelay: '1s' }}></div>
-      <div className="floating-element blue" style={{ top: '90%', left: '80%', animationDelay: '2s' }}></div>
+      <div
+        className="floating-element orange"
+        style={{ top: "10%", left: "20%", animationDelay: "0s" }}
+      ></div>
+      <div
+        className="floating-element blue"
+        style={{ top: "30%", left: "50%", animationDelay: "2s" }}
+      ></div>
+      <div
+        className="floating-element green"
+        style={{ top: "50%", left: "80%", animationDelay: "4s" }}
+      ></div>
+      <div
+        className="floating-element orange"
+        style={{ top: "30%", left: "10%", animationDelay: "1s" }}
+      ></div>
+      <div
+        className="floating-element orange"
+        style={{ top: "80%", left: "5%", animationDelay: "1s" }}
+      ></div>
+      <div
+        className="floating-element blue"
+        style={{ top: "90%", left: "90%", animationDelay: "2s" }}
+      ></div>
+      <div
+        className="floating-element orange"
+        style={{ top: "5%", left: "10%", animationDelay: "0s" }}
+      ></div>
+      <div
+        className="floating-element blue"
+        style={{ top: "60%", left: "10%", animationDelay: "2s" }}
+      ></div>
+      <div
+        className="floating-element green"
+        style={{ top: "75%", left: "12%", animationDelay: "4s" }}
+      ></div>
+      <div
+        className="floating-element orange"
+        style={{ top: "30%", left: "97%", animationDelay: "1s" }}
+      ></div>
+      <div
+        className="floating-element green"
+        style={{ top: "10%", left: "90%", animationDelay: "1s" }}
+      ></div>
+      <div
+        className="floating-element orange"
+        style={{ top: "70%", left: "89%", animationDelay: "1s" }}
+      ></div>
+      <div
+        className="floating-element blue"
+        style={{ top: "90%", left: "80%", animationDelay: "2s" }}
+      ></div>
 
       {/* Feedback Overlay */}
       {showFeedback && (
@@ -285,11 +324,11 @@ const DivisionGamePage = () => {
             <span className="final-icon">🏆</span>
             <h2>අවසන් !</h2>
             <p>
-            ඔයා {questions.length} න් {correctCount} ක් හරි !
+              ඔයා {questions.length} න් {correctCount} ක් හරි !
             </p>
             <div className="button-container">
-              <button onClick={goToMainMenu}>ප්‍රධාන මෙනුවට </button>
               <button onClick={resetGame}>නැවත උත්සාහ කරමු</button>
+              <button onClick={goToMainMenu}>ප්‍රධාන මෙනුවට </button>
             </div>
           </div>
         </div>
@@ -298,7 +337,7 @@ const DivisionGamePage = () => {
       {/* Game Content */}
       <div className="header">
         <span>
-        ප්‍රශ්නය  {currentQuestionIndex + 1} න් {questions.length}
+          ප්‍රශ්නය {currentQuestionIndex + 1} න් {questions.length}
         </span>
         <span>වෙලාව : {elapsedTime}තත්පර</span>
       </div>
