@@ -169,7 +169,7 @@ const MathAdditionGamePage = () => {
   return (
     <div
       className="magp-math-addition-game-page"
-      style={{ backgroundImage: `url(${backgroundImage})` }} // Corrected: Enclose in backticks
+      style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {/* Inline scoped CSS */}
       <style>{`
