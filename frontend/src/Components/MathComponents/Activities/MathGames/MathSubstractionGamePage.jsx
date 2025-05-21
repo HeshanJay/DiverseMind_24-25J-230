@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Confetti from 'react-confetti'; // Added import
+import Confetti from "react-confetti"; // Added import
 import correctSound from "../../../../assets/Audios/design_sounds/correct.mp3";
 import incorrectSound from "../../../../assets/Audios/design_sounds/incorrect.mp3";
 import levelUpSound from "../../../../assets/Audios/design_sounds/level_up.mp3";
@@ -9,7 +9,7 @@ import gemImage from "../../../../assets/Math/gems_map.png";
 import nothingImage from "../../../../assets/Math/nothing_map.png";
 import replayIcon from "../../../../assets/Math/replayx.png";
 import homeIcon from "../../../../assets/Math/homexx.png";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const MathSubtractionGamePage = () => {
   // State variables (unchanged)
@@ -94,11 +94,14 @@ const MathSubtractionGamePage = () => {
 
     if (unrevealedCells.length === 0) return;
 
-    const [row, col] = unrevealedCells[Math.floor(Math.random() * unrevealedCells.length)];
+    const [row, col] =
+      unrevealedCells[Math.floor(Math.random() * unrevealedCells.length)];
     const isTreasure = Math.random() < 0.8;
     newGrid[row][col] = {
       revealed: true,
-      content: isTreasure ? treasureImages[Math.floor(Math.random() * treasureImages.length)] : nothingImage,
+      content: isTreasure
+        ? treasureImages[Math.floor(Math.random() * treasureImages.length)]
+        : nothingImage,
     };
     setGrid(newGrid);
 
@@ -427,23 +430,29 @@ const MathSubtractionGamePage = () => {
 
       <div
         className={`mtg-game-container level-${currentLevel}`}
-        style={{ backgroundImage: `url(${treasureMapImage})` }}
+        tyle={{ backgroundImage: `url(${treasureMapImage})` }}
       >
         <div className="mtg-header">
           <span>ඔබේ මට්ටම : {currentLevel}</span>
           <span>ලකුණු : {score}</span>
-          <span>නිධාන: {treasuresFound} / {treasuresNeeded}</span>
+          <span>
+            නිධාන: {treasuresFound} / {treasuresNeeded}
+          </span>
         </div>
 
         <div className="mtg-grid">
           {grid.map((row, rowIdx) =>
             row.map((cell, colIdx) => (
               <div
-                key={`${rowIdx}-${colIdx}`}
+                key={`<span class="math-inline">\{rowIdx\}\-</span>{colIdx}`}
                 className={`mtg-grid-cell ${cell.revealed ? "revealed" : ""}`}
               >
                 {cell.revealed && cell.content && (
-                  <img src={cell.content} alt="Treasure" className="mtg-treasure" />
+                  <img
+                    src={cell.content}
+                    alt="Treasure"
+                    className="mtg-treasure"
+                  />
                 )}
               </div>
             ))
@@ -484,7 +493,7 @@ const MathSubtractionGamePage = () => {
             <h2>මට්ටම {currentLevel} හරි !</h2>
             <p>විශිෂ්ටයි ඔයා ඔක්කොම වටිනා දේවල් හොයාගෙන !</p>
             <button onClick={nextLevel}>
-              {currentLevel < 3 ? "Next Map" : "Claim Your Bounty!"}
+              {currentLevel < 3 ? "ඉදිරියට" : "Claim Your Bounty!"}
             </button>
           </div>
         )}
@@ -504,15 +513,15 @@ const MathSubtractionGamePage = () => {
               <h2>සුබ පැතුම් දක්ෂ නිදන් සොයන්න්නෝ !</h2>
               <p>අවසන් ලකුණු : {score}</p>
               <div className="mtg-game-over-buttons">
-                <button onClick={resetGame}>
-                නැවත සොයමු
-                </button>
-                <button onClick={goHome}>
-                මෙණුවට යමු 
-                </button>
+                <button onClick={resetGame}>නැවත සොයමු</button>
+                <button onClick={goHome}>මෙණුවට යමු</button>
               </div>
             </div>
-            <Confetti numberOfPieces={200} colors={['#FFD700', '#C0C0C0', '#B8860B']} style={{ zIndex: 12 }} />
+            <Confetti
+              numberOfPieces={200}
+              colors={["#FFD700", "#C0C0C0", "#B8860B"]}
+              style={{ zIndex: 12 }}
+            />
           </>
         )}
       </div>

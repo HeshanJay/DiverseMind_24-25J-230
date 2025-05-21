@@ -1,5 +1,5 @@
 import React from "react";
-import backgroundImage from "../../../assets/background_images/intro.jpg";
+import backgroundImage from "../../../assets/background_images/w_intro.webp";
 import "./WritingIntro.css";
 
 const WritingIntroPage = ({ onStartTest }) => {

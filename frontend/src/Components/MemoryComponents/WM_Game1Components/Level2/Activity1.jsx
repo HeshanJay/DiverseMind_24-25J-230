@@ -80,7 +80,7 @@ const Activity1 = () => {
   useEffect(() => {
     if (current.questionImages && current.questionImages.length > 0) {
       setShowQuestion(true);
-      setQuestionTimer(10);
+      setQuestionTimer(2);
     } else {
       setShowQuestion(false);
     }
@@ -88,14 +88,19 @@ const Activity1 = () => {
 
   useEffect(() => {
     if (showQuestion && questionTimer > 0) {
-      const timer = setTimeout(() => setQuestionTimer((prev) => prev - 1), 1000);
+      const timer = setTimeout(
+        () => setQuestionTimer((prev) => prev - 1),
+        1000
+      );
       return () => clearTimeout(timer);
     } else if (showQuestion && questionTimer === 0) {
       setShowQuestion(false);
     }
   }, [questionTimer, showQuestion]);
 
-  const [revealed, setRevealed] = useState(Array(current.answerImages.length).fill(false));
+  const [revealed, setRevealed] = useState(
+    Array(current.answerImages.length).fill(false)
+  );
   const [previewActive, setPreviewActive] = useState(false);
   const [answerTimer, setAnswerTimer] = useState(null);
 
@@ -103,7 +108,7 @@ const Activity1 = () => {
     setRevealed(Array(current.answerImages.length).fill(false));
     setAnswerTimer(null);
     setPreviewActive(false);
-    setHasSelectedAtLeastOne(false); 
+    setHasSelectedAtLeastOne(false);
   }, [currentQuestion, current.answerImages.length]);
 
   useEffect(() => {
@@ -133,15 +138,15 @@ const Activity1 = () => {
   const handleSelect = (index) => {
     if (previewActive || (answerTimer !== null && answerTimer <= 0)) return;
     if (revealed[index]) return;
-  
+
     setHasSelectedAtLeastOne(true);
-    
+
     setRevealed((prev) => {
       const newArr = [...prev];
       newArr[index] = true;
       return newArr;
     });
-    
+
     if (current.correctIndices.includes(index)) {
       setScore((prevScore) => prevScore + 2);
     } else {
@@ -154,7 +159,9 @@ const Activity1 = () => {
       }, 1000);
     }
   };
-  const allCorrectRevealed = current.correctIndices.every((idx) => revealed[idx]);
+  const allCorrectRevealed = current.correctIndices.every(
+    (idx) => revealed[idx]
+  );
 
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
@@ -211,7 +218,6 @@ const Activity1 = () => {
         </div>
       ) : (
         <div className="w-full max-w-3xl relative">
-      
           <div className="bg-black bg-opacity-60 rounded-lg p-4 mb-6 mx-auto w-[360px] mt-[-30px]">
             <h1 className="text-3xl font-bold text-center text-white border-4 border-white">
               {current.questionText}
@@ -225,7 +231,11 @@ const Activity1 = () => {
                 className="relative cursor-pointer flip-container"
                 onClick={() => handleSelect(index)}
               >
-                <div className={`flipper ${(previewActive || revealed[index]) ? "revealed" : ""}`}>
+                <div
+                  className={`flipper ${
+                    previewActive || revealed[index] ? "revealed" : ""
+                  }`}
+                >
                   <div className="front">
                     <img
                       src={img}
@@ -252,7 +262,7 @@ const Activity1 = () => {
             ))}
           </div>
           {answerTimer !== null && (
-            <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-6 py-3 rounded-md shadow-lg mt-10 w-64 mx-auto">
+            <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-cyan-600 px-6 py-3 rounded-md shadow-lg mt-10 w-72 mx-auto">
               ⏳ කාලය: {answerTimer} තත්පර
             </div>
           )}
@@ -260,16 +270,28 @@ const Activity1 = () => {
           {!previewActive && answerTimer !== null && (
             <button
               onClick={() => {
-                if (allCorrectRevealed || (answerTimer !== null && answerTimer <= 0) || hasSelectedAtLeastOne) {
+                if (
+                  allCorrectRevealed ||
+                  (answerTimer !== null && answerTimer <= 0) ||
+                  hasSelectedAtLeastOne
+                ) {
                   handleNext();
                 }
               }}
-              className={`absolute bottom-[-2] right-[-120px] p-4 rounded-full shadow-lg transition ${
-                (allCorrectRevealed || (answerTimer !== null && answerTimer <= 0) || hasSelectedAtLeastOne)
+              className={`absolute bottom-0 right-[-120px] p-4 rounded-full shadow-lg transition ${
+                allCorrectRevealed ||
+                (answerTimer !== null && answerTimer <= 0) ||
+                hasSelectedAtLeastOne
                   ? "bg-gradient-to-r from-teal-400 to-cyan-500 text-white hover:from-teal-500 hover:to-cyan-600"
                   : "bg-gradient-to-r from-gray-100 to-gray-300 text-gray-500 cursor-not-allowed"
               }`}
-              disabled={!(allCorrectRevealed || (answerTimer !== null && answerTimer <= 0) || hasSelectedAtLeastOne)}
+              disabled={
+                !(
+                  allCorrectRevealed ||
+                  (answerTimer !== null && answerTimer <= 0) ||
+                  hasSelectedAtLeastOne
+                )
+              }
             >
               <FaArrowRight size={24} />
             </button>

@@ -62,7 +62,7 @@ const ScoreBoard = ({ onRestart }) => {
       {/* Move everything upwards by reducing mt-20 to mt-10 */}
       <div className="relative text-center text-white z-10 mt-23">
         <div className="mt-4">
-          <h2 className="text-4xl font-bold text-yellow-300 mb-9">
+          <h2 className="text-5xl font-bold text-yellow-300 mb-9">
             🎉 ඔබේ අවධානය 🎉
           </h2>
         </div>
@@ -90,7 +90,7 @@ const ScoreBoard = ({ onRestart }) => {
         </div>
 
         {/* Right-aligned vertical buttons (pushed even further right and up) */}
-        <div className="absolute right-[-150px] top-6 flex flex-col gap-6">
+        <div className="absolute right-[-130px] top-8 flex flex-col gap-6">
           <button
             onClick={onRestart}
             className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg hover:scale-105 transition-transform duration-300"

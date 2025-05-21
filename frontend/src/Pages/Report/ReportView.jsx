@@ -32,6 +32,33 @@ const ReportView = () => {
     { name: "Logout", onClick: handleLogout },
   ];
 
+  // Helper functions for mapping outputs
+  const getMathDisplay = (value) => {
+    // Identity mapping – display the value as is
+    return value;
+  };
+
+  const getWritingDisplay = (value) => {
+    if (value === "Good") return "ඉතා හොඳයි";
+    if (value === "Average") return "හොඳයි";
+    if (value === "Weak") return "උනන්දු විය යුතුයි";
+    return value;
+  };
+
+  const getAttentionDisplay = (value) => {
+    if (value === "Focused") return "ඉතා හොඳයි";
+    if (value === "Moderately Focused") return "මධ්‍යස්තයි";
+    if (value === "Not Focused") return "උනන්දු විය යුතුයි";
+    return value;
+  };
+
+  const getMemoryDisplay = (value) => {
+    if (value === "Normal") return "ඉතා හොඳයි";
+    if (value === "Medium") return "හොඳයි";
+    if (value === "Low") return "උනන්දු විය යුතුයි";
+    return value;
+  };
+
   useEffect(() => {
     const fetchStudentReport = async () => {
       try {
@@ -66,7 +93,7 @@ const ReportView = () => {
     const downloadButton = document.getElementById("downloadButton");
     let originalDisplay = "";
     if (downloadButton) {
-      originalDisplay = downloadButton.style.display; // likely empty
+      originalDisplay = downloadButton.style.display;
       downloadButton.style.display = "none";
     }
     html2canvas(reportElement, {
@@ -77,7 +104,7 @@ const ReportView = () => {
       allowTaint: true,
     }).then((canvas) => {
       if (downloadButton) {
-        downloadButton.style.display = ""; // Restore to CSS default
+        downloadButton.style.display = ""; // Restore display
       }
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
@@ -117,7 +144,7 @@ const ReportView = () => {
             <div className="header-text">
               <h1 className="institute-name">DiverseMind</h1>
               <p className="institute-address">
-                An Education Platform for Children with Learning Difficultites
+                ඉගෙනීමේ දුෂ්කරතා ඇති දරුවන් සඳහා අධ්‍යාපන මෙවලමක්
               </p>
             </div>
           </div>
@@ -132,14 +159,6 @@ const ReportView = () => {
               <span className="info-label">සිසුවාගේ නම:</span>
               <span className="info-value">{student.name}</span>
             </div>
-            <div className="info-item">
-              <span className="info-label">ශ්‍රේණිය:</span>
-              <span className="info-value">Grade 5</span>
-            </div>
-            <div className="info-item">
-              <span className="info-label">පාසල:</span>
-              <span className="info-value">Colombo International School</span>
-            </div>
           </div>
 
           {/* Math Section */}
@@ -153,7 +172,7 @@ const ReportView = () => {
                 {student.math_results.map((result, index) => (
                   <div key={index} className="result-card">
                     <div className="skill-level-badge">
-                      {result.skillPhrase}
+                      {getMathDisplay(result.skillPhrase)}
                     </div>
                     <div className="metric-row">
                       <span>සම්පූර්ණ නිරවද්‍යතාව:</span>
@@ -199,7 +218,7 @@ const ReportView = () => {
                 ))}
               </div>
             ) : (
-              <p className="no-data">No math results available</p>
+              <p className="no-data">ගණිත ප්‍රතිඵල නොමැත.</p>
             )}
           </div>
 
@@ -214,7 +233,7 @@ const ReportView = () => {
                 {student.writing_results.map((result, index) => (
                   <div key={index} className="result-card">
                     <div className="skill-level-badge">
-                      {result.skill_level}
+                      {getWritingDisplay(result.skill_level)}
                     </div>
                     <div className="metric-row">
                       <span>ලිවීමේ පරීක්ෂාව:</span>
@@ -238,7 +257,7 @@ const ReportView = () => {
                 ))}
               </div>
             ) : (
-              <p className="no-data">No writing results available</p>
+              <p className="no-data">ලිවීමේ ප්‍රතිඵල නොමැත.</p>
             )}
           </div>
 
@@ -254,7 +273,9 @@ const ReportView = () => {
               <div className="results-grid">
                 {student.attention_results.map((result, index) => (
                   <div key={index} className="result-card">
-                    <div className="skill-level-badge">{result.status}</div>
+                    <div className="skill-level-badge">
+                      {getAttentionDisplay(result.status)}
+                    </div>
                     <div className="metric-row">
                       <span>සාමාන්‍ය ලකුණු:</span>
                       <span className="metric-value">
@@ -269,7 +290,7 @@ const ReportView = () => {
                 ))}
               </div>
             ) : (
-              <p className="no-data">No attention results available</p>
+              <p className="no-data">අවධානය යොමු කිරීමේ ප්‍රතිඵල නොමැත.</p>
             )}
           </div>
 
@@ -283,42 +304,44 @@ const ReportView = () => {
               <div className="results-grid">
                 {student.memory_results.map((result, index) => (
                   <div key={index} className="result-card">
-                    <div className="skill-level-badge">{result.prediction}</div>
+                    <div className="skill-level-badge">
+                      {getMemoryDisplay(result.prediction)}
+                    </div>
                     <div className="metric-row">
-                      <span>දෘශ්ය වෙනස්කම්:</span>
+                      <span>දෘශ්‍ය විෂමතා පරීක්ෂණය:</span>
                       <span className="metric-value">
-                        {result.visualDiscriminationScore}/10
+                        {result.visualDiscriminationScore}/1.0
                       </span>
                     </div>
                     <div className="metric-row">
-                      <span>මතක ලකුණු:</span>
+                      <span>ශ්‍රව්‍ය විෂමතා පරීක්ෂණය:</span>
                       <span className="metric-value">
-                        {result.memoryScore}/10
+                        {result.memoryScore}/1.0
                       </span>
                     </div>
                     <div className="metric-row">
-                      <span>භාෂා වාග් තන්දුව:</span>
+                      <span>භාෂා ශබ්ද කෝෂ පරීක්ෂණය:</span>
                       <span className="metric-value">
-                        {result.languageVocabScore}/10
+                        {result.languageVocabScore}/1.0
                       </span>
                     </div>
                     <div className="metric-row">
-                      <span>ශ්‍රවණ වෙනස්කම්:</span>
+                      <span>මතක මිනුම් පරීක්ෂණය:</span>
                       <span className="metric-value">
-                        {result.audioDiscriminationScore}/10
+                        {result.audioDiscriminationScore}/1.0
                       </span>
                     </div>
                     <div className="metric-row">
-                      <span>වේගය:</span>
+                      <span>වේගය විශ්ලේෂණ පරීක්ෂණය:</span>
                       <span className="metric-value">
-                        {result.speedScore}/10
+                        {result.speedScore}/1.0
                       </span>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="no-data">No memory results available</p>
+              <p className="no-data">මතක ප්‍රතිඵල නොමැත.</p>
             )}
           </div>
 
@@ -332,8 +355,7 @@ const ReportView = () => {
               සම්පූර්ණ වාර්තාව බාගත කරගන්න
             </button>
             <p className="download-note">
-              * This official report requires supervisor signature for
-              validation
+              * මෙම නිල වාර්තාව වලංගු කිරීම සඳහා අධීක්ෂක අත්සන අවශ්‍ය වේ.
             </p>
           </div>
         </div>

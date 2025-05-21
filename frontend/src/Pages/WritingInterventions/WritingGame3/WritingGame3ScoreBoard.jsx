@@ -8,11 +8,11 @@ const WritingGame3ScoreBoard = ({ totalPoints, stars }) => {
 
   return (
     <div className="scoreboard-container">
-      <h2 className="scoreboard-title">Score Board</h2>
+      <h2 className="scoreboard-title">ලකුණු පුවරුව</h2>
       <div className="scoreboard-info">
-        <p className="scoreboard-points">Total Points: {totalPoints} / 30</p>
+        <p className="scoreboard-points">මුළු ලකුණු: {totalPoints} / 30</p>
         <p className="scoreboard-stars">
-          Stars: {filledStars}
+          ත්‍යාග: {filledStars}
           {emptyStars}
         </p>
       </div>
