@@ -26,7 +26,7 @@ const MemoryFinal_Feedback = ({
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-fixed relative flex flex-col"
+      className="h-screen w-screen bg-cover bg-center bg-fixed relative flex flex-col overflow-hidden"
       style={{ backgroundImage: `url(${img5})` }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-40"></div>

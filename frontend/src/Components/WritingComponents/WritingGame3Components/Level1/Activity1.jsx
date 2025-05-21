@@ -217,7 +217,7 @@ const Activity1 = () => {
       ) : (
         <>
           <div className="title-box">
-            <h2>පථය {currentLevel}</h2>
+            <h2>අදියර {currentLevel}</h2>
           </div>
           {isGameActive && (
             <div className="activity1-controls">

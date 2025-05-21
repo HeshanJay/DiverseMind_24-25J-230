@@ -365,7 +365,7 @@ function Activity1({ onNext }) {
                 className="text-4xl font-extrabold mb-4"
                 style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.6)" }}
               >
-                {gameWon ? "Congratulations!" : "Time's Up!"}
+                {gameWon ? "සුභ පැතුම්!" : "කාලය ඉවරයි!"}
               </h2>
               {starRating > 0 && (
                 <div className="flex justify-center mb-4 text-3xl text-yellow-500">
@@ -380,14 +380,14 @@ function Activity1({ onNext }) {
                 className="text-2xl font-semibold mb-4"
                 style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.5)" }}
               >
-                Final Score: {score}
+                අවසාන ලකුණු: {score}
               </p>
               <div className="flex gap-4 justify-center">
                 <button
                   onClick={resetGame}
                   className="bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700 transition-colors"
                 >
-                  Retry
+                  නැවත උත්සාහ කරන්න
                 </button>
                 {(score >= 20 || gameWon) && (
                   <button
@@ -396,7 +396,7 @@ function Activity1({ onNext }) {
                     }
                     className="bg-yellow-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:bg-yellow-600 transition-colors"
                   >
-                    Next Level
+                    ඊලඟ අදියරය
                   </button>
                 )}
               </div>

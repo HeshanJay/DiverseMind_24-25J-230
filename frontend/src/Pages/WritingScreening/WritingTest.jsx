@@ -516,8 +516,8 @@ const WritingTest = () => {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      console.log("Prediction Response:", response.data);
-      alert("Prediction Response: " + JSON.stringify(response.data));
+      // console.log("Prediction Response:", response.data);
+      // alert("Prediction Response: " + JSON.stringify(response.data));
 
       if (response.data && typeof response.data.total_score === "number") {
         setCnnOutputScore(response.data.total_score);

@@ -138,7 +138,7 @@ function Intervention_menu() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center bg-cover bg-center relative"
+      className="min-h-screen flex items-center justify-center bg-cover bg-center relative overflow-hidden"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <style>

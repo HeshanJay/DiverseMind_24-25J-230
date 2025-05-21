@@ -93,12 +93,13 @@ function Activity2({ onNext }) {
   const isAllFilled = () => {
     const start = page === 1 ? 0 : 3;
     const end = page === 1 ? 3 : fillQuestions.length;
-    return userAnswers.slice(start, end).every((answers) =>
-      answers.every((answer) => answer !== "")
-    );
+    return userAnswers
+      .slice(start, end)
+      .every((answers) => answers.every((answer) => answer !== ""));
   };
 
-  const pageQuestions = page === 1 ? fillQuestions.slice(0, 3) : fillQuestions.slice(3);
+  const pageQuestions =
+    page === 1 ? fillQuestions.slice(0, 3) : fillQuestions.slice(3);
 
   return (
     <div
@@ -114,8 +115,10 @@ function Activity2({ onNext }) {
 
       {/* White container box for header text */}
       {page === 1 && (
-        <div className="bg-white bg-opacity-50 p-4 rounded-2xl border-4 border-black mb-8 z-20">
-          <h1 className="text-3xl font-bold text-black">නිවැරදි පිළිතුර තෝරන්න</h1>
+        <div className="bg-white bg-opacity-50 p-4 rounded-2xl border-4 border-black mt-12 mb-8 z-20">
+          <h1 className="text-3xl font-bold text-black">
+            නිවැරදි පිළිතුර තෝරන්න
+          </h1>
         </div>
       )}
 
@@ -148,11 +151,17 @@ function Activity2({ onNext }) {
                           }
                         >
                           <option value="" className="text-black"></option>
-                          {question.choicesPerBlank[partIndex].map((choice, cIdx) => (
-                            <option key={cIdx} value={choice} className="text-black">
-                              {choice}
-                            </option>
-                          ))}
+                          {question.choicesPerBlank[partIndex].map(
+                            (choice, cIdx) => (
+                              <option
+                                key={cIdx}
+                                value={choice}
+                                className="text-black"
+                              >
+                                {choice}
+                              </option>
+                            )
+                          )}
                         </select>
                       )}
                     </React.Fragment>
@@ -165,16 +174,16 @@ function Activity2({ onNext }) {
       </div>
 
       <button
-  onClick={handleNextPage}
-  className={`mt-8 bg-gradient-to-r from-blue-700 to-teal-500 text-white font-bold text-xl md:text-2xl px-6 py-4 rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 hover:rotate-1 ${
-    isAllFilled()
-      ? "bg-gradient-to-r from-teal-400 to-cyan-700 text-white hover:from-teal-500 hover:to-cyan-600"
-      : "bg-gradient-to-r from-gray-400 to-gray-300 text-gray-500 cursor-not-allowed"
-  }`}
-  disabled={!isAllFilled()}
->
-  {page === 1 ? <FaArrowRight size={24} /> : "අවසානය"}
-</button>
+        onClick={handleNextPage}
+        className={`mt-4 bg-gradient-to-r from-blue-700 to-teal-500 text-white font-bold text-xl md:text-2xl px-6 py-4 rounded-full shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 hover:rotate-1 ${
+          isAllFilled()
+            ? "bg-gradient-to-r from-teal-400 to-cyan-700 text-white hover:from-teal-500 hover:to-cyan-600"
+            : "bg-gradient-to-r from-gray-400 to-gray-300 text-gray-500 cursor-not-allowed"
+        }`}
+        disabled={!isAllFilled()}
+      >
+        {page === 1 ? <FaArrowRight size={24} /> : "අවසානය"}
+      </button>
     </div>
   );
 }
