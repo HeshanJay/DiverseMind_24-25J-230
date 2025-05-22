@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import sea_menu_back1 from "../../../assets/WM_Interventions_images/menu_images/sea_menu_back1.png";
 import sea1_icon from "../../../assets/WM_Interventions_images/menu_images/sea1_icon.png";
 import sea2_icon from "../../../assets/WM_Interventions_images/menu_images/sea2_icon.png";
 import sea3_icon from "../../../assets/WM_Interventions_images/menu_images/sea3_icon.png";
 import star1 from "../../../assets/WM_Interventions_images/menu_images/star1.png";
+import clickSound from "../../../assets/Audios/click_sound.mp3";
 
 function WM_Game1Menu() {
   const navigate = useNavigate();
+  const clickAudio = useRef(new Audio(clickSound));
+
+  const handleIconClick = (path) => {
+    // play click sound
+    clickAudio.current.currentTime = 0;
+    clickAudio.current.play().catch((e) => {
+      console.warn("Audio playback failed:", e);
+    });
+    // then navigate
+    navigate(path);
+  };
 
   return (
     <div
@@ -23,7 +35,7 @@ function WM_Game1Menu() {
       <img
         src={sea3_icon}
         alt="Sea Icon 3"
-        onClick={() => navigate("/working-memory-game1/Level3/*")}
+        onClick={() => handleIconClick("/working-memory-game1/Level3/*")}
         style={{
           position: "absolute",
           top: "180px",
@@ -39,7 +51,7 @@ function WM_Game1Menu() {
       <img
         src={sea2_icon}
         alt="Sea Icon 2"
-        onClick={() => navigate("/working-memory-game1/Level2/*")}
+        onClick={() => handleIconClick("/working-memory-game1/Level2/*")}
         style={{
           position: "absolute",
           top: "140px",
@@ -55,7 +67,7 @@ function WM_Game1Menu() {
       <img
         src={sea1_icon}
         alt="Sea Icon 1"
-        onClick={() => navigate("/working-memory-game1/Level1/*")}
+        onClick={() => handleIconClick("/working-memory-game1/Level1/*")}
         style={{
           position: "absolute",
           top: "180px",

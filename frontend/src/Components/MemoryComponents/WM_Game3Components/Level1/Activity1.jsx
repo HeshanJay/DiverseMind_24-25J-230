@@ -22,6 +22,9 @@ import penguin6 from "../../../../assets/WM_Interventions_images/L3_images/pengu
 import penguin8 from "../../../../assets/WM_Interventions_images/L3_images/penguin8.png";
 import penguin9 from "../../../../assets/WM_Interventions_images/L3_images/penguin9.png";
 import penguin10 from "../../../../assets/WM_Interventions_images/L3_images/penguin10.png";
+import correctSound from "../../../../assets/Audios/correct_answer.mp3";
+import wrongSound   from "../../../../assets/Audios/wrong_answer.mp3";
+
 
 function Activity1({ onNext, setTotalScore }) {
   const questions = [
@@ -59,6 +62,9 @@ function Activity1({ onNext, setTotalScore }) {
   const [score, setScore] = useState(0);
   const audioRef = useRef(null);
   const playCountRef = useRef(0);
+  const correctAudio = useRef(new Audio(correctSound));
+  const wrongAudio   = useRef(new Audio(wrongSound));
+
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -108,11 +114,21 @@ function Activity1({ onNext, setTotalScore }) {
       setAudioStarted(false);
     }
   };
+  
 
   const handleAnswerClick = (index) => {
     if (selectedAnswer !== null) return; 
     setSelectedAnswer(index);
     
+
+if (currentQuestion.answers[index].isCorrect) {
+  correctAudio.current.currentTime = 0;
+  correctAudio.current.play().catch(() => {});
+} else {
+  wrongAudio.current.currentTime = 0;
+  wrongAudio.current.play().catch(() => {});
+}
+
     if (currentQuestion.answers[index].isCorrect) {
       setScore(prev => prev + 4);
       setShowCelebration(true);

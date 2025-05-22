@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaArrowRight, FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+
 import L1_background from "../../../../assets/WM_Interventions_images/L1_images/L1_background.png";
 import woodenBoard from "../../../../assets/WM_Interventions_images/L2_images/wooden_board.png";
 import frame1 from "../../../../assets/WM_Interventions_images/L1_images/frame1.png";
 import dog from "../../../../assets/WM_Interventions_images/L2_images/dog.png";
+
+import timerSound   from "../../../../assets/Audios/timer_sound.mp3";
+import correctSound from "../../../../assets/Audios/correct_answer.mp3";
+import wrongSound   from "../../../../assets/Audios/wrong_answer.mp3";
 
 const questions = [
   {
@@ -14,12 +19,7 @@ const questions = [
   },
   {
     question: "නැට්ට නැති \nගෙඩිය",
-    options: [
-      " අල \nගෙඩිය",
-      "තිත්බටු \nගෙඩිය",
-      "ගෝවා \nගෙඩිය",
-      "බිත්තර \nගෙඩිය",
-    ],
+    options: [" අල \nගෙඩිය", "තිත්බටු \nගෙඩිය", "ගෝවා \nගෙඩිය", "බිත්තර \nගෙඩිය"],
     correctAnswer: 3,
   },
   {
@@ -41,15 +41,21 @@ const questions = [
 
 function Activity1({ onNext }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(10);
+  const [timeLeft, setTimeLeft]                     = useState(10);
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
-  const [score, setScore] = useState(0);
-  const [timeUp, setTimeUp] = useState(false);
-  const [showCelebration, setShowCelebration] = useState(false);
+  const [score, setScore]                           = useState(0);
+  const [timeUp, setTimeUp]                         = useState(false);
+  const [showCelebration, setShowCelebration]       = useState(false);
   const [incorrectAnswerIndex, setIncorrectAnswerIndex] = useState(null);
 
   const currentQuestion = questions[currentQuestionIndex];
 
+  // audio refs
+  const timerAudio   = useRef(new Audio(timerSound));
+  const correctAudio = useRef(new Audio(correctSound));
+  const wrongAudio   = useRef(new Audio(wrongSound));
+
+  // reset per question
   useEffect(() => {
     setTimeLeft(10);
     setSelectedAnswerIndex(null);
@@ -58,28 +64,46 @@ function Activity1({ onNext }) {
     setIncorrectAnswerIndex(null);
   }, [currentQuestionIndex]);
 
+  // countdown timer
   useEffect(() => {
     if (timeLeft <= 0) {
       setTimeUp(true);
       return;
     }
-
     const intervalId = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
     }, 1000);
-
     return () => clearInterval(intervalId);
+  }, [timeLeft]);
+
+  // play/pause timer sound based on timeLeft
+  useEffect(() => {
+    if (timeLeft > 0) {
+      timerAudio.current.loop = true;
+      timerAudio.current.currentTime = 0;
+      timerAudio.current.play().catch(() => {});
+    } else {
+      timerAudio.current.pause();
+      timerAudio.current.currentTime = 0;
+    }
   }, [timeLeft]);
 
   const handleSelectAnswer = (answerIdx) => {
     if (selectedAnswerIndex !== null || timeUp) return;
 
     setSelectedAnswerIndex(answerIdx);
+
     if (answerIdx === currentQuestion.correctAnswer) {
+      // correct sound
+      correctAudio.current.currentTime = 0;
+      correctAudio.current.play().catch(() => {});
       setScore((prev) => prev + 5);
       setShowCelebration(true);
       setTimeout(() => setShowCelebration(false), 3000);
     } else {
+      // wrong sound
+      wrongAudio.current.currentTime = 0;
+      wrongAudio.current.play().catch(() => {});
       setIncorrectAnswerIndex(answerIdx);
     }
   };
@@ -89,7 +113,6 @@ function Activity1({ onNext }) {
       alert("කරුණාකර පිළිතුරක් තෝරන්න!");
       return;
     }
-
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prev) => prev + 1);
     } else {
@@ -129,9 +152,11 @@ function Activity1({ onNext }) {
         </div>
       </div>
 
-      <div className="absolute bottom-[215px] left-1/2 transform -translate-x-1/2 text-xl text-white px-6 py-3 rounded-xl font-semibold
+      <div
+        className="absolute bottom-[215px] left-1/2 transform -translate-x-1/2 text-xl text-white px-6 py-3 rounded-xl font-semibold
                     bg-gradient-to-r from-[#8B4513] via-[#CD653F] to-[#8B4513]
-                    min-w-[200px] max-w-[300px] text-center shadow-lg">
+                    min-w-[200px] max-w-[300px] text-center shadow-lg"
+      >
         ⏳ කාලය: {timeLeft} තත්පර
       </div>
 
@@ -149,7 +174,9 @@ function Activity1({ onNext }) {
             <div
               key={i}
               className={`relative cursor-pointer transition-transform ${
-                (selectedAnswerIndex !== null || timeUp) ? "cursor-not-allowed" : ""
+                selectedAnswerIndex !== null || timeUp
+                  ? "cursor-not-allowed"
+                  : ""
               } ${isSelected ? "scale-110" : ""}`}
               onClick={() => handleSelectAnswer(i)}
             >
@@ -174,18 +201,19 @@ function Activity1({ onNext }) {
           );
         })}
       </div>
+
       <button
         onClick={handleNextQuestion}
         disabled={!timeUp && selectedAnswerIndex === null}
         className={`absolute bottom-6 right-6 rounded-full p-3 shadow-lg transition ${
-          (!timeUp && selectedAnswerIndex === null)
+          !timeUp && selectedAnswerIndex === null
             ? "bg-gradient-to-r from-[#2D1B0F] to-[#3C2A1A] text-gray-500 cursor-not-allowed"
             : "bg-gradient-to-r from-[#4B3621] to-[#6E4B3A] text-white hover:from-[#5C4530] hover:to-[#7E5D45]"
         }`}
       >
         <FaArrowRight size={24} />
       </button>
-
+      
       <style>
         {`
           @keyframes firework {

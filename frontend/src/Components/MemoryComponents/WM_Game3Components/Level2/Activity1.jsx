@@ -9,15 +9,16 @@ import bear from "../../../../assets/WM_Interventions_images/L3_images/bear1.png
 import playButton from "../../../../assets/WM_Interventions_images/L3_images/play_icon.png";
 import pauseIcon from "../../../../assets/WM_Interventions_images/L3_images/pause_icon.png";
 import snowball from "../../../../assets/WM_Interventions_images/L3_images/snowball.png";
-import mon1 from "../../../../assets/WM_Interventions_images/L3_images/mon1.png";  
-import mon2 from "../../../../assets/WM_Interventions_images/L3_images/mon2.png";  
-import mon3 from "../../../../assets/WM_Interventions_images/L3_images/mon3.png";  
-import mon4 from "../../../../assets/WM_Interventions_images/L3_images/mon4.png"; 
-import flowerImage from "../../../../assets/WM_Interventions_images/L3_images/flower.png"; 
-import sadMonImage  from "../../../../assets/WM_Interventions_images/L3_images/sad_mon.png"; 
+import mon1 from "../../../../assets/WM_Interventions_images/L3_images/mon1.png";
+import mon2 from "../../../../assets/WM_Interventions_images/L3_images/mon2.png";
+import mon3 from "../../../../assets/WM_Interventions_images/L3_images/mon3.png";
+import mon4 from "../../../../assets/WM_Interventions_images/L3_images/mon4.png";
+import flowerImage from "../../../../assets/WM_Interventions_images/L3_images/flower.png";
+import sadMonImage from "../../../../assets/WM_Interventions_images/L3_images/sad_mon.png";
 import snowman from "../../../../assets/WM_Interventions_images/L3_images/snowman.png";
 import duck2 from "../../../../assets/WM_Interventions_images/L3_images/duck2.png";
-
+import correctSound from "../../../../assets/Audios/correct_answer.mp3";
+import wrongSound from "../../../../assets/Audios/wrong_answer.mp3";
 
 function Activity1({ onNext }) {
   const questions = [
@@ -27,8 +28,8 @@ function Activity1({ onNext }) {
         { text: "ගුවන් යානය හරිත කෙත්වතු මත පහත් ලෙස පියාසර කළේය.", isCorrect: false },
         { text: "ගුවන් යානය වලාකුළුවලට ඉහළින් නොපෙනි නැඟී ගියේය.", isCorrect: true },
         { text: "අඳුරු වලාකුළු පිටුපස ගුවන්<br>යානය අතුරුදහන් විය.", isCorrect: false },
-        { text: "ගුවන් යානය<br>අහස හරහා සුමටව ලිස්සා ගියේය.", isCorrect: false }
-      ]
+        { text: "ගුවන් යානය<br>අහස හරහා සුමටව ලිස්සා ගියේය.", isCorrect: false },
+      ],
     },
     {
       audio: Q4_audio,
@@ -36,8 +37,8 @@ function Activity1({ onNext }) {
         { text: "බේකරිය උණුසුම් චොකලට් සහ වැනිලා සුවඳින් පිරී තිබුණි.", isCorrect: false },
         { text: "බේකරිය අසලින් නැවුම් පාන් සහ කුරුඳු සුවඳක් හමයි.", isCorrect: true },
         { text: "බේකරිය චොක්ලට් සහ නැවුම්ව බේක් කරන ලද කුකීස් සුවඳයි.", isCorrect: false },
-        { text: "බේකරියේ තිබුණේ බටර් සහ<br>සීනිවල මිහිරි සුවඳයි.", isCorrect: false }
-      ]
+        { text: "බේකරියේ තිබුණේ බටර් සහ<br>සීනිවල මිහිරි සුවඳයි.", isCorrect: false },
+      ],
     },
     {
       audio: Q7_audio,
@@ -45,8 +46,8 @@ function Activity1({ onNext }) {
         { text: "හකුරු ගල්පරවල ගැටෙන විට රළ ඝෝෂාකාරී විය.", isCorrect: false },
         { text: "නිස්කලංක වෙරළ මත රළ සුමටව පෙරළී ගියේය.", isCorrect: false },
         { text: "ගල්පර සහිත වෙරළට රළ පහර වැදී ඇත.", isCorrect: true },
-        { text: "වැලි සහිත වෙරළ මත රළ සෙමෙන් විසිරී ගියේය.", isCorrect: false }
-      ]
+        { text: "වැලි සහිත වෙරළ මත රළ සෙමෙන් විසිරී ගියේය.", isCorrect: false },
+      ],
     },
     {
       audio: Q5_audio,
@@ -54,9 +55,9 @@ function Activity1({ onNext }) {
         { text: "රන්වන් හිරු සෙමෙන් ක්ෂිතිජයෙන් පහළට බැස එමින්,රෝස සහ තැඹිලි වර්ණවලින් අහස පින්තාරු කළේය.", isCorrect: true },
         { text: "රන්වන් හිරු සෙමෙන් කඳු පිටුපසින්<br>බැස, රෝස ,කහ,කොළ පාට<br>සහ තැඹිලි වර්ණවලින් අහස<br>පින්තාරු කළේය.", isCorrect: false },
         { text: "රන්වන් හිරු සෙමෙන් ක්ෂිතිජයෙන් පහළට බැස, රෝස<br>සහ රතු වර්ණවලින්<br>අහස පින්තාරු<br>කළේය.", isCorrect: false },
-        { text: "රන් හිරු<br>කඳුකරයෙන් පිටතට වියැකී ගියේ රතු<br>සහ රන්වන්<br>ඉරි වලින්<br>අහස<br>විහිදුවමිනි.", isCorrect: false }
-      ]
-    }
+        { text: "රන් හිරු<br>කඳුකරයෙන් පිටතට වියැකී ගියේ රතු<br>සහ රන්වන්<br>ඉරි වලින්<br>අහස<br>විහිදුවමිනි.", isCorrect: false },
+      ],
+    },
   ];
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -64,18 +65,21 @@ function Activity1({ onNext }) {
   const [audioStarted, setAudioStarted] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [score, setScore] = useState(0);  
+  const [score, setScore] = useState(0);
+
   const audioRef = useRef(null);
   const playCountRef = useRef(0);
+  const correctAudio = useRef(new Audio(correctSound));
+  const wrongAudio = useRef(new Audio(wrongSound));
 
   const currentQuestion = questions[currentQuestionIndex];
 
   const handleAudioEnded = () => {
     if (playCountRef.current < 1) {
       playCountRef.current += 1;
-      audioRef.current.play(); 
+      audioRef.current.play();
     } else {
-      setShowAnswers(true); 
+      setShowAnswers(true);
     }
   };
 
@@ -85,42 +89,46 @@ function Activity1({ onNext }) {
     setSelectedAnswer(null);
     setShowCelebration(false);
     playCountRef.current = 0;
-
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.src = currentQuestion.audio;
       audioRef.current.load();
-      audioRef.current.play(); 
+      audioRef.current.play();
       setAudioStarted(true);
     }
-  }, [currentQuestionIndex, currentQuestion.audio]);
+  }, [currentQuestionIndex]);
 
   const handleAnswerClick = (index) => {
+    // feedback sound
+    if (currentQuestion.answers[index].isCorrect) {
+      correctAudio.current.currentTime = 0;
+      correctAudio.current.play().catch(() => {});
+    } else {
+      wrongAudio.current.currentTime = 0;
+      wrongAudio.current.play().catch(() => {});
+    }
+
     setSelectedAnswer(index);
     if (currentQuestion.answers[index].isCorrect) {
-      setScore(prev => prev + 5);  
+      setScore((prev) => prev + 5);
       setShowCelebration(true);
-      setTimeout(() => {
-        setShowCelebration(false);
-      }, 3000);
+      setTimeout(() => setShowCelebration(false), 3000);
     }
   };
 
   const moveToNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedAnswer(null);
+      setCurrentQuestionIndex((i) => i + 1);
     } else {
-      onNext(score);  
+      onNext(score);
     }
   };
 
-  
   const monsterSizes = [
-    { width: "120px", height: "170px" }, 
-    { width: "140px", height: "140px" }, 
-    { width: "130px", height: "130px" }, 
-    { width: "150px", height: "150px" }, 
+    { width: "120px", height: "170px" },
+    { width: "140px", height: "140px" },
+    { width: "130px", height: "130px" },
+    { width: "150px", height: "150px" },
   ];
 
   return (
