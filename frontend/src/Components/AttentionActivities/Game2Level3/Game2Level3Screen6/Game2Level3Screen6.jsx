@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BackImage from "../../../../assets/Attention/light.png";
 import { FaRedo, FaArrowRight, FaEllipsisH } from "react-icons/fa";
+import timeoutSound from "../../../../assets/Audios/win.mp3";
 
 const Game2Level3Screen6 = ({ userAnswers, onGameComplete }) => {
   const totalQuestions = userAnswers.length;
   const correctCount = userAnswers.filter((ans) => ans === true).length;
   const stars = correctCount; // 1 star per correct answer
 
+  // Play the timeout sound when the component mounts
+  useEffect(() => {
+    const audio = new Audio(timeoutSound);
+    audio.volume = 0.7;
+    audio.play().catch(console.error); // Handle autoplay restrictions
+  }, []);
+
   const handleRestart = () => {
-    // Redirect to Game2Level3Screen1 on restart
     if (onGameComplete) {
       onGameComplete();
     } else {
@@ -24,7 +31,7 @@ const Game2Level3Screen6 = ({ userAnswers, onGameComplete }) => {
       {/* Dark overlay to enhance contrast */}
       <div className="absolute inset-0 bg-black bg-opacity-40"></div>
 
-      {/* Main container with a pretty border */}
+      {/* Main container */}
       <div
         className="relative z-10 bg-black bg-opacity-90 p-8 md:p-10 text-center text-white 
                    border-8 border-yellow-400 rounded-3xl shadow-2xl max-w-xl w-full mx-4"
@@ -58,7 +65,6 @@ const Game2Level3Screen6 = ({ userAnswers, onGameComplete }) => {
 
         {/* Action Buttons */}
         <div className="flex gap-6 mt-8 justify-center">
-          {/* Restart Button */}
           <button
             onClick={handleRestart}
             className="w-16 h-16 flex items-center justify-center bg-blue-500 rounded-full text-white hover:bg-blue-600 transition duration-200"
@@ -67,7 +73,6 @@ const Game2Level3Screen6 = ({ userAnswers, onGameComplete }) => {
             <FaRedo size={28} />
           </button>
 
-          {/* Go to Attention Game 2 Main Menu */}
           <button
             onClick={() => (window.location.href = "/attentiongame2")}
             className="w-16 h-16 flex items-center justify-center bg-green-500 rounded-full text-white hover:bg-green-600 transition duration-200"
@@ -76,7 +81,6 @@ const Game2Level3Screen6 = ({ userAnswers, onGameComplete }) => {
             <FaArrowRight size={28} />
           </button>
 
-          {/* Next Button */}
           <button
             onClick={() => (window.location.href = "/attentionInterventions")}
             className="w-16 h-16 flex items-center justify-center bg-purple-500 rounded-full text-white hover:bg-purple-600 transition duration-200"

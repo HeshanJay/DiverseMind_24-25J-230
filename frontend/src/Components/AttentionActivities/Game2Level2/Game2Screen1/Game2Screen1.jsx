@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Level2_1 from "../../../../assets/background_images/AttentionGames/Game2/Level2_1.png";
 import Level2_1_1 from "../../../../assets/background_images/AttentionGames/Game2/Level2_1.1.png";
 import BackImage from "../../../../assets/background_images/AttentionGames/Game2/backimg1_game2.png";
-import IntroImage from "../../../../assets/Attention/intro4.png"; // New import for intro background image
+import IntroImage from "../../../../assets/Attention/intro4.png";
+import clickSound from "../../../../assets/Audios/click_sound.mp3";
+import selectSound from "../../../../assets/Audios/select.mp3";
+import Clock from "../../../../assets/Audios/clock.mp3";
+import timeoutSound from "../../../../assets/Audios/timeout.mp3";
+
 import { IoMdRefresh } from "react-icons/io";
 import { GiGamepad } from "react-icons/gi";
 import { FaArrowRight } from "react-icons/fa";
 
-// Replacing the patchy dashed outline with a solid line border
 const solidBorderStyle = {
   border: "3px solid orange",
 };
@@ -16,25 +20,67 @@ const Game2Screen1 = ({ onTileSelect, onTimeout }) => {
   const [selectedTile, setSelectedTile] = useState(null);
   const [timeLeft, setTimeLeft] = useState(10);
   const [progress, setProgress] = useState(100);
-  const [gameStarted, setGameStarted] = useState(false); // New state for game start
-  const [gameEnded, setGameEnded] = useState(false); // New state for game end
+  const [gameStarted, setGameStarted] = useState(false);
+  const [gameEnded, setGameEnded] = useState(false);
+
+  const clockAudioRef = useRef(null);
+
+  const playClickSound = () => {
+    const audio = new Audio(clickSound);
+    audio.play().catch(console.error);
+  };
+
+  const playSelectSound = () => {
+    const audio = new Audio(selectSound);
+    audio.play().catch(console.error);
+  };
+
+  const playTimeoutSound = () => {
+    const audio = new Audio(timeoutSound);
+    audio.volume = 0.7;
+    audio.play().catch(console.error);
+  };
+
+  const playClockAudio = () => {
+    if (clockAudioRef.current) {
+      clockAudioRef.current.volume = 0.3;
+      clockAudioRef.current.loop = true;
+      clockAudioRef.current.play().catch(console.error);
+    }
+  };
+
+  const stopClockAudio = () => {
+    if (clockAudioRef.current) {
+      clockAudioRef.current.pause();
+      clockAudioRef.current.currentTime = 0;
+    }
+  };
 
   useEffect(() => {
     if (!gameStarted) return;
+
+    playClockAudio(); // start ticking
 
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => {
         if (prevTime <= 1) {
           clearInterval(timer);
-          onTimeout();
-          setGameEnded(true);
+          stopClockAudio(); // stop ticking
+          setTimeout(() => {
+            playTimeoutSound();
+            onTimeout();
+            setGameEnded(true);
+          }, 200);
           return 0;
         }
         return prevTime - 1;
       });
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      stopClockAudio(); // cleanup ticking sound
+    };
   }, [onTimeout, gameStarted]);
 
   useEffect(() => {
@@ -52,12 +98,15 @@ const Game2Screen1 = ({ onTileSelect, onTimeout }) => {
 
   const handleTileClick = (id) => {
     if (selectedTile !== id) {
+      playSelectSound();
       setSelectedTile(id);
       onTileSelect(id);
+      playClickSound();
     }
   };
 
   const handleStartGame = () => {
+    playClickSound();
     setGameStarted(true);
   };
 
@@ -68,8 +117,6 @@ const Game2Screen1 = ({ onTileSelect, onTimeout }) => {
     setTimeLeft(10);
   };
 
-  // Conditionally set the container background:
-  // Use the intro background if the game hasn't started yet (and game hasn't ended), otherwise use the main game background.
   const containerBackground =
     !gameStarted && !gameEnded ? IntroImage : BackImage;
 
@@ -78,7 +125,11 @@ const Game2Screen1 = ({ onTileSelect, onTimeout }) => {
       className="relative w-screen h-screen bg-cover bg-center flex items-center justify-center"
       style={{ backgroundImage: `url(${containerBackground})` }}
     >
-      {/* Intro Overlay before the game starts */}
+      {/* Preload ticking sound */}
+      <audio ref={clockAudioRef} preload="auto">
+        <source src={Clock} type="audio/mpeg" />
+      </audio>
+
       {!gameStarted && !gameEnded && (
         <div className="absolute inset-0 z-30 flex items-center justify-center bg-black bg-opacity-50">
           <div
@@ -89,7 +140,7 @@ const Game2Screen1 = ({ onTileSelect, onTimeout }) => {
               දෙවැනි අදිරයෙන් විනෝද වෙමු!
             </h1>
             <p className="text-xl text-white mb-6 max-w-lg mx-auto">
-              මෙම ක්‍රිඩාවේ ඔබ කළ යුත්තේ නොගලපෙන රූපය සොයාගැනීම. මෙහි කාලය ගැන
+              මෙම ක්‍රිඩාවේ ඔබ කළ යුත්තේ නොගලපෙන රූපය සොයාගැනීම. මෙහි කාලය ගැන
               සැලකිලිමත් වීම අනිවාර්යයි. ඔබ සුදානම් ද?
             </p>
             <button
@@ -102,11 +153,9 @@ const Game2Screen1 = ({ onTileSelect, onTimeout }) => {
         </div>
       )}
 
-      {/* Game content when the game starts */}
       {gameStarted && !gameEnded && (
         <>
           <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-          {/* Timer */}
           <div className="absolute top-5 right-5 flex items-center justify-center">
             <svg width="80" height="80" viewBox="0 0 100 100">
               <circle
@@ -143,7 +192,6 @@ const Game2Screen1 = ({ onTileSelect, onTimeout }) => {
             </svg>
           </div>
 
-          {/* Tiles */}
           <div className="relative grid grid-cols-3 gap-6">
             {tiles.map((tile) => (
               <button
@@ -166,7 +214,6 @@ const Game2Screen1 = ({ onTileSelect, onTimeout }) => {
         </>
       )}
 
-      {/* Show restart and other buttons once the game is ended */}
       {gameEnded && (
         <div className="absolute bottom-5 flex gap-6 z-40">
           <button

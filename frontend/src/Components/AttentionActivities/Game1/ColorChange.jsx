@@ -2,9 +2,14 @@ import React, { useState, useEffect } from "react";
 import backgroundImage from "../../../assets/background_images/bb3.jpg";
 import popupboard from "../../../assets/Attention/note2.png";
 import zebraImage from "../../../assets/Attention/zebra.png";
-import elephantImage from "../../../assets/Attention/lion.png"; // lion image
-import b2Image from "../../../assets/Attention/b7.png"; // new image
-import feebackImage from "../../../assets/Attention/t4.png"; // <-- the t4 image
+import elephantImage from "../../../assets/Attention/lion.png";
+import b2Image from "../../../assets/Attention/b7.png";
+import feebackImage from "../../../assets/Attention/t4.png";
+import clickSound from "../../../assets/Audios/click_sound.mp3";
+import correctSound from "../../../assets/Audios/correct_answer.mp3";
+import wrongSound from "../../../assets/Audios/wrong_answer.mp3";
+import timeoutSound from "../../../assets/Audios/timeout.mp3";
+import gameoverSound from "../../../assets/Audios/celebrate.mp3";
 import { FaRedo, FaArrowRight, FaEllipsisH } from "react-icons/fa";
 
 const INITIAL_TIMER = 40;
@@ -21,6 +26,36 @@ const ColorChange = () => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+
+  // Function to play the click sound (only for start button)
+  const playClickSound = () => {
+    const audio = new Audio(clickSound);
+    audio.play();
+  };
+
+  // Function to play correct answer sound
+  const playCorrectSound = () => {
+    const audio = new Audio(correctSound);
+    audio.play();
+  };
+
+  // Function to play wrong answer sound
+  const playWrongSound = () => {
+    const audio = new Audio(wrongSound);
+    audio.play();
+  };
+
+  // Function to play timeout sound
+  const playTimeoutSound = () => {
+    const audio = new Audio(timeoutSound);
+    audio.play();
+  };
+
+  // Function to play game over sound
+  const playGameOverSound = () => {
+    const audio = new Audio(gameoverSound);
+    audio.play();
+  };
 
   // Generate a random RGB color
   function generateRandomColor() {
@@ -52,6 +87,7 @@ const ColorChange = () => {
       setTimer(INITIAL_TIMER);
       setRound((prevRound) => prevRound + 1);
     } else {
+      playGameOverSound(); // Play game over sound when game ends
       setGameOver(true);
     }
   };
@@ -59,12 +95,15 @@ const ColorChange = () => {
   // Handle user's guess
   const handleGuess = (guess) => {
     if (gameOver) return;
+
     if (guess === rgbColor) {
+      playCorrectSound(); // Play correct answer sound
       setFeedback("✔ නිවැරදි!");
       setFeedbackClass("correct");
       setScore((prevScore) => prevScore + SCORE_INCREMENT);
       resetRound();
     } else {
+      playWrongSound(); // Play wrong answer sound
       setFeedback("✗ වැරදි!");
       setFeedbackClass("wrong");
     }
@@ -86,6 +125,7 @@ const ColorChange = () => {
   useEffect(() => {
     if (!gameStarted) return;
     if (timer <= 0 && !gameOver) {
+      playTimeoutSound(); // Play timeout sound
       setFeedback("✗ කාලය අවසන්!");
       setFeedbackClass("timeout");
       resetRound();
@@ -105,8 +145,9 @@ const ColorChange = () => {
     setGameOver(false);
   };
 
-  // Start game
+  // Start game with click sound
   const handleStartGame = () => {
+    playClickSound(); // Play click sound ONLY when start button is clicked
     setGameStarted(true);
   };
 
@@ -219,7 +260,7 @@ const ColorChange = () => {
         <div
           style={{
             position: "absolute",
-            bottom: "200px", // Adjust to fit your design
+            bottom: "200px",
             right: "20px",
             width: "250px",
             zIndex: 70,
@@ -236,7 +277,7 @@ const ColorChange = () => {
           <div
             style={{
               position: "absolute",
-              bottom: "70px", // how far from bottom of image
+              bottom: "70px",
               left: "50%",
               transform: "translateX(-50%)",
               color: "black",
@@ -309,8 +350,8 @@ const ColorChange = () => {
             className="relative bg-center bg-no-repeat bg-contain text-center"
             style={{
               backgroundImage: `url(${feebackImage})`,
-              width: "490px", // Adjusted smaller width
-              height: "490px", // Adjusted smaller height
+              width: "490px",
+              height: "490px",
             }}
           >
             {/* 
@@ -357,9 +398,8 @@ const ColorChange = () => {
   );
 };
 
-/* -------------------------------- */
 /*         Utility Functions        */
-/* -------------------------------- */
+
 function generateRandomColor() {
   const r = Math.floor(Math.random() * 256);
   const g = Math.floor(Math.random() * 256);
