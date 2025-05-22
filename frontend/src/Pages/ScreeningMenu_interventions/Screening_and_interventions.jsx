@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import screen_In_back from "../../assets/background_images/screen_In_back.png";
 import tortoise from "../../assets/background_images/tortoise.png";
 import tortoise2 from "../../assets/background_images/tortoise2.png";
@@ -56,13 +57,13 @@ function ScreeningandInterventions() {
       </div>
 
       {/* Page Title */}
-      <div className="absolute top-4 left-[674px] transform -translate-x-1/2 z-50">
-        <div className="bg-gradient-to-r from-purple-500 to-blue-700 text-white text-4xl font-bold text-center p-4 rounded-2xl border-4 border-white shadow-lg w-[350px] h-[75px]">
+      <div className="absolute top-2 left-1/2 transform -translate-x-1/2 z-50">
+        <div className="bg-gradient-to-r from-purple-500 to-blue-700 text-white text-2xl font-bold text-center p-4 rounded-2xl border-4 border-white shadow-lg w-[350px] h-[75px]">
           කාණ්ඩය තෝරන්න
         </div>
       </div>
 
-      {/* Left Side - Screening Container */}
+      {/* Screening Section */}
       <div className="absolute left-[400px]" style={{ top: "250px" }}>
         <div className="relative">
           {selectedOption === "screening" ? (
@@ -79,11 +80,11 @@ function ScreeningandInterventions() {
                 alt="Greeting"
                 className="w-[650px] h-[250px] transform translate-x-[-80px] translate-y-[-100px]"
               />
-              <div className="absolute top-[50px] left-[20px] transform -translate-x-1/2 -translate-y-1 text-center">
-                <p className="text-2xl font-bold text-black mb-[-1px]">
+              <div className="absolute top-[50px] left-[20px] text-center">
+                <p className="text-1xl font-bold text-black mt-2">
                   සුභ පැතුම්.
                 </p>
-                <p className="text-2xl font-semibold text-black">
+                <p className="text-1xl font-semibold text-black mt-1">
                   ඔබට පුළුවන්.
                 </p>
               </div>
@@ -107,7 +108,7 @@ function ScreeningandInterventions() {
                       "linear-gradient(to right, rgba(189, 120, 276, 0.7), rgba(16, 185, 129, 0.7))",
                   }}
                 >
-                  <h2 className="text-4xl text-center font-bold text-white mb-4">
+                  <h2 className="text-3xl text-center font-bold text-white mb-4">
                     ඇගයීම
                   </h2>
                   <div className="overflow-hidden rounded-xl h-30">
@@ -121,19 +122,16 @@ function ScreeningandInterventions() {
               </div>
               <img
                 src={tortoise}
-                alt="Right Tortoise"
+                alt="Tortoise"
                 className="w-[250px] h-[140px] relative"
-                style={{
-                  transform: "translateY(120px) translateX(-130px)",
-                  marginRight: "20px",
-                }}
+                style={{ transform: "translateY(120px) translateX(-130px)" }}
               />
             </>
           )}
         </div>
       </div>
 
-      {/* Right Side - Interventions Container */}
+      {/* Interventions Section */}
       <div className="absolute right-[430px]" style={{ top: "250px" }}>
         <div className="relative">
           {selectedOption === "intervention" ? (
@@ -150,11 +148,11 @@ function ScreeningandInterventions() {
                 alt="Greeting"
                 className="w-[650px] h-[250px] transform translate-x-[-280px] translate-y-[-70px]"
               />
-              <div className="absolute top-[80px] left-[-180px] transform -translate-x-1/2 -translate-y-1 text-center">
-                <p className="text-2xl font-bold text-black mb-[-1px]">
+              <div className="absolute top-[80px] left-[-180px] text-center">
+                <p className="text-1xl font-bold text-black mt-2">
                   සුභ පැතුම්,
                 </p>
-                <p className="text-2xl font-semibold text-black">
+                <p className="text-1xl font-semibold text-black mt-1">
                   ඔබට පුළුවන්.
                 </p>
               </div>
@@ -178,7 +176,7 @@ function ScreeningandInterventions() {
                       "linear-gradient(to right, rgba(59, 100, 246, 0.7), rgba(66, 195, 149, 0.8))",
                   }}
                 >
-                  <h2 className="text-4xl text-center font-bold text-white mb-4">
+                  <h2 className="text-3xl text-center font-bold text-white mb-4">
                     මඟ හුරුව
                   </h2>
                   <div className="overflow-hidden rounded-xl h-30">
@@ -192,11 +190,9 @@ function ScreeningandInterventions() {
               </div>
               <img
                 src={tortoise2}
-                alt="Left Tortoise"
+                alt="Tortoise2"
                 className="w-[250px] h-[140px] relative"
-                style={{
-                  transform: "translateY(120px) translateX(210px)",
-                }}
+                style={{ transform: "translateY(120px) translateX(210px)" }}
               />
             </>
           )}
@@ -204,22 +200,21 @@ function ScreeningandInterventions() {
       </div>
 
       {/* Animated Bunny */}
-      <div className="absolute bottom-[10px] left-[650px] -translate-x-1/2 z-50">
+      <div className="absolute bottom-[10px] left-1/2 -translate-x-1/2 z-50">
         <img src={RB2} alt="Cheering Bunny" className="w-[500px] h-[300px]" />
       </div>
 
-      <style>
-        {`
-          @keyframes float {
-            0% { transform: translateY(0) translateX(0); }
-            70% { transform: translateY(-20px) translateX(20px); }
-            100% { transform: translateY(0) translateX(0); }
-          }
-          .animate-float {
-            animation: float 5s ease-in-out infinite;
-          }
-        `}
-      </style>
+      <style>{`
+        @keyframes float {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+          100% { transform: translateY(0); }
+        }
+
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }
