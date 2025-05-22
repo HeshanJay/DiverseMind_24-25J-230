@@ -6,6 +6,27 @@ import MontyMole from "../../../assets/background_images/AttentionGames/Game3/mo
 import Pipe from "../../../assets/background_images/AttentionGames/Game3/pot1.png";
 import PiranhaPlant from "../../../assets/background_images/AttentionGames/Game3/plant1.png";
 import Soil from "../../../assets/background_images/AttentionGames/Game3/grass5.jpg";
+import clickSound from "../../../assets/Audios/click_sound.mp3";
+import punch from "../../../assets/Audios/punch.mp3";
+import gameover from "../../../assets/Audios/gameover.mp3";
+
+// Function to play the click sound
+const playClickSound = () => {
+  const audio = new Audio(clickSound);
+  audio.play();
+};
+
+// Function to play the punch sound
+const playPunchSound = () => {
+  const audio = new Audio(punch);
+  audio.play();
+};
+
+// Function to play the game over sound
+const playGameOverSound = () => {
+  const audio = new Audio(gameover);
+  audio.play();
+};
 
 const Display2 = () => {
   const [currMole, setCurrMole] = useState(null);
@@ -48,6 +69,13 @@ const Display2 = () => {
       setBestScore(parseInt(storedBestScore, 10));
     }
   }, []);
+
+  // Play game over sound when game ends
+  useEffect(() => {
+    if (gameOver) {
+      playGameOverSound();
+    }
+  }, [gameOver]);
 
   // Helper function to generate a random tile index (0-15 for a 4x4 grid)
   const getRandomTile = () => Math.floor(Math.random() * 16);
@@ -113,14 +141,17 @@ const Display2 = () => {
     if (gameOver) return;
 
     if (index === currMole) {
+      playPunchSound(); // Play punch sound when hitting mole
       setScore((prev) => prev + 10);
     } else if (index === currPlant1 || index === currPlant2) {
+      playPunchSound(); // Play punch sound when hitting plant
       setGameOver(true);
     }
   };
 
   // Handler for starting the game
   const handleStartGame = () => {
+    playClickSound(); // Play sound when starting the game
     setGameStarted(true);
   };
 
@@ -203,9 +234,9 @@ const Display2 = () => {
             දෙවැනි අදිරයෙන් විනෝද වෙමු!
           </h1>
           <p className="text-xl text-white mb-6 max-w-lg">
-            ආයුබෝවන් පුංච් වීරයා, මෙහි ඇති පෝච්චි වලින් මොල් නමැති සත්වයා
-            සහ කෝපයට පත් පැළෑටියක් මතු වේ. පැළෑටියට තට්ටු නොකර හැකි ඉක්මනින්
-            සත්වයාට තට්ටු කරන්න. ඔබ සූදානම ද විනෝදවන්න!
+            ආයුබෝවන් පුංච් වීරයා, මෙහි ඇති පෝච්චි වලින් මොල් නමැති සත්වයා සහ
+            කෝපයට පත් පැළෑටියක් මතු වේ. පැළෑටියට තට්ටු නොකර හැකි ඉක්මනින්
+            සත්වයාට තට්ටු කරන්න. ඔබ සූදානම ද විනෝදවන්න!
           </p>
           <button
             onClick={handleStartGame}
