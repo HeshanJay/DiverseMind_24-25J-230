@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BackImage from "../../../../assets/Attention/light.png";
 import { FaRedo, FaArrowRight, FaEllipsisH } from "react-icons/fa";
+import timeoutSound from "../../../../assets/Audios/win.mp3";
 
 const Game2Screen6 = ({ userAnswers, onGameComplete }) => {
   const totalQuestions = userAnswers.length;
   const correctCount = userAnswers.filter((ans) => ans === true).length;
   const stars = correctCount; // one star per correct answer
 
+  // Play the timeout sound when the component loads
+  useEffect(() => {
+    const audio = new Audio(timeoutSound);
+    audio.volume = 0.7;
+    audio.play().catch(console.error); // Handle autoplay restrictions
+  }, []);
+
   const handleRestart = () => {
-    // Reset the game state in parent component (which should reset current screen to 1)
     if (onGameComplete) {
       onGameComplete();
     } else {
-      // Fallback to direct navigation if no state management function is provided
-      window.location.href = "/game2screen1"; // Redirect to Game2Screen1
+      window.location.href = "/game2screen1";
     }
   };
 

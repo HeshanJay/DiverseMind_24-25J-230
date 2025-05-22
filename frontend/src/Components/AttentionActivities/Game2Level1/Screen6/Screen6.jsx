@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BackImage from "../../../../assets/Attention/light.png";
 import { FaRedo, FaArrowRight, FaEllipsisH } from "react-icons/fa";
+import timeoutSound from "../../../../assets/Audios/win.mp3";
 
 const Screen6 = ({ userAnswers, onGameComplete }) => {
   const totalQuestions = userAnswers.length;
   const correctCount = userAnswers.filter((ans) => ans === true).length;
   const stars = correctCount; // 1 star per correct answer
+
+  // Play sound on component mount
+  useEffect(() => {
+    const audio = new Audio(timeoutSound);
+    audio.volume = 0.7;
+    audio.play().catch(console.error);
+  }, []);
 
   const handleRestart = () => {
     if (onGameComplete) {
