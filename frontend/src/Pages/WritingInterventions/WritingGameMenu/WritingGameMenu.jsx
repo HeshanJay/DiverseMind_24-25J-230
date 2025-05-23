@@ -138,7 +138,7 @@ const WritingGameMenu = () => {
         </div>
         {/* card flip Game Card */}
         <div
-          onClick={() => navigate("/writing-game2-menu")}
+          onClick={() => navigate("/writing-game2-ins")}
           className="cursor-pointer bg-white/60 backdrop-blur-sm rounded-2xl shadow-2xl p-8 transform hover:scale-105 transition duration-300 flex flex-col items-center justify-center relative w-90 h-97"
         >
           <img

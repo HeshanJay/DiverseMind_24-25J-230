@@ -1,8 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import backgroundImage from "../../../../assets/writing_interventions/background/back11.webp";
 import chestimage from "../../../../assets/writing_interventions/cards/chest.png";
 import popupimage from "../../../../assets/writing_interventions/popups/popupimage.webp";
 import popupimage2 from "../../../../assets/writing_interventions/popups/popupimage2.webp";
+
+import { useNavigate } from "react-router-dom"; // ← added
+import { FaRedo, FaArrowRight, FaEllipsisH } from "react-icons/fa";
+
+/* 🔊 NEW  sound imports */
+import flipSound from "../../../../assets/Audios/v_flip.mp3";
+import correctSound from "../../../../assets/Audios/v_correct.wav";
+import wrongSound from "../../../../assets/Audios/v_wrong.wav";
+import timeSound from "../../../../assets/Audios/v_time.wav";
+import finishSound from "../../../../assets/Audios/v_finish.wav";
+import clickSound from "../../../../assets/Audios/click_sound.mp3";
 
 const cardStyles = `
   .card {
@@ -148,6 +159,33 @@ const vowels = [
 ];
 
 function Activity1({ onNext }) {
+  /* 🔊 NEW refs & helper */
+  const flipRef = useRef(null);
+  const correctRef = useRef(null);
+  const wrongRef = useRef(null);
+  const timeRef = useRef(null);
+  const finishRef = useRef(null);
+  const clickRef = useRef(null);
+
+  const navigate = useNavigate();
+
+  const play = (r) => {
+    if (r.current) {
+      r.current.currentTime = 0;
+      r.current.play();
+    }
+  };
+
+  useEffect(() => {
+    flipRef.current = new Audio(flipSound);
+    correctRef.current = new Audio(correctSound);
+    wrongRef.current = new Audio(wrongSound);
+    timeRef.current = new Audio(timeSound);
+    finishRef.current = new Audio(finishSound);
+    clickRef.current = new Audio(clickSound);
+  }, []);
+  /* ---------------------------------------- */
+
   const shuffle = (array) => {
     let currentIndex = array.length,
       randomIndex;
@@ -181,16 +219,20 @@ function Activity1({ onNext }) {
   }, [gameOver, timeLeft]);
 
   useEffect(() => {
-    // End the game when time is up or when maximum score (40) is reached.
     if (timeLeft === 0 || score === 40) {
       setGameOver(true);
       setGameWon(score === 40);
+      /* 🔊 NEW end-of-game sounds */
+      score === 40 ? play(finishRef) : play(timeRef);
     }
   }, [timeLeft, score]);
 
   const handleCardClick = (id) => {
     if (gameOver || flippedCards.length === 2 || matchedPairs.includes(id))
       return;
+
+    /* 🔊 flip sound */
+    play(flipRef);
 
     const newFlipped = [...flippedCards, id];
     setFlippedCards(newFlipped);
@@ -201,6 +243,9 @@ function Activity1({ onNext }) {
       const secondCard = cards.find((c) => c.id === secondId);
 
       if (firstCard.type !== secondCard.type) {
+        /* 🔊 correct */
+        play(correctRef);
+
         const consonant =
           firstCard.type === "consonant" ? firstCard : secondCard;
         const vowel = firstCard.type === "vowel" ? firstCard : secondCard;
@@ -214,18 +259,23 @@ function Activity1({ onNext }) {
 
         setTimeout(() => {
           setMatchedPairs((prev) => [...prev, firstId, secondId]);
-          // Increase score by 5 for a correct match
           setScore((prev) => prev + 5);
           setFlippedCards([]);
           setShowMatch(null);
         }, 2000);
       } else {
+        /* 🔊 wrong */
+        play(wrongRef);
+
         setTimeout(() => setFlippedCards([]), 1000);
       }
     }
   };
 
   const resetGame = () => {
+    /* 🔊 click */
+    play(clickRef);
+
     setCards(initializeCards());
     setFlippedCards([]);
     setMatchedPairs([]);
@@ -241,12 +291,6 @@ function Activity1({ onNext }) {
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
-  // Star mapping:
-  // 40 points -> 4 stars
-  // 35 points -> 3 stars
-  // 30 points -> 2 stars
-  // 20 points -> 1 star
-  // Otherwise, 0 stars
   const starRating =
     score === 40
       ? 4
@@ -294,10 +338,7 @@ function Activity1({ onNext }) {
 
         <div
           className="grid grid-cols-4 gap-4"
-          style={{
-            marginTop: "-40px",
-            marginBottom: "40px",
-          }}
+          style={{ marginTop: "-40px", marginBottom: "40px" }}
         >
           {cards.map((card) => (
             <button
@@ -328,9 +369,7 @@ function Activity1({ onNext }) {
         {showMatch && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="celebration-animation">
-              {/* Main burst */}
               <div className="celebration-star">🎉</div>
-              {/* Floating emojis */}
               {[...Array(12)].map((_, i) => (
                 <div
                   key={i}
@@ -382,23 +421,52 @@ function Activity1({ onNext }) {
               >
                 අවසාන ලකුණු: {score}
               </p>
-              <div className="flex gap-4 justify-center">
+              {/* buttons inside the popup */}
+              <div className="flex justify-center gap-6 mt-8">
+                {/* restart */}
                 <button
-                  onClick={resetGame}
-                  className="bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700 transition-colors"
+                  onClick={() => {
+                    play(clickRef);
+                    resetGame();
+                  }}
+                  className="w-14 h-14 flex items-center justify-center rounded-full text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition-colors"
+                  title="නැවත උත්සාහ කරන්න"
                 >
-                  නැවත උත්සාහ කරන්න
+                  <FaRedo size={28} />
                 </button>
+
+                {/* next level */}
                 {(score >= 20 || gameWon) && (
                   <button
-                    onClick={() =>
-                      (window.location.href = "/writing-game2-level3")
-                    }
-                    className="bg-yellow-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:bg-yellow-600 transition-colors"
+                    onClick={() => {
+                      play(clickRef);
+                      setTimeout(
+                        () =>
+                          navigate("/writing-game2-level3", { replace: true }),
+                        80
+                      );
+                    }}
+                    className="w-14 h-14 flex items-center justify-center rounded-full text-white bg-green-600 hover:bg-green-700 shadow-lg transition-colors"
+                    title="ඊළඟ අදියර"
                   >
-                    ඊලඟ අදියරය
+                    <FaArrowRight size={28} />
                   </button>
                 )}
+
+                {/* main menu */}
+                <button
+                  onClick={() => {
+                    play(clickRef);
+                    setTimeout(
+                      () => navigate("/writing-game-menu", { replace: true }),
+                      80
+                    );
+                  }}
+                  className="w-14 h-14 flex items-center justify-center rounded-full text-white bg-purple-600 hover:bg-purple-700 shadow-lg transition-colors"
+                  title="මුල් මෙනුව"
+                >
+                  <FaEllipsisH size={28} />
+                </button>
               </div>
             </div>
           </div>

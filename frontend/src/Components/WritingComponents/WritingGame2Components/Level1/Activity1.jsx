@@ -1,9 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import backgroundImage from "../../../../assets/writing_interventions/background/back11.webp";
 import chestimage from "../../../../assets/writing_interventions/cards/chest.png";
 import popupimage from "../../../../assets/writing_interventions/popups/popupimage.webp";
 import popupimage2 from "../../../../assets/writing_interventions/popups/popupimage2.webp";
+import { useNavigate } from "react-router-dom";
+import { FaRedo, FaArrowRight, FaEllipsisH } from "react-icons/fa";
 
+/* ─────────────── NEW: sound assets ─────────────── */
+import flipSound    from "../../../../assets/Audios/v_flip.mp3";
+import correctSound from "../../../../assets/Audios/v_correct.wav";
+import wrongSound   from "../../../../assets/Audios/v_wrong.wav";
+import timeSound    from "../../../../assets/Audios/v_time.wav";
+import finishSound  from "../../../../assets/Audios/v_finish.wav";
+import clickSound   from "../../../../assets/Audios/click_sound.mp3";
+
+/* -------------------  cardStyles (unchanged) ------------------- */
 const cardStyles = `
   .card {
     perspective: 1000px;
@@ -49,31 +60,15 @@ const cardStyles = `
     background-color: #d1fae5;
   }
   @keyframes pop-in {
-    0% {
-      transform: scale(0);
-      opacity: 0;
-    }
-    90% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
+    0% { transform: scale(0); opacity: 0; }
+    90% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
   }
   @keyframes stars {
-    0% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(3);
-      opacity: 0;
-    }
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(3); opacity: 0; }
   }
-  .animate-pop-in {
-    animation: pop-in 0.3s ease-out;
-  }
+  .animate-pop-in { animation: pop-in 0.3s ease-out; }
   .stars-animation {
     position: absolute;
     width: 100px;
@@ -87,68 +82,21 @@ const cardStyles = `
     50% { transform: scale(1.2); opacity: 1; }
     100% { transform: scale(0.5); opacity: 0; }
   }
-  .magic-star {
-    animation: magicStar 1.5s ease-in-out infinite;
+  .magic-star { animation: magicStar 1.5s ease-in-out infinite; }
+
+  .sparkle-animation { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+  .celebration-animation { position: fixed; inset: 0; pointer-events: none; z-index: 1; display: flex; align-items: center; justify-content: center; }
+  .celebration-star { font-size: 8rem; animation: star-pop 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; transform-origin: center; }
+  .celebration-item { position: absolute; font-size: 2rem; opacity: 0; animation: celebration-flow 1.5s ease-out both; }
+  @keyframes star-pop   { 0%{transform:scale(0);opacity:0;} 80%{transform:scale(1.2);opacity:1;} 100%{transform:scale(1);opacity:1;} }
+  @keyframes celebration-flow {
+    0%{opacity:1;transform:translate(0,0) scale(1) rotate(0deg);}
+    100%{opacity:0;transform:translate(calc(var(--dx)*300px),calc(var(--dy)*300px)) scale(0.5) rotate(360deg);}
   }
-
-  .sparkle-animation {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.celebration-animation {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.celebration-star {
-  font-size: 8rem;
-  animation: star-pop 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  transform-origin: center;
-}
-
-.celebration-item {
-  position: absolute;
-  font-size: 2rem;
-  opacity: 0;
-  animation: celebration-flow 1.5s ease-out both;
-}
-
-@keyframes star-pop {
-  0% { transform: scale(0); opacity: 0; }
-  80% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes celebration-flow {
-  0% {
-    opacity: 1;
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
-  100% {
-    opacity: 0;
-    transform: 
-      translate(
-        calc(var(--dx) * 300px), 
-        calc(var(--dy) * 300px)
-      )
-      scale(0.5)
-      rotate(360deg);
-  }
-}
-
-/* Different directions */
-.item-0 { --dx: 0.5; --dy: -0.5; color: #FFD700; }
-.item-1 { --dx: -0.5; --dy: -0.5; color: #FF69B4; }
-.item-2 { --dx: 0.3; --dy: 0.7; color: #7FFF00; }
-.item-3 { --dx: -0.3; --dy: 0.7; color: #00BFFF; }
+  .item-0 { --dx: 0.5;  --dy: -0.5; color:#FFD700; }
+  .item-1 { --dx:-0.5;  --dy: -0.5; color:#FF69B4; }
+  .item-2 { --dx: 0.3;  --dy: 0.7;  color:#7FFF00; }
+  .item-3 { --dx:-0.3;  --dy: 0.7;  color:#00BFFF; }
 `;
 
 const consonants = [
@@ -170,6 +118,28 @@ const vowels = [
 ];
 
 function Activity1({ onNext }) {
+  const navigate = useNavigate();
+
+  /* ─────────────── NEW: audio refs & helpers ─────────────── */
+  const flipRef    = useRef(null);
+  const correctRef = useRef(null);
+  const wrongRef   = useRef(null);
+  const timeRef    = useRef(null);
+  const finishRef  = useRef(null);
+  const clickRef   = useRef(null);
+
+  const play = (r) => { if (r.current) { r.current.currentTime = 0; r.current.play(); } };
+
+  useEffect(() => {
+    flipRef.current    = new Audio(flipSound);
+    correctRef.current = new Audio(correctSound);
+    wrongRef.current   = new Audio(wrongSound);
+    timeRef.current    = new Audio(timeSound);
+    finishRef.current  = new Audio(finishSound);
+    clickRef.current   = new Audio(clickSound);
+  }, []);
+  /* ────────────────────────────────────────────────────────── */
+
   const shuffle = (array) => {
     let currentIndex = array.length,
       randomIndex;
@@ -206,12 +176,18 @@ function Activity1({ onNext }) {
     if (timeLeft === 0 || score === 30) {
       setGameOver(true);
       setGameWon(score === 30);
+      /* ─────────────── NEW: end-of-game sounds ─────────────── */
+      if (score === 30) play(finishRef);
+      else play(timeRef);
     }
   }, [timeLeft, score]);
 
   const handleCardClick = (id) => {
     if (gameOver || flippedCards.length === 2 || matchedPairs.includes(id))
       return;
+
+    /* ─ NEW flip sound ─ */
+    play(flipRef);
 
     const newFlipped = [...flippedCards, id];
     setFlippedCards(newFlipped);
@@ -222,6 +198,9 @@ function Activity1({ onNext }) {
       const secondCard = cards.find((c) => c.id === secondId);
 
       if (firstCard.type !== secondCard.type) {
+        /* correct combo sound */
+        play(correctRef);
+
         const consonant =
           firstCard.type === "consonant" ? firstCard : secondCard;
         const vowel = firstCard.type === "vowel" ? firstCard : secondCard;
@@ -240,12 +219,18 @@ function Activity1({ onNext }) {
           setShowMatch(null);
         }, 2000);
       } else {
+        /* wrong combo sound */
+        play(wrongRef);
+
         setTimeout(() => setFlippedCards([]), 1000);
       }
     }
   };
 
   const resetGame = () => {
+    /* button click sound */
+    play(clickRef);
+
     setCards(initializeCards());
     setFlippedCards([]);
     setMatchedPairs([]);
@@ -388,23 +373,45 @@ function Activity1({ onNext }) {
               >
                 අවසාන ලකුණු: {score}
               </p>
-              <div className="flex gap-4 justify-center">
+              {/* buttons inside the popup */}
+              <div className="flex justify-center gap-6 mt-8">
+                {/* restart / redo */}
                 <button
-                  onClick={resetGame}
-                  className="bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700 transition-colors"
+                  onClick={() => {
+                    play(clickRef);
+                    resetGame();
+                  }}
+                  className="w-14 h-14 flex items-center justify-center rounded-full text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition-colors"
+                  title="නැවත උත්සාහ කරන්න"
                 >
-                  නැවත උත්සාහ කරන්න
+                  <FaRedo size={28} />
                 </button>
+
+                {/* next level (only if allowed) */}
                 {(score >= 20 || gameWon) && (
                   <button
-                    onClick={() =>
-                      (window.location.href = "/writing-game2-level2")
-                    }
-                    className="bg-yellow-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:bg-yellow-600 transition-colors"
+                    onClick={() => {
+                      play(clickRef);
+                      navigate("/writing-game2-level2");
+                    }}
+                    className="w-14 h-14 flex items-center justify-center rounded-full text-white bg-green-600 hover:bg-green-700 shadow-lg transition-colors"
+                    title="ඊළඟ අදියර"
                   >
-                    ඊලඟ අදියරය
+                    <FaArrowRight size={28} />
                   </button>
                 )}
+
+                {/* main menu */}
+                <button
+                  onClick={() => {
+                    play(clickRef);
+                    navigate("/writing-game-menu");
+                  }}
+                  className="w-14 h-14 flex items-center justify-center rounded-full text-white bg-purple-600 hover:bg-purple-700 shadow-lg transition-colors"
+                  title="මුල් මෙනුව"
+                >
+                  <FaEllipsisH size={28} />
+                </button>
               </div>
             </div>
           </div>

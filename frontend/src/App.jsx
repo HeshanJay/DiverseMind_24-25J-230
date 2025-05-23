@@ -51,6 +51,7 @@ import AttentionGame3Level2 from "./Pages/Attention/AttentionGame3Level2";
 import AttentionGame3Level3 from "./Pages/Attention/AttentionGame3Level3";
 import MathChoiceSelectionPage from "./Pages/MathematicActivities/MathChoiceSelectionPage";
 import WritingGameMenu from "./Pages/WritingInterventions/WritingGameMenu/WritingGameMenu";
+import WritingGame2Ins from "./Pages/WritingInterventions/WritingGame2/WritingGame2Ins";
 import WritingGame2Menu from "./Pages/WritingInterventions/WritingGame2/WritingGame2Menu";
 import WritingGame3Menu from "./Pages/WritingInterventions/WritingGame3/WritingGame3Menu";
 import WritingGame2Level1 from "./Pages/WritingInterventions/WritingGame2/WritingGame2Level1";
@@ -248,6 +249,7 @@ const App = () => {
               element={<MathAdditionGamePage />}
             />
             <Route path="/writing-game-menu" element={<WritingGameMenu />} />
+            <Route path="/writing-game2-ins" element={<WritingGame2Ins />} />
             <Route path="/writing-game2-menu" element={<WritingGame2Menu />} />
             <Route path="/writing-game3-menu" element={<WritingGame3Menu />} />
             <Route
@@ -294,26 +296,11 @@ const App = () => {
               path="/math-division-game"
               element={<MathDivisionGamePage />}
             />
-            <Route
-              path="/math-instruction1"
-              element={<MathInstruction1 />}
-            />
-            <Route
-              path="/math-instruction2"
-              element={<MathInstruction2 />}
-            />
-            <Route
-              path="/math-instruction3"
-              element={<MathInstruction3 />}
-            />
-            <Route
-              path="/math-instruction4"
-              element={<MathInstruction4 />}
-            />
-            <Route
-              path="/math-instruction5"
-              element={<MathInstruction5 />}
-            />
+            <Route path="/math-instruction1" element={<MathInstruction1 />} />
+            <Route path="/math-instruction2" element={<MathInstruction2 />} />
+            <Route path="/math-instruction3" element={<MathInstruction3 />} />
+            <Route path="/math-instruction4" element={<MathInstruction4 />} />
+            <Route path="/math-instruction5" element={<MathInstruction5 />} />
             <Route
               path="/math-funny-game-menu"
               element={<MathFunnyGameMenu />}
