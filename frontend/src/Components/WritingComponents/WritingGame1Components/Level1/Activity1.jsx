@@ -35,6 +35,12 @@ import goldenPencil from "../../../../assets/writing_interventions/icons/golden_
 // Import background image
 import background from "../../../../assets/writing_interventions/background/back6.webp";
 
+import clickSound from "../../../../assets/Audios/click_sound.mp3";
+import correctAnswer from "../../../../assets/Audios/correct_answer.mp3";
+import wrongAnswer from "../../../../assets/Audios/l_wrong.wav";
+import losingSound from "../../../../assets/Audios/l_losing.wav";
+import celebrateSound from "../../../../assets/Audios/celebrate.mp3";
+
 // Helper function to shuffle array using Fisher-Yates algorithm
 function shuffleArray(array) {
   const newArray = [...array];
@@ -75,6 +81,26 @@ const allLetterPics = [
 
 const Activity1 = () => {
   const navigate = useNavigate();
+
+  const clickRef = useRef(null);
+  const correctRef = useRef(null);
+  const wrongRef = useRef(null);
+  const loseRef = useRef(null);
+  const celebrateRef = useRef(null);
+  const play = (ref) => {
+    if (ref.current) {
+      ref.current.currentTime = 0; // restart from the beginning
+      ref.current.play().catch(() => {}); // ignore autoplay errors
+    }
+  };
+
+  useEffect(() => {
+    clickRef.current = new Audio(clickSound);
+    correctRef.current = new Audio(correctAnswer);
+    wrongRef.current = new Audio(wrongAnswer);
+    loseRef.current = new Audio(losingSound);
+    celebrateRef.current = new Audio(celebrateSound);
+  }, []);
 
   // Best score is read from localStorage (default to 0)
   const [bestScore, setBestScore] = useState(() => {
@@ -603,49 +629,62 @@ button:focus {
 
   // Handle answer selection.
   const handleAnswer = (answer) => {
+    // stop the “letter finished” timer
     clearTimeout(finishTimeoutRef.current);
+
     const elapsed = Date.now() - letterStartTimeRef.current;
-    const catchBegin = 3300;
-    const catchEnd = 3700;
+    const catchBegin = 3300; // ms – safe-to-answer window starts
+    const catchEnd = 3700; // ms – window ends
+
+    /* ───── too early ───────────────────────────────*/
     if (elapsed < catchBegin) {
-      setPopUp("⏰");
+      play(loseRef); // 🔊 “l_losing.wav”
+      setPopUp("⏰"); // clock emoji
       setSelectionResult(null);
       setAnswered(true);
       scheduleNextLetter(1000);
       return;
     }
+
+    /* ───── too late ────────────────────────────────*/
     if (elapsed > catchEnd) {
-      setPopUp("⌛");
+      play(loseRef); // 🔊 “l_losing.wav”
+      setPopUp("⌛"); // hour-glass emoji
       setSelectionResult(null);
       setAnswered(true);
       scheduleNextLetter(1000);
       return;
     }
-    if (
+
+    /* ───── inside catch window – evaluate answer ───*/
+    const isCorrect =
       (answer === "correct" && currentLetter.isCorrect) ||
-      (answer === "incorrect" && !currentLetter.isCorrect)
-    ) {
+      (answer === "incorrect" && !currentLetter.isCorrect);
+
+    if (isCorrect) {
+      play(correctRef); // 🔊 “correct_answer.mp3”
       setPopUp("🎉");
       setSelectionResult("correct");
-      setScore((prev) => prev + 4); // Award 4 points for a correct answer
-      setCombo((prev) => prev + 1);
-      setFreezeLetter(true);
+      setScore((prev) => prev + 4); // +4 points
+      setCombo((prev) => prev + 1); // increase combo
+      setFreezeLetter(true); // keep letter in zone
     } else {
+      play(wrongRef); // 🔊 “l_wrong.wav”
       setPopUp("❌");
       setSelectionResult("incorrect");
-      setCombo(0);
+      setCombo(0); // reset combo
       setLives((prev) => {
         const newLives = prev - 1;
         if (newLives <= 0) {
-          setTimeout(() => {
-            setShowGameOver(true);
-          }, 500);
+          // delay so the ❌ shows before modal
+          setTimeout(() => setShowGameOver(true), 500);
         }
         return newLives;
       });
     }
-    setAnswered(true);
-    scheduleNextLetter(1000);
+
+    setAnswered(true); // prevent double-answer
+    scheduleNextLetter(1000); // next letter in 1 s
   };
 
   // Render hearts based on remaining lives.
@@ -676,7 +715,10 @@ button:focus {
       {gameStarted && (
         <div className="restart-container">
           <button
-            onClick={handleRestart}
+            onClick={() => {
+              play(clickRef);
+              handleRestart();
+            }}
             className="nav-button bg-green-600 hover:bg-green-700"
           >
             <FaRedo size={28} />
@@ -706,7 +748,10 @@ button:focus {
           </p>
           <br />
           <button
-            onClick={() => setGameStarted(true)}
+            onClick={() => {
+              play(clickRef);
+              setGameStarted(true);
+            }}
             className="px-6 py-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl text-2xl transform transition-transform duration-200 hover:scale-105 shadow-lg border-4 border-blue-700"
           >
             ආරම්භ කරන්න
@@ -842,7 +887,10 @@ button:focus {
             </p>
             <div className="flex justify-center">
               <button
-                onClick={goToScoreBoard}
+                onClick={() => {
+                  play(celebrateRef);
+                  goToScoreBoard();
+                }}
                 className="px-8 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl text-xl transform transition-transform duration-200 hover:scale-105 shadow-lg border-4 border-blue-700"
               >
                 අවසාන ලකුණු බලන්න 🏆

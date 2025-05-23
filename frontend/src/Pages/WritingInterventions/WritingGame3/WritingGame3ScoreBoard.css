@@ -1,35 +1,45 @@
-/* Global styles */
+/* ---------------------------------------------------------------
+   Page-level centering
+---------------------------------------------------------------- */
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #f0f0f0; /* optional background color */
+  background: #f0f0f0;
 }
 
-/* Scoreboard container centered horizontally with margin auto */
+.scoreboard-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+}
+
+/* ---------------------------------------------------------------
+   Scoreboard card
+---------------------------------------------------------------- */
 .scoreboard-container {
-  margin: 200px auto 0; /* 200px from the top, auto for left/right centering */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.8); /* semi-transparent white */
-  border: 2px solid #ff9800; /* thin orange border */
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px solid #ff9800;
   border-radius: 15px;
-  padding: 20px;
-  max-width: 400px;
+  padding: 28px 32px;
+  max-width: 420px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
 }
 
 .scoreboard-title {
-  font-size: 2.5em;
+  font-size: 2.4rem;
   margin-bottom: 20px;
   color: #2c5f2d;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .scoreboard-info {
-  font-size: 2em;
+  font-size: 1.8rem;
   font-weight: bold;
   color: #2c5f2d;
   text-align: center;
@@ -38,4 +48,48 @@ body {
 .scoreboard-points,
 .scoreboard-stars {
   margin: 10px 0;
+}
+
+/* ---------------------------------------------------------------
+   Navigation buttons
+---------------------------------------------------------------- */
+.nav-btn-row {
+  display: flex;
+  gap: 18px;
+  margin-top: 32px;
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.nav-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+.nav-button:active {
+  transform: scale(0.95);
+}
+
+/* colour helpers */
+.bg-blue {
+  background: #2563eb;
+}
+.bg-green {
+  background: #16a34a;
+}
+.bg-purple {
+  background: #7c3aed;
 }
