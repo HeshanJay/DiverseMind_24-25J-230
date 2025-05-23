@@ -2,9 +2,14 @@ import React, { useState, useEffect } from "react";
 import backgroundImage from "../../../assets/background_images/bb3.jpg";
 import popupboard from "../../../assets/Attention/note2.png";
 import zebraImage from "../../../assets/Attention/zebra.png";
-import elephantImage from "../../../assets/Attention/lion.png"; // lion image
-import b2Image from "../../../assets/Attention/b7.png"; // image for score board
-import feebackImage from "../../../assets/Attention/t4.png"; // game over background image
+import elephantImage from "../../../assets/Attention/lion.png";
+import b2Image from "../../../assets/Attention/b7.png";
+import feebackImage from "../../../assets/Attention/t4.png";
+import clickSound from "../../../assets/Audios/click_sound.mp3";
+import correctSound from "../../../assets/Audios/correct_answer.mp3";
+import wrongSound from "../../../assets/Audios/wrong_answer.mp3";
+import timeoutSound from "../../../assets/Audios/timeout.mp3";
+import gameoverSound from "../../../assets/Audios/celebrate.mp3";
 import { FaRedo, FaArrowRight, FaEllipsisH } from "react-icons/fa";
 
 const INITIAL_TIMER = 40;
@@ -21,6 +26,36 @@ const ColorChange2 = () => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+
+  // Function to play the click sound
+  const playClickSound = () => {
+    const audio = new Audio(clickSound);
+    audio.play();
+  };
+
+  // Function to play correct answer sound
+  const playCorrectSound = () => {
+    const audio = new Audio(correctSound);
+    audio.play();
+  };
+
+  // Function to play wrong answer sound
+  const playWrongSound = () => {
+    const audio = new Audio(wrongSound);
+    audio.play();
+  };
+
+  // Function to play timeout sound
+  const playTimeoutSound = () => {
+    const audio = new Audio(timeoutSound);
+    audio.play();
+  };
+
+  // Function to play game over sound
+  const playGameOverSound = () => {
+    const audio = new Audio(gameoverSound);
+    audio.play();
+  };
 
   // Generate a random RGB color
   function generateRandomColor() {
@@ -53,6 +88,7 @@ const ColorChange2 = () => {
       setRound((prevRound) => prevRound + 1);
     } else {
       setGameOver(true);
+      playGameOverSound(); // Play game over sound
     }
   };
 
@@ -63,10 +99,12 @@ const ColorChange2 = () => {
       setFeedback("✔ නිවැරදි!");
       setFeedbackClass("correct");
       setScore((prevScore) => prevScore + SCORE_INCREMENT);
+      playCorrectSound(); // Play correct sound
       resetRound();
     } else {
       setFeedback("✗ වැරදි!");
       setFeedbackClass("wrong");
+      playWrongSound(); // Play wrong sound
     }
   };
 
@@ -88,6 +126,7 @@ const ColorChange2 = () => {
     if (timer <= 0 && !gameOver) {
       setFeedback("✗ කාලය අවසන්!");
       setFeedbackClass("timeout");
+      playTimeoutSound(); // Play timeout sound
       resetRound();
     }
   }, [gameStarted, timer, gameOver]);
@@ -105,8 +144,9 @@ const ColorChange2 = () => {
     setGameOver(false);
   };
 
-  // Start game
+  // Start game with click sound
   const handleStartGame = () => {
+    playClickSound(); // Play click sound when button is clicked
     setGameStarted(true);
   };
 

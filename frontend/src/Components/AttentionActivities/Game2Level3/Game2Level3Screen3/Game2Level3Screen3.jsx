@@ -1,33 +1,78 @@
-// Game2Level3Screen3.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Level3_3 from "../../../../assets/background_images/AttentionGames/Game2/Level3_3.png";
 import Level3_3_1 from "../../../../assets/background_images/AttentionGames/Game2/Level3_3.1.png";
 import BackImage from "../../../../assets/background_images/AttentionGames/Game2/backimg1_game2.png";
+import clickSound from "../../../../assets/Audios/click_sound.mp3";
+import selectSound from "../../../../assets/Audios/select.mp3";
+import Clock from "../../../../assets/Audios/clock.mp3";
+import timeoutSound from "../../../../assets/Audios/timeout.mp3";
 
 const Game2Level3Screen3 = ({ onTileSelect, onTimeout }) => {
   const [selectedTile, setSelectedTile] = useState(null);
   const [timeLeft, setTimeLeft] = useState(10);
   const [progress, setProgress] = useState(100);
 
+  const clockAudioRef = useRef(null);
+
+  const playClickSound = () => {
+    const audio = new Audio(clickSound);
+    audio.play().catch(console.error);
+  };
+
+  const playSelectSound = () => {
+    const audio = new Audio(selectSound);
+    audio.play().catch(console.error);
+  };
+
+  const playTimeoutSound = () => {
+    const audio = new Audio(timeoutSound);
+    audio.volume = 0.7;
+    audio.play().catch(console.error);
+  };
+
+  const playClockAudio = () => {
+    if (clockAudioRef.current) {
+      clockAudioRef.current.volume = 0.3;
+      clockAudioRef.current.loop = true;
+      clockAudioRef.current.play().catch(console.error);
+    }
+  };
+
+  const stopClockAudio = () => {
+    if (clockAudioRef.current) {
+      clockAudioRef.current.pause();
+      clockAudioRef.current.currentTime = 0;
+    }
+  };
+
   useEffect(() => {
+    playClockAudio();
+
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          onTimeout();
+          stopClockAudio();
+          setTimeout(() => {
+            playTimeoutSound();
+            onTimeout();
+          }, 200);
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
-    return () => clearInterval(timer);
+
+    return () => {
+      clearInterval(timer);
+      stopClockAudio();
+    };
   }, [onTimeout]);
 
   useEffect(() => {
     setProgress((timeLeft / 10) * 100);
   }, [timeLeft]);
 
-  // There are 8 tiles; the correct answer is tile with id 2.
   const tiles = [
     { id: 1, image: Level3_3 },
     { id: 2, image: Level3_3_1 },
@@ -41,8 +86,10 @@ const Game2Level3Screen3 = ({ onTileSelect, onTimeout }) => {
 
   const handleTileClick = (id) => {
     if (selectedTile !== id) {
+      playSelectSound();
       setSelectedTile(id);
       onTileSelect(id);
+      playClickSound();
     }
   };
 
@@ -51,6 +98,11 @@ const Game2Level3Screen3 = ({ onTileSelect, onTimeout }) => {
       className="relative w-screen h-screen bg-cover bg-center flex items-center justify-center"
       style={{ backgroundImage: `url(${BackImage})` }}
     >
+      {/* Preload ticking sound */}
+      <audio ref={clockAudioRef} preload="auto">
+        <source src={Clock} type="audio/mpeg" />
+      </audio>
+
       {/* Timer */}
       <div className="absolute top-5 right-5">
         <svg width="80" height="80" viewBox="0 0 100 100">
@@ -87,6 +139,7 @@ const Game2Level3Screen3 = ({ onTileSelect, onTimeout }) => {
           </text>
         </svg>
       </div>
+
       {/* Tiles */}
       <div className="relative grid grid-cols-4 gap-6">
         {tiles.map((tile) => (
