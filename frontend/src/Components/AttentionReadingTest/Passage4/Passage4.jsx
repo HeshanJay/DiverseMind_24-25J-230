@@ -7,10 +7,10 @@ const Passage4 = ({ onPrevious, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    "සාමකාමී සහ කුමන්ත‍්‍රණාත්මක",
+    "සාමකාමී සහ කුමන්ත‍්‍රණාත්මක වීම",
     "ඔවුන් අල්ලන එක ගැන සතුටු වීම",
     "කෝපයෙන් සහ අප්‍රසන්නතාවයෙන් පිරී යාම", // Correct answer is "C"
-    "නොතකස්සූ ලෙස හැසිරීම",
+    "නොසන්සුන් ලෙස හැසිරීම",
   ];
   const correctAnswer = "කෝපයෙන් සහ අප්‍රසන්නතාවයෙන් පිරී යාම";
 
@@ -29,7 +29,7 @@ const Passage4 = ({ onPrevious, onNext }) => {
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl w-[768px] h-[473px] text-center border-4 border-red-400">
         <h1 className="text-3xl font-extrabold text-red-600 mb-6">
-          <p>මියෝගේ මේ හැසිරීම්වලට හෙනේ මාමාගේ හැඟීම</p>
+          <p>මීයන්ගේ මේ හැසිරීම්වලට හේනේ මාමාගේ හැඟීම</p>
           <p>කුමක්ද?</p>
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">

@@ -109,7 +109,7 @@ function ScreeningandInterventions() {
                   }}
                 >
                   <h2 className="text-3xl text-center font-bold text-white mb-4">
-                    ඇගයීම
+                    අනාවරණය
                   </h2>
                   <div className="overflow-hidden rounded-xl h-30">
                     <img

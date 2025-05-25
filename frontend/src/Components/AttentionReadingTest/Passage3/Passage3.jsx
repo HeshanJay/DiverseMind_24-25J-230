@@ -10,7 +10,7 @@ const Passage3 = ({ onPrevious, onNext }) => {
     "වගාවේ පිටුපස සැගවීම",
     "විදුලිය වගේ පැනලා දුවීම", // Correct answer is "B"
     "වගාව විනාශ කිරීම දිගටම කරමින් සිටීම",
-    "හෙනේ මාමාට ප්‍රහාරක කිරීම",
+    "හේනේ මාමාට ප්‍රහාර එල්ල කිරීම",
   ];
   const correctAnswer = "විදුලිය වගේ පැනලා දුවීම";
 
@@ -29,7 +29,7 @@ const Passage3 = ({ onPrevious, onNext }) => {
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-blue-400">
         <h1 className="text-3xl font-extrabold text-blue-600 mb-6">
-          හෙනේ මාමාගේ අඩි සද්දෙ ඇහුන ගමන් මියෝ කරන්නේ කුමක්ද?
+          හේනේ මාමාගේ අඩි සද්දෙ ඇහුන ගමන් මීයෝ කරන්නේ කුමක්ද?
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (

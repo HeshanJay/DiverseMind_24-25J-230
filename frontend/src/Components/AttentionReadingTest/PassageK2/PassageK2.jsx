@@ -7,7 +7,7 @@ const PassageK2 = ({ onPrevious, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    "ඕනේම දෙයක් ලැබෙන බව දැනගත්තා නිසා", // Correct answer is "A"
+    "ඕනෑම දෙයක් ලැබෙන බව දැනගත් නිසා", // Correct answer is "A"
     "අම්මට හා තාත්තට රිදවන්න",
     "ගෙදර අය බබාව බය කරන නිසා",
     "ගෙදර අය බබාව නොසලකා හැරීම නිසා",

@@ -35,7 +35,7 @@ const HomePage = () => {
           <div className="options-container">
             <div className="option-card" onClick={handleTeacherClick}>
               <img src={teacherIcon} alt="Teacher" className="option-icon" />
-              <h2>ගුරුවර ගිණුම</h2>
+              <h2>ගුරු ගිණුම</h2>
             </div>
 
             <div className="option-card" onClick={handleStudentClick}>

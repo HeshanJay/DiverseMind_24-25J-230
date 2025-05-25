@@ -8,9 +8,9 @@ const Passage2 = ({ onPrevious, onNext }) => {
 
   const options = [
     "වගා භූමිය ජලයෙන් ගිලීම",
-    "මියෝ වගාවට හානි කිරීම",
-    "මියෝ වගා සහ පොළොව විනාශ කිරීම", // Correct answer is "C"
-    "කාලගුණය වැඩි දැඩි වීම",
+    "මීයෝ වගාවට හානි කිරීම",
+    "මීයෝ වගා සහ පොළොව විනාශ කිරීම", // Correct answer is "C"
+    "කාලගුණය වෙනස්වීම",
   ];
   const correctAnswer = "මියෝ වගා සහ පොළොව විනාශ කිරීම";
 
@@ -31,7 +31,7 @@ const Passage2 = ({ onPrevious, onNext }) => {
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-green-400">
         <h1 className="text-3xl font-extrabold text-green-600 mb-6">
-          හෙනේ මාමාට කතාවේදී මුහුණ දීමට සිදුවන ප්‍රධාන ගැටළුව කුමක්ද?
+          හේනේ මාමාට කතාවේදී මුහුණ දීමට සිදුවන ප්‍රධාන ගැටළුව කුමක්ද?
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (

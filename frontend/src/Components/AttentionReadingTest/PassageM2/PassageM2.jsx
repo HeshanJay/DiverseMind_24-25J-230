@@ -7,12 +7,12 @@ const PassageM2 = ({ onPrevious, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    "හිඹුටු ගසක වැඳුන ගිරවා,සන්සුන්ව සිටින්නෙක්",
-    "හිඹුටු කැලේ ඇති පැහැදිලිම සතෙකි,හැමෝටම උපදෙස් දෙනා",
-    "හිඹුටු කැලේ වැඳුන වඳුරෙකු,කවදාවත් දඟ නොකරන්නෙක්",
-    "හිඹුටු කැලේ වඳුරු පැටියෙක්,දඟකාරයෙක්", // Correct answer is "D"
+    "හිඹුටු ගසක සිටින ගිරවෙකි,සන්සුන්ව සිටින්නෙකි",
+    "හිඹුටු කැලේ ඇති පැහැදිලිම සතෙකි,හැමෝටම උපදෙස් දෙන්නෙකි",
+    "හිඹුටු කැලේ සිටින වදුරෙකි,කවදාවත් දඟ නොකරන්නෙකි",
+    "හිඹුටු කැලේ වඳුරු පැටියෙකි,දඟකාරයෙකි", // Correct answer is "D"
   ];
-  const correctAnswer = "හිඹුටු කැලේ වඳුරු පැටියෙක්,දඟකාරයෙක්";
+  const correctAnswer = "හිඹුටු කැලේ වඳුරු පැටියෙක්,දඟකාරයෙකි";
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);

@@ -7,10 +7,10 @@ const Passage5 = ({ onPrevious, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    "මියෝ ගැඹුරු බිම් තුළ සැඟවීම",
-    "මියෝ ඉතා වේගයෙන් පලායාම", // Correct answer is "B"
-    "හෙනේ මාමාගේ උපකරණ පිළිසකර නොවීම",
-    "මියෝ වගාව ආරක්ෂා කිරීම",
+    "මීයෝ ගැඹුරු බිම් තුළ සැඟවීම",
+    "මීයෝ ඉතා වේගයෙන් පලායාම", // Correct answer is "B"
+    "හේනේ මාමාගේ උපකරණ පිළිසකර නොවීම",
+    "මීයෝ වගාව ආරක්ෂා කිරීම",
   ];
   const correctAnswer = "මියෝ ඉතා වේගයෙන් පලායාම";
 
@@ -29,7 +29,7 @@ const Passage5 = ({ onPrevious, onNext }) => {
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-xl shadow-2xl max-w-3xl text-center border-4 border-yellow-400">
         <h1 className="text-3xl font-extrabold text-yellow-600 mb-6">
-          හෙනේ මාමාට මියෝ අල්ලා ගැනීමට නොහැකි වීමට හේතුව කුමක්ද?
+          හේනේ මාමාට මීයෝ අල්ලා ගැනීමට නොහැකි වීමට හේතුව කුමක්ද?
         </h1>
         <div className="grid grid-cols-1 gap-4 text-lg">
           {options.map((option, index) => (

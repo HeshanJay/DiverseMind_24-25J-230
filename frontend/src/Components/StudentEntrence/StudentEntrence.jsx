@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./StudentEntrence.css"; 
+import "./StudentEntrence.css";
 import { useNavigate } from "react-router-dom";
-import backImg8 from "../../assets/background_images/back_img8.jpg"; 
+import backImg8 from "../../assets/background_images/back_img8.jpg";
 
 const StudentEntrance = () => {
   const [teacherCode, setTeacherCode] = useState("");
   const [studentName, setStudentName] = useState("");
   const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false); 
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleEntrance = async (e) => {
@@ -42,7 +42,6 @@ const StudentEntrance = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-
       <div className="overlay">
         <div className="student-entrance-form">
           <h2>DiverseMind එක්ක විනෝද වෙමු !</h2>
@@ -59,11 +58,11 @@ const StudentEntrance = () => {
               />
             </div>
             <div className="input-group">
-              <label htmlFor="studentName">ඔයාගේ නම</label>
+              <label htmlFor="studentName">ඔබේ නම</label>
               <input
                 id="studentName"
                 type="text"
-                placeholder="ඔයාගේ නම ඇතුළත් කරන්න "
+                placeholder="ඔබේ නම ඇතුළත් කරන්න "
                 value={studentName}
                 onChange={(e) => setStudentName(e.target.value)}
                 required

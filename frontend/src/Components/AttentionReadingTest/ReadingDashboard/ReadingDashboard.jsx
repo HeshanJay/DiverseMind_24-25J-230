@@ -73,7 +73,7 @@ const ReadingDashboard = ({ onNext }) => {
 
       {instructionStep === 2 && (
         <div className="absolute bottom-24 right-36 bg-white text-black p-3 rounded-lg shadow-lg animate-fadeIn z-10">
-          ✅ Click here to start!
+          ✅ ආරම්භ කිරීමට මෙතන ක්ලික් කරන්න!
         </div>
       )}
 
