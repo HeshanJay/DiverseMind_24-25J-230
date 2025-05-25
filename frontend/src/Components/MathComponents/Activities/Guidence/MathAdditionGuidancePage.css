@@ -8,11 +8,11 @@
   background-position: center;
   background-color: #f0f8ff; 
   font-family: "Comic Sans MS", cursive, sans-serif; 
-  padding: 20px;
+  padding: 40px;
   box-sizing: border-box;
   position: relative; 
 }
-
+/* 
 .video-container {
   position: relative;
   width: 90%;
@@ -136,4 +136,4 @@
     top: 10px; 
     padding: 8px;
   }
-}
+} */

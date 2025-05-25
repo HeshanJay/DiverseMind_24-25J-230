@@ -38,7 +38,7 @@ const AttentionGame2 = () => {
       >
         <img src={titleBg} alt="Title Background" className="w-64 md:w-72" />
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-white text-5xl font-bold">අදිරය</span>
+          <span className="text-white text-5xl font-bold">අදියරය</span>
         </div>
       </div>
 

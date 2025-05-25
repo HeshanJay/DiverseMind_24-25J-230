@@ -430,7 +430,7 @@ const MathSubtractionGamePage = () => {
 
       <div
         className={`mtg-game-container level-${currentLevel}`}
-        tyle={{ backgroundImage: `url(${treasureMapImage})` }}
+        style={{ backgroundImage: `url(${treasureMapImage})` }}
       >
         <div className="mtg-header">
           <span>ඔබේ මට්ටම : {currentLevel}</span>

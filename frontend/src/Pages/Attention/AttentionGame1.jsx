@@ -57,7 +57,7 @@ const AttentionGame1 = () => {
           className="relative text-4xl sm:text-5xl font-bold text-white text-center drop-shadow-lg"
           style={{ zIndex: 1 }}
         >
-          අදිරය
+          අදියරය
         </h1>
       </div>
 

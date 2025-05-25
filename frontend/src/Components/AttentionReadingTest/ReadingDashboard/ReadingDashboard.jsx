@@ -36,7 +36,7 @@ const ReadingDashboard = ({ onNext }) => {
       )}
 
       <div className="absolute top-[25%] left-1/2 transform -translate-x-1/2 p-6 flex flex-col items-center popup-container">
-        <h1 className="text-3xl text-center text-white font-extrabold popup-text">
+        <h1 className="text-4xl text-center text-white font-extrabold popup-text">
           අවධානය <br /> පරීක්ෂා කරමු
         </h1>
 

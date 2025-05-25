@@ -170,7 +170,7 @@ const ColorChange = () => {
       {!gameStarted && !gameOver && (
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center p-4 bg-black bg-opacity-50">
           <h2 className="text-yellow-500 font-extrabold text-4xl mb-4">
-            තුන්වැනි අදිරයෙන් විනෝද වෙමු !
+            තුන්වැනි අදියරයෙන් විනෝද වෙමු !
           </h2>
           <div className="relative w-[2200px] md:w-[1000px] h-[1100px] mt-4 rounded-xl shadow-lg overflow-hidden">
             <div
@@ -262,7 +262,7 @@ const ColorChange = () => {
         <div
           style={{
             position: "absolute",
-            bottom: "200px",
+            bottom: "100px",
             right: "20px",
             width: "250px",
             zIndex: 70,

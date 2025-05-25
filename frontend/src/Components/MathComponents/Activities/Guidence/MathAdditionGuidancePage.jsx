@@ -67,7 +67,10 @@ const MathAdditionGuidancePage = () => {
   }, [showConfetti]);
 
   return (
-    <div className="math-addition-guidance-page" style={{ backgroundImage: `url(${bgWallpaper})` }}>
+    <div
+      className="math-addition-guidance-page"
+      style={{ backgroundImage: `url(${bgWallpaper})` }}
+    >
       {/* Confetti Animation */}
       {showConfetti && <Confetti />}
 
@@ -88,156 +91,45 @@ const MathAdditionGuidancePage = () => {
         {/* Show "Previous" button if not on the first video */}
         {currentVideoIndex > 0 && (
           <button className="previous-button" onClick={handlePreviousClick}>
-            Previous
+            ආපසු
           </button>
         )}
 
         {/* Show "Replay" button if the video has ended */}
         {isVideoEnded && (
           <button className="replay-button" onClick={handleReplayClick}>
-            Replay
+            නැවත නරඹන්න
           </button>
         )}
 
         {/* Show "Next" button if the video has ended and it's not the last video */}
         {isVideoEnded && currentVideoIndex < videoSources.length - 1 && (
           <button className="next-button" onClick={handleNextClick}>
-            Next
+            ඉදිරියට
           </button>
         )}
 
         {/* Show "Finish" button if it's the last video */}
         {isVideoEnded && currentVideoIndex === videoSources.length - 1 && (
           <button className="finish-button" onClick={handleFinishClick}>
-            Finish
+            අවසන්
           </button>
         )}
       </div>
 
       {/* Progress Indicator */}
-      <div className="progress-indicator">
+      {/* <div className="progress-indicator">
         {videoSources.map((_, index) => (
           <div
             key={index}
-            className={`progress-circle ${currentVideoIndex === index ? "active" : ""}`}
+            className={`progress-circle ${
+              currentVideoIndex === index ? "active" : ""
+            }`}
           ></div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
 
 export default MathAdditionGuidancePage;
-
-
-// import React, { useRef, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import "./MathAdditionGuidancePage.css"; // Import the CSS file
-// import bgWallpaper from "../../../../assets/background_images/bg-wallpaper_21.png";
-// import additionVideo1 from "../../../../assets/Math/Addition_1.mp4";
-// import additionVideo2 from "../../../../assets/Math/Addition_2.mp4";
-// import additionVideo3 from "../../../../assets/Math/Addition_3.mp4";
-
-// const MathAdditionGuidancePage = () => {
-//   const navigate = useNavigate();
-//   const videoRef = useRef(null);
-//   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-//   const [isVideoEnded, setIsVideoEnded] = useState(false);
-
-//   // Array of video sources
-//   const videoSources = [additionVideo1, additionVideo2, additionVideo3];
-
-//   // Handle video end
-//   const handleVideoEnd = () => {
-//     setIsVideoEnded(true);
-//   };
-
-//   // Handle next button click
-//   const handleNextClick = () => {
-//     if (currentVideoIndex < videoSources.length - 1) {
-//       setCurrentVideoIndex(currentVideoIndex + 1); // Go to the next video
-//       setIsVideoEnded(false); // Reset the video ended state
-//     }
-//   };
-
-//   // Handle previous button click
-//   const handlePreviousClick = () => {
-//     if (currentVideoIndex > 0) {
-//       setCurrentVideoIndex(currentVideoIndex - 1); // Go to the previous video
-//       setIsVideoEnded(false); // Reset the video ended state
-//     }
-//   };
-
-//   // Handle replay button click
-//   const handleReplayClick = () => {
-//     if (videoRef.current) {
-//       videoRef.current.currentTime = 0; // Restart the video
-//       videoRef.current.play();
-//       setIsVideoEnded(false);
-//     }
-//   };
-
-//   // Handle finish button click
-//   const handleFinishClick = () => {
-//     navigate("/next-activity"); // Navigate to the next activity page
-//   };
-
-//   return (
-//     <div className="math-addition-guidance-page" style={{ backgroundImage: `url(${bgWallpaper})` }}>
-//       <div className="video-container">
-//         <video
-//           ref={videoRef}
-//           className="guidance-video"
-//           autoPlay
-//           muted
-//           playsInline
-//           onEnded={handleVideoEnd}
-//           key={currentVideoIndex} // Force re-render when video changes
-//         >
-//           <source src={videoSources[currentVideoIndex]} type="video/mp4" />
-//           Your browser does not support the video tag.
-//         </video>
-
-//         {/* Show "Previous" button if not on the first video */}
-//         {currentVideoIndex > 0 && (
-//           <button className="previous-button" onClick={handlePreviousClick}>
-//             Previous
-//           </button>
-//         )}
-
-//         {/* Show "Replay" button if the video has ended */}
-//         {isVideoEnded && (
-//           <button className="replay-button" onClick={handleReplayClick}>
-//             Replay
-//           </button>
-//         )}
-
-//         {/* Show "Next" button if the video has ended and it's not the last video */}
-//         {isVideoEnded && currentVideoIndex < videoSources.length - 1 && (
-//           <button className="next-button" onClick={handleNextClick}>
-//             Next
-//           </button>
-//         )}
-
-//         {/* Show "Finish" button if it's the last video */}
-//         {isVideoEnded && currentVideoIndex === videoSources.length - 1 && (
-//           <button className="finish-button" onClick={handleFinishClick}>
-//             Finish
-//           </button>
-//         )}
-//       </div>
-
-//       {/* Progress Indicator */}
-//       <div className="progress-indicator">
-//         {videoSources.map((_, index) => (
-//           <div
-//             key={index}
-//             className={`progress-circle ${currentVideoIndex === index ? "active" : ""}`}
-//           ></div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default MathAdditionGuidancePage;

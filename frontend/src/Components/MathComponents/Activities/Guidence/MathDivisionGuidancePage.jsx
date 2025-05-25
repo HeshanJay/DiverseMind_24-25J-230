@@ -52,7 +52,7 @@ const MathDivisionGuidancePage = () => {
 
   // Handle finish button click
   const handleFinishClick = () => {
-    navigate("/next-activity"); // Navigate to the next activity page
+    navigate("/math-division-game"); // Navigate to the next activity page
   };
 
   // Hide confetti after 3 seconds
@@ -87,41 +87,41 @@ const MathDivisionGuidancePage = () => {
         {/* Show "Previous" button if not on the first video */}
         {currentVideoIndex > 0 && (
           <button className="previous-button" onClick={handlePreviousClick}>
-            Previous
+            ආපසු
           </button>
         )}
 
         {/* Show "Replay" button if the video has ended */}
         {isVideoEnded && (
           <button className="replay-button" onClick={handleReplayClick}>
-            Replay
+            නැවත නරඹන්න
           </button>
         )}
 
         {/* Show "Next" button if the video has ended and it's not the last video */}
         {isVideoEnded && currentVideoIndex < videoSources.length - 1 && (
           <button className="next-button" onClick={handleNextClick}>
-            Next
+            ඉදිරියට
           </button>
         )}
 
         {/* Show "Finish" button if it's the last video */}
         {isVideoEnded && currentVideoIndex === videoSources.length - 1 && (
           <button className="finish-button" onClick={handleFinishClick}>
-            Finish
+            අවසන්
           </button>
         )}
       </div>
 
       {/* Progress Indicator */}
-      <div className="progress-indicator">
+      {/* <div className="progress-indicator">
         {videoSources.map((_, index) => (
           <div
             key={index}
             className={`progress-circle ${currentVideoIndex === index ? "active" : ""}`}
           ></div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
