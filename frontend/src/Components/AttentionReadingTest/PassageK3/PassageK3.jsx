@@ -7,9 +7,9 @@ const PassageK3 = ({ onPrevious, onNext }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
-    "බබාව දැඩියෙන් දණ්ඩනය කළා",
-    "බබාව අනධිකරණයට පැමිණිල්ලක් කළා",
-    "බබාව නළවා, ඔහු ඉල්ලන දේ සැපයීය", // Correct answer is "C"
+    "බබාට දැඩි ලෙස දඬුවම් කළා",
+    "බබා ගැන අධිකරණයට පැමිණිල්ලක් කළා",
+    "බබාව නළවා, ඔහු ඉල්ලන දේ ලබා දුන්නා", // Correct answer is "C"
     "බබාව ගෙදරින් පිටුවහල් කළා",
   ];
   const correctAnswer = "බබාව නළවා, ඔහු ඉල්ලන දේ සැපයීය";
