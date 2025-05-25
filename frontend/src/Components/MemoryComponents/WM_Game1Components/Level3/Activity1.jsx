@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import L3_img1 from "../../../../assets/WM_Interventions_images/L3_images/L3_img1.png";
 import puffer_fish1 from "../../../../assets/WM_Interventions_images/L1_images/puffer_fish1.png";
@@ -8,6 +8,9 @@ import bubble from "../../../../assets/WM_Interventions_images/L1_images/bubble.
 import sea_back3 from "../../../../assets/WM_Interventions_images/L1_images/sea_back3.png";
 import sea_back4 from "../../../../assets/WM_Interventions_images/L1_images/sea_back4.jpg";
 import fish20 from "../../../../assets/WM_Interventions_images/L1_images/fish20.png";
+import correctSound from "../../../../assets/Audios/correct_answer.mp3";
+import wrongSound   from "../../../../assets/Audios/wrong_answer.mp3";
+import timerSound from "../../../../assets/Audios/timer_sound.mp3";
 
 const questions = [
   {
@@ -62,7 +65,10 @@ const bubblePositions = [
 
 function Activity1({ onNext }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const correctAudio = useRef(new Audio(correctSound));
+  const wrongAudio   = useRef(new Audio(wrongSound));
   const currentQuestion = questions[currentQuestionIndex];
+  const timerAudio = useRef(new Audio(timerSound));
   const [showQuestionPhase, setShowQuestionPhase] = useState(
     currentQuestion.questionPhaseDuration > 0
   );
@@ -97,6 +103,19 @@ function Activity1({ onNext }) {
     return () => clearTimeout(timer);
   }, [questionTimer, showQuestionPhase]);
 
+ 
+useEffect(() => {
+  if (showQuestionPhase) {
+    timerAudio.current.loop = true;
+    timerAudio.current.currentTime = 0;
+    timerAudio.current.play().catch(() => {});
+  } else {
+    timerAudio.current.pause();
+    timerAudio.current.currentTime = 0;
+  }
+}, [showQuestionPhase]);
+
+
   useEffect(() => {
     let timer;
     if (!showQuestionPhase && answerTimer > 0) {
@@ -111,12 +130,21 @@ function Activity1({ onNext }) {
       if (index === currentQuestion.correctAnswerIndex) {
         setScore((prev) => prev + 4);
         setShowCelebration(true);
+        correctAudio.current.currentTime = 0;
+        correctAudio.current.play().catch(() => {});
+        setScore((prev) => prev + 4);
+        setShowCelebration(true);
         setTimeout(() => {
           setShowCelebration(false);
         }, 3000);
-      }
-    }
-  };
+      } else {
+            // nothing here before
+             // wrong
+             wrongAudio.current.currentTime = 0;
+             wrongAudio.current.play().catch(() => {});
+               }
+             }
+           };
 
   const handleNext = () => {
     if (selectedAnswer !== null) {

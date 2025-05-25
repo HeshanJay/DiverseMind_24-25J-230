@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import L2_back3 from "../../../../assets/WM_Interventions_images/L2_images/L2_back3.png";
 import img_egg1 from "../../../../assets/WM_Interventions_images/L2_images/img_egg1.png";
 import dino_img from "../../../../assets/WM_Interventions_images/L2_images/dino_img.png";
 import dino_break from "../../../../assets/WM_Interventions_images/L2_images/dino_break.png";
 import L2_img2 from "../../../../assets/WM_Interventions_images/L2_images/L2_img2.jpg";
+import timerSound   from '../../../../assets/Audios/timer_sound.mp3';
+import correctSound from '../../../../assets/Audios/correct_answer.mp3';
+import wrongSound   from '../../../../assets/Audios/wrong_answer.mp3';
+
 
 const questions = [
   {
@@ -38,6 +42,9 @@ function Activity1({ onNext }) {
   const [showDinoBreak, setShowDinoBreak] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [score, setScore] = useState(0);
+  const timerAudio   = useRef(new Audio(timerSound));
+  const correctAudio = useRef(new Audio(correctSound));
+  const wrongAudio   = useRef(new Audio(wrongSound));
 
   useEffect(() => {
     if (showImage) {
@@ -57,6 +64,17 @@ function Activity1({ onNext }) {
   }, [showImage]);
 
   useEffect(() => {
+    if (showImage) {
+      timerAudio.current.loop = true;
+      timerAudio.current.currentTime = 0;
+      timerAudio.current.play().catch(() => {});
+    } else {
+      timerAudio.current.pause();
+      timerAudio.current.currentTime = 0;
+    }
+  }, [showImage]);
+
+  useEffect(() => {
     setSelectedAnswer(null);
     setEggAnimState("intact");
     setShowDinoBreak(false);
@@ -68,6 +86,16 @@ function Activity1({ onNext }) {
   const handleAnswerSelect = (option) => {
     if (selectedAnswer !== null) return;
     setSelectedAnswer(option);
+
+    // play feedback
+if (option === currentQuestion.correctAnswer) {
+  correctAudio.current.currentTime = 0;
+  correctAudio.current.play().catch(() => {});
+} else {
+  wrongAudio.current.currentTime = 0;
+  wrongAudio.current.play().catch(() => {});
+}
+
 
     if (option === currentQuestion.correctAnswer) {
       setScore(prev => prev + 3);

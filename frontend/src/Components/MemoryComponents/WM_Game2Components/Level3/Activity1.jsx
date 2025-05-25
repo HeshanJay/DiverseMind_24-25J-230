@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import L3_Back2 from "../../../../assets/WM_Interventions_images/L3_images/L3_Back2.jpg"; 
 import L3_Back3 from "../../../../assets/WM_Interventions_images/L3_images/L3_Back3.jpg"; 
 import L3_img2 from "../../../../assets/WM_Interventions_images/L3_images/L3_img2.png";
@@ -12,6 +12,10 @@ import L3_img11 from "../../../../assets/WM_Interventions_images/L3_images/L3_im
 import L3_img12 from "../../../../assets/WM_Interventions_images/L3_images/L3_img12.jpg";
 import deer1 from "../../../../assets/WM_Interventions_images/L3_images/deer1.png";
 import { FaArrowRight } from 'react-icons/fa';
+import timerSound   from '../../../../assets/Audios/timer_sound.mp3';
+import correctSound from '../../../../assets/Audios/correct_answer.mp3';
+import wrongSound   from '../../../../assets/Audios/wrong_answer.mp3';
+
 
 const questions = [
   {
@@ -46,6 +50,11 @@ function Activity1({ onNext }) {
   const [showCelebration, setShowCelebration] = useState(false);
   const [score, setScore] = useState(0);
   const [timeUp, setTimeUp] = useState(false);
+  const timerAudio   = useRef(new Audio(timerSound));
+  const correctAudio = useRef(new Audio(correctSound));
+  const wrongAudio   = useRef(new Audio(wrongSound));
+  
+  
 
   useEffect(() => {
     let countdown;
@@ -54,20 +63,45 @@ function Activity1({ onNext }) {
     }
     return () => clearInterval(countdown);
   }, [currentQuestion, timer, timeUp]);
+  
 
   useEffect(() => {
     if (timer === 0 && currentQuestion > 0) setTimeUp(true);
   }, [timer, currentQuestion]);
 
+    // play/stop timer_sound.mp3 during the question countdown
+    useEffect(() => {
+      if (currentQuestion > 0 && timer > 0 && !timeUp) {
+        timerAudio.current.loop = true;
+        timerAudio.current.currentTime = 0;
+        timerAudio.current.play().catch(() => {});
+      } else {
+        timerAudio.current.pause();
+        timerAudio.current.currentTime = 0;
+      }
+    }, [currentQuestion, timer, timeUp]);  
+
+
   const handleAnswerSelect = (option) => {
     if (selectedAnswer || timeUp) return;
     setSelectedAnswer(option);
+
+    
+if (option === questions[currentQuestion - 1].correctAnswer) {
+  correctAudio.current.currentTime = 0;
+  correctAudio.current.play().catch(() => {});
+} else {
+  wrongAudio.current.currentTime = 0;
+  wrongAudio.current.play().catch(() => {});
+}
+
     if (option === questions[currentQuestion - 1].correctAnswer) {
       setScore(prev => prev + 5);
       setShowCelebration(true);
       setTimeout(() => setShowCelebration(false), 4000);
     }
   };
+  
 
   const handleNext = () => {
     if (currentQuestion <= questions.length) {

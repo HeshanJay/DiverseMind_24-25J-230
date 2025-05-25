@@ -17,6 +17,8 @@ import penguinA_20 from "../../../../assets/WM_Interventions_images/L3_images/pe
 import rabbit_icon from "../../../../assets/WM_Interventions_images/L3_images/rabbit_icon.png";
 import rabbit2 from "../../../../assets/WM_Interventions_images/L3_images/rabbit2.png";
 import L3_LastAudio from "../../../../assets/WM_Interventions_images/L3_audios/L3_LastAudio.mp3";
+import correctSound from "../../../../assets/Audios/correct_answer.mp3";
+import wrongSound   from "../../../../assets/Audios/wrong_answer.mp3";
 
 function Activity1({ onNext }) {
   const questions = [
@@ -32,10 +34,10 @@ function Activity1({ onNext }) {
     {
       question: "නමුත් මම කිසිම ක්‍රීඩාවක් කරලා නැහැ. ඒ නිසා මම දන්නේ නැහැ!",
       answers: [
-        { image: penguin_Iced, isCorrect: false, position: { top: "60%", left: "10%" }, text: "දිනුෂි විසින් සියලු දෙනාටමට පවසයි" },
+        { image: penguin_Iced, isCorrect: true, position: { top: "60%", left: "10%" }, text: "දිනුෂි විසින් සියලු දෙනාටමට පවසයි" },
         { image: bear, isCorrect: false, position: { top: "60%", left: "30%" }, text: "රවිඳු විසින් සියලු දෙනාටමට පවසයි" },
         { image: owl, isCorrect: false, position: { top: "30%", left: "50%" }, text: "දිනුෂි විසින් සුපුන්ට පවසයි" },
-        { image: fox, isCorrect: true, position: { top: "30%", left: "70%" }, text: "ගයාන් විසින් දිනුෂිට පවසයි" },
+        { image: fox, isCorrect: false, position: { top: "30%", left: "70%" }, text: "ගයාන් විසින් දිනුෂිට පවසයි" },
       ]
     },
     {
@@ -67,7 +69,9 @@ function Activity1({ onNext }) {
   const [brokenIce, setBrokenIce] = useState([]);
   const [score, setScore] = useState(0);
   const [answerSubmitted, setAnswerSubmitted] = useState(false);
-  const audioRef = useRef(null);
+  const audioRef   = useRef(null);
+  const correctRef = useRef(new Audio(correctSound));
+  const wrongRef   = useRef(new Audio(wrongSound));
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -94,12 +98,22 @@ function Activity1({ onNext }) {
     }
   };
 
+  // <-- updated feedback logic here
   const handleAnswerClick = (index) => {
-    if (selectedAnswer !== null) return; 
-    
+    if (selectedAnswer !== null) return;
+
+    // play feedback sound
+    if (currentQuestion.answers[index].isCorrect) {
+      correctRef.current.currentTime = 0;
+      correctRef.current.play().catch(() => {});
+    } else {
+      wrongRef.current.currentTime = 0;
+      wrongRef.current.play().catch(() => {});
+    }
+
     setSelectedAnswer(index);
     setAnswerSubmitted(true);
-    
+
     if (currentQuestion.answers[index].isCorrect) {
       setScore(prev => prev + 5);
       setShowCelebration(true);
@@ -108,10 +122,11 @@ function Activity1({ onNext }) {
       }, 3000);
     }
   };
+  // -->
 
   const moveToNextQuestion = () => {
     if (!answerSubmitted) return; 
-    
+
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
       setSelectedAnswer(null);
@@ -131,6 +146,7 @@ function Activity1({ onNext }) {
       default: return cold;
     }
   };
+
 
   return (
     <div

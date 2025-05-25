@@ -22,7 +22,7 @@ const MemoryTests = ({ onNext }) => {
             <div
               style={{
                 textAlign: "right",
-                paddingRight: "400px",
+                paddingRight: "360px",
               }}
             >
               <span className="bg-gradient-to-r from-emerald-200 via-green-200 to-teal-200 text-transparent bg-clip-text drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
@@ -44,7 +44,7 @@ const MemoryTests = ({ onNext }) => {
           onClick={handleStart}
           style={{
             marginLeft: "auto",
-            marginRight: "500px",
+            marginRight: "450px",
             padding: "15px 48px",
             border: "2px solid rgb(110 231 183)",
             transform: "scale(1)",

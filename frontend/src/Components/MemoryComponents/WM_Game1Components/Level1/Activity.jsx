@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import img2 from "../../../../assets/WM_Interventions_images/img2.jpg";
 import img3 from "../../../../assets/WM_Interventions_images/img3.jpg";
@@ -18,6 +18,9 @@ import fish4 from "../../../../assets/WM_Interventions_images/L1_images/fish4.pn
 import crab1 from "../../../../assets/WM_Interventions_images/L1_images/crab1.png";
 import crab3 from "../../../../assets/WM_Interventions_images/L1_images/crab3.png";
 import G1_L1_Feedback from "../../../../Components/MemoryComponents/WM_Game1Components/Level1/G1_L1_Feedback";
+import correctSound from "../../../../assets/Audios/correct_answer.mp3";
+import wrongSound from "../../../../assets/Audios/wrong_answer.mp3";
+import timerSound from "../../../../assets/Audios/timer_sound.mp3";
 
 const Activity = () => {
   const [currentQuestion, setCurrentQuestion] = useState(1);
@@ -27,6 +30,10 @@ const Activity = () => {
   const [showCelebration, setShowCelebration] = useState(false);
   const [score, setScore] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
+  const correctAudio = useRef(new Audio(correctSound));
+  const wrongAudio = useRef(new Audio(wrongSound));
+  const timerAudio = useRef(new Audio(timerSound));
+
   useEffect(() => {
     setShowImage(true);
     setTimeLeft(20);
@@ -42,6 +49,17 @@ const Activity = () => {
       setShowImage(false);
     }
   }, [timeLeft]);
+  
+    useEffect(() => {
+    if (showImage) {
+   timerAudio.current.loop = true;
+   timerAudio.current.currentTime = 0;
+ timerAudio.current.play().catch(() => {});
+ } else {
+    timerAudio.current.pause();
+    timerAudio.current.currentTime = 0;
+ }
+}, [showImage]);
 
   const questionData = {
     1: {
@@ -132,10 +150,18 @@ const Activity = () => {
 
   const handleAnswerClick = (index) => {
     setSelectedAnswer(index);
-    if (questionData[currentQuestion].answers[index].isCorrect) {
+    const isCorrect = questionData[currentQuestion].answers[index].isCorrect;
+    if (isCorrect) {
+      // play correct sound
+      correctAudio.current.currentTime = 0;
+      correctAudio.current.play().catch((e) => console.warn(e));
       setScore((prevScore) => prevScore + 5);
       setShowCelebration(true);
       setTimeout(() => setShowCelebration(false), 3000);
+    } else {
+      // play wrong sound
+      wrongAudio.current.currentTime = 0;
+      wrongAudio.current.play().catch((e) => console.warn(e));
     }
   };
 

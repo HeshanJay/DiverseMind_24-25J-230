@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+
 import jungle_menu from "../../../assets/WM_Interventions_images/menu_images/jungle_menu.png";
 import jungle_icon1 from "../../../assets/WM_Interventions_images/menu_images/jungle_icon1.png";
 import jungle_icon2 from "../../../assets/WM_Interventions_images/menu_images/jungle_icon2.png";
@@ -7,9 +8,17 @@ import jungle_icon3 from "../../../assets/WM_Interventions_images/menu_images/ju
 import monkey1 from "../../../assets/WM_Interventions_images/menu_images/monkey1.png";
 import monkey5 from "../../../assets/WM_Interventions_images/menu_images/monkey5.png";
 import monkey3 from "../../../assets/WM_Interventions_images/menu_images/monkey3.png";
+import clickSound from "../../../assets/Audios/click_sound.mp3";
 
 function WM_Game2Menu() {
   const navigate = useNavigate();
+  const clickAudio = useRef(new Audio(clickSound));
+
+  const handleClick = (path) => {
+    clickAudio.current.currentTime = 0;
+    clickAudio.current.play().catch(() => {});
+    navigate(path);
+  };
 
   return (
     <div
@@ -22,11 +31,11 @@ function WM_Game2Menu() {
         position: "relative",
       }}
     >
-      {/* jungle_icon3 at the top-right corner */}
+      {/* Level 3 */}
       <img
         src={jungle_icon3}
         alt="Jungle Icon 3"
-        onClick={() => navigate("/working-memory-game2/Level3/*")}
+        onClick={() => handleClick("/working-memory-game2/Level3/*")}
         style={{
           position: "absolute",
           top: "190px",
@@ -40,11 +49,11 @@ function WM_Game2Menu() {
         onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
       />
 
-      {/* jungle_icon2 at the top-center */}
+      {/* Level 2 */}
       <img
         src={jungle_icon2}
         alt="Jungle Icon 2"
-        onClick={() => navigate("/working-memory-game2/Level2/*")}
+        onClick={() => handleClick("/working-memory-game2/Level2/*")}
         style={{
           position: "absolute",
           top: "160px",
@@ -58,11 +67,11 @@ function WM_Game2Menu() {
         onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
       />
 
-      {/* jungle_icon1 at the top-left corner */}
+      {/* Level 1 */}
       <img
         src={jungle_icon1}
         alt="Jungle Icon 1"
-        onClick={() => navigate("/working-memory-game2/Level1/*")}
+        onClick={() => handleClick("/working-memory-game2/Level1/*")}
         style={{
           position: "absolute",
           top: "190px",
@@ -76,7 +85,7 @@ function WM_Game2Menu() {
         onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
       />
 
-      {/* monkey image at the bottom center with bouncing animation */}
+      {/* Decorative monkeys */}
       <img
         src={monkey5}
         alt="Monkey"
@@ -89,7 +98,6 @@ function WM_Game2Menu() {
           height: "auto",
         }}
       />
-
       <img
         src={monkey3}
         alt="Monkey"
@@ -102,7 +110,6 @@ function WM_Game2Menu() {
           height: "auto",
         }}
       />
-      {/* monkey image at the bottom center with bouncing animation */}
       <img
         src={monkey1}
         alt="Monkey"
@@ -117,16 +124,12 @@ function WM_Game2Menu() {
         }}
       />
 
-      {/* Define the bounce animation */}
+      {/* Bounce keyframes */}
       <style>
         {`
           @keyframes bounce {
-            0%, 100% {
-              transform: translateX(-50%) translateY(0);
-            }
-            50% {
-              transform: translateX(-50%) translateY(-20px);
-            }
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-20px); }
           }
         `}
       </style>

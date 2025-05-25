@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 
@@ -33,6 +33,9 @@ import img35 from "../../../../assets/WM_Interventions_images/Activity_images/im
 import sea_back5 from "../../../../assets/WM_Interventions_images/L1_images/sea_back5.jpg";
 import sea_back7 from "../../../../assets/WM_Interventions_images/L1_images/sea_back7.png";
 import G1_L2_Feedback from "../../../../Components/MemoryComponents/WM_Game1Components/Level2/G1_L2_Feedback";
+import timerSound from "../../../../assets/Audios/timer_sound.mp3";
+import correctSound from "../../../../assets/Audios/correct_answer.mp3";
+import wrongSound from "../../../../assets/Audios/wrong_answer.mp3";
 
 const questions = [
   {
@@ -76,6 +79,9 @@ const Activity1 = () => {
   const [hasSelectedAtLeastOne, setHasSelectedAtLeastOne] = useState(false);
   const [showQuestion, setShowQuestion] = useState(true);
   const [questionTimer, setQuestionTimer] = useState(2);
+  const timerAudio   = useRef(new Audio(timerSound));
+  const correctAudio = useRef(new Audio(correctSound));
+  const wrongAudio = useRef(new Audio(wrongSound));
 
   useEffect(() => {
     if (current.questionImages && current.questionImages.length > 0) {
@@ -97,6 +103,18 @@ const Activity1 = () => {
       setShowQuestion(false);
     }
   }, [questionTimer, showQuestion]);
+
+   // play/stop looping timer sound
+    useEffect(() => {
+   if (showQuestion) {
+     timerAudio.current.loop = true;
+     timerAudio.current.currentTime = 0;
+     timerAudio.current.play().catch(() => {});
+  } else {
+     timerAudio.current.pause();
+     timerAudio.current.currentTime = 0;
+    }
+  }, [showQuestion]);
 
   const [revealed, setRevealed] = useState(
     Array(current.answerImages.length).fill(false)
@@ -138,7 +156,26 @@ const Activity1 = () => {
   const handleSelect = (index) => {
     if (previewActive || (answerTimer !== null && answerTimer <= 0)) return;
     if (revealed[index]) return;
-
+  
+    const isCorrect = current.correctIndices.includes(index);
+  
+    // play feedback sound
+    if (isCorrect) {
+      correctAudio.current.currentTime = 0;
+      correctAudio.current.play().catch(() => {});
+      setScore((prevScore) => prevScore + 2);
+    } else {
+      wrongAudio.current.currentTime = 0;
+      wrongAudio.current.play().catch(() => {});
+      // flip back the card after a short delay
+      setTimeout(() => {
+        setRevealed((prev) => {
+          const newArr = [...prev];
+          newArr[index] = false;
+          return newArr;
+        });
+      }, 1000);
+    }
     setHasSelectedAtLeastOne(true);
 
     setRevealed((prev) => {
