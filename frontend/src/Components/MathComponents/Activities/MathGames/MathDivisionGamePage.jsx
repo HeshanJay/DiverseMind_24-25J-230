@@ -147,7 +147,7 @@ const DivisionGamePage = () => {
         .answer-column {
           display: flex;
           flex-direction: column;
-          gap: 50px;
+          gap: 40px;
         }
         .question-column {
           display: flex;
@@ -155,14 +155,14 @@ const DivisionGamePage = () => {
           align-items: center;
         }
         .question-card {
-          width: 300px;
+          width: 200px;
           height: auto;
           border: 3px solid #2196F3;
           border-radius: 10px;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .answer-card {
-          width: 200px;
+          width: 170px;
           height: auto;
           cursor: pointer;
           border: 2px solid #ccc;
