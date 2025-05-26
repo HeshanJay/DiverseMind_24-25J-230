@@ -59,14 +59,6 @@ status_mapping = {
 }
 
 def preprocess_image(image_bytes: bytes, input_shape=(64, 64, 3)) -> np.ndarray:
-    """
-    Preprocess the image to match the input format of the model.
-    - Convert to grayscale
-    - Resize
-    - Edge detection + threshold
-    - Normalize
-    - Reshape to (1, 64, 64, 3)
-    """
     img = cv2.imdecode(np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_GRAYSCALE)
     img = cv2.resize(img, (input_shape[0], input_shape[1]))
 
@@ -83,18 +75,6 @@ def preprocess_image(image_bytes: bytes, input_shape=(64, 64, 3)) -> np.ndarray:
     return np.expand_dims(binary, axis=0)
 
 def predict_outcome_writing(image_bytes: bytes) -> dict:
-    """
-    Predict the outcome for a given image using the Keras model (letter formation).
-
-    Returns:
-        dict: {
-          "predicted_class": <str>,
-          "status": <str>,
-          "confidence": <float>
-        }
-        or
-        {"error": <str>} if an exception occurs
-    """
     try:
         # Preprocess
         processed_image = preprocess_image(image_bytes)
