@@ -29,9 +29,9 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
       image: question1Image,
       answers: ["↑", "↓", "←", "→"],
       correctAnswer: "↑",
-      imageWidth: "270px",  
-      imageHeight: "208px", 
-      imageMarginTop: "-30px" 
+      imageWidth: "270px",
+      imageHeight: "208px",
+      imageMarginTop: "-30px",
     },
     {
       image: question2Image,
@@ -59,7 +59,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showImage, setShowImage] = useState(true);
   const [showAnswers, setShowAnswers] = useState(false);
-  const [timer, setTimer] = useState(2);
+  const [timer, setTimer] = useState(3);
   const [score, setScore] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
 
@@ -71,7 +71,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
           if (prevTimer === 1) {
             setShowImage(false);
             setShowAnswers(true);
-            setTimer(2);
+            setTimer(3);
             clearInterval(interval);
           }
           return prevTimer - 1;
@@ -103,7 +103,7 @@ const SpeedMeasurementActivity = ({ onNext, onBack }) => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(10);
+      setTimer(3);
     } else {
       setIsCompleted(true);
       onNext();

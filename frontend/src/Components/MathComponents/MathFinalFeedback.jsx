@@ -1,9 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import backimag from "../../assets/background_images/scorebg.jpg";
-import { MdHome, MdMenu, MdRefresh } from "react-icons/md";
-import { FaRedoAlt, FaHome, FaBars } from "react-icons/fa"; // New icons for navigation
+import { FaRedoAlt, FaHome, FaBars } from "react-icons/fa";
 
-const MathFinalFeedback = ({ skillPhrase, onGoHome, onGoMenu, onRetry }) => {
+const MathFinalFeedback = ({ skillPhrase }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="fixed inset-0 flex items-center justify-center overflow-hidden">
       {/* Background image */}
@@ -98,7 +100,7 @@ const MathFinalFeedback = ({ skillPhrase, onGoHome, onGoMenu, onRetry }) => {
           <FaRedoAlt />
         </button>
         <button
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/home-page")}
           className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg hover:scale-105 transition-transform duration-300"
           title="Home"
         >

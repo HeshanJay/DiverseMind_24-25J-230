@@ -208,7 +208,7 @@ const Display1 = () => {
       {!gameStarted && !gameOver && (
         <div className="relative z-20 flex flex-col items-center justify-center h-screen text-center p-4">
           <h1 className="text-5xl font-bold text-yellow-300 mb-4">
-            පලමු අදිරයෙන් විනෝද වෙමු !
+            පළමු අදියරයෙන් විනෝද වෙමු !
           </h1>
           <p className="text-xl text-white mb-6 max-w-lg">
             ආයුබෝවන් පුංච් වීරයා, මෙහි ඇති පෝච්චි වලින් මොල් නමැති සත්වයා සහ

@@ -166,7 +166,7 @@ const ColorChange = () => {
       {!gameStarted && !gameOver && (
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center p-4 bg-black bg-opacity-50">
           <h2 className="text-yellow-500 font-extrabold text-4xl mb-4">
-            පලමු අදියරයෙන් විනෝද වෙමු !
+            පළමු අදියරයෙන් විනෝද වෙමු !
           </h2>
           <div className="relative w-[2200px] md:w-[1000px] h-[1100px] mt-4 rounded-xl shadow-lg overflow-hidden">
             <div

@@ -99,7 +99,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
   ];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [timer, setTimer] = useState(2);
+  const [timer, setTimer] = useState(3);
   const [showImage, setShowImage] = useState(true);
   const [showAnswers, setShowAnswers] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -107,13 +107,13 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
   useEffect(() => {
     let interval;
     if (showImage) {
-      setTimer(2);
+      setTimer(3);
       interval = setInterval(() => {
         setTimer((prevTimer) => {
           if (prevTimer === 1) {
             setShowImage(false);
             setShowAnswers(true);
-            setTimer(10);
+            setTimer(3);
           }
           return prevTimer - 1;
         });
@@ -144,7 +144,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(10);
+      setTimer(3);
     } else {
       setIsCompleted(true);
       onNext();
@@ -191,7 +191,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
                 />
               </div>
             </div>
-            <div className="mt-6">
+            <div className="mt-10">
               <div className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 rounded-md shadow-lg text-center">
                 ⏳ කාලය: {timer} තත්පර
               </div>
@@ -200,7 +200,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
         )}
         {showAnswers && (
           <>
-            <div className="bg-gray-800 bg-opacity-70 p-6 rounded-[3rem] shadow-lg mb-3 w-[940px] h-[485px] border-4 border-white">
+            <div className="bg-gray-800 bg-opacity-70 p-6 rounded-[3rem] shadow-lg mb-3 w-[940px] h-[440px] border-4 border-white">
               <h2 className="text-4xl font-semibold mb-6 text-center">
                 නිවැරදි පිළිතුර තෝරන්න
               </h2>
@@ -220,7 +220,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
                             <button
                               onClick={() => handleAnswerClick(answer.id)}
                               className="bg-gradient-to-r from-green-400 to-lime-600 text-white px-6 py-3 rounded-xl text-2xl shadow-lg hover:scale-105 transition-transform relative"
-                              style={{ width: "400px", height: "150px" }}
+                              style={{ width: "300px", height: "110px" }}
                             >
                               <img
                                 src={answer.src}
@@ -245,7 +245,7 @@ const MemoryTestActivity = ({ onNext, onBack }) => {
                                   )
                                 }
                                 className="bg-gradient-to-r from-green-400 to-lime-600 text-white px-6 py-3 rounded-xl text-2xl shadow-lg hover:scale-105 transition-transform"
-                                style={{ width: "400px", height: "150px" }}
+                                style={{ width: "300px", height: "110px" }}
                               >
                                 <img
                                   src={

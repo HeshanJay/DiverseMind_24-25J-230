@@ -57,14 +57,14 @@ function ScreeningandInterventions() {
       </div>
 
       {/* Page Title */}
-      <div className="absolute top-2 left-1/2 transform -translate-x-1/2 z-50">
-        <div className="bg-gradient-to-r from-purple-500 to-blue-700 text-white text-2xl font-bold text-center p-4 rounded-2xl border-4 border-white shadow-lg w-[350px] h-[75px]">
+      <div className="absolute top-2 left-[52%] transform -translate-x-1/2 z-50">
+        <div className="bg-gradient-to-r from-purple-500 to-blue-700 text-white text-3xl font-bold text-center p-4 rounded-2xl border-4 border-white shadow-lg w-[350px] h-[75px]">
           කාණ්ඩය තෝරන්න
         </div>
       </div>
 
       {/* Screening Section */}
-      <div className="absolute left-[400px]" style={{ top: "250px" }}>
+      <div className="absolute left-[400px]" style={{ top: "240px" }}>
         <div className="relative">
           {selectedOption === "screening" ? (
             <div
@@ -78,9 +78,9 @@ function ScreeningandInterventions() {
               <img
                 src={SQ_greeting}
                 alt="Greeting"
-                className="w-[650px] h-[250px] transform translate-x-[-80px] translate-y-[-100px]"
+                className="w-[650px] h-[250px] transform translate-x-[-60px] translate-y-[-110px]"
               />
-              <div className="absolute top-[50px] left-[20px] text-center">
+              <div className="absolute top-[40px] left-[2px] text-center">
                 <p className="text-1xl font-bold text-black mt-2">
                   සුභ පැතුම්.
                 </p>
@@ -123,7 +123,7 @@ function ScreeningandInterventions() {
               <img
                 src={tortoise}
                 alt="Tortoise"
-                className="w-[250px] h-[140px] relative"
+                className="w-[250px] h-[120px] relative"
                 style={{ transform: "translateY(120px) translateX(-130px)" }}
               />
             </>
@@ -132,7 +132,7 @@ function ScreeningandInterventions() {
       </div>
 
       {/* Interventions Section */}
-      <div className="absolute right-[430px]" style={{ top: "250px" }}>
+      <div className="absolute right-[430px]" style={{ top: "240px" }}>
         <div className="relative">
           {selectedOption === "intervention" ? (
             <div
@@ -146,9 +146,9 @@ function ScreeningandInterventions() {
               <img
                 src={SQ_greeting}
                 alt="Greeting"
-                className="w-[650px] h-[250px] transform translate-x-[-280px] translate-y-[-70px]"
+                className="w-[650px] h-[250px] transform translate-x-[-250px] translate-y-[-70px]"
               />
-              <div className="absolute top-[80px] left-[-180px] text-center">
+              <div className="absolute top-[80px] left-[-190px] text-center">
                 <p className="text-1xl font-bold text-black mt-2">
                   සුභ පැතුම්,
                 </p>
@@ -191,7 +191,7 @@ function ScreeningandInterventions() {
               <img
                 src={tortoise2}
                 alt="Tortoise2"
-                className="w-[250px] h-[140px] relative"
+                className="w-[250px] h-[120px] relative"
                 style={{ transform: "translateY(120px) translateX(210px)" }}
               />
             </>

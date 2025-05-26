@@ -1,5 +1,5 @@
-import React, { useState, useEffect,useRef } from 'react';
-import { FaArrowRight } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from "react";
+import { FaArrowRight } from "react-icons/fa";
 import img2_back from "../../../../assets/WM_Interventions_images/L2_images/img2_back.png";
 import L2_img3 from "../../../../assets/WM_Interventions_images/L2_images/L2_img3.jpg";
 import img13 from "../../../../assets/WM_Interventions_images/L2_images/img13.png";
@@ -11,10 +11,9 @@ import imgQ2 from "../../../../assets/WM_Interventions_images/L2_images/imgQ2.pn
 import imgQ3 from "../../../../assets/WM_Interventions_images/L2_images/imgQ3.png";
 import imgQ4 from "../../../../assets/WM_Interventions_images/L2_images/imgQ4.png";
 import dino_img from "../../../../assets/WM_Interventions_images/L2_images/dino_img.png";
-import timerSound   from '../../../../assets/Audios/timer_sound.mp3';
-import correctSound from '../../../../assets/Audios/correct_answer.mp3';
-import wrongSound   from '../../../../assets/Audios/wrong_answer.mp3';
-
+import timerSound from "../../../../assets/Audios/timer_sound.mp3";
+import correctSound from "../../../../assets/Audios/correct_answer.mp3";
+import wrongSound from "../../../../assets/Audios/wrong_answer.mp3";
 
 const questions = [
   {
@@ -24,7 +23,7 @@ const questions = [
       "මල් පොකුරු පිරුණු රථයක්.",
       "ගඩොල් පිරුණු රථයක්.",
       "පොල් ගෙඩි පිරුණු රථයක්.",
-      "වෙළඳපොළෙන් ගෙනා භාණ්ඩ රථයක්."
+      "වෙළඳපොළෙන් ගෙනා භාණ්ඩ රථයක්.",
     ],
   },
   {
@@ -34,7 +33,7 @@ const questions = [
       "වෙළඳාමේ යෙදී සිටිති.",
       "සන්වාදයේ යෙදෙමින් සිටිති.",
       "වතු කම්කරුවන් ලෙස වැඩ කරමින් සිටිති.",
-      "වන්දනා කරමින් සිටිති."
+      "වන්දනා කරමින් සිටිති.",
     ],
   },
   {
@@ -44,7 +43,7 @@ const questions = [
       "ගෘහස්ථ ව්‍යාපාර සහ කෘෂිකර්මය.",
       "මිනිසුන් සියල්ලන්ම මහානගරයෙ වැඩ කරති.",
       "ඔවුන් මධ්‍යම රාත්‍රියේ පමණක් ව්‍යාපාර කරති.",
-      "ඔවුන් විදේශ රටවල පමණක් වැඩ කරති."
+      "ඔවුන් විදේශ රටවල පමණක් වැඩ කරති.",
     ],
   },
   {
@@ -54,23 +53,22 @@ const questions = [
       "ගවයාට බැඳි ලෑල්ල සහ පාද යාත්‍රා.",
       "මිනිසුන් සියලුදෙනා කාර් වලින් ගමන් කරති.",
       "ප්‍රවාහනය සඳහා දුම්රිය භාවිතා කරති.",
-      "ගුවන් පාලමක් හරහා ගමන් කරති."
+      "ගුවන් පාලමක් හරහා ගමන් කරති.",
     ],
   },
 ];
 
 const questionImages = [imgQ1, imgQ2, imgQ3, imgQ4];
-function Activity2({ onNext }) {  
+function Activity2({ onNext }) {
   const [showIntro, setShowIntro] = useState(true);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(3);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [score, setScore] = useState(0);  
-  const timerAudio   = useRef(new Audio(timerSound));
+  const [score, setScore] = useState(0);
+  const timerAudio = useRef(new Audio(timerSound));
   const correctAudio = useRef(new Audio(correctSound));
-  const wrongAudio   = useRef(new Audio(wrongSound));
-  
+  const wrongAudio = useRef(new Audio(wrongSound));
 
   useEffect(() => {
     if (showIntro) {
@@ -88,17 +86,16 @@ function Activity2({ onNext }) {
     }
   }, [showIntro]);
 
-    useEffect(() => {
-      if (showIntro) {
-        timerAudio.current.loop = true;
-        timerAudio.current.currentTime = 0;
-        timerAudio.current.play().catch(() => {});
-      } else {
-        timerAudio.current.pause();
-        timerAudio.current.currentTime = 0;
-      }
-    }, [showIntro]);
-  
+  useEffect(() => {
+    if (showIntro) {
+      timerAudio.current.loop = true;
+      timerAudio.current.currentTime = 0;
+      timerAudio.current.play().catch(() => {});
+    } else {
+      timerAudio.current.pause();
+      timerAudio.current.currentTime = 0;
+    }
+  }, [showIntro]);
 
   useEffect(() => {
     setSelectedAnswer(null);
@@ -111,18 +108,16 @@ function Activity2({ onNext }) {
     if (selectedAnswer !== null) return;
     setSelectedAnswer(option);
 
-    
-if (option === currentQuestion.correctAnswer) {
-  correctAudio.current.currentTime = 0;
-  correctAudio.current.play().catch(() => {});
-} else {
-  wrongAudio.current.currentTime = 0;
-  wrongAudio.current.play().catch(() => {});
-}
-
-    
     if (option === currentQuestion.correctAnswer) {
-      setScore(prev => prev + 3);  
+      correctAudio.current.currentTime = 0;
+      correctAudio.current.play().catch(() => {});
+    } else {
+      wrongAudio.current.currentTime = 0;
+      wrongAudio.current.play().catch(() => {});
+    }
+
+    if (option === currentQuestion.correctAnswer) {
+      setScore((prev) => prev + 3);
       setShowCelebration(true);
       setTimeout(() => {
         setShowCelebration(false);
@@ -135,13 +130,13 @@ if (option === currentQuestion.correctAnswer) {
       alert("Please select an answer!");
       return;
     }
-    
+
     setShowCelebration(false);
-    
+
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      onNext(score);  
+      onNext(score);
     }
   };
 
@@ -151,14 +146,18 @@ if (option === currentQuestion.correctAnswer) {
         className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center p-4"
         style={{ backgroundImage: `url(${img2_back})` }}
       >
-      <img 
-        src={L2_img3} 
-        alt="Intro" 
-        className="w-[490px] h-[390px] rounded-lg object-cover border-4 border-white"
+        <img
+          src={L2_img3}
+          alt="Intro"
+          className="w-[490px] h-[390px] rounded-lg object-cover border-4 border-white"
         />
-        <p className="absolute bottom-[65px] left-1/2 transform -translate-x-1/2 text-xl text-white px-6 py-3 rounded-xl font-semibold
+        <p
+          className="absolute bottom-[20px] left-1/2 transform -translate-x-1/2 text-xl text-white px-6 py-3 rounded-xl font-semibold
                     bg-gradient-to-r from-[#8B4513] via-[#CD653F] to-[#8B4513]
-                    min-w-[200px] max-w-[300px] text-center shadow-lg">⏳ කාලය: {timer} තත්පර</p> 
+                    min-w-[200px] max-w-[300px] text-center shadow-lg"
+        >
+          ⏳ කාලය: {timer} තත්පර
+        </p>
       </div>
     );
   }
@@ -168,41 +167,54 @@ if (option === currentQuestion.correctAnswer) {
       className="relative flex flex-col items-center justify-center min-h-screen bg-cover bg-center p-4"
       style={{ backgroundImage: `url(${img2_back})` }}
     >
-   <div className="relative ml-auto" style={{ width: '230px', marginTop: '-469px', marginLeft: '338px' }}>
-  <img
-    src={questionImages[currentIndex]}
-    alt={`Question ${currentIndex + 1}`}
-    className="w-full h-auto "
-  />
-  <div 
-    className="absolute top-[62px] p-2" 
-    style={currentIndex === questionImages.length - 1 ? { right: '15px', color: 'yellow' } : { right: '15px' }}
-  >
-    <h2 
-      className="text-lg font-bold text-white text-center"
-      style={currentQuestion.question === "3. ගමේ මිනිසුන් වැඩි වශයෙන් කුමන කර්මාන්තයක නිරත වෙයි?" ? { marginTop: '-15px', marginLeft: '20px' } : {}}
-    >
-      {currentQuestion.question === "3. ගමේ මිනිසුන් වැඩි වශයෙන් කුමන කර්මාන්තයක නිරත වෙයි?" ? (
-        <>
-          {"3. ගමේ මිනිසුන් වැඩි"}
-          <br />
-          {"වශයෙන් කුමන"}
-          <br />
-          {"කර්මාන්තයක නිරත වෙයි?"}
-        </>
-      ) : (
-        currentQuestion.question
-      )}
-    </h2>
-  </div>
-</div>
+      <div
+        className="relative ml-auto"
+        style={{ width: "230px", marginTop: "-469px", marginLeft: "338px" }}
+      >
+        <img
+          src={questionImages[currentIndex]}
+          alt={`Question ${currentIndex + 1}`}
+          className="w-full h-auto "
+        />
+        <div
+          className="absolute top-[62px] p-2"
+          style={
+            currentIndex === questionImages.length - 1
+              ? { right: "15px", color: "yellow" }
+              : { right: "15px" }
+          }
+        >
+          <h2
+            className="text-lg font-bold text-white text-center"
+            style={
+              currentQuestion.question ===
+              "3. ගමේ මිනිසුන් වැඩි වශයෙන් කුමන කර්මාන්තයක නිරත වෙයි?"
+                ? { marginTop: "-15px", marginLeft: "20px" }
+                : {}
+            }
+          >
+            {currentQuestion.question ===
+            "3. ගමේ මිනිසුන් වැඩි වශයෙන් කුමන කර්මාන්තයක නිරත වෙයි?" ? (
+              <>
+                {"3. ගමේ මිනිසුන් වැඩි"}
+                <br />
+                {"වශයෙන් කුමන"}
+                <br />
+                {"කර්මාන්තයක නිරත වෙයි?"}
+              </>
+            ) : (
+              currentQuestion.question
+            )}
+          </h2>
+        </div>
+      </div>
 
       <div
         className="group absolute"
         style={{
-          top: '52%',
-          left: '27%',
-          transform: 'translate(-50%, 0)',
+          top: "52%",
+          left: "27%",
+          transform: "translate(-50%, 0)",
         }}
         onClick={() => handleAnswerClick(currentQuestion.options[0])}
       >
@@ -210,19 +222,18 @@ if (option === currentQuestion.correctAnswer) {
           src={img13}
           alt="Top Answer"
           className="object-cover"
-          style={{ width: '215px', height: 'auto', margin: '20px 0' }}
+          style={{ width: "215px", height: "auto", margin: "20px 0" }}
         />
         <div className="absolute inset-10 flex items-center justify-center pl-2 text-xl font-bold text-black group-hover:text-white cursor-pointer">
-  {currentQuestion.options[0]}
-</div>
-
+          {currentQuestion.options[0]}
+        </div>
       </div>
       <div
         className="group absolute"
         style={{
-          top: '33%',
-          right: '20%',
-          transform: 'translate(0, -50%)',
+          top: "33%",
+          right: "20%",
+          transform: "translate(0, -50%)",
         }}
         onClick={() => handleAnswerClick(currentQuestion.options[1])}
       >
@@ -230,7 +241,7 @@ if (option === currentQuestion.correctAnswer) {
           src={img14}
           alt="Right Answer"
           className="object-cover"
-          style={{ width: '215px', height: 'auto', margin: '20px 0' }}
+          style={{ width: "215px", height: "auto", margin: "20px 0" }}
         />
         <div className="absolute inset-10 flex items-center justify-center pl-8 text-xl font-bold text-black group-hover:text-white cursor-pointer">
           {currentQuestion.options[1]}
@@ -240,9 +251,9 @@ if (option === currentQuestion.correctAnswer) {
       <div
         className="group absolute"
         style={{
-          bottom: '22%',
-          left: '53%',
-          transform: 'translate(-50%, 0)',
+          bottom: "22%",
+          left: "53%",
+          transform: "translate(-50%, 0)",
         }}
         onClick={() => handleAnswerClick(currentQuestion.options[2])}
       >
@@ -250,7 +261,7 @@ if (option === currentQuestion.correctAnswer) {
           src={img18}
           alt="Bottom Answer"
           className="object-cover"
-          style={{ width: '215px', height: 'auto', margin: '20px 0' }}
+          style={{ width: "215px", height: "auto", margin: "20px 0" }}
         />
         <div className="absolute inset-10 flex items-center justify-center pl-3 text-xl font-bold text-black group-hover:text-white cursor-pointer">
           {currentQuestion.options[2]}
@@ -259,9 +270,9 @@ if (option === currentQuestion.correctAnswer) {
       <div
         className="group absolute"
         style={{
-          top: '51%',
-          left: '29%',
-          transform: 'translate(0, -50%)',
+          top: "51%",
+          left: "29%",
+          transform: "translate(0, -50%)",
         }}
         onClick={() => handleAnswerClick(currentQuestion.options[3])}
       >
@@ -269,7 +280,7 @@ if (option === currentQuestion.correctAnswer) {
           src={img16}
           alt="Left Answer"
           className="object-cover"
-          style={{ width: '215px', height: 'auto', margin: '20px 0' }}
+          style={{ width: "215px", height: "auto", margin: "20px 0" }}
         />
         <div className="absolute inset-10 flex items-center justify-center pl-3 text-xl font-bold text-black group-hover:text-white cursor-pointer">
           {currentQuestion.options[3]}
@@ -280,8 +291,8 @@ if (option === currentQuestion.correctAnswer) {
         disabled={!selectedAnswer}
         className={`absolute bottom-[67px] right-[60px] p-4 rounded-full transition ${
           selectedAnswer
-              ? "bg-gradient-to-r from-green-400/90 via-yellow-300/90 to-green-600/90 text-white hover:from-green-500/90 hover:via-yellow-400/90 hover:to-green-700/90"
-              : "bg-gradient-to-r from-gray-300/90 via-gray-400/90 to-gray-500/90 text-gray-700 cursor-not-allowed"
+            ? "bg-gradient-to-r from-green-400/90 via-yellow-300/90 to-green-600/90 text-white hover:from-green-500/90 hover:via-yellow-400/90 hover:to-green-700/90"
+            : "bg-gradient-to-r from-gray-300/90 via-gray-400/90 to-gray-500/90 text-gray-700 cursor-not-allowed"
         }`}
       >
         <FaArrowRight size={24} />
@@ -316,8 +327,8 @@ if (option === currentQuestion.correctAnswer) {
             <div className="firework firework-24"></div>
           </div>
           <h1 className="relative z-10 text-6xl font-bold mb-[-100px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
-      ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
-    </h1>
+            ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
+          </h1>
           <img
             src={dino_img}
             alt="Celebration Dino"

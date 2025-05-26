@@ -13,10 +13,7 @@ import img44 from "../../assets/Working_Memory/img44.png";
 import img48 from "../../assets/Working_Memory/img48.png";
 
 const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
-  const {
-    languageVocabScore,
-    setLanguageVocabScore,
-  } = useScores();
+  const { languageVocabScore, setLanguageVocabScore } = useScores();
 
   const questions = [
     {
@@ -87,7 +84,7 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
   ];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [timer, setTimer] = useState(2);
+  const [timer, setTimer] = useState(3);
   const [showImage, setShowImage] = useState(true);
   const [showAnswers, setShowAnswers] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -104,7 +101,7 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
           clearInterval(interval);
           setShowImage(false);
           setShowAnswers(true);
-          setTimer(2);
+          setTimer(3);
         }
         return prev - 1;
       });
@@ -140,7 +137,7 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
       setCurrentQuestion((prev) => prev + 1);
       setShowImage(true);
       setShowAnswers(false);
-      setTimer(10);
+      setTimer(3);
     } else {
       setIsCompleted(true);
       // Only fire finish once
@@ -165,11 +162,31 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
             </div>
 
             {/* Decorative thumbnails */}
-            <img src={img41} alt="img41" className="absolute top-[267px] right-[360px] w-[200px] h-auto" />
-            <img src={img42} alt="img42" className="absolute top-[267px] right-[200px] w-[200px] h-auto" />
-            <img src={img43} alt="img43" className="absolute top-[267px] right-[90px] w-[200px] h-auto" />
-            <img src={img44} alt="img44" className="absolute top-[267px] right-[6px] w-[200px] h-auto" />
-            <img src={img48} alt="img48" className="absolute top-[10px] right-[414px] w-[145px] h-auto" />
+            <img
+              src={img41}
+              alt="img41"
+              className="absolute top-[267px] right-[360px] w-[200px] h-auto"
+            />
+            <img
+              src={img42}
+              alt="img42"
+              className="absolute top-[267px] right-[200px] w-[200px] h-auto"
+            />
+            <img
+              src={img43}
+              alt="img43"
+              className="absolute top-[267px] right-[90px] w-[200px] h-auto"
+            />
+            <img
+              src={img44}
+              alt="img44"
+              className="absolute top-[267px] right-[6px] w-[200px] h-auto"
+            />
+            <img
+              src={img48}
+              alt="img48"
+              className="absolute top-[10px] right-[414px] w-[145px] h-auto"
+            />
 
             {/* Main question image */}
             <div className="flex-grow flex justify-center items-center w-full">
@@ -190,19 +207,18 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
 
         {/* Timer */}
         {(showImage || showAnswers) && (
-  <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
-    <div
-      className={`text-xl font-bold ${
-        showImage
-          ? "bg-gradient-to-r from-blue-500 to-purple-500"
-          : "bg-gradient-to-r from-green-700 to-lime-700"
-      } px-6 py-3 rounded-md shadow-lg`}
-    >
-      ⏳ කාලය: {timer} තත්පර
-    </div>
-  </div>
-)}
-
+          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+            <div
+              className={`text-xl font-bold ${
+                showImage
+                  ? "bg-gradient-to-r from-blue-500 to-purple-500"
+                  : "bg-gradient-to-r from-green-700 to-lime-700"
+              } px-6 py-3 rounded-md shadow-lg`}
+            >
+              ⏳ කාලය: {timer} තත්පර
+            </div>
+          </div>
+        )}
 
         {/* Answers */}
         {showAnswers && (
@@ -232,7 +248,9 @@ const LanguageVocabActivity = ({ onNext, onBack, onFinishAll }) => {
                               className="bg-gradient-to-r from-green-600 to-lime-300 text-white px-6 py-3 rounded-xl text-2xl shadow-lg hover:scale-105 transition-transform"
                               style={{ width: "320px", height: "70px" }}
                             >
-                              <strong>{questions[currentQuestion].answers[idx + 1]}</strong>
+                              <strong>
+                                {questions[currentQuestion].answers[idx + 1]}
+                              </strong>
                             </button>
                           </td>
                         )}

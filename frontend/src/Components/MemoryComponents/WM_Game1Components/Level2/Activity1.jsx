@@ -78,15 +78,15 @@ const Activity1 = () => {
   const current = questions[currentQuestion];
   const [hasSelectedAtLeastOne, setHasSelectedAtLeastOne] = useState(false);
   const [showQuestion, setShowQuestion] = useState(true);
-  const [questionTimer, setQuestionTimer] = useState(2);
-  const timerAudio   = useRef(new Audio(timerSound));
+  const [questionTimer, setQuestionTimer] = useState(3);
+  const timerAudio = useRef(new Audio(timerSound));
   const correctAudio = useRef(new Audio(correctSound));
   const wrongAudio = useRef(new Audio(wrongSound));
 
   useEffect(() => {
     if (current.questionImages && current.questionImages.length > 0) {
       setShowQuestion(true);
-      setQuestionTimer(2);
+      setQuestionTimer(3);
     } else {
       setShowQuestion(false);
     }
@@ -104,15 +104,15 @@ const Activity1 = () => {
     }
   }, [questionTimer, showQuestion]);
 
-   // play/stop looping timer sound
-    useEffect(() => {
-   if (showQuestion) {
-     timerAudio.current.loop = true;
-     timerAudio.current.currentTime = 0;
-     timerAudio.current.play().catch(() => {});
-  } else {
-     timerAudio.current.pause();
-     timerAudio.current.currentTime = 0;
+  // play/stop looping timer sound
+  useEffect(() => {
+    if (showQuestion) {
+      timerAudio.current.loop = true;
+      timerAudio.current.currentTime = 0;
+      timerAudio.current.play().catch(() => {});
+    } else {
+      timerAudio.current.pause();
+      timerAudio.current.currentTime = 0;
     }
   }, [showQuestion]);
 
@@ -136,7 +136,7 @@ const Activity1 = () => {
         setPreviewActive(true);
         timer2 = setTimeout(() => {
           setPreviewActive(false);
-          setAnswerTimer(10);
+          setAnswerTimer(3);
         }, 1000);
       }, 1000);
     }
@@ -156,9 +156,9 @@ const Activity1 = () => {
   const handleSelect = (index) => {
     if (previewActive || (answerTimer !== null && answerTimer <= 0)) return;
     if (revealed[index]) return;
-  
+
     const isCorrect = current.correctIndices.includes(index);
-  
+
     // play feedback sound
     if (isCorrect) {
       correctAudio.current.currentTime = 0;

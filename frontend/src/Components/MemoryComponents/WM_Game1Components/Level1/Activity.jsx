@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import img2 from "../../../../assets/WM_Interventions_images/img2.jpg";
 import img3 from "../../../../assets/WM_Interventions_images/img3.jpg";
@@ -36,7 +36,7 @@ const Activity = () => {
 
   useEffect(() => {
     setShowImage(true);
-    setTimeLeft(20);
+    setTimeLeft(3);
     setSelectedAnswer(null);
     setShowCelebration(false);
   }, [currentQuestion]);
@@ -49,17 +49,17 @@ const Activity = () => {
       setShowImage(false);
     }
   }, [timeLeft]);
-  
-    useEffect(() => {
+
+  useEffect(() => {
     if (showImage) {
-   timerAudio.current.loop = true;
-   timerAudio.current.currentTime = 0;
- timerAudio.current.play().catch(() => {});
- } else {
-    timerAudio.current.pause();
-    timerAudio.current.currentTime = 0;
- }
-}, [showImage]);
+      timerAudio.current.loop = true;
+      timerAudio.current.currentTime = 0;
+      timerAudio.current.play().catch(() => {});
+    } else {
+      timerAudio.current.pause();
+      timerAudio.current.currentTime = 0;
+    }
+  }, [showImage]);
 
   const questionData = {
     1: {

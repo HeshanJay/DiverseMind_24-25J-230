@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { FaArrowRight } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from "react";
+import { FaArrowRight } from "react-icons/fa";
 import L2_back3 from "../../../../assets/WM_Interventions_images/L2_images/L2_back3.png";
 import img_egg1 from "../../../../assets/WM_Interventions_images/L2_images/img_egg1.png";
 import dino_img from "../../../../assets/WM_Interventions_images/L2_images/dino_img.png";
 import dino_break from "../../../../assets/WM_Interventions_images/L2_images/dino_break.png";
 import L2_img2 from "../../../../assets/WM_Interventions_images/L2_images/L2_img2.jpg";
-import timerSound   from '../../../../assets/Audios/timer_sound.mp3';
-import correctSound from '../../../../assets/Audios/correct_answer.mp3';
-import wrongSound   from '../../../../assets/Audios/wrong_answer.mp3';
-
+import timerSound from "../../../../assets/Audios/timer_sound.mp3";
+import correctSound from "../../../../assets/Audios/correct_answer.mp3";
+import wrongSound from "../../../../assets/Audios/wrong_answer.mp3";
 
 const questions = [
   {
@@ -35,20 +34,20 @@ const questions = [
 
 function Activity1({ onNext }) {
   const [showImage, setShowImage] = useState(true);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(3);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [eggAnimState, setEggAnimState] = useState("intact");
   const [showDinoBreak, setShowDinoBreak] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [score, setScore] = useState(0);
-  const timerAudio   = useRef(new Audio(timerSound));
+  const timerAudio = useRef(new Audio(timerSound));
   const correctAudio = useRef(new Audio(correctSound));
-  const wrongAudio   = useRef(new Audio(wrongSound));
+  const wrongAudio = useRef(new Audio(wrongSound));
 
   useEffect(() => {
     if (showImage) {
-      setTimer(10);
+      setTimer(3);
       const intervalId = setInterval(() => {
         setTimer((prev) => {
           if (prev <= 1) {
@@ -88,17 +87,16 @@ function Activity1({ onNext }) {
     setSelectedAnswer(option);
 
     // play feedback
-if (option === currentQuestion.correctAnswer) {
-  correctAudio.current.currentTime = 0;
-  correctAudio.current.play().catch(() => {});
-} else {
-  wrongAudio.current.currentTime = 0;
-  wrongAudio.current.play().catch(() => {});
-}
-
+    if (option === currentQuestion.correctAnswer) {
+      correctAudio.current.currentTime = 0;
+      correctAudio.current.play().catch(() => {});
+    } else {
+      wrongAudio.current.currentTime = 0;
+      wrongAudio.current.play().catch(() => {});
+    }
 
     if (option === currentQuestion.correctAnswer) {
-      setScore(prev => prev + 3);
+      setScore((prev) => prev + 3);
       setEggAnimState("breaking");
       setTimeout(() => {
         setEggAnimState("broken");
@@ -128,19 +126,23 @@ if (option === currentQuestion.correctAnswer) {
       style={{ backgroundImage: `url(${L2_back3})` }}
     >
       {showImage ? (
-  <div className="flex flex-col items-center">
-    <img
-      src={L2_img2}
-      alt="Intro"
-      className="w-1/2 h-auto rounded-lg shadow-lg border-4 border-white" 
-    />
-    <p className="absolute bottom-[65px] left-1/2 transform -translate-x-1/2 text-xl text-white px-6 py-3 rounded-xl font-semibold
+        <div className="flex flex-col items-center">
+          <img
+            src={L2_img2}
+            alt="Intro"
+            className="w-1/2 h-auto rounded-lg shadow-lg border-4 border-white"
+          />
+          <p
+            className="absolute bottom-[20px] left-1/2 transform -translate-x-1/2 text-xl text-white px-6 py-3 rounded-xl font-semibold
                     bg-gradient-to-r from-[#8B4513] via-[#CD653F] to-[#8B4513]
-                    min-w-[200px] max-w-[300px] text-center shadow-lg ">⏳ කාලය: {timer} තත්පර</p> 
-  </div>
+                    min-w-[200px] max-w-[300px] text-center shadow-lg "
+          >
+            ⏳ කාලය: {timer} තත්පර
+          </p>
+        </div>
       ) : (
         <div className="bg-gradient-to-r from-[#1A4D2E] via-[#3A7D44] to-[#4B9D4A] p-6 rounded-lg shadow-lg w-full max-w-2xl border-4 border-[#2D5A3D] relative">
-        <h2 className="text-4xl font-bold mb-4 text-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+          <h2 className="text-4xl font-bold mb-4 text-center text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
             {currentQuestion.question}
           </h2>
           <div className="grid grid-cols-5 gap-4 mb-4">
@@ -156,14 +158,24 @@ if (option === currentQuestion.correctAnswer) {
                   <img
                     src={
                       isSelected && isCorrect && eggAnimState === "broken"
-                        ? (showDinoBreak ? dino_break : dino_img)
+                        ? showDinoBreak
+                          ? dino_break
+                          : dino_img
                         : img_egg1
                     }
                     alt="egg"
                     className={`
                       w-40 h-40 rounded-full object-cover
-                      ${isSelected && isCorrect && eggAnimState === "breaking" ? "animate-break-slow" : ""}
-                      ${isSelected && !isCorrect ? "border-4 border-red-500" : ""}
+                      ${
+                        isSelected && isCorrect && eggAnimState === "breaking"
+                          ? "animate-break-slow"
+                          : ""
+                      }
+                      ${
+                        isSelected && !isCorrect
+                          ? "border-4 border-red-500"
+                          : ""
+                      }
                     `}
                   />
                   {!(isSelected && isCorrect) && (
@@ -181,7 +193,6 @@ if (option === currentQuestion.correctAnswer) {
               selectedAnswer !== null
                 ? "bg-gradient-to-r from-green-400/90 via-yellow-300/90 to-green-600/90 text-white hover:from-green-500/90 hover:via-yellow-400/90 hover:to-green-700/90"
                 : "bg-gradient-to-r from-gray-300/90 via-gray-400/90 to-gray-500/90 text-gray-700 cursor-not-allowed"
-
             }`}
             disabled={selectedAnswer === null}
           >
@@ -218,8 +229,8 @@ if (option === currentQuestion.correctAnswer) {
             <div className="firework firework-24"></div>
           </div>
           <h1 className="relative z-10 text-6xl font-bold mb-[-100px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
-      ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
-    </h1>
+            ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
+          </h1>
           <img
             src={dino_img}
             alt="Celebration Dino"

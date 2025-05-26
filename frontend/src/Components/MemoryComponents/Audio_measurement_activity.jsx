@@ -66,11 +66,10 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [showAnswers, setShowAnswers] = useState(false);
-  const [timer, setTimer] = useState(10); 
+  const [timer, setTimer] = useState(3);
   const [audioPlayedCount, setAudioPlayedCount] = useState(0);
   const [score, setScore] = useState(0);
   const [isQuizCompleted, setIsQuizCompleted] = useState(false);
-
 
   useEffect(() => {
     let interval;
@@ -88,7 +87,6 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
     return () => clearInterval(interval);
   }, [showAnswers]);
 
-
   useEffect(() => {
     if (audioPlayedCount < 2 && isAudioPlaying) {
       const audio = new Audio(audioFiles[currentQuestion - 1]);
@@ -105,7 +103,7 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
   const handleStartAudio = () => {
     setIsAudioPlaying(true);
     setShowAnswers(false);
-    setTimer(10);
+    setTimer(3);
     setAudioPlayedCount(0);
   };
 
@@ -122,11 +120,11 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
       setCurrentQuestion((prev) => prev + 1);
       setIsAudioPlaying(false);
       setShowAnswers(false);
-      setTimer(10);
+      setTimer(3);
       setAudioPlayedCount(0);
     } else {
       setIsQuizCompleted(true);
-     
+
       setTimeout(() => {
         onNext();
       }, 0);
@@ -139,7 +137,9 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
         <div
           className="relative z-10 flex flex-col justify-center items-center"
           style={{
-            backgroundImage: showAnswers ? `url(${backImgAnswer})` : `url(${backImg})`,
+            backgroundImage: showAnswers
+              ? `url(${backImgAnswer})`
+              : `url(${backImg})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -149,12 +149,14 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
           }}
         >
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-  
+
           <div className="relative z-10 flex flex-col justify-center items-center h-full text-white text-center">
             {!showAnswers && (
-              <div className="bg-gradient-to-r from-blue-300/80 via-green-300/80 to-purple-300/80 
+              <div
+                className="bg-gradient-to-r from-blue-300/80 via-green-300/80 to-purple-300/80 
                   p-8 rounded-[2rem] shadow-md w-[420px] h-[120px] relative border-8 border-blue-800 
-                  flex flex-col justify-center items-center mt-[-40px]">
+                  flex flex-col justify-center items-center mt-[-40px]"
+              >
                 <img
                   src={img32}
                   alt="Butterfly 1"
@@ -172,7 +174,7 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
                 </h1>
               </div>
             )}
-  
+
             {!showAnswers && (
               <>
                 {!isAudioPlaying && (
@@ -183,7 +185,7 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
                     <FaPlay className="m-auto" />
                   </button>
                 )}
-  
+
                 {isAudioPlaying && (
                   <button
                     disabled
@@ -194,10 +196,16 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
                 )}
               </>
             )}
-            
+
             {showAnswers && (
               <>
-                <div className={`bg-gray-800 bg-opacity-70 p-4 border-4 border-white rounded-[3rem] mb-6 w-full max-w-5xl mx-auto ${[4,5].includes(currentQuestion) ? 'min-h-[400px]' : 'min-h-[300px]'}`}>
+                <div
+                  className={`bg-gray-800 bg-opacity-70 p-4 border-4 border-white rounded-[3rem] mb-6 w-full max-w-5xl mx-auto ${
+                    [4, 5].includes(currentQuestion)
+                      ? "min-h-[400px]"
+                      : "min-h-[300px]"
+                  }`}
+                >
                   <h2 className="text-4xl font-semibold mb-9 text-white text-center">
                     නිවැරදි පිළිතුර තෝරන්න
                   </h2>
@@ -212,9 +220,15 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
                                 <button
                                   onClick={() => handleAnswerClick(index)}
                                   className="bg-gradient-to-r from-green-700 to-blue-500 text-white px-6 py-4 rounded-xl text-xl shadow-lg hover:scale-110 transition-transform flex items-center justify-start w-full"
-                                  style={{ height: [4,5].includes(currentQuestion) ? "100px" : "70px" }}
+                                  style={{
+                                    height: [4, 5].includes(currentQuestion)
+                                      ? "100px"
+                                      : "70px",
+                                  }}
                                 >
-                                  <strong className="ml-4 text-left w-full">{answer}</strong>
+                                  <strong className="ml-4 text-left w-full">
+                                    {answer}
+                                  </strong>
                                 </button>
                               </td>
 
@@ -223,9 +237,15 @@ const AudioMeasurementActivity = ({ onNext, onBack }) => {
                                   <button
                                     onClick={() => handleAnswerClick(index + 1)}
                                     className="bg-gradient-to-r from-green-700 to-blue-500 text-white px-6 py-4 rounded-xl text-xl shadow-lg hover:scale-110 transition-transform flex items-center justify-start w-full"
-                                    style={{ height: [4,5].includes(currentQuestion) ? "100px" : "70px" }}
+                                    style={{
+                                      height: [4, 5].includes(currentQuestion)
+                                        ? "100px"
+                                        : "70px",
+                                    }}
                                   >
-                                    <strong className="ml-4 text-left w-full">{answers[currentQuestion - 1][index + 1]}</strong>
+                                    <strong className="ml-4 text-left w-full">
+                                      {answers[currentQuestion - 1][index + 1]}
+                                    </strong>
                                   </button>
                                 </td>
                               )}

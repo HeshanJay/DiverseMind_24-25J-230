@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import L3_Back2 from "../../../../assets/WM_Interventions_images/L3_images/L3_Back2.jpg"; 
-import L3_Back3 from "../../../../assets/WM_Interventions_images/L3_images/L3_Back3.jpg"; 
+import React, { useState, useEffect, useRef } from "react";
+import L3_Back2 from "../../../../assets/WM_Interventions_images/L3_images/L3_Back2.jpg";
+import L3_Back3 from "../../../../assets/WM_Interventions_images/L3_images/L3_Back3.jpg";
 import L3_img2 from "../../../../assets/WM_Interventions_images/L3_images/L3_img2.png";
 import L3_img4 from "../../../../assets/WM_Interventions_images/L3_images/L3_img4.png";
 import L3_img6 from "../../../../assets/WM_Interventions_images/L3_images/L3_img6.jpg";
@@ -11,16 +11,15 @@ import L3_img10 from "../../../../assets/WM_Interventions_images/L3_images/L3_im
 import L3_img11 from "../../../../assets/WM_Interventions_images/L3_images/L3_img11.png";
 import L3_img12 from "../../../../assets/WM_Interventions_images/L3_images/L3_img12.jpg";
 import deer1 from "../../../../assets/WM_Interventions_images/L3_images/deer1.png";
-import { FaArrowRight } from 'react-icons/fa';
-import timerSound   from '../../../../assets/Audios/timer_sound.mp3';
-import correctSound from '../../../../assets/Audios/correct_answer.mp3';
-import wrongSound   from '../../../../assets/Audios/wrong_answer.mp3';
-
+import { FaArrowRight } from "react-icons/fa";
+import timerSound from "../../../../assets/Audios/timer_sound.mp3";
+import correctSound from "../../../../assets/Audios/correct_answer.mp3";
+import wrongSound from "../../../../assets/Audios/wrong_answer.mp3";
 
 const questions = [
   {
     question:
-      "1. සීලෝන් නාෂනල් රිවීව්\" පතනය ආරම්භ කළේ සහ ශ්‍රී ලංකාවේ අධ්‍යාපන සහ සංස්කෘතික ප්‍රබෝධය සඳහා මහත් දායකත්වයක් ලබාදුන් පුද්ගලයා කවුද?",
+      '1. සීලෝන් නාෂනල් රිවීව්" පතනය ආරම්භ කළේ සහ ශ්‍රී ලංකාවේ අධ්‍යාපන සහ සංස්කෘතික ප්‍රබෝධය සඳහා මහත් දායකත්වයක් ලබාදුන් පුද්ගලයා කවුද?',
     correctAnswer: L3_img4,
     options: [L3_img6, L3_img4, L3_img2, L3_img10],
   },
@@ -46,93 +45,104 @@ const questions = [
 function Activity1({ onNext }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(3);
   const [showCelebration, setShowCelebration] = useState(false);
   const [score, setScore] = useState(0);
   const [timeUp, setTimeUp] = useState(false);
-  const timerAudio   = useRef(new Audio(timerSound));
+  const timerAudio = useRef(new Audio(timerSound));
   const correctAudio = useRef(new Audio(correctSound));
-  const wrongAudio   = useRef(new Audio(wrongSound));
-  
-  
+  const wrongAudio = useRef(new Audio(wrongSound));
 
   useEffect(() => {
     let countdown;
     if (currentQuestion > 0 && timer > 0 && !timeUp) {
-      countdown = setInterval(() => setTimer(prev => prev - 1), 1000);
+      countdown = setInterval(() => setTimer((prev) => prev - 1), 1000);
     }
     return () => clearInterval(countdown);
   }, [currentQuestion, timer, timeUp]);
-  
 
   useEffect(() => {
     if (timer === 0 && currentQuestion > 0) setTimeUp(true);
   }, [timer, currentQuestion]);
 
-    // play/stop timer_sound.mp3 during the question countdown
-    useEffect(() => {
-      if (currentQuestion > 0 && timer > 0 && !timeUp) {
-        timerAudio.current.loop = true;
-        timerAudio.current.currentTime = 0;
-        timerAudio.current.play().catch(() => {});
-      } else {
-        timerAudio.current.pause();
-        timerAudio.current.currentTime = 0;
-      }
-    }, [currentQuestion, timer, timeUp]);  
-
+  // play/stop timer_sound.mp3 during the question countdown
+  useEffect(() => {
+    if (currentQuestion > 0 && timer > 0 && !timeUp) {
+      timerAudio.current.loop = true;
+      timerAudio.current.currentTime = 0;
+      timerAudio.current.play().catch(() => {});
+    } else {
+      timerAudio.current.pause();
+      timerAudio.current.currentTime = 0;
+    }
+  }, [currentQuestion, timer, timeUp]);
 
   const handleAnswerSelect = (option) => {
     if (selectedAnswer || timeUp) return;
     setSelectedAnswer(option);
 
-    
-if (option === questions[currentQuestion - 1].correctAnswer) {
-  correctAudio.current.currentTime = 0;
-  correctAudio.current.play().catch(() => {});
-} else {
-  wrongAudio.current.currentTime = 0;
-  wrongAudio.current.play().catch(() => {});
-}
+    if (option === questions[currentQuestion - 1].correctAnswer) {
+      correctAudio.current.currentTime = 0;
+      correctAudio.current.play().catch(() => {});
+    } else {
+      wrongAudio.current.currentTime = 0;
+      wrongAudio.current.play().catch(() => {});
+    }
 
     if (option === questions[currentQuestion - 1].correctAnswer) {
-      setScore(prev => prev + 5);
+      setScore((prev) => prev + 5);
       setShowCelebration(true);
       setTimeout(() => setShowCelebration(false), 4000);
     }
   };
-  
 
   const handleNext = () => {
     if (currentQuestion <= questions.length) {
-      setCurrentQuestion(prev => prev + 1);
+      setCurrentQuestion((prev) => prev + 1);
       setTimeUp(false);
       setSelectedAnswer(null);
-      setTimer(10);
+      setTimer(3);
     }
     if (currentQuestion === questions.length) onNext(score);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center px-6"
-      style={{ backgroundImage: `url(${currentQuestion === 0 ? L3_Back2 : L3_Back3})` }}>
-      
+    <div
+      className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center px-6"
+      style={{
+        backgroundImage: `url(${currentQuestion === 0 ? L3_Back2 : L3_Back3})`,
+      }}
+    >
       {currentQuestion === 0 ? (
         <div className="bg-gradient-to-r from-emerald-100 via-lime-50 to-teal-100 p-6 rounded-2xl shadow-lg text-center max-w-3xl">
           <h2 className="text-2xl font-bold text-emerald-800 mb-4">
             හොඳින් ඡේදය කියවා ප්‍රශ්නවලට පිළිතුරු සපයන්න.
           </h2>
           <p className="text-xl font-semibold">
-          මෙහි දැක්වෙන ප්‍රබල නායකයින් ශ්‍රී ලංකාවේ අධ්‍යාපන, බෞද්ධ ප්‍රබෝධය, විද්‍යාත්මක ප්‍රවර්ධනය සහ නිදහස සඳහා විශාල සේවයක් කළහ. ඩී. බී. ජයතිලක ශ්‍රී ලංකාවේ ජාතික අධ්‍යාපනය සඳහා වැදගත් දායකත්වයක් ලබාදෙමින්, "සීලෝන් නාෂනල් රිවීව්" පතනය ආරම්භ කළේය. ඔහු 1917 දී ලන්ඩනයට ගොස් ශ්‍රී ලංකාවේ නිදහස සඳහාත් ඉංග්‍රීසි ආණ්ඩුවට එරෙහිවත් වැඩ කළේය.
-            සී. ඊ. ඊ. කන්නන්ගර ශ්‍රී ලංකාවේ නොමිලේ අධ්‍යාපන ක්‍රමය හඳුන්වාදීමෙන් 1943 දී පනතක් හඳුන්වාදියි. මෙය දරුවන්ට වියදම් රහිතව උසස් අධ්‍යාපනය ලබාගැනීමට හැකියාව ලබාදුන් විශාල අධ්‍යාපන ප්‍රතිසංස්කරණයක් විය. අනගාරික ධර්මපාල ශ්‍රී ලංකාවේ බෞද්ධ ප්‍රබෝධය ප්‍රවර්ධනය කිරීමටත්, බෝධි මන්දිරය යළිත් බෞද්ධයන්ට ලබාදීමටත් මහත් උත්සාහයක් දැරීය.
-            අතර් සී. ක්ලාර්ක් තාරකා විද්‍යාව හා තාක්ෂණය ප්‍රවර්ධනය කරමින්, ශ්‍රී ලංකාවට විශාල සේවයක් කළේය. ඔහුගේ "2001: A Space Odyssey" නවකතාව ලෝක විද්‍යා ප්‍රබන්ධ ඉතිහාසයේ මනා නිර්මාණයක් විය. සුගතධම්ම හිමි ජාතික චේතනාව දියුණු කිරීම සඳහා පද පේලි හා කවි නිර්මාණය කළ අතර, ඔහුගේ කවි ශ්‍රී ලංකාවේ ජනතාවට මග පෙන්වූයේ ප්‍රබල ජාතික සිතිවිලි ආවරණය කරමිනි.
+            මෙහි දැක්වෙන ප්‍රබල නායකයින් ශ්‍රී ලංකාවේ අධ්‍යාපන, බෞද්ධ ප්‍රබෝධය,
+            විද්‍යාත්මක ප්‍රවර්ධනය සහ නිදහස සඳහා විශාල සේවයක් කළහ. ඩී. බී.
+            ජයතිලක ශ්‍රී ලංකාවේ ජාතික අධ්‍යාපනය සඳහා වැදගත් දායකත්වයක්
+            ලබාදෙමින්, "සීලෝන් නාෂනල් රිවීව්" පතනය ආරම්භ කළේය. ඔහු 1917 දී
+            ලන්ඩනයට ගොස් ශ්‍රී ලංකාවේ නිදහස සඳහාත් ඉංග්‍රීසි ආණ්ඩුවට එරෙහිවත්
+            වැඩ කළේය. සී. ඊ. ඊ. කන්නන්ගර ශ්‍රී ලංකාවේ නොමිලේ අධ්‍යාපන ක්‍රමය
+            හඳුන්වාදීමෙන් 1943 දී පනතක් හඳුන්වාදියි. මෙය දරුවන්ට වියදම් රහිතව
+            උසස් අධ්‍යාපනය ලබාගැනීමට හැකියාව ලබාදුන් විශාල අධ්‍යාපන
+            ප්‍රතිසංස්කරණයක් විය. අනගාරික ධර්මපාල ශ්‍රී ලංකාවේ බෞද්ධ ප්‍රබෝධය
+            ප්‍රවර්ධනය කිරීමටත්, බෝධි මන්දිරය යළිත් බෞද්ධයන්ට ලබාදීමටත් මහත්
+            උත්සාහයක් දැරීය. අතර් සී. ක්ලාර්ක් තාරකා විද්‍යාව හා තාක්ෂණය
+            ප්‍රවර්ධනය කරමින්, ශ්‍රී ලංකාවට විශාල සේවයක් කළේය. ඔහුගේ "2001: A
+            Space Odyssey" නවකතාව ලෝක විද්‍යා ප්‍රබන්ධ ඉතිහාසයේ මනා නිර්මාණයක්
+            විය. සුගතධම්ම හිමි ජාතික චේතනාව දියුණු කිරීම සඳහා පද පේලි හා කවි
+            නිර්මාණය කළ අතර, ඔහුගේ කවි ශ්‍රී ලංකාවේ ජනතාවට මග පෙන්වූයේ ප්‍රබල
+            ජාතික සිතිවිලි ආවරණය කරමිනි.
           </p>
           <button
             onClick={() => setCurrentQuestion(1)}
             className="mt-4 text-white px-4 py-2 rounded-lg text-xl font-semibold
                      bg-gradient-to-r from-emerald-600 via-lime-600 to-teal-600
                      hover:bg-gradient-to-r hover:from-emerald-700 hover:via-lime-700 hover:to-teal-700
-                     transition-all duration-300 shadow-md hover:shadow-lg">
+                     transition-all duration-300 shadow-md hover:shadow-lg"
+          >
             ආරම්භ කරන්න
           </button>
         </div>
@@ -145,21 +155,30 @@ if (option === questions[currentQuestion - 1].correctAnswer) {
               </p>
               <div className="grid grid-cols-2 gap-4 w-full max-w-lg mx-auto">
                 {questions[currentQuestion - 1].options.map((option, index) => {
-                  const isCorrect = option === questions[currentQuestion - 1].correctAnswer;
+                  const isCorrect =
+                    option === questions[currentQuestion - 1].correctAnswer;
                   const isSelected = option === selectedAnswer;
-                  
+
                   return (
                     <div
                       key={index}
                       className={`flex flex-col items-center p-4 rounded-lg shadow-md border-2 transition-all
-                        ${isSelected ?
-                          (isCorrect ? 'border-green-500 bg-green-100' : 'border-red-500 bg-red-100')
-                          : 'border-gray-200 hover:border-blue-300'}
-                        ${(selectedAnswer || timeUp) ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                        ${
+                          isSelected
+                            ? isCorrect
+                              ? "border-green-500 bg-green-100"
+                              : "border-red-500 bg-red-100"
+                            : "border-gray-200 hover:border-blue-300"
+                        }
+                        ${
+                          selectedAnswer || timeUp
+                            ? "cursor-not-allowed"
+                            : "cursor-pointer"
+                        }`}
                       onClick={() => handleAnswerSelect(option)}
                     >
-                      <img 
-                        src={option} 
+                      <img
+                        src={option}
                         alt={`Option ${index + 1}`}
                         className="w-32 h-32 object-cover rounded-lg mb-2"
                       />
@@ -173,7 +192,7 @@ if (option === questions[currentQuestion - 1].correctAnswer) {
             </div>
           </div>
           <div className="flex flex-col items-center mt-8">
-            <button 
+            <button
               className="mt-[-20px] text-white px-4 py-2 rounded-lg text-xl font-semibold
                        bg-gradient-to-r from-emerald-600 via-lime-600 to-teal-600"
               disabled
@@ -183,9 +202,11 @@ if (option === questions[currentQuestion - 1].correctAnswer) {
             <button
               onClick={handleNext}
               className={`absolute bottom-5 right-5 p-4 rounded-full shadow-lg transition
-                ${(selectedAnswer || timeUp) ?
-                  "bg-gradient-to-r from-green-400/90 via-yellow-300/90 to-green-600/90 text-white hover:from-green-500/90 hover:via-yellow-400/90 hover:to-green-700/90"
-                  : "bg-gradient-to-r from-gray-300/90 via-gray-400/90 to-gray-500/90 text-gray-700 cursor-not-allowed"}`}
+                ${
+                  selectedAnswer || timeUp
+                    ? "bg-gradient-to-r from-green-400/90 via-yellow-300/90 to-green-600/90 text-white hover:from-green-500/90 hover:via-yellow-400/90 hover:to-green-700/90"
+                    : "bg-gradient-to-r from-gray-300/90 via-gray-400/90 to-gray-500/90 text-gray-700 cursor-not-allowed"
+                }`}
               disabled={!selectedAnswer && !timeUp}
             >
               <FaArrowRight size={24} />
@@ -202,8 +223,8 @@ if (option === questions[currentQuestion - 1].correctAnswer) {
             ))}
           </div>
           <h1 className="relative z-10 text-6xl font-bold mb-[-30px] animate-fadeIn bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
-      ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
-    </h1>
+            ඔබේ පිළිතුර නිවැරදියි. සුභ පැතුම්
+          </h1>
           <img
             src={deer1}
             alt="Celebration Feedback"

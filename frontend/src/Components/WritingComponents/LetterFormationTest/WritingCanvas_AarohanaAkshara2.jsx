@@ -159,7 +159,7 @@ const WritingCanvas_AarohanaAkshara2 = ({ onNext, onBack }) => {
         src={monkeyImage}
         alt="Monkey"
         className="monkey-img"
-        style={{ zIndex: 20, position: "absolute", top: "272px" }}
+        style={{ zIndex: 20, position: "absolute", top: "255px" }}
       />
 
       <div className="relative" style={{ zIndex: 10, marginTop: "45px" }}>
@@ -216,7 +216,7 @@ const WritingCanvas_AarohanaAkshara2 = ({ onNext, onBack }) => {
       </button>
 
       {/* Buttons */}
-      <div className="absolute bottom-12" style={{ left: "440px", zIndex: 20 }}>
+      <div className="absolute bottom-10" style={{ left: "440px", zIndex: 20 }}>
         <button
           className="bg-gradient-to-r from-pink-500 to-yellow-500 hover:from-yellow-500 hover:to-pink-500 text-white font-bold text-xl py-3 px-6 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110"
           onClick={eraseCanvas}
@@ -224,7 +224,7 @@ const WritingCanvas_AarohanaAkshara2 = ({ onNext, onBack }) => {
           🩹 මකන්න
         </button>
       </div>
-      <div className="absolute bottom-12" style={{ left: "650px", zIndex: 20 }}>
+      <div className="absolute bottom-10" style={{ left: "650px", zIndex: 20 }}>
         <button
           className="bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-400 hover:from-yellow-400 hover:to-purple-400 text-white text-xl font-extrabold py-3 px-8 rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110"
           onClick={handleSubmitImage}

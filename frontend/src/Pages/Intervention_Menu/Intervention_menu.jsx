@@ -84,7 +84,7 @@ function Intervention_menu() {
             width: "300px",
             height: "190px",
             position: "absolute",
-            bottom: "330px",
+            bottom: "280px",
             right: "150px",
           },
           gradient: "bg-gradient-to-r from-black to-black",
@@ -100,7 +100,7 @@ function Intervention_menu() {
             width: "240px",
             height: "260px",
             position: "absolute",
-            bottom: "290px",
+            bottom: "250px",
             left: "280px",
           },
           gradient: "bg-gradient-to-r from-black to-black",
@@ -116,7 +116,7 @@ function Intervention_menu() {
             width: "230px",
             height: "200px",
             position: "absolute",
-            bottom: "310px",
+            bottom: "270px",
             right: "190px",
           },
           gradient: "bg-gradient-to-r from-black to-black",
@@ -238,8 +238,7 @@ function Intervention_menu() {
         >
           <FireworksAnimation />
 
-          {/* Add Snail Image Here */}
-          <div className="absolute bottom-[10px] left-[420px] transform -translate-x-1/2 z-30">
+          <div className="absolute bottom-0 left-[420px] transform -translate-x-1/2 z-30">
             <img
               src={snail1}
               alt="Snail"
@@ -288,12 +287,12 @@ function Intervention_menu() {
       ) : (
         <div className="flex flex-col items-center w-full h-full relative">
           {/* Title Container */}
-          <div className="absolute top-[-155px] bg-gradient-to-r from-green-600/90 via-yellow-500/100 to-green-600/90 p-4 rounded-2xl shadow-lg z-10 border-4 border-white">
-            <h1 className="text-white text-4xl font-bold">කාණ්ඩ මගහුරුව</h1>
+          <div className="absolute top-[-120px] bg-gradient-to-r from-green-600/90 via-yellow-500/100 to-green-600/90 p-4 rounded-2xl shadow-lg z-10 border-4 border-white">
+            <h1 className="text-white text-4xl font-bold">කාණ්ඩය මගහුරුව</h1>
           </div>
 
           {/* Door Container with Hover Effects */}
-          <div className="flex-1 flex items-center justify-center mt-[-50px]">
+          <div className="flex-1 flex items-center justify-center mt-[-40px]">
             <div className="flex space-x-8">
               <div
                 className="relative cursor-pointer w-70 h-70 hover:scale-110 transition-transform duration-300"

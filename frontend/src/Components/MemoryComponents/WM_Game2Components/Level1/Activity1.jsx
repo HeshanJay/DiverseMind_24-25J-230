@@ -7,9 +7,9 @@ import woodenBoard from "../../../../assets/WM_Interventions_images/L2_images/wo
 import frame1 from "../../../../assets/WM_Interventions_images/L1_images/frame1.png";
 import dog from "../../../../assets/WM_Interventions_images/L2_images/dog.png";
 
-import timerSound   from "../../../../assets/Audios/timer_sound.mp3";
+import timerSound from "../../../../assets/Audios/timer_sound.mp3";
 import correctSound from "../../../../assets/Audios/correct_answer.mp3";
-import wrongSound   from "../../../../assets/Audios/wrong_answer.mp3";
+import wrongSound from "../../../../assets/Audios/wrong_answer.mp3";
 
 const questions = [
   {
@@ -19,7 +19,12 @@ const questions = [
   },
   {
     question: "නැට්ට නැති \nගෙඩිය",
-    options: [" අල \nගෙඩිය", "තිත්බටු \nගෙඩිය", "ගෝවා \nගෙඩිය", "බිත්තර \nගෙඩිය"],
+    options: [
+      " අල \nගෙඩිය",
+      "තිත්බටු \nගෙඩිය",
+      "ගෝවා \nගෙඩිය",
+      "බිත්තර \nගෙඩිය",
+    ],
     correctAnswer: 3,
   },
   {
@@ -41,23 +46,23 @@ const questions = [
 
 function Activity1({ onNext }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [timeLeft, setTimeLeft]                     = useState(10);
+  const [timeLeft, setTimeLeft] = useState(3);
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
-  const [score, setScore]                           = useState(0);
-  const [timeUp, setTimeUp]                         = useState(false);
-  const [showCelebration, setShowCelebration]       = useState(false);
+  const [score, setScore] = useState(0);
+  const [timeUp, setTimeUp] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
   const [incorrectAnswerIndex, setIncorrectAnswerIndex] = useState(null);
 
   const currentQuestion = questions[currentQuestionIndex];
 
   // audio refs
-  const timerAudio   = useRef(new Audio(timerSound));
+  const timerAudio = useRef(new Audio(timerSound));
   const correctAudio = useRef(new Audio(correctSound));
-  const wrongAudio   = useRef(new Audio(wrongSound));
+  const wrongAudio = useRef(new Audio(wrongSound));
 
   // reset per question
   useEffect(() => {
-    setTimeLeft(10);
+    setTimeLeft(3);
     setSelectedAnswerIndex(null);
     setTimeUp(false);
     setShowCelebration(false);
@@ -153,7 +158,7 @@ function Activity1({ onNext }) {
       </div>
 
       <div
-        className="absolute bottom-[215px] left-1/2 transform -translate-x-1/2 text-xl text-white px-6 py-3 rounded-xl font-semibold
+        className="absolute bottom-[400px] left-1/2 transform -translate-x-1/2 text-xl text-white px-6 py-3 rounded-xl font-semibold
                     bg-gradient-to-r from-[#8B4513] via-[#CD653F] to-[#8B4513]
                     min-w-[200px] max-w-[300px] text-center shadow-lg"
       >
@@ -213,7 +218,7 @@ function Activity1({ onNext }) {
       >
         <FaArrowRight size={24} />
       </button>
-      
+
       <style>
         {`
           @keyframes firework {

@@ -138,7 +138,7 @@ const Game2Level3Screen1 = ({ onTileSelect, onTimeout }) => {
             style={solidBorderStyle}
           >
             <h1 className="text-5xl font-bold text-yellow-300 mb-4">
-              තුන්වැනි අදිරයෙන් විනෝද වෙමු!
+              තුන්වැනි අදියරයෙන් විනෝද වෙමු!
             </h1>
             <p className="text-xl text-white mb-6 max-w-lg mx-auto">
               මෙම ක්‍රිඩාවේ ඔබ කළ යුත්තේ නොගලපෙන රූපය සොයාගැනීම. මෙහි කාලය ගැන
