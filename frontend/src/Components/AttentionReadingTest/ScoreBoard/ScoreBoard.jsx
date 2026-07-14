@@ -44,7 +44,17 @@ const ScoreBoard = ({ onRestart }) => {
   };
 
   const getFeedbackMessage = (status) => {
+<<<<<<< HEAD
     return status === "Focused" ? "ඉතා හොඳයි 😊" : "හොඳ නැහැ 😐";
+=======
+    if (status === "Focused") {
+      return "ඉතා හොඳයි 😊";
+    } else if (status === "Moderately Focused") {
+      return "හොඳයි 😊";
+    } else {
+      return "හොඳ උත්සාහයක් !🌿";
+    }
+>>>>>>> 5206e652eb675fe20bd3b18bad06c8040d33592d
   };
 
   return (
@@ -56,7 +66,11 @@ const ScoreBoard = ({ onRestart }) => {
       {/* Move everything upwards by reducing mt-20 to mt-10 */}
       <div className="relative text-center text-white z-10 mt-23">
         <div className="mt-4">
+<<<<<<< HEAD
           <h2 className="text-4xl font-bold text-yellow-300 mb-9">
+=======
+          <h2 className="text-5xl font-bold text-yellow-300 mb-9">
+>>>>>>> 5206e652eb675fe20bd3b18bad06c8040d33592d
             🎉 ඔබේ අවධානය 🎉
           </h2>
         </div>
@@ -84,7 +98,11 @@ const ScoreBoard = ({ onRestart }) => {
         </div>
 
         {/* Right-aligned vertical buttons (pushed even further right and up) */}
+<<<<<<< HEAD
         <div className="absolute right-[-150px] top-6 flex flex-col gap-6">
+=======
+        <div className="absolute right-[-130px] top-8 flex flex-col gap-6">
+>>>>>>> 5206e652eb675fe20bd3b18bad06c8040d33592d
           <button
             onClick={onRestart}
             className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg hover:scale-105 transition-transform duration-300"
@@ -92,13 +110,21 @@ const ScoreBoard = ({ onRestart }) => {
             <FaRedoAlt />
           </button>
           <button
+<<<<<<< HEAD
             onClick={() => navigate("/home")}
+=======
+            onClick={() => navigate("/screening_and_interventions")}
+>>>>>>> 5206e652eb675fe20bd3b18bad06c8040d33592d
             className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg hover:scale-105 transition-transform duration-300"
           >
             <FaHome />
           </button>
           <button
+<<<<<<< HEAD
             onClick={() => navigate("/home")}
+=======
+            onClick={() => navigate("/screening-menu")}
+>>>>>>> 5206e652eb675fe20bd3b18bad06c8040d33592d
             className="bg-gradient-to-r from-pink-400 to-red-500 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold shadow-lg hover:scale-105 transition-transform duration-300"
           >
             <FaBars />

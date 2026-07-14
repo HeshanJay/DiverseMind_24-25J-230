@@ -1,0 +1,331 @@
+:root {
+  --primary-green: #2e7d32;
+  --secondary-green: #388e3c;
+  --accent-red: #d32f2f;
+  --background-light: #f8f9fa;
+  --text-dark: #2d3748;
+  --text-light: #ffffff;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+/* Main Layout */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--background-light);
+}
+
+.main-content {
+  flex-grow: 1;
+  margin-left: 16rem;
+  padding: 2rem;
+  transition: margin 0.3s ease;
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Code Management Section */
+.code-management {
+  margin-bottom: 2rem;
+}
+
+.code-card {
+  background: var(--text-light);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+}
+
+.code-title {
+  color: var(--primary-green);
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.code-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.code-value {
+  font-family: "Courier New", monospace;
+  font-size: 1.5rem;
+  color: var(--secondary-green);
+  font-weight: 600;
+  letter-spacing: 2px;
+  background: var(--background-light);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+}
+
+.code-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.code-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.code-btn.generate {
+  background: var(--primary-green);
+  color: var(--text-light);
+}
+
+.code-btn.reset {
+  background: #e8f5e9;
+  color: var(--primary-green);
+}
+
+.code-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Students Management Section */
+.students-management {
+  background: var(--text-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+}
+
+.students-title {
+  color: var(--primary-green);
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--text-light);
+}
+
+.students-table th {
+  background: var(--background-light);
+  color: var(--text-dark);
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.students-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #edf2f7;
+}
+
+/* Task Badges */
+.task-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.task-badge {
+  background: #e8f5e9;
+  color: var(--primary-green);
+  padding: 0.375rem 0.875rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.view-btn,
+.delete-btn {
+  padding: 0.5rem;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.view-btn {
+  background: var(--primary-green);
+  color: var(--text-light);
+}
+
+.delete-btn {
+  background: #ffebee;
+  color: var(--accent-red);
+}
+
+.view-btn:hover,
+.delete-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: #718096;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .code-display {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .code-actions {
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .students-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .task-badge {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .code-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .code-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+/* Popup Styling */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: var(--text-light);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.popup-content.success {
+  background: #e8f5e9;
+  color: var(--primary-green);
+}
+
+.popup-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.confirm-btn {
+  background: var(--accent-red);
+  color: var(--text-light);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.confirm-btn:hover {
+  background: #c62828;
+}
+
+.cancel-btn {
+  background: var(--background-light);
+  color: var(--text-dark);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background: #edf2f7;
+}
+
+/* Print styles */
+@media print {
+  body {
+    visibility: hidden;
+  }
+  #reportContent {
+    visibility: visible;
+    position: absolute;
+    left: 0;
+    top: 0;
+    box-shadow: none !important;
+  }
+  .download-section {
+    display: none !important;
+  }
+  .report-section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .math-section,
+  .memory-section {
+    page-break-before: always;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}

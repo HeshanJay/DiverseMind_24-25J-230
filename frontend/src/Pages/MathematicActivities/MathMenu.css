@@ -1,0 +1,245 @@
+.math-menu-forest-theme {
+  background-image: url('../../assets/Math/math-background_1.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  text-align: center;
+  overflow: hidden;
+}
+
+.title-container {
+  background: linear-gradient(rgba(207, 255, 179, 0.1), rgba(124, 229, 255, 0.3)),
+                url("../../assets/Math/kid_title-background.png") repeat center center;
+  background-size: auto;
+  border: 4px solid #ff6b6b;
+  border-radius: 30px;
+  padding: 10px 40px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.title-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.3) 50%, transparent 80%);
+  animation: sparkle 4s linear infinite;
+}
+
+.math-menu-title1, .math-menu-title2 {
+  font-family: 'Comic Neue', cursive;
+  color: #2c5fbe;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 1px;
+  text-shadow: 
+    2px 2px 0 #ff6b6b,
+    -1px -1px 0 #ff6b6b,
+    1px -1px 0 #ff6b6b,
+    -1px 1px 0 #ff6b6b;
+}
+
+.math-menu-title1 {
+  font-size: 3.5rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+.math-menu-title2 {
+  font-size: 2.5rem;
+  animation: float 3s ease-in-out infinite 0.5s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes sparkle {
+  0% { transform: rotate(0deg) translate(-50%, -50%); }
+  100% { transform: rotate(360deg) translate(-50%, -50%); }
+}
+
+.math-menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.math-menu-button-row {
+  display: flex;
+  justify-content: center;
+  gap: 250px;
+}
+
+.math-menu-button-row.math-menu-centered {
+  justify-content: center;
+}
+
+.math-menu-button {
+  background-image: url('../../assets/design_images/math_activity/wood-rectangle.png');
+  background-size: cover;
+  background-position: center;
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  width: 340px;
+  height: 80px;
+  position: relative;
+}
+
+.math-menu-button:hover {
+  background-color: #A0522D;
+  transform: scale(1.1);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.math-menu-button:hover .math-menu-button-symbol {
+  animation: rotateSymbol 1s linear 1 forwards;
+}
+
+.math-menu-symbol-container {
+  position: absolute;
+  left: -67px;
+  top: 30%;
+  transform: translateY(-50%);
+  background-image: url('../../assets/design_images/math_activity/wood-round.png');
+  background-size: cover;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.math-menu-button-symbol {
+  width: 70px;
+  height: 78px;
+  margin-bottom: -30px;
+  margin-left: -1px;
+}
+
+.math-menu-button-text {
+  font-size: 1.7rem;
+  font-weight: bold;
+  margin-left: 25px;
+}
+
+@keyframes rotateSymbol {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+    white-space: nowrap;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .math-menu-button-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .math-menu-button {
+    width: 100%;
+    max-width: 300px;
+  }
+  .math-menu-symbol-container {
+    width: 120px;
+    height: 120px;
+    left: -40px;
+  }
+  .math-menu-button-symbol {
+    width: 50px;
+    height: 55px;
+  }
+  .math-menu-button-text {
+    margin-left: 50px;
+  }
+  .math-menu-title {
+    font-size: 2rem;
+  }
+  .math-menu-subtitle {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .title-container {
+    padding: 10px 20px;
+  }
+  .math-menu-title1 {
+    font-size: 2.5rem;
+  }
+  .math-menu-title2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-container {
+    padding: 5px 10px;
+  }
+  .math-menu-title1 {
+    font-size: 2rem;
+  }
+  .math-menu-title2 {
+    font-size: 1.5rem;
+  }
+}

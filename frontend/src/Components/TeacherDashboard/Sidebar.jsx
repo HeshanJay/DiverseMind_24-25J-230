@@ -1,24 +1,60 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {
+  FiHome,
+  FiFileText,
+  FiActivity,
+  FiKey,
+  FiLogOut,
+} from "react-icons/fi";
 import Logo from "../../assets/logo/DiverseMind_logo.png";
+
+const optionnames = {
+  Dashboard: "පාලන පුවරුව",
+  "Screening Test": "හැකියා ඇගයීම",
+  Interventions: "මඟ හුරුව",
+  "Reset Password": "මුරපදය නැවත සකසන්න",
+  Logout: "පිටවීම",
+};
 
 const Sidebar = ({ routes }) => {
   return (
-    <div className="fixed w-64 h-full bg-gray-800 text-white shadow-lg">
-      <div className="flex items-center p-4">
-        <img src={Logo} alt="Diverse Mind Logo" className="w-20 h-20 mr-2" />
-        <span className="text-2xl font-semibold">DiverseMind</span>
+    <div className="fixed h-full w-64 bg-gray-800 text-white shadow-xl">
+      <div className="flex items-center gap-3 p-6 border-b border-gray-700">
+        <img src={Logo} alt="DiverseMind Logo" className="w-12 h-12" />
+        <h2 className="text-xl font-semibold">DiverseMind</h2>
       </div>
 
-      <nav className="mt-2">
+      <nav className="p-4">
         {routes.map((route, index) => (
-          <a
-            key={index}
-            href={route.path}
-            className="block px-4 py-2 mt-2 text-gray-200 hover:bg-gray-700 hover:text-white rounded-lg"
-          >
-            {route.name}
-          </a>
+          <div key={index} className="mb-2">
+            {route.path ? (
+              <a
+                href={route.path}
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                {route.name === "Dashboard" && <FiHome className="w-5 h-5" />}
+                {route.name === "Screening Test" && (
+                  <FiFileText className="w-5 h-5" />
+                )}
+                {route.name === "Interventions" && (
+                  <FiActivity className="w-5 h-5" />
+                )}
+                <span>{optionnames[route.name]}</span>
+              </a>
+            ) : (
+              <button
+                onClick={route.onClick}
+                className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                {route.name === "Reset Password" && (
+                  <FiKey className="w-5 h-5" />
+                )}
+                {route.name === "Logout" && <FiLogOut className="w-5 h-5" />}
+                <span>{optionnames[route.name]}</span>
+              </button>
+            )}
+          </div>
         ))}
       </nav>
     </div>
@@ -28,10 +64,11 @@ const Sidebar = ({ routes }) => {
 Sidebar.propTypes = {
   routes: PropTypes.arrayOf(
     PropTypes.shape({
-      path: PropTypes.string.isRequired,
+      path: PropTypes.string,
       name: PropTypes.string.isRequired,
+      onClick: PropTypes.func,
     })
-  ),
+  ).isRequired,
 };
 
 export default Sidebar;

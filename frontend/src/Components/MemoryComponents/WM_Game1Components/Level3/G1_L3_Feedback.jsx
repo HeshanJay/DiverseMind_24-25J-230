@@ -1,0 +1,91 @@
+import React from "react";
+import PropTypes from "prop-types";
+import { FaRedo, FaArrowRight, FaEllipsisH } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import sea_feedback1 from "../../../../assets/WM_Interventions_images/L1_images/sea_feedback1.png";
+import fish20 from "../../../../assets/WM_Interventions_images/L1_images/fish20.png";
+
+const G1_L3_Feedback = ({ activity1Score = 0, activity2Score = 0, handleRetry }) => {
+  const totalScore = activity1Score + activity2Score;
+  const maxScore = 36; // 12 from Activity1 + 24 from Activity2
+  const percentage = (totalScore / maxScore) * 100;
+  const roundedPercentage = Math.round(percentage);
+
+  let message;
+  let celebration = false;
+
+  if (totalScore === 36) {
+    message = "විශිෂ්ටයි! ඔබ සාර්ථකයි 🎉";
+    celebration = true;
+  } else if (totalScore >= 20 && totalScore < 36) {
+    message = "ඉතා හොඳයි! ඔබ එය හොඳින් කළා";
+  } else if (totalScore >= 10 && totalScore < 20) {
+    message = "හොඳයි! ඔබ එය හොඳින් කළා";
+  } else {
+    message = "ඔබේ උත්සහය හොඳයි! නැවත උත්සාහ කරන්න!";
+  }
+
+  const navigate = useNavigate();
+
+  return (
+    <div
+      className="flex flex-col items-center justify-center h-screen bg-cover bg-center text-white"
+      style={{ backgroundImage: `url(${sea_feedback1})` }}
+    >
+      {celebration && (
+        <img
+          src={fish20}
+          alt="Celebration"
+          className="w-48 h-48 mb-8 animate-bounce"
+        />
+      )}
+
+      <div className="bg-gradient-to-r from-blue-200/90 via-cyan-300/100 to-teal-400/90 p-8 rounded-[2rem] shadow-md w-[520px] h-[560px] relative border-8 border-blue-700">
+        <h1 className="text-5xl font-bold mb-8 text-center text-blue-900">
+          ලකුණු පුවරුව
+        </h1>
+
+        {/* Score Box */}
+        <div className="bg-white/60 p-6 rounded-2xl shadow-lg mb-8 w-[70%] mx-auto">
+          <div className="text-2xl text-green-800 text-center font-bold">
+            <span className="font-semibold">ක්‍රියාකාරකම 1:</span> {activity1Score}/12
+          </div>
+          <div className="text-2xl text-green-800 text-center font-bold mt-4">
+            <span className="font-semibold">ක්‍රියාකාරකම 2:</span> {activity2Score}/24
+          </div>
+          <div className="text-3xl font-bold mt-4 text-purple-800 text-center">
+            සම්පූර්ණ ලකුණු: {totalScore}/36
+          </div>
+        </div>
+
+        <p className="text-4xl mb-3 text-blue-900 text-center font-bold">
+          {message}
+        </p>
+
+        {/* Buttons */}
+        <div className="flex justify-center space-x-4">
+          <button
+            onClick={handleRetry} // Call handleRetry when clicked
+            className="w-16 h-16 flex items-center justify-center bg-blue-500 rounded-full text-white hover:bg-blue-600 transition duration-200"
+          >
+            <FaRedo size={28} />
+          </button>
+          <button
+            onClick={() => navigate("/WM_Game1Menu")}
+            className="w-16 h-16 flex items-center justify-center bg-green-500 rounded-full text-white hover:bg-green-600 transition duration-200"
+          >
+            <FaArrowRight size={28} />
+          </button>
+          <button
+            onClick={() => navigate("/WM_Menu")}
+            className="w-16 h-16 flex items-center justify-center bg-purple-500 rounded-full text-white hover:bg-purple-600 transition duration-200"
+          >
+            <FaEllipsisH size={28} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default G1_L3_Feedback;
